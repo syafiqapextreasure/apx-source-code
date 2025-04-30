@@ -9,33 +9,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays; 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
-
-import org.hibernate.mapping.Array;
+import java.util.Map; 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping; 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -47,6 +37,8 @@ import com.ppk.topController.lost.LostMaterial.service.CirBahanRosakHilangServic
 import com.ppk.topController.membership.renual.entity.RenewalMembershipData;
 import com.ppk.topController.membership.renual.service.GetFndGlnumbService;
 import com.ppk.topController.membership.renual.service.RenewFeeService;
+import com.ppk.topEntity.APITokenResponse;
+import com.ppk.topEntity.PaymentAccessPayload;
 import com.ppk.topEntity.errorEntity.ReportCreationException;
 import com.ppk.topEntity.errorEntity.UserNotFoundException;
 import com.ppk.topEntity.formsEntity.BorrowDetails;
@@ -69,11 +61,12 @@ import com.ppk.topServiceImpl.formServiceImpl.MaterialProcurementProposalFormSer
 import com.ppk.topServiceImpl.formServiceImpl.RoomReservationService;
 import com.ppk.topServiceImpl.formServiceImpl.roomServiceImpl.RoomServiceImpl;
 import com.ppk.topServiceImpl.userServiceImpl.PpkMembershipRegistrationFormImpl;
-import com.ppk.topServiceImpl.userServiceImpl.RoomReservationServiceImpl;
 import com.ppk.utilities.LogUtil;
-
-import javax.mail.Session;
+import com.ppk.utilities.Utilities;
+ 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -106,6 +99,12 @@ public class FormController {
 	@Autowired
 	private RegistrationService registrationService;
 
+	@Autowired
+	GetFndGlnumbService getFndGlnumbService;
+
+	@Autowired
+	RestTemplate restTemplate;
+	
 	@Autowired
 	private com.ppk.topService.formService.roomService.RoomBookingTransactionService roomBookingTransactionService;
 
@@ -152,24 +151,23 @@ public class FormController {
 
 	@PostMapping("/save")
 	public String saveFormToDb(@ModelAttribute MaterialProcurementProposalForm formData,
-	                           RedirectAttributes redirectAttributes,
-	                           org.springframework.ui.Model model) {
-	    try {
-	        MaterialProcurementProposalForm savedData = materialProcurementProposalFormServiceImpl
-	                .saveMaterialProposalForm(formData);
+			RedirectAttributes redirectAttributes, org.springframework.ui.Model model) {
+		try {
+			MaterialProcurementProposalForm savedData = materialProcurementProposalFormServiceImpl
+					.saveMaterialProposalForm(formData);
 
-	        // Add a success message using flash attributes
-	        redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
-	        return "redirect:/recommendation-form"; // Redirect to reload the form
+			// Add a success message using flash attributes
+			redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
+			return "redirect:/recommendation-form"; // Redirect to reload the form
 
-	    } catch (Exception e) {
-	        // Add an error message to the model (since redirectAttributes do not work for the same request)
-	        model.addAttribute("errorMessage",
-	                "An unexpected error occurred while saving the proposal form. Please try again.");
-	        return "user/form/recommendationf"; // Return to the form with an error message
-	    }
+		} catch (Exception e) {
+			// Add an error message to the model (since redirectAttributes do not work for
+			// the same request)
+			model.addAttribute("errorMessage",
+					"An unexpected error occurred while saving the proposal form. Please try again.");
+			return "user/form/recommendationf"; // Return to the form with an error message
+		}
 	}
-
 
 	// This endpoint retrieves material procurement proposal data by email ID
 	@GetMapping("/getFormDataByEmail/{email}")
@@ -210,7 +208,7 @@ public class FormController {
 	@GetMapping("/listBorrowedMaterial")
 	public String showAllBorrowedMaterialsLost(org.springframework.ui.Model model) {
 		List<LostBorrowedMaterial> borrowedMaterials = damagedReportServiceImpl.getBorrowedMaterials();
-	
+
 		model.addAttribute("borrowedMaterials", borrowedMaterials);
 		return "user/form/lostmf";
 	}
@@ -232,40 +230,37 @@ public class FormController {
 		model.addAttribute("borrowedMaterials", borrowedMaterials);
 		return "user/form/lostmf";
 	}
-	
+
 	// Handle form submission
 	@PostMapping("/submit")
-	public String submitForm(
-	    @RequestParam String patronId,
-	    @RequestParam String[] acquisitionNumbers, // Array for multiple checkboxes
-	    @RequestParam String borrowDate,
-	    @RequestParam String returnDate,
-	    @RequestParam String paymentMethod,
-	    @RequestParam double totalPayment,
-	    RedirectAttributes redirectAttributes) {
+	public String submitForm(@RequestParam String patronId, @RequestParam String[] acquisitionNumbers, // Array for
+																										// multiple
+																										// checkboxes
+			@RequestParam String borrowDate, @RequestParam String returnDate, @RequestParam String paymentMethod,
+			@RequestParam double totalPayment, RedirectAttributes redirectAttributes) {
 
-	    try {
-	        // Save each selected material
-	        for (String acquisitionNumber : acquisitionNumbers) {
-	            LostMaterialForm form = new LostMaterialForm();
-	            form.setPatronId(patronId);
-	            form.setAcquisitionNumber(acquisitionNumber);
-	            form.setBorrowDate(borrowDate);
-	            form.setReturnDate(returnDate);
-	            form.setPaymentMethod(paymentMethod);
-	            form.setTotalPayment(totalPayment);
+		try {
+			// Save each selected material
+			for (String acquisitionNumber : acquisitionNumbers) {
+				LostMaterialForm form = new LostMaterialForm();
+				form.setPatronId(patronId);
+				form.setAcquisitionNumber(acquisitionNumber);
+				form.setBorrowDate(borrowDate);
+				form.setReturnDate(returnDate);
+				form.setPaymentMethod(paymentMethod);
+				form.setTotalPayment(totalPayment);
 
-	            damagedReportServiceImpl.saveFormData(form);
-	        }
+				damagedReportServiceImpl.saveFormData(form);
+			}
 
-	        redirectAttributes.addFlashAttribute("message", "Form submitted successfully!");
-	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("message", "Error submitting form: " + e.getMessage());
-	    }
+			redirectAttributes.addFlashAttribute("message", "Form submitted successfully!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", "Error submitting form: " + e.getMessage());
+		}
 
-	    return "redirect:/lost-material-form"; // Redirect to the form page
+		return "redirect:/lost-material-form"; // Redirect to the form page
 	}
-	
+
 	@GetMapping("/lost-material-form-service")
 	@ResponseBody
 	public List<CirBahanRosakHilangtblPinjaman> getLostFormUI(org.springframework.ui.Model model,
@@ -310,7 +305,7 @@ public class FormController {
 	@PostMapping("/lost-save")
 	@ResponseBody // This will ensure a JSON response is sent back
 	public Map<String, Object> saveLostMaterialForm(@ModelAttribute BorrowDetails borrowDetails) {
-	
+
 		BorrowDetails savedBorrowDetails = lostDamagedReportService.saveBorrowDetails(borrowDetails);
 
 		Map<String, Object> response = new HashMap<>();
@@ -349,69 +344,69 @@ public class FormController {
 	@PostMapping("/membership-renewal-service")
 	public String getMembershipRenewal(Model model, HttpServletRequest request) {
 		String petronId = request.getParameter("username");
-		LocalDate expDate=null;
+		LocalDate expDate = null;
 		List<com.ppk.topController.membership.renual.entity.RenewalMembershipData> dbData = renewFeeService
 				.getMembershipData(petronId);
-		//User user = getLiferayUserDetails(request); 
+		// User user = getLiferayUserDetails(request);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 		// Ensure dbData is not null or empty, create an instance manually if needed
 		RenewalMembershipData membershipData = new RenewalMembershipData();
 		if (dbData != null && !dbData.isEmpty()) {
-		    membershipData = dbData.get(0);
+			membershipData = dbData.get(0);
 		}
-		List<Dependent> dependentDetails =new ArrayList<Dependent>();
-if(membershipData !=null) {
-		// Set default values if null
-		String dateEnrolledStr = (membershipData.getDateEnrolled() != null) ? membershipData.getDateEnrolled() : "20000101";
-		String expiryDateStr = (membershipData.getExpiryDate() != null) ? membershipData.getExpiryDate() : "20990101";
-		String returnDateStr = (membershipData.getLastReturnDate() != null) ? membershipData.getLastReturnDate() : "20990101";
-		// Parse dates safely
-		LocalDate dateEnrolled = LocalDate.parse(dateEnrolledStr, formatter);
-		LocalDate expiryDate = LocalDate.parse(expiryDateStr, formatter);
-		LocalDate returnDate = LocalDate.parse(returnDateStr, formatter);
+		List<Dependent> dependentDetails = new ArrayList<Dependent>();
+		if (membershipData != null) {
+			// Set default values if null
+			String dateEnrolledStr = (membershipData.getDateEnrolled() != null) ? membershipData.getDateEnrolled()
+					: "20000101";
+			String expiryDateStr = (membershipData.getExpiryDate() != null) ? membershipData.getExpiryDate()
+					: "20990101";
+			String returnDateStr = (membershipData.getLastReturnDate() != null) ? membershipData.getLastReturnDate()
+					: "20990101";
+			// Parse dates safely
+			LocalDate dateEnrolled = LocalDate.parse(dateEnrolledStr, formatter);
+			LocalDate expiryDate = LocalDate.parse(expiryDateStr, formatter);
+			LocalDate returnDate = LocalDate.parse(returnDateStr, formatter);
 
-		// Add attributes to the model
-		model.addAttribute("formattedDateEnrolled", dateEnrolled);
-		model.addAttribute("expireDate", expiryDate);
-		model.addAttribute("returnDate", returnDate);
-		model.addAttribute("dbUserData", dbData);
-		expDate=expiryDate;
-		
+			// Add attributes to the model
+			model.addAttribute("formattedDateEnrolled", dateEnrolled);
+			model.addAttribute("expireDate", expiryDate);
+			model.addAttribute("returnDate", returnDate);
+			model.addAttribute("dbUserData", dbData);
+			expDate = expiryDate;
 
-		// Fetch dependent details safely
-		 dependentDetails = registrationService.getDependentRegs(petronId);
-        if (dependentDetails == null) {
-	        dependentDetails = new ArrayList<>();  // Ensure we have a non-null list
-	    }
-		model.addAttribute("dependentDetails", dependentDetails);
+			// Fetch dependent details safely
+			dependentDetails = registrationService.getDependentRegs(petronId);
+			if (dependentDetails == null) {
+				dependentDetails = new ArrayList<>(); // Ensure we have a non-null list
+			}
+			model.addAttribute("dependentDetails", dependentDetails);
 
+			model.addAttribute("dependentDetails", dependentDetails);
+			model.addAttribute("membershipData", membershipData);
+		} else {
+			dependentDetails = new ArrayList<Dependent>();
+			model.addAttribute("formattedDateEnrolled", "");
+			model.addAttribute("expireDate", "");
+			model.addAttribute("returnDate", "");
+			model.addAttribute("dbUserData", "");
+			model.addAttribute("membershipData", null);
+			model.addAttribute("dependentDetails", dependentDetails);
+		}
 
-
-		model.addAttribute("dependentDetails", dependentDetails);
-		model.addAttribute("membershipData",membershipData);
-}else {
-	dependentDetails=new ArrayList<Dependent>();
-		model.addAttribute("formattedDateEnrolled", "");
-		model.addAttribute("expireDate", "");
-		model.addAttribute("returnDate", "");
-		model.addAttribute("dbUserData", "");
-		model.addAttribute("membershipData",null);
-	model.addAttribute("dependentDetails", dependentDetails);
-}
-
-LocalDate currentDate = LocalDate.now();
+		LocalDate currentDate = LocalDate.now();
 
 // Calculate the date that is one month ahead from the current date
-LocalDate oneMonthFromNow = currentDate.plusMonths(1);
+		LocalDate oneMonthFromNow = currentDate.plusMonths(1);
 
 // Check if the expiry date is less than or equal to one month from now
-String display="user/form/membership_renewal";
-if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(oneMonthFromNow))) {
-	display="user/form/membership_renewal";
-} else {
-	display="user/form/renualdateYetnotcame";
-}
+		String display = "user/form/membership_renewal";
+		if (expDate != null && (expDate.isBefore(oneMonthFromNow) || expDate.isEqual(oneMonthFromNow))) {
+			display = "user/form/membership_renewal";
+		} else {
+			display = "user/form/renualdateYetnotcame";
+		}
 
 		return display;
 	}
@@ -476,25 +471,26 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 //			return "user/form/lostmf"; // Or the page where you want to show the error
 //		}
 //	}
-	
+
 	@PostMapping("/save-room-booking")
 	public String saveRoomBookingDetails(@ModelAttribute RoomBookingDetails roomBookingDetails,
 			org.springframework.ui.Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		Long roomId = (Long) session.getAttribute("id");
 		try {
 			// Retrieve the roomId from session
-			
+
 			roomBookingDetails.setRoomId(roomId);
 
 			// Save the initial booking details and store in session
 			RoomBookingDetails savedBookingDetails = roomServiceImpl.saveRoomDetails(roomBookingDetails);
 			session.setAttribute("roomDetailsI", savedBookingDetails);
-			
+
 			// After saving, redirect to the equipment page
 			return "redirect:/room-booking-equipment/" + roomId.toString();
 		} catch (Exception e) {
 			logger.error("Error while saving room booking details: {}", e.getMessage());
-            redirectAttributes.addFlashAttribute("roomAlreadyBooked", "The room is already booked for the selected date and time.");
+			redirectAttributes.addFlashAttribute("roomAlreadyBooked",
+					"The room is already booked for the selected date and time.");
 
 			model.addAttribute("errorMessage", "An error occurred while saving your booking. Please try again.");
 			return "redirect:/room-booking-details/" + roomId.toString();
@@ -522,7 +518,6 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 		EquipmentForm equipmentForm = new EquipmentForm();
 		equipmentForm.setEquipmentList(equipmentList);
 
-	
 		model.addAttribute("equipmentForm", equipmentForm); // Add the entire form object
 		model.addAttribute("roomId", id);
 
@@ -537,26 +532,28 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 			// Enhanced logging for debugging
 			logger.info("Processing equipment form with roomId: {}", id);
 			logger.info("Equipment form data: {}", equipmentForm);
-			logger.info("Equipment list size: {}", equipmentForm.getEquipmentList() != null ? equipmentForm.getEquipmentList().size() : "null");
-			
+			logger.info("Equipment list size: {}",
+					equipmentForm.getEquipmentList() != null ? equipmentForm.getEquipmentList().size() : "null");
+
 			if (equipmentForm.getEquipmentList() != null) {
 				for (EquipmentDetails equipment : equipmentForm.getEquipmentList()) {
 					logger.info("Equipment item: name={}, selected={}, quantity={}, price={}",
-							equipment.getEquipmentName(), equipment.isSelected(), equipment.getQuantity(), equipment.getPrice());
+							equipment.getEquipmentName(), equipment.isSelected(), equipment.getQuantity(),
+							equipment.getPrice());
 				}
 			}
-			
+
 			// Delegate the saving operation to the service
 			roomServiceImpl.saveSelectedEquipment(equipmentForm.getEquipmentList());
-			
+
 			// Log session attributes
 			logger.info("Setting session attribute 'eqipList'");
 			session.setAttribute("eqipList", equipmentForm.getEquipmentList());
-			
+
 			// Log redirect destination
 			String redirectUrl = "/room-booking-summary/" + id;
 			logger.info("Redirecting to: {}", redirectUrl);
-			
+
 			// Redirect to the summary page with the room ID
 			return "redirect:" + redirectUrl;
 		} catch (Exception e) {
@@ -582,29 +579,27 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 	}
 
 	@PostMapping("/complete-booking")
-	public String completeBooking(@ModelAttribute PersonalInformation personalInfo,
-			HttpSession session, Model model) {
+	public String completeBooking(@ModelAttribute PersonalInformation personalInfo, HttpSession session, Model model,
+			HttpServletResponse response) {
 		try {
 			// Retrieve all booking information from session
 			RoomBookingDetails bookingDetails = (RoomBookingDetails) session.getAttribute("roomDetailsI");
 			@SuppressWarnings("unchecked")
 			List<EquipmentDetails> equipmentList = (List<EquipmentDetails>) session.getAttribute("selectedEquipment");
-			
+
 			// Process the complete booking transaction
-			RoomBookingDetails completedBooking = roomBookingTransactionService.processCompleteBooking(
-				bookingDetails,
-				equipmentList,
-				personalInfo
-			);
-			
+			RoomBookingDetails completedBooking = roomBookingTransactionService.processCompleteBooking(bookingDetails,
+					equipmentList, personalInfo);
+
 			// Clear session attributes
 			session.removeAttribute("roomDetailsI");
 			session.removeAttribute("selectedEquipment");
-			
+
 			// Add booking confirmation to model
 			model.addAttribute("bookingConfirmation", completedBooking);
+
 			return "user/rooms/booking-confirmation";
-			
+
 		} catch (Exception e) {
 			logger.error("Error while completing booking: {}", e.getMessage());
 			model.addAttribute("errorMessage", "Failed to complete the booking. Please try again.");
@@ -613,22 +608,38 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 	}
 
 	@PostMapping("/confirm-booking")
-	public String saveAllRoomBookingDetails(@ModelAttribute PersonalInformation personalInformation, RedirectAttributes redirectAttributes) {
+	public String saveAllRoomBookingDetails(@ModelAttribute PersonalInformation personalInformation,
+			RedirectAttributes redirectAttributes, HttpSession httpSession, HttpServletResponse response ) {
 		try {
 			logger.info("Processing personal information submission: {}", personalInformation);
-			
+
 			// Set bookingId to null to avoid database column issue
 			personalInformation.setBookingId(null);
-			
+
 			// Save personal information
 			PersonalInformation savedPersonalInformation = this.roomServiceImpl.savedUserDetails(personalInformation);
 
-			if (savedPersonalInformation != null) {
-				// Return a success response for AJAX
-				redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
-				return "redirect:/room-booking";
-			}
 			
+			if (savedPersonalInformation != null) {
+			Double totalPriceSession=httpSession.getAttribute("totalPrice") !=null?(Double)	httpSession.getAttribute("totalPrice"):0;
+				Cookie cookie = new Cookie("petronId", personalInformation.getId().toString());
+			    cookie.setMaxAge(60 * 60); // 1 hour
+			    cookie.setPath("/");
+			    response.addCookie(cookie);
+				Utilities u = new Utilities(null);
+			    PaymentAccessPayload payload = u.paymentProcessModel(totalPriceSession.toString(),
+			    		personalInformation.getId().toString());
+			    ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
+				 int iCounter = getFndGlnumbService.getGlnumb2("TRXNO");
+		      		getFndGlnumbService.insertRETRXN(iCounter+1, null, totalPriceSession.toString(), personalInformation.getId().toString(),
+		      				"_ADMIN", String.valueOf(new java.util.Date().getYear()), payload.getPayload().getOrderNo());
+				
+				// Return a success response for AJAX
+		      	return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
+			//	redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
+			//	return "redirect:/room-booking";
+			}
+
 			// Handle unsuccessful save
 			logger.warn("Failed to save personal information");
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to save your information. Please try again.");
@@ -646,28 +657,26 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 		// Get all room types (can be fetched from database or hardcoded for now)
 		List<String> roomTypes = Arrays.asList("Bilik Mesyuarat", "Bilik Serbaguna");
 		model.addAttribute("roomTypes", roomTypes);
-		
+
 		// Get all available rooms
 		List<RoomReservationFormEntity> rooms = roomServiceImpl.getAllAvailableRooms();
 		model.addAttribute("rooms", rooms);
-		
+
 		return "user/rooms/room-filter";
 	}
 
 	@GetMapping("/filter-rooms")
-	public String filterRooms(
-		@RequestParam(required = false) String roomType,
-		@RequestParam(required = false) String date,
-		@RequestParam(required = false) String time,
-		org.springframework.ui.Model model) {
-		
+	public String filterRooms(@RequestParam(required = false) String roomType,
+			@RequestParam(required = false) String date, @RequestParam(required = false) String time,
+			org.springframework.ui.Model model) {
+
 		try {
 			// Convert parameters as needed
 			String labelName = null;
 			if (roomType != null && !roomType.equals("Jenis Bilik")) {
 				labelName = roomType.equals("Bilik Mesyuarat") ? "P11 Bilik Mesyuarat" : "Bilik Serbaguna";
 			}
-			
+
 			// Filter rooms based on parameters
 			List<RoomReservationFormEntity> filteredRooms;
 			if (labelName != null) {
@@ -675,41 +684,41 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 			} else {
 				filteredRooms = roomServiceImpl.getAllAvailableRooms();
 			}
-			
+
 			// Add the filtered rooms to the model
 			model.addAttribute("rooms", filteredRooms);
-			
+
 			// Pass the filter parameters back to maintain form state
 			model.addAttribute("selectedRoomType", roomType);
 			model.addAttribute("selectedDate", date);
 			model.addAttribute("selectedTime", time);
-			
+
 			// Add room types for the dropdown
 			List<String> roomTypes = Arrays.asList("Bilik Mesyuarat", "Bilik Serbaguna");
 			model.addAttribute("roomTypes", roomTypes);
-			
+
 			return "user/rooms/room-filter";
 		} catch (Exception e) {
 			// Handle exceptions
 			model.addAttribute("errorMessage", "Error while filtering rooms: " + e.getMessage());
-			
+
 			// Add room types for the dropdown
 			List<String> roomTypes = Arrays.asList("Bilik Mesyuarat", "Bilik Serbaguna");
 			model.addAttribute("roomTypes", roomTypes);
-			
+
 			return "user/rooms/room-filter";
 		}
 	}
-	
+
 	@GetMapping("/api/booked-dates/{roomId}")
 	@ResponseBody
 	public List<Map<String, Object>> getBookedDatesForRoom(@PathVariable Long roomId) {
 		// Get all bookings for the specific room
 		List<RoomBookingDetails> bookings = roomServiceImpl.getBookingsForRoom(roomId);
-		
+
 		// Convert to a format suitable for frontend (dates and times that are booked)
 		List<Map<String, Object>> bookedDates = new ArrayList<>();
-		
+
 		for (RoomBookingDetails booking : bookings) {
 			Map<String, Object> dateInfo = new HashMap<>();
 			dateInfo.put("startDate", booking.getStartDate().toString());
@@ -717,7 +726,7 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 			dateInfo.put("time", booking.getTime());
 			bookedDates.add(dateInfo);
 		}
-		
+
 		return bookedDates;
 	}
 
@@ -768,7 +777,7 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 
 			String getTimesCost = service.getMenuLcost(accno, patronid);
 			String getLcostMenu = service.biggetLcostMenu();
-			
+
 			BigDecimal biggetLcostMenu = new BigDecimal(getLcostMenu);
 			BigDecimal biggetTimesCost = new BigDecimal(getTimesCost);
 			bookCost = biggetLcostMenu.multiply(biggetTimesCost);
@@ -788,7 +797,7 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 			HttpSession session) {
 		try {
 			logger.info("Processing room booking summary for room ID: {}", id);
-			
+
 			BookingSummary bookingSummary = new BookingSummary();
 
 			// Get room from database
@@ -799,11 +808,12 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 				return "errorPage";
 			}
 			model.addAttribute("room", room);
-			
+
 			// Get room details from session
-			RoomReservationFormEntity currentRoomDetails = (RoomReservationFormEntity) session.getAttribute("roomDetails");
+			RoomReservationFormEntity currentRoomDetails = (RoomReservationFormEntity) session
+					.getAttribute("roomDetails");
 			model.addAttribute("currentRoom", currentRoomDetails);
-			
+
 			// Get equipment list from session
 			@SuppressWarnings("unchecked")
 			List<EquipmentDetails> equipDet = (List<EquipmentDetails>) session.getAttribute("eqipList");
@@ -812,28 +822,40 @@ if (expDate !=null && (expDate.isBefore(oneMonthFromNow) || expDate .isEqual(one
 				equipDet = new ArrayList<>();
 			}
 			model.addAttribute("selectedEquip", equipDet);
-			
+
 			// Get booking details from session
 			RoomBookingDetails bookingDetails = (RoomBookingDetails) session.getAttribute("roomDetailsI");
 			model.addAttribute("currentBookingDet", bookingDetails);
-			
+
 			// Calculate costs
 			bookingSummary.setRoomCost(currentRoomDetails != null ? currentRoomDetails.getPrice() : 0);
 			double equipCost = 0;
 			for (EquipmentDetails equip : equipDet) {
 				equipCost += equip.getPrice() * equip.getQuantity();
 			}
-			
 			bookingSummary.setEquipmentCost(equipCost);
-			model.addAttribute("totalPrice", equipCost + (currentRoomDetails != null ? currentRoomDetails.getPrice() : 0));
-			
+
+			double totalPrice = equipCost + (currentRoomDetails != null ? currentRoomDetails.getPrice() : 0);
+			model.addAttribute("totalPrice", totalPrice);
+
+			// Store totalPrice in HTTP session
+			session.setAttribute("totalPrice", totalPrice);
+
+			bookingSummary.setEquipmentCost(equipCost);
+			model.addAttribute("totalPrice",
+					equipCost + (currentRoomDetails != null ? currentRoomDetails.getPrice() : 0));
+
 			logger.info("Successfully processed room booking summary. Rendering room-summary page");
 			return "user/rooms/room-summary";
 		} catch (Exception e) {
 			logger.error("Error processing room booking summary: {}", e.getMessage(), e);
-			model.addAttribute("errorMessage", "An error occurred while processing your booking summary. Please try again.");
+			model.addAttribute("errorMessage",
+					"An error occurred while processing your booking summary. Please try again.");
 			return "errorPage";
 		}
 	}
-
+	public ResponseEntity<APITokenResponse> getToken(PaymentAccessPayload payload) {
+		String url = "https://ppkdev.ppj.gov.my:8080/pfxp/pay-api/pay/access";
+		return restTemplate.postForEntity(url,payload.getPayload(), APITokenResponse.class);
+	}
 }

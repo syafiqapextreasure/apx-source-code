@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,7 +80,7 @@ public class RegistrationController {
 			@RequestParam(value = "emailAddress", required = false) String emailAddress,
 			@RequestParam(value = "updatedCat", required = false) String updatedCat,
 
-			Model model, RedirectAttributes redirectAttributes) {
+			Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
 		/* ==================== */
 //    		@RequestParam("paspekerja") MultipartFile paspekerja,
@@ -164,8 +167,13 @@ public class RegistrationController {
 				PaymentAccessPayload payload = u.paymentProcessModel(total.toString(),
 						selectedItems.get(0).getLoginId());
 				ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
+				Cookie cookie = new Cookie("petronId", selectedItems.get(0).getLoginId());
+			    cookie.setMaxAge(60 * 60); // 1 hour
+			    cookie.setPath("/");
+			    response.addCookie(cookie);
 				return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
 			}
+			
 			redirectAttributes.addFlashAttribute("message", "Success");
 			return "redirect:/membership-registration"; // Redirect to a Thymeleaf template named 'success.html'
 		} catch (Exception e) {
@@ -191,8 +199,8 @@ public class RegistrationController {
 	@ResponseBody
 	public LoginUserDetail loginUserDetail(@RequestParam String emailAddress) {
 		System.out.println("emailAddress is " + emailAddress);
-		// String url = "jdbc:mysql://10.32.0.44:3306/equipcms-ppkp"; staging
-		String url = "jdbc:mysql://10.10.32.154:3306/equipcmsppkp"; // prod
+		String url = "jdbc:mysql://10.32.0.44:3306/equipcms-ppkp"; //staging
+	//	String url = "jdbc:mysql://10.10.32.154:3306/equipcmsppkp"; // prod
 		String user = "ilmuweb"; // Change to your username
 		String password = "ilmuweb"; // Change to your password
 		LoginUserDetail loginUserDetail = new LoginUserDetail();
@@ -232,7 +240,7 @@ public class RegistrationController {
 			throws JsonMappingException, JsonProcessingException {
 		String url = "https://api.ppj.gov.my/api/call/5?fid=52&token=bhnod0tidzd4czfrueduttcwoujwnm9sufphzuo5vww4zw1py2vlng==&ref="
 				+ emailAddress;
-		RestTemplate restTemplate = new RestTemplate();
+		//RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
 		ObjectMapper objectMapper = new ObjectMapper();

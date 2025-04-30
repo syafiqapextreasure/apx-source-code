@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +53,7 @@ public class MembershipRenuwalformCkntroller {
 	}
 
 	@PostMapping("handleRenewalMembership")
-	public ResponseEntity<Object> handleRenewalMembership(@RequestParam Map<String, String> params,HttpServletRequest request)
+	public ResponseEntity<Object> handleRenewalMembership(@RequestParam Map<String, String> params,HttpServletRequest request, HttpServletResponse response)
 			throws UnknownHostException {
 		try {
 			String patronId = params.get("patronId");
@@ -129,6 +131,10 @@ public class MembershipRenuwalformCkntroller {
 					return ResponseEntity.status(500).body("An error occurred");
 				}
 			}
+			Cookie cookie = new Cookie("petronId", patronId);
+		    cookie.setMaxAge(60 * 60); // 1 hour
+		    cookie.setPath("/");
+		    response.addCookie(cookie);
 		} catch (Exception ex) {
 
 			ex.printStackTrace();
