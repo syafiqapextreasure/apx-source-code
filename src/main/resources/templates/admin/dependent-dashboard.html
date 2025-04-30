@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Dependents Dashboard</title>
+    <style>
+        /* Responsive table styles */
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Modal fixes */
+        .modal-dialog {
+            max-width: 90%;
+            margin: 1.75rem auto;
+        }
+        
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 500px;
+            }
+            
+            .modal-dialog.modal-lg {
+                max-width: 800px;
+            }
+        }
+        
+        /* Fix for table cell wrapping */
+        .table td, .table th {
+            white-space: normal;
+            word-break: break-word;
+        }
+        
+        /* Fix for modal content overflow */
+        .modal-body {
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+        
+        /* Pagination styles */
+        .pagination {
+            margin-bottom: 0;
+        }
+        
+        .pagination .page-link {
+            color: #005e9a;
+            border-color: #dee2e6;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #005e9a;
+            border-color: #005e9a;
+            color: white;
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="dashboard_main px-4 py-4">
+            <div class="row dashboard_container">
+                <div class="col-md-8 dashbord-right-container px-5 flex-grow-1">
+                    <div>
+                        <h1>
+                            <span>DEPENDENT MANAGEMENT</span>
+                        </h1>
+                        <p class="date-para" th:text="${currentDate}">February 20, 2024 | Tuesday, 10:00 AM</p>
+                    </div>
+                    
+                    <!-- DEBUG INFO SECTION -->
+                    <!-- <div style="background-color: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc;">
+                        <h3>Debug Information:</h3>
+                        <ul>
+                            <li>Current Page: <span th:text="${currentPage != null ? currentPage : 'Not set'}">Not set</span></li>
+                            <li>Total Pages: <span th:text="${totalPages != null ? totalPages : 'Not set'}">Not set</span></li>
+                            <li>Page Size: <span th:text="${pageSize != null ? pageSize : 'Not set'}">Not set</span></li>
+                            <li>Total Items: <span th:text="${totalItems != null ? totalItems : 'Not set'}">Not set</span></li>
+                            <li>Items on current page: <span th:text="${dependents != null ? dependents.size() : 'null'}">0</span></li>
+                        </ul>
+                    </div>
+                     -->
+                    <!-- Stats Cards Section -->
+                    <div class="row cards-section d-flex justify-content-between gap-md-5 gap-3 w-100 mt-4">
+                        <div class="tract-card d-flex flex-column">
+                            <h1 class="px-2 pt-3">Total Dependents</h1>
+                            <div class="mt-3 px-5" th:text="${totalItems ?: dependents.size()}">0</div>
+                            <div class="icon_wrapper">
+                                <i class="bi bi-people" style="font-size: 3rem; color: #fff"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dependents List Section -->
+                    <div class="row table_section mt-4">
+                        <h1>Dependents List</h1>
+                        <div class="col-md-12 view_table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Login ID</th>
+                                            <th>User ID</th>
+                                            <th>IC Number</th>
+                                            <th>Relationship</th>
+                                            <th>OKU Status</th>
+                                            <th>Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Thymeleaf iteration over dependents -->
+                                        <tr th:each="dependent : ${dependents}">
+                                            <td th:text="${dependent.dependentId}">1</td>
+                                            <td th:text="${dependent.loginId}">login123</td>
+                                            <td th:text="${dependent.idPengguna}">user123</td>
+                                            <td th:text="${dependent.nokPTanggungan}">123456789012</td>
+                                            <td th:text="${dependent.hubungan}">Spouse</td>
+                                            <td th:text="${dependent.statusOKU}">No</td>
+                                            <td th:text="${#numbers.formatDecimal(dependent.harga, 1, 2)}">100.00</td>
+                                            <td>
+                                                <button class="btn btn-sm" 
+                                                    style="background-color: #005e9a; border-color: #005e9a; color: #ffffff;"
+                                                    th:attr="onclick='loadDependentDetails(' + ${dependent.dependentId} + ')'">
+                                                    View Details
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Show message if no dependents found -->
+                                        <tr th:if="${dependents.empty}">
+                                            <td colspan="8" class="text-center">No dependents found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Simple Manual Pagination -->
+                            <div class="d-flex justify-content-center mt-3">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="/eforms/admin/dependents?page=1&size=5">5 per page</a></li>
+                                        <li class="page-item"><a class="page-link" href="/eforms/admin/dependents?page=1&size=10">10 per page</a></li>
+                                        <li class="page-item"><a class="page-link" href="/eforms/admin/dependents?page=1&size=20">20 per page</a></li>
+                                        <li class="page-item"><a class="page-link" href="/eforms/admin/dependents?page=1&size=50">50 per page</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal for Dependent Details -->
+        <div class="modal fade" id="dependentDetailsModal" tabindex="-1" aria-labelledby="dependentDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dependentDetailsModalLabel">Dependent Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="width: 30%;">ID</th>
+                                        <td id="modalDependentId"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Login ID</th>
+                                        <td id="modalLoginId"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">User ID</th>
+                                        <td id="modalIdPengguna"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">IC Number</th>
+                                        <td id="modalNokPTanggungan"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Relationship</th>
+                                        <td id="modalHubungan"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">OKU Status</th>
+                                        <td id="modalStatusOKU"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Price</th>
+                                        <td id="modalHarga"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function loadDependentDetails(id) {
+                // Make an AJAX request to fetch the dependent data
+                fetch(`/eforms/admin/api/dependents/${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Populate the modal with the fetched data
+                        document.getElementById('modalDependentId').textContent = data.dependentId;
+                        document.getElementById('modalLoginId').textContent = data.loginId;
+                        document.getElementById('modalIdPengguna').textContent = data.idPengguna;
+                        document.getElementById('modalNokPTanggungan').textContent = data.nokPTanggungan;
+                        document.getElementById('modalHubungan').textContent = data.hubungan;
+                        document.getElementById('modalStatusOKU').textContent = data.statusOKU;
+                        document.getElementById('modalHarga').textContent = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'MYR'
+                        }).format(data.harga);
+                        
+                        // Show the modal programmatically
+                        const modalElement = document.getElementById('dependentDetailsModal');
+                        const modalInstance = new bootstrap.Modal(modalElement);
+                        modalInstance.show();
+                    })
+                    .catch(error => {
+                        console.error('Error fetching dependent details:', error);
+                        alert('Error loading data: ' + error.message);
+                    });
+            }
+            
+            // Log page load for debugging
+            console.log('Dependent dashboard loaded at', new Date().toISOString());
+        </script>
+    </section>
+</body>
+</html> 

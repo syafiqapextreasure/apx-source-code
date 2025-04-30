@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<meta charset="ISO-8859-1">
+<title>Borang Tempahan Bilik</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+
+<section>
+    <div class="roomReservationForm">
+        <div class="main_container">
+            <h1>BORANG TEMPAHAN BILIK</h1>
+            <div class="sub-title p-2 my-2">PENGUNGUMAN TERKINI</div>
+            <div class="notice-board">
+                <div class="w-75 m-auto py-4">
+                   <p class="mb-3"> Dimaklumkan bahawa Perpustakaan Presint 11 akan ditutup sementara pada 17/12/2024.</p>
+                   <p> Sehubungan dengan itu, kemudahan bilik di perpustakaan tidak akan dapat digunakan pada hari tersebut.</p>
+                    <p>Kami memohon maaf atas sebarang kesulitan yang timbul dan armat menghargai pemahaman anda. Perkhidmatan akan beroperasi seperti biasa pada keesokan harinya.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row mt-5 d-flex justify-content-between">
+                    <div class="col-md-3 side-bar-section d-flex flex-column gap-3 py-4 px-3">
+                        <div class="d-flex w-100 gap-3">
+                            <div class="image-wrapper">
+                                <i class="bi bi-house-door" style="font-size: 2rem; color: #fff;"></i>
+                            </div>
+                            <div class="step-button-grp d-flex flex-column gap-2">
+                                <button class="step-button show" tabindex="0">Langkah 1-Bilik Mesyuarat</button>
+                                <button class="step-button">Langkah 2-Tempahan Bilik</button>
+                                <button class="step-button">Langkah 3-Persediaan Bilik</button>
+                                <button class="step-button">Langkah 4-Daftar Keluar</button>
+                                <button class="step-button">Langkah 5-Pengesahan</button>
+                            </div>
+                        </div>
+                        <h1 class="mt-3 mb-2">Filter</h1>
+                        <form id="filterForm" th:action="@{/filter-rooms}" method="get">
+                            <select class="form-select filter-select" id="roomType" name="roomType" onchange="handleRoomTypeChange()">
+                                <option selected value="Jenis Bilik">Jenis Bilik</option>
+                                <option th:each="type : ${roomTypes}" th:value="${type}" th:text="${type}" th:selected="${type == selectedRoomType}"></option>
+                            </select>
+                            
+                            <div class="form-group mt-3">
+                                <input type="text" id="datepicker" name="date" class="form-control filter-select" 
+                                    placeholder="Pilih Tarikh" th:value="${selectedDate}" readonly>
+                            </div>
+    
+                            <select class="form-select filter-select mt-3" id="time" name="time">
+                                <option selected value="">Masa</option>
+                                <option value="09:00-10:00" th:selected="${'09:00-10:00' == selectedTime}">09:00 AM</option>
+                                <option value="10:00-11:00" th:selected="${'10:00-11:00' == selectedTime}">10:00 AM</option>
+                                <option value="11:00-12:00" th:selected="${'11:00-12:00' == selectedTime}">11:00 AM</option>
+                                <option value="12:00-13:00" th:selected="${'12:00-13:00' == selectedTime}">12:00 PM</option>
+                                <option value="13:00-14:00" th:selected="${'13:00-14:00' == selectedTime}">01:00 PM</option>
+                                <option value="14:00-15:00" th:selected="${'14:00-15:00' == selectedTime}">02:00 PM</option>
+                                <option value="15:00-16:00" th:selected="${'15:00-16:00' == selectedTime}">03:00 PM</option>
+                                <option value="16:00-17:00" th:selected="${'16:00-17:00' == selectedTime}">04:00 PM</option>
+                            </select>
+    
+                            <button type="submit" class="cari_btn mt-3">Cari</button>
+                        </form>
+                    </div>
+                    <div class="col-md-8 d-flex gap-2 flex-wrap justify-content-between">
+                        <!-- Error message if present -->
+                        <div th:if="${errorMessage}" class="alert alert-danger w-100" role="alert">
+                            <span th:text="${errorMessage}"></span>
+                        </div>
+                        
+                        <!-- Message if no rooms found -->
+                        <div th:if="${rooms.empty}" class="alert alert-info w-100" role="alert">
+                            Tiada bilik tersedia bagi kriteria pilihan anda.
+                        </div>
+                        
+                        <!-- Loop through rooms and display each one dynamically -->
+                        <div th:each="room : ${rooms}" class="card-section" th:attr="data-room-id=${room.id}">
+                            <div th:text="'P' + ${room.id} + ' ' + ${room.labelName}" class="offer-sticker"></div>
+                            <div class="room-card">
+                                <img src="/img/room2.jpg" alt="Room image" />
+                            </div>
+                            <div class="card-body d-flex justify-content-between flex-wrap align-items-center gap-2">
+                                <div>
+                                    <p th:text="'Kapasiti: ' + ${room.capacity} + ' Orang'"></p>
+                                    <p th:text="'Harga: ' + ${room.price} + ' MYR sejam'"></p>
+                                </div>
+                                <button>
+                                    <a th:href="@{'/room-booking-details/' + ${room.id}}" style="text-decoration: none; color: inherit;">TEMPAH</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Store all the booked dates for each room
+            const bookedDatesMap = new Map();
+            
+            // Initialize flatpickr with disabled dates
+            const datepicker = flatpickr("#datepicker", {
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disableMobile: "true",
+                onOpen: function(selectedDates, dateStr, instance) {
+                    updateDisabledDates();
+                }
+            });
+            
+            // Function to update disabled dates based on room and time selection
+            function updateDisabledDates() {
+                const roomTypeSelect = document.getElementById('roomType');
+                const timeSelect = document.getElementById('time');
+                
+                if (roomTypeSelect.value === 'Jenis Bilik') {
+                    datepicker.set('disable', []); // No room selected, no dates disabled
+                    return;
+                }
+                
+                // Get all room cards
+                const roomCards = document.querySelectorAll('.card-section');
+                let selectedRoomIds = [];
+                
+                // Filter rooms based on type
+                roomCards.forEach(card => {
+                    const roomLabel = card.querySelector('.offer-sticker').textContent;
+                    const roomId = card.getAttribute('data-room-id');
+                    
+                    if ((roomTypeSelect.value === 'Bilik Mesyuarat' && roomLabel.includes('Bilik Mesyuarat')) || 
+                        (roomTypeSelect.value === 'Bilik Serbaguna' && roomLabel.includes('Bilik Serbaguna'))) {
+                        selectedRoomIds.push(roomId);
+                    }
+                });
+                
+                // Fetch booked dates for selected rooms
+                Promise.all(selectedRoomIds.map(roomId => {
+                    if (!bookedDatesMap.has(roomId)) {
+                        return fetch(`/api/booked-dates/${roomId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                bookedDatesMap.set(roomId, data);
+                                return data;
+                            })
+                            .catch(error => {
+                                console.error('Error fetching booked dates:', error);
+                                return [];
+                            });
+                    } else {
+                        return Promise.resolve(bookedDatesMap.get(roomId));
+                    }
+                })).then(bookedDatesArrays => {
+                    // Combine all booked dates
+                    const allBookedDates = [];
+                    const selectedTime = timeSelect.value;
+                    
+                    bookedDatesArrays.forEach(datesArray => {
+                        datesArray.forEach(dateInfo => {
+                            // If no time selected, disable all dates that have any booking
+                            if (!selectedTime || dateInfo.time === selectedTime) {
+                                // Create date range
+                                const startDate = new Date(dateInfo.startDate);
+                                const endDate = new Date(dateInfo.endDate);
+                                
+                                // Add all dates in range
+                                const currentDate = new Date(startDate);
+                                while (currentDate <= endDate) {
+                                    allBookedDates.push(new Date(currentDate));
+                                    currentDate.setDate(currentDate.getDate() + 1);
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Update datepicker with disabled dates
+                    datepicker.set('disable', allBookedDates);
+                });
+            }
+            
+            // Event listeners for filter changes
+            document.getElementById('roomType').addEventListener('change', updateDisabledDates);
+            document.getElementById('time').addEventListener('change', updateDisabledDates);
+            
+            // Initial load
+            updateDisabledDates();
+        });
+        
+        // Handle room type change
+        function handleRoomTypeChange() {
+            // Submit the form when room type changes
+            document.getElementById('filterForm').submit();
+        }
+    </script>
+</section>
+
+</body>
+</html>

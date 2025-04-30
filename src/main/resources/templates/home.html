@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:fragment="layout(content)">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet" href="./procurementProposalForm.css">
+<link rel="stylesheet" href="PPK3.0-1.0/css/recommendationf/rf.css">
+<link rel="stylesheet" href="PPK3.0-1.0/css/lmf/lmf.css">
+<link rel="stylesheet" href="PPK3.0-1.0/css/admin/admin.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="PPK3.0-1.0/css/rooms/room-list.css">
+<!--   <link rel="stylesheet" href="/css/rooms/room-booking1.css"> -->
+<!--                               <link rel="stylesheet" href="/css/rooms/room-equipment.css">
+ -->
+
+</head>
+<body>
+<!-- <!-- 	<style>
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
+
+/* Navbar Styling */
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #4CAF50;
+	padding: 10px 20px;
+}
+
+.navbar .logo {
+	color: white;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+.navbar ul li {
+	margin: 0 15px;
+}
+
+.navbar ul li a {
+	text-decoration: none;
+	color: white;
+	font-size: 18px;
+	transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+	color: #d4f5d6;
+}
+
+/* Responsive Menu */
+.menu-toggle {
+	display: none;
+	flex-direction: column;
+	cursor: pointer;
+}
+
+.menu-toggle div {
+	background-color: white;
+	height: 3px;
+	width: 25px;
+	margin: 3px 0;
+}
+
+@media ( max-width : 768px) {
+	.navbar ul {
+		display: none;
+		flex-direction: column;
+		background-color: #4CAF50;
+		width: 100%;
+		position: absolute;
+		top: 60px;
+		left: 0;
+	}
+	.navbar ul.show {
+		display: flex;
+	}
+	.menu-toggle {
+		display: flex;
+	}
+}
+</style>
+</head>
+<body>
+
+<section>
+<div class="navbar">
+    <a href="#" class="logo">Library System</a>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+   
+    
+   <ul id="menu">
+        Show Recommendation Form, Lost Material Form, Membership Registration, Renewal, and Room Booking for users
+        <li >
+            <a href="/user/recommendation-form">Recommendation Form</a>
+        </li>
+        <li >
+            <a href="/user/lost-material-form">Lost Form</a>
+        </li>
+        <li >
+            <a href="/user/membership-registration">Membership Registration</a>
+        </li>
+        <li >
+            <a href="/user/membership-renewal">Membership Renewal</a>
+        </li>
+        <li >
+            <a href="/user/room-booking">Room Booking</a>
+        </li>
+
+        Show Admin Dashboard only for Admin
+        <li th:if="${#authorization.expression('hasRole(\'ROLE_ADMIN\')')}">
+            <a href="/user/admin-dashboard">Admin Dashboard</a>
+        </li>
+    </ul>
+</div>
+
+
+	<script>
+    function toggleMenu() {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('show');
+    }
+</script> --> -->
+</section>
+
+	<div th:replace="${content}"></div>
+
+
+</body>
+</html>

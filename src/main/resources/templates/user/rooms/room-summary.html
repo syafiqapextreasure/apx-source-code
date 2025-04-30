@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">SYARAT-SYARAT TEMPAHAN BILIK MESYUARAT/SERBA GUNA DI PUSAT PEMBELAJARAN KEJIRANAN (PPK)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     <div class="modal-body">
+
+    <ol>
+        <li>Setiap <b>TEMPAHAN</b> adalah hanya pada <b>WAKTU OPERASI PPK.</b></li>
+        <li><b>TIADA</b> bayaran <b>DEPOSIT &amp; TIADA PEMULANGAN BAYARAN</b> tempahan.</li>
+        <li><b>TIADA PEMBATALAN TEMPAHAN</b> tetapi hanya boleh membuat penukaran tarikh pada tahun semasa.</li>
+        <li>Sebarang <b>PEMBATALAN/PERUBAHAN </b> tempahan hendaklah selewat-lewatnya <b>3 HARI SEBELUM TARIKH SEWAAN.</b></li>
+        <li><b>MAKAN &amp; MINUM</b> hanya <b>DIBENARKAN</b> di dalam Bilik Mesyuarat/Serba Guna Sahaja.</li>
+        <li>Pihak <b>PPK BERHAK MENUNDA ATAU MEMBATALKAN PERMOHONAN</b> tuan/puan sekiranya mendapat arahan daripada pihak atasan yang memerlukan kemudahan pada masa dan tarikh yang sama dengan permohonan tuan/puan.</li>
+    </ol>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<!--         <button type="button" class="btn btn-primary">Understood</button>
+ -->      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="singleReservationFrom p-md-5 p-2">
+      <div
+        class="singleReservation_main d-flex flex-column align-items-center justify-content-center"
+      >
+        <h1>BORANG TEMPAHAN BILIK</h1>
+        <div
+          class="row filter_section d-flex justify-content-between flex-wrap gap-md-4 gap-2"
+        >
+          <div class="image-wrapper">
+            <i
+              class="bi bi-house-door"
+              style="font-size: 2rem; color: #fff"
+            ></i>
+          </div>
+          <button class="step-button special-width flex-grow-1" tabindex="0">
+           Langkah 4-Daftar Keluar
+          </button>
+          <!-- <select class="form-select filter-select flex-grow-1" id="roomType">
+            <option selected>Jenis Bilik</option>
+            <option value="1">Bilik Mesyuarat</option>
+            <option value="2">Bilik Serbaguna</option>
+          </select>
+
+          <select
+            class="form-select filter-select flex-grow-1"
+            id="reservationDate"
+          >
+            <option selected>Tarikh</option>
+            <option value="1">08/12/2024</option>
+            <option value="2">09/12/2024</option>
+          </select>
+
+          <select
+            class="form-select filter-select flex-grow-1"
+            id="reservationTime"
+          >
+            <option selected>Masa</option>
+            <option value="1">09:00 AM</option>
+            <option value="2">10:00 AM</option>
+          </select>
+          <div class="w-100 d-flex justify-content-end">
+            <button class="cari_btn">Cari</button>
+          </div> -->
+        </div>
+        <div class="card-section">
+          <div class="offer-sticker" th:text="${room.labelName}">P9 BILIK SERBAGUNA</div>
+          <div class="room-card">
+                                                               <img th:src="@{/img/room2.jpg}" alt="room img" />
+
+          </div>
+          <div
+            class="card-body d-flex justify-content-between flex-wrap align-items-center gap-2"
+          >
+            <div>
+              <p th:text="'Kapasiti: ' + ${room.capacity} + ' Orang'"></p>
+<p th:text="'Harga: ' + ${#numbers.formatDecimal(room.price, 1, 2, 'POINT')} + ' MYR sejam'"></p>
+            </div>
+                     <!-- <button th:onclick="'window.location.href=\'/room-booking/' + ${room.id} + '/book\''">TEMPAH</button> -->
+	
+          </div>
+        </div>
+
+        <div class="form_section_box custome-width mt-5">
+          <h1>TEMPAHAN ANDA</h1>
+          <div class="w-100 billing_receipt">
+            <table style="border-spacing: 0 15px; width: 100%; border-collapse: separate;" class="w-100">
+              <tbody>
+                <tr>
+                  <td th:text="${currentRoom.labelName}">P11 Bilik Mesyurat</td>
+                  <td th:text="${currentRoom.capacity} + ' orang'">2 orang</td>
+<td th:text="${#numbers.formatDecimal(currentRoom.price, 1, 2, 'POINT')} + ' MYR sejam'"></td>
+<td th:text="${#numbers.formatDecimal(currentRoom.price, 1, 2, 'POINT')} + ' MYR'"></td>
+                </tr>
+                <tr>
+                  <td>Tarikh:</td>
+                  <td th:text="${currentBookingDet.startDate}">03-09-2024</td>
+                </tr>
+                <tr>
+                  <td>Daripada kepada:</td>
+                  <td>10:00-11:00</td>
+                </tr>
+                <tr>
+                  <td>Bilangan Kehadiran</td>
+                  <td th:text="${currentBookingDet.attendees}">1</td>
+                </tr>
+                <tr>
+                  <td>Susun atur.</td>
+                  <td  th:text="${#strings.substringAfter(currentRoom.labelName, ' ')}">Bilik Mesyuarat</td>
+         <tr th:each="equipment, iterStat : ${selectedEquip}" th:if="${equipment.selected}">
+        <td th:if="${iterStat.index == 0}">Peralatan:</td>
+        <td th:unless="${iterStat.index == 0}"></td>
+        <td>
+            <span th:text="${equipment.equipmentName}"></span>
+            x
+            <span th:text="${equipment.quantity}"></span>
+        </td>
+        <td th:text="${#numbers.formatDecimal(equipment.price, 1, 2, 'POINT')} + ' MYR Setiap Tempahan'"></td>
+<td th:text="${#numbers.formatDecimal(equipment.price * equipment.quantity, 1, 2, 'POINT')} + ' MYR'"></td>
+
+    </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-5 lower_level">
+            <div>
+              <span>Jumlah kecil:</span>
+<span th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'POINT')} + ' MYR'"></span>
+            </div>
+            <div>
+              <span>Cukal</span>
+              <span>0.00MYR</span>
+            </div>
+            <div>
+              <span>Jumlah</span>
+<span th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'POINT')} + ' MYR'"></span>
+            </div>
+            <div>
+              <span>Deposit</span>
+              <span>0.00MYR</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-form mt-4">
+         <form id="bookingForm" th:action="@{/confirm-booking}" method="post" onsubmit="return validateForm()">
+  <div class="row">
+    <h1>MAKLUMAT PERIBADI</h1>
+    <div class="col-md-8">
+      <div class="row mb-3">
+        <div class="col-md-6 form-group mb-2">
+          <label for="gelaran" class="mb-2">Gelaran<span class="red_mark">*</span></label>
+          <input type="text" class="form-control" id="gelaran" name="title">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="nama" class="mb-2">Nama<span class="red_mark">*</span></label>
+          <input type="text" class="form-control" id="nama" name="name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group mb-2">
+          <label for="noTelefon" class="mb-2">No. Telefon<span class="red_mark">*</span></label>
+          <input type="text" class="form-control" id="noTelefon" name="phoneNumber">
+        </div>
+        <div class="form-group col-md-6 mb-2">
+          <label for="emel" class="mb-2">E-mel<span class="red_mark">*</span></label>
+          <input type="email" class="form-control" id="emel" name="email">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="catatan" class="mb-2">Catatan<span class="red_mark">*</span></label>
+        <textarea class="form-control" id="catatan" rows="4" name="notes"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <h1>ALAMAT PENGEBILAN</h1>
+  <div class="row">
+    <div class="form-group col-md-4 mb-2 mt-1">
+      <label for="namaSyarikat" class="mb-2">Nama Syarikat<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="namaSyarikat" name="companyName">
+    </div>
+    <div class="form-group col-md-4 mt-1 mb-2">
+      <label for="alamat" class="mb-2">Alamat<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="alamat" name="address">
+    </div>
+    <div class="form-group col-md-4 mb-2">
+      <label for="bandar" class="mb-2">Bandar<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="bandar" name="city">
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="form-group col-md-4 mb-2">
+      <label for="negeri" class="mb-2">Negeri<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="negeri" name="state">
+    </div>
+    <div class="form-group col-md-4 mb-2">
+      <label for="poskod" class="mb-2">Poskod<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="poskod" name="postalCode">
+    </div>
+    <div class="form-group col-md-4 mb-2">
+      <label for="negara" class="mb-2">Negara<span class="red_mark">*</span></label>
+      <input type="text" class="form-control" id="negara" name="country">
+    </div>
+  </div>
+
+  <h1>KAEDAH PEMBAYARAN</h1>
+  <div class="form-group mb-2">
+    <label for="kaedahPembayaran" class="mb-2">Kaedah Pembayaran<span class="red_mark">*</span></label>
+    <!--  <input type="text" class="form-control" id="kaedahPembayaran" name="paymentMethod">
+  -->
+  <div class="row px-3">  <select class="col-12 form-select filter-select flex-grow-1" id="kaedahPembayaran" name="paymentMethod">
+    <option selected>Manual</option>
+    <option value="1">FPX</option>
+  </select>
+</div>
+  </div>
+
+  <h1>TERMA DAN SYARAT</h1>
+  <div class="row px-3">
+    <div class="form-check col-md-8 flex-grow-1 mb-2">
+      <input type="checkbox" class="form-check-input mb-2" id="termaSyarat" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+      <label class="form-check-label fw-bold" for="termaSyarat">Saya bersetuju dengan syarat tempahan.</label>
+    </div>
+    <button class="sahkan_btn" type="submit" id="submitButton">SAHKAN</button>
+  </div>
+</form>
+
+
+<!-- Success Message Popup (Hidden initially) -->
+    <div id="successPopup" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Booking Successful</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Your room was booked successfully. Please check your email for more details.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Handle form submission via AJAX
+$(document).ready(function() {
+    $("#bookingForm").submit(function(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        var formData = $(this).serialize(); // Serialize the form data
+
+        console.log("Serialized Form Data:", formData); // Log the form data for debugging
+
+        // Show a loading indicator
+        $("#submitButton").prop("disabled", true).text("Processing...");
+
+        // Send the data via AJAX
+        $.ajax({
+            type: "POST",
+            url: "/confirm-booking", // Endpoint for form submission
+            data: formData,
+            success: function(response) {
+                console.log("Server Response:", response); // Log response for debugging
+                
+                // Always show success for now, since our controller always redirects
+                $("#successPopup").modal('show');
+                
+                // Reset button
+                $("#submitButton").prop("disabled", false).text("SAHKAN");
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors here
+                console.error("Error:", xhr.responseText);
+                
+                // Show error message
+                alert("An error occurred: " + xhr.responseText);
+                
+                // Reset button
+                $("#submitButton").prop("disabled", false).text("SAHKAN");
+            }
+        });
+    });
+});
+
+function validateForm() {
+  const requiredFields = [
+    'gelaran', 'nama', 'noTelefon', 'emel', 'catatan', 'namaSyarikat', 'alamat', 
+    'bandar', 'negeri', 'poskod', 'negara', 'kaedahPembayaran'
+  ];
+
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = document.getElementById(requiredFields[i]);
+    if (!field.value.trim()) {
+      alert('Please fill in all required fields');
+      return false;
+    }
+  }
+
+  const checkbox = document.getElementById('termaSyarat');
+  if (!checkbox.checked) {
+    alert('You must agree to the terms and conditions');
+    return false;
+  }
+
+  return true; // Continue with form submission
+}
+</script>
+
+        </div>
+        
+
+        <!-- <div class="details-form mt-4">
+          <form>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row mb-3">
+                  <div class="col-md-6 form-group">
+                    <label for="exampleInputEmail1">Gelaran<span class="red_mark">*</span></label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">Nama<span class="red_mark">*</span></label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label for="exampleInputEmail1">No. Telefon *</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">E-mel<span class="red_mark">*</span></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Catatan<span class="red_mark">*</span></label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+            <h1>ALAMAT PENGEBILAN</h1>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="exampleInputEmail1">Nama Syarikat<span class="red_mark">*</span></label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Alamat<span class="red_mark">*</span></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Bandar<span class="red_mark">*</span></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="exampleInputEmail1">Negeri<span class="red_mark">*</span></label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Poskod<span class="red_mark">*</span></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Negara<span class="red_mark">*</span></label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+            </div>
+            <h1>KAEDAH PEMBAYARAN</h1>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Kaedah Pembayaran<span class="red_mark">*</span></label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <h1>TERMA DAN SYARAT</h1>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Saya bersetuju dengan syarat tempahan.</label>
+            </div>
+          </form>
+        </div> -->
+      </div>
+    </div>
+
+  
+  
+  <style>
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Base styles for all devices */
+.singleReservationFrom {
+    width: 100%;
+    height: fit-content;
+    padding: 3rem 3rem;
+}
+a
+.singleReservation_main {
+    box-shadow: var(--box-shadow);
+    padding: 2rem 0rem;
+    border-radius: 6px;
+}
+
+.singleReservation_main h1 {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+}
+
+.filter_section {
+    box-shadow: var(--box-shadow);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    width: 80%;
+}
+
+.image-wrapper {
+    background-color: #000000;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-button {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    border-color: transparent;
+    color: white;
+    background-color: rgb(87 134 190);
+    width: 150px;
+    border-radius: 8px;
+}
+
+.filter-select {
+    width: 150px;
+}
+
+.cari_btn {
+    width: fit-content;
+    padding: 3px 20px;
+    border-radius: 8px;
+    background-color: rgb(12 33 51);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.card-section {
+    width: 80%;
+    height: fit-content;
+}
+
+.room-card {
+    width: 100%;
+    height: 400px;
+    height: fit-content;
+}
+
+.room-card img {
+    width: 100%;
+    height: 300px;
+}
+
+.card-body {
+    color: #fff;
+    padding: 1rem 2rem;
+    width: 100%;
+    background-color: rgb(14 20 42);
+}
+
+.card-body p {
+    margin: 0;
+}
+
+.card-body button {
+    background-color: rgb(209 22 13);
+    padding: 6px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 400;
+    border: unset;
+}
+
+.offer-sticker {
+    width: fit-content;
+    padding: 8px 16px;
+    background-color: rgb(254 239 2);
+    position: relative;
+    left: 40%;
+    top: 40px;
+}
+
+.custome-width {
+    width: 80%;
+}
+
+.form_section_box {
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+    padding: 2rem 2rem;
+    overflow-x: auto;
+}
+
+.table-borderless {
+    min-width: 700px;
+}
+
+.form_section_box h1 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-check-input:checked {
+    background-color: rgb(69 69 69) !important;
+    border-color: rgb(69 69 69) !important;
+}
+
+.button_wrapper {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button_wrapper button {
+    width: fit-content;
+    padding: 6px 16px;
+    border-radius: 8px;
+    background-color: rgb(27 37 55);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.billing_receipt table tr>td:nth-child(2) {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.billing_receipt table tr>td:nth-child(4) {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.billing_receipt {
+    overflow-x: auto;
+    padding: 16px 0;
+    font-size: 16px;
+}
+
+.billing_receipt>table {
+    padding: 10px 0;
+    min-width: 991px;
+}
+
+.lower_level>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lower_level>div>span:last-child {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.details-form {
+    box-shadow: var(--box-shadow);
+    padding: 1rem 1rem;
+    width: 80%;
+    height: fit-content;
+}
+
+.details-form h1 {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    margin: 24px 0px 12px 0px;
+}
+
+.red_mark {
+    color: red;
+    font-size: 16px;
+    margin: 0px 2px;
+}
+
+textarea {
+    resize: none;
+}
+
+.sahkan_btn {
+    background-color: rgb(33 36 53);
+    border-radius: 4px;
+    padding: 4px 16px;
+    width: fit-content;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Responsive styles for tablets (768px to 991px) */
+@media screen and (max-width: 991px) {
+    .singleReservationFrom {
+        padding: 2rem 2rem; /* Reduce padding for tablets */
+    }
+
+    .filter_section {
+        width: 90%; /* Adjust width for tablets */
+    }
+
+    .card-section {
+        width: 90%; /* Adjust width for tablets */
+    }
+
+    .custome-width {
+        width: 90%; /* Adjust width for tablets */
+    }
+
+    .details-form {
+        width: 90%; /* Adjust width for tablets */
+    }
+
+    .step-button {
+        width: 120px; /* Adjust button width for tablets */
+    }
+
+    .filter-select {
+        width: 120px; /* Adjust select width for tablets */
+    }
+
+    .room-card img {
+        height: 250px; /* Adjust image height for tablets */
+    }
+}
+
+/* Responsive styles for mobile devices (up to 767px) */
+@media screen and (max-width: 767px) {
+    .singleReservationFrom {
+        padding: 1rem; /* Further reduce padding for mobile */
+    }
+
+    .filter_section {
+        width: 100%; /* Full width for mobile */
+        padding: 1rem; /* Reduce padding for mobile */
+    }
+
+    .card-section {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .custome-width {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .details-form {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .step-button {
+        width: 100px; /* Adjust button width for mobile */
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .filter-select {
+        width: 100px; /* Adjust select width for mobile */
+    }
+
+    .room-card img {
+        height: 200px; /* Adjust image height for mobile */
+    }
+
+    .offer-sticker {
+        left: 30%; /* Adjust position for mobile */
+        top: 30px; /* Adjust position for mobile */
+    }
+
+    .form_section_box {
+        padding: 1rem; /* Reduce padding for mobile */
+    }
+
+    .form_section_box h1 {
+        font-size: 16px; /* Smaller font size for mobile */
+    }
+
+    .button_wrapper button {
+        font-size: 14px; /* Smaller font size for mobile */
+        padding: 4px 12px; /* Adjust padding for mobile */
+    }
+
+    .details-form h1 {
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .sahkan_btn {
+        font-size: 14px; /* Smaller font size for mobile */
+        padding: 3px 12px; /* Adjust padding for mobile */
+    }
+}
+
+/* Responsive styles for very small mobile devices (up to 480px) */
+@media screen and (max-width: 480px) {
+    .singleReservationFrom {
+        padding: 0.5rem; /* Minimal padding for very small devices */
+    }
+
+    .filter_section {
+        padding: 0.5rem; /* Minimal padding for very small devices */
+    }
+
+    .step-button {
+        width: 80px; /* Very small button width for very small devices */
+        font-size: 12px; /* Very small font size for very small devices */
+    }
+
+    .filter-select {
+        width: 80px; /* Very small select width for very small devices */
+    }
+
+    .room-card img {
+        height: 150px; /* Very small image height for very small devices */
+    }
+
+    .offer-sticker {
+        left: 20%; /* Adjust position for very small devices */
+        top: 20px; /* Adjust position for very small devices */
+    }
+
+    .form_section_box {
+        padding: 0.5rem; /* Minimal padding for very small devices */
+    }
+
+    .form_section_box h1 {
+        font-size: 14px; /* Very small font size for very small devices */
+    }
+
+ .button_wrapper {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    }
+
+    .button_wrapper button {
+        font-size: 14px; /* Very small font size for very small devices */
+        padding: 4px 12px; /* Minimal padding for very small devices */
+    }
+
+    .details-form h1 {
+        font-size: 12px; /* Very small font size for very small devices */
+    }
+
+    .sahkan_btn {
+        font-size: 12px; /* Very small font size for very small devices */
+        padding: 2px 8px; /* Minimal padding for very small devices */
+    }
+}
+  </style>
+</section>
+</body>
+</html>

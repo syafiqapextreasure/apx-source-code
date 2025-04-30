@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+
+		  <section>
+        <div class="container mt-5 p-5">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+                        <div class="card-header text-center">
+                            <h3 class="fs-4">Library System Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <div th:if="${param.error}" class="alert alert-danger text-center">
+                                <p th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
+                                    Invalid login attempt.
+                                </p>
+                            </div>
+                            <form action="/login" method="post">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Library ID or Email</label>
+                                    <input
+                                        id="username"
+                                        required
+                                        class="form-control"
+                                        name="username"
+                                        type="email"
+                                        placeholder="Enter your registered email"
+                                    >
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input
+                                        id="password"
+                                        required
+                                        class="form-control"
+                                        name="password"
+                                        type="password"
+                                        placeholder="Enter your password"
+                                    >
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <a href="/forgot-password" class="text-decoration-none">Forgot Password?</a><br>
+                            Don't have an account? 
+                            <a href="/register" class="text-decoration-none">Create One</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	</section>
+</body>
+</html>

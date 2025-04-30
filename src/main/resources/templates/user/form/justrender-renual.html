@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html> 
+<body>
+    <form th:action="@{/membership-renewal-service}" method="POST" id="myForm">
+        <input type="hidden" name="username" id="username" /> 
+ 
+    </form>
+
+    <script type="text/javascript"> 
+    window.addEventListener("load", () => {  
+        	       const iframeElement = window.frameElement; // Reference to the iframe
+        	          const parentName = iframeElement.getAttribute("name");
+        	        var loginuser=parentName.split(",")[0];
+        	          document.getElementById("username").value=loginuser;//"sysadmin"; 
+        	        document.getElementById('myForm').submit(); 
+        	        // Submit the form on page load
+        	    })
+           
+      
+    </script>
+</body>
+</html>

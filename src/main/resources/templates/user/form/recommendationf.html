@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>MATERIAL PROCUREMENT PROPOSAL FORM</title>
+</head>
+<body>
+	<section>
+		<!-- SweetAlert2 CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+		<!-- Error Message -->
+		<div th:if="${errorMessage}" style="color: red;">
+			<p th:text="${errorMessage}"></p>
+		</div>
+		<style>
+/* Popup styling */
+.popup {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	display: none;
+	z-index: 1000;
+}
+
+.popup.success {
+	border: 2px solid green;
+}
+
+.popup.error {
+	border: 2px solid red;
+}
+
+.popup.show {
+	display: block;
+}
+</style>
+
+		<div class="materialProcurementProposalForm">
+
+			<h1>BORANG CADANGAN PEROLEHAN BAHAN</h1>
+
+			<div class="form_wrapper">
+				<div class="mt-3 ps-md-5">
+					<form id="recommendationForm" th:action="@{/save}" method="post"
+						onsubmit="event.preventDefault(); checkAlertMessages();">
+						<input type="hidden" name="messageRespon" id="messageResponse"
+							th:value='${successMessage}' />
+						<div
+							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="name">Nama:</label> <input type="text" name="nama"
+									class="form-control mt-2" id="name" />
+							</div>
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="email">Email:<span class="cus-red">*</span></label>
+								<input type="email" name="email" class="form-control mt-2"
+									required="required" id="email" />
+							</div>
+						</div>
+						<div
+							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+							<div class="form-group col-md-12 flex-grow-1">
+								<label for="title">Judul:</label> <input type="text"
+									name="title" class="form-control mt-2" id="title" />
+							</div>
+						</div>
+						<div
+							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="subject">Subjek:</label> <input type="text"
+									name="subjek" class="form-control mt-2" id="subject" />
+							</div>
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="isbn">ISBN:</label> <input type="text" name="isbn"
+									class="form-control mt-2" id="isbn" />
+							</div>
+						</div>
+						<div class="row d-flex justify-content-between gap-2 mb-3">
+							<div class="form-group col-md-12 flex-grow-1">
+								<label for="author">Pengarang:</label> <input type="text"
+									name="author" class="form-control mt-2" id="author" />
+							</div>
+							<div class="form-group col-md-12 flex-grow-1">
+								<label for="publisher" class="mb-2">Penerbit:</label> <input
+									type="text" name="penerbit" class="form-control" id="publisher" />
+							</div>
+						</div>
+						<div
+							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="edition">Edisi:</label> <input type="text"
+									name="edisi" class="form-control mt-2" id="edition" />
+							</div>
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="copies">Bil. Salinan:<span class="cus-red">*</span></label>
+								<input type="number" name="bilSalinan" class="form-control mt-2"
+									id="copies" required="required" />
+							</div>
+						</div>
+						<div
+							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="materialType">Jenis Bahan:<span
+									class="cus-red">*</span></label> <input type="text" name="jenisBahan"
+									class="form-control mt-2" required="required" id="materialType" />
+							</div>
+							<div class="form-group col-md-5 flex-grow-1">
+								<label for="sets">Bil. Set</label> <input type="number"
+									name="bilSet" class="form-control mt-2" id="sets" />
+							</div>
+						</div>
+
+						<div class="daftar_btn d-flex gap-4 justify-content-end mt-4">
+							<button type="submit">Hantar</button>
+						</div>
+					</form>
+
+					<div id="successMessage" th:if="${successMessage}"
+						th:text="${successMessage}" style="display: none;"></div>
+					<div id="errorMessage" th:if="${errorMessage}"
+						th:text="${errorMessage}" style="display: none;"></div>
+
+				</div>
+				<script>
+				var messageResponse=document.getElementById("messageResponse").value;
+					if (messageResponse
+							&& messageResponse!== "") {
+						showSuccessAlert(messageResponse);
+						document.getElementById("messageResponse").value=""
+					}
+					function checkAlertMessages() {
+						let successMessage = document
+								.getElementById("successMessage");
+						let errorMessage = document
+								.getElementById("errorMessage");
+
+						if (successMessage
+								&& successMessage.innerText.trim() !== "") {
+							showSuccessAlert(successMessage.innerText);
+						} else if (errorMessage
+								&& errorMessage.innerText.trim() !== "") {
+							showErrorAlert(errorMessage.innerText);
+						} else {
+							document.getElementById("recommendationForm")
+									.submit();
+						}
+					}
+
+					function showSuccessAlert(message) {
+						 Swal.fire({
+							title : 'Success!',
+							text : message,
+							icon : 'success',
+							confirmButtonText : 'OK'
+						}).then((result) => {
+				            // Optional: If you want to redirect or perform an action after closing the alert, you can add it here
+				            if (result.isConfirmed) {
+				             
+				              window.location.href = '/eforms/recommendation-form'; 
+				            }
+				        });
+					}
+
+					function showErrorAlert(message) {
+						alert(message);
+					}
+				</script>
+	</section>
+</body>
+</html>

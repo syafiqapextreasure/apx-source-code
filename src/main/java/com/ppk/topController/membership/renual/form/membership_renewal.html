@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+<div class="renewalForm_container">
+  <h1>BORANG PEMBAHARUAN KEAHLIAN</h1>
+  <div class="form-wrapper ps-md-5 ps-4 pt-5 pb-4 pe-4 mt-3">
+    <div class="row">
+      <!-- Profile Icon -->
+      <div class="col-md-2 d-flex justify-content-center align-items-start">
+        <img
+          src="https://via.placeholder.com/80"
+          alt="Profile Icon"
+          class="rounded-circle"
+        />
+      </div>
+      <!-- Form Section -->
+      <div class="col-md-10">
+        <form>
+          <div class="mb-3 row">
+            <label for="idPengguna" class="col-sm-2 col-form-label"
+              >ID Pengguna:</label
+            >
+            <div class="col-sm-6 flex-grow-1">
+              <input type="text" class="form-control" id="idPengguna" />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="alamat" class="col-sm-2 col-form-label">Alamat:</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" id="alamat" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="mb-2 row mt-3">
+            <label for="tarikhDidaftarkan" class="col-md-2 col-form-label"
+              >Tarikh Didaftarkan:</label
+            >
+            <div class="col-md-4 mb-2">
+              <input type="date" class="form-control" id="tarikhDidaftarkan" />
+            </div>
+            <label
+              for="tarikhTamat"
+              class="col-md-2 pt-0 col-form-label text-md-end mt-2 mt-md-0"
+            >
+              <span class="d-md-block">Tarikh Tamat</span>
+              <span class="d-md-block">Keahlian:</span></label
+            >
+            <div class="col-md-3 flex-grow-1">
+              <input type="date" class="form-control" id="tarikhTamat" />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="noTelefon" class="col-md-2 col-form-label"
+              >No Telefon:</label
+            >
+            <div class="col-md-4">
+              <input type="email" class="form-control" id="noTelefon" />
+            </div>
+            <label for="emel" class="col-md-2 col-form-label text-md-end"
+              >Emel:</label
+            >
+            <div class="col-md-4">
+              <input type="email" class="form-control" id="emel" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">Maklumat Ahli</div>
+    </div>
+    <div class="mt-5 ps-md-5">
+      <form>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="bilanganpinjaman">Bilangan Pinjaman:</label>
+            <input
+              type="text"
+              class="form-control mt-2"
+              id="bilanganpinjaman"
+            />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="tarikhPinjaman">Tarikh Pinjaman Terakhir:</label>
+            <input type="date" class="form-control mt-2" id="tarikhPinjaman" />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="bahanLewat">Bahan Lewat Pulang:</label>
+            <input type="text" class="form-control mt-2" id="bahanLewat" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="tarikhPemulangan">Tarikh Pemulangan Terakhir:</label>
+            <input
+              type="date"
+              class="form-control mt-2"
+              id="tarikhPemulangan"
+            />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup31">Bilangan Bahan Hilang:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup31" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup32">Tarikh Pembaharuan Terakhir:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup32" />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup41">Bilangan Penggantungan:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup41" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup42">Jumlah Tertunggak:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup42" />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup51">Bahan Pinjaman Tahun Ini:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup51" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup52">Jumlah Bayaran:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup52" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">
+        Maklumat Peribadi
+      </div>
+    </div>
+    <div class="mt-5 ps-md-5">
+      <form>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup11">ID Kumpulan:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup11" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup12">Jabatan:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup12" />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup61">Status:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup61" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup62">Kategori:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup62" />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup81">Tarikh Lahir:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup81" />
+          </div>
+          <div class="form-group col-md-5 flex-grow-1">
+            <label for="inputgroup82">Jantina:</label>
+            <input type="text" class="form-control mt-2" id="inputgroup82" />
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">
+        Maklumat Pembayaran
+      </div>
+    </div>
+    <form class="mb-3 table_form">
+      <fieldset id="fieldset-design">
+        <div class="row px-4">
+          <div class="col-md-12 mt-2">
+            <div class="table_responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Pilih</th>
+                    <th scope="col">ID Pengguna</th>
+                    <th scope="col">Hubungan</th>
+                    <th scope="col">Status OKU</th>
+                    <th scope="col">Harga (RM)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck1"
+                      />
+                    </td>
+                    <td>02121000993</td>
+                    <td>Anak</td>
+                    <td>Tidak</td>
+                    <td>16</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck2"
+                      />
+                    </td>
+                    <td>98900292892</td>
+                    <td>Anak</td>
+                    <td>Ya</td>
+                    <td>6</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <p class="mt-3">Jumlah Harga: RM XX</p>
+              </div>
+              <div class="col-md-12">
+                <label for="lokasiPPK" class="form-label mb-2"
+                  >Kaedah Pembayaran:</label
+                >
+                <select class="form-select" id="lokasiPPK">
+                  <option selected></option>
+                  <option value="1">Lokasi 1</option>
+                  <option value="2">Lokasi 2</option>
+                  <option value="3">Lokasi 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="daftar_btn d-flex gap-4 justify-content-end mt-4">
+      <button>Perbaharui Keahlian</button>
+    </div>
+  </div>
+</div>
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.renewalForm_container{
+    width: 100%;
+    height: fit-content;
+    padding: 2rem 4rem;
+}
+
+.renewalForm_container > div.form-wrapper{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.renewalForm_container h1{
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.form_heading{
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(126 126 126);
+    padding: 6px 20px;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+textarea{
+    resize: none !important;
+}
+
+.table_form{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 2rem 3rem;
+    border-radius: 6px;
+}
+
+.daftar_btn > button{
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+}
+
+.daftar_btn > button:first-child{
+    background-color: rgb(32 78 59);
+    color: #FFF;
+}
+
+.daftar_btn > button:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media screen and (max-width:991px) {
+    .table_responsive{
+        overflow-x: auto;
+    }
+}
+
+</style>
+</section>
+</body>
+</html>

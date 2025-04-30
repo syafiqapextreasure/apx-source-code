@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet" href="./procurementProposalForm.css">
+<link rel="stylesheet" href="/css/recommendationf/rf.css">
+<link rel="stylesheet" href="/css/lmf/lmf.css">
+<link rel="stylesheet" href="/css/admin/admin.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="/css/rooms/room-list.css">
+<!--   <link rel="stylesheet" href="/css/rooms/room-booking1.css"> -->
+<!--                               <link rel="stylesheet" href="/css/rooms/room-equipment.css">
+ -->
+
+</head>
+<body>
+	<section>
+	
+	<style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #333;
+        }
+
+        .error-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-container h1 {
+            font-size: 48px;
+            color: #e74c3c;
+        }
+
+        .error-container p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .details-item {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .retry-btn {
+            padding: 10px 25px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 25px;
+        }
+
+        .retry-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="error-container">
+        <h1>Error Occurred</h1>
+        <p>We are sorry, but something went wrong.</p>
+        
+        <div class="details-item">
+            <strong>Exception Type:</strong> <span th:text="${exception}"></span>
+        </div>
+        <div class="details-item">
+            <strong>Error Message:</strong> <span th:text="${errorMessage}"></span>
+        </div>
+        <div class="details-item">
+            <strong>Time of Error:</strong> <span th:text="${currentTime}"></span>
+        </div>
+
+        <a href="/" class="retry-btn">Back to Home</a>
+    </div>
+	
+	
+
+</section>
+
+
+
+</body>
+</html>
