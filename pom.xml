@@ -116,6 +116,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>pfxp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

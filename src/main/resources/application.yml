@@ -14,12 +14,13 @@ spring:
       password: admin123
       roles: ADMIN
   datasource:
-    url: jdbc:h2:file:./data/fpxdb
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://10.32.0.43:3306/wilmuppkp
+    username: ilmuweb
+    password: ilmuweb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
  
 
 payment:

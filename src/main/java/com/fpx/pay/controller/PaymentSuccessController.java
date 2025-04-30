@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,7 @@ public class PaymentSuccessController {
             @RequestParam(required = false) String amount,
             @RequestParam(required = false) String txnTime,
             @RequestParam(required = false) String status,
-            Model model) {
+            Model model, HttpServletRequest request) {
         
         model.addAttribute("txnId", txnId);
         model.addAttribute("orderNo", orderNo);
@@ -32,8 +35,18 @@ public class PaymentSuccessController {
         model.addAttribute("txnTime", txnTime);
         model.addAttribute("status", status != null ? status : "SUCCESS");
         int nextIndex = getNextCount();
-      boolean  bSuccessful =  insertRETRXN(nextIndex, null, amount, "test_123456",
-				"" + "_ADMIN", txnTime, orderNo,txnId);
+       String userId="";
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println(cookie.getName() + ": " + cookie.getValue());
+                if (cookie.getName().equals("patronId")) {
+                	userId= cookie.getValue();
+                }
+            }
+        }
+      boolean  bSuccessful =  insertRETRXN(nextIndex, null, amount, userId,
+    		  userId + "_ADMIN", txnTime, orderNo,txnId);
         return "payment-success";
     }
     public static String getTodaySystemDate() {
