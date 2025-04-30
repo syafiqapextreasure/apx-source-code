@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /pfxp
+
+spring:
+  application:
+    name: fpx-pay
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin
+      password: admin123
+      roles: ADMIN
+  datasource:
+    url: jdbc:h2:file:./data/fpxdb
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+ 
+
+payment:
+  token:
+    expiry-hours: 1
+  paynet:
+    api-url: https://fpxuat.ppj.gov.my
+    api-key: VEcybXJ5OG5tVmNMdzhlY1RJRnJFVVo3eHk1TDE2V05uQzRpRDA2bw==
+    #seller-id: ${PAYNET_SELLER_ID}
+    #seller-bank-code: ${PAYNET_SELLER_BANK_CODE}
+  notification:
+    retry-attempts: 3
+    retry-delay-seconds: 60
+logging:
+  level:
+    root: INFO
+    com.fpx.pay: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+  file:
+   # name: ${catalina.home}/logs/fpx-pay.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
