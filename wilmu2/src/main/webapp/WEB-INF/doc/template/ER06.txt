@@ -1,0 +1,118 @@
+BEGIN ARRAY LATEITEMS
+    TITLE
+    ACCNO
+    CALLNO
+    DUEDATE
+    DUETIME
+    BORROWDATE
+    BORROWTIME
+    LATEBY
+    FINES
+    REMARK
+    LCOST
+    LOCATION
+    BRANCH
+    LOCATIONDESC
+    BRANCHDESC
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYTOWN
+    LIBRARYPOSTCODE
+    BRANCHNAME
+    BRANCHADD1
+    BRANCHADD2
+    BRANCHADD3
+    BRANCHTOWN
+    BRANCHPOSTCODE
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    OFFICERNAME
+    DESIGNATION
+    PATRONNAME
+    PATRONADD1
+    PATRONADD2
+    PATRONADD3
+    PATRONID
+    HOMETEL
+    OFFTEL
+    DEPTCODE
+    DEPARTMENTDESC
+    POSTCODE
+    TOWN
+    COURSE
+END VARIABLE
+
+BEGIN TEXT
+[marginleft=0.5"]
+[marginright=0.5"]
+[fontname=Tahoma]
+[fontsize=8]
+[charset=178]
+[n][n][n][n]
+[n][b][boxc 0" 7"]MEMO[\box]
+[n][boxc 0" 7"]PERPUSTAKAAN POLITEKNIK IBRAHIM SULTAN[\box][b]
+[n]
+[n]___________________________________________________________________________________________________________________[n]
+[n][box 0.00" 1.00"]Kepada[\box][box 1.10" 2.50"]:<PATRONNAME>[\box][n]
+[n][box 0.00" 1.00"]Daripada[\box][box 1.10" 2.50"]:Pustakawan[\box][n]
+[n][box 0.00" 1.00"]Rujukan[\box][box 1.10" 2.50"]:PIS/LIB/14 JLD 1 (    )[\box][n]
+[n][box 0.00" 1.00"]Tarikh[\box][box 1.10" 2.50"]:<LETTERDATE>[\box][n]
+[n]___________________________________________________________________________________________________________________[n]
+[n]
+[n]Tuan / Puan,
+[n]
+[n]
+[n][b]NOTIS LAMPAU TEMPOH (PERINGATAN KETIGA)[b]
+[n]
+[n]Adalah saya dengan segala hormatnya merujuk kepada perkara tersebut di atas memo kami PIS/LIB/14 JLD (     ) bertarikh                         dan PIS/LIB/14 JLD (     ) bertarikh                            adalah berkaitan.
+[n]
+[n]2.        Berdasarkan rekod peminjaman perpustakaan bertarikh                   , buku yang disenaraikan di bawah ini telah lampau tempoh pinjaman dan masih berada dalam simpanan tuan / puan.
+[n]
+[n]
+[n][ul][b] 
+[box 0.00" 2.50"]Tajuk[\box]
+[box 2.60" 1.20"]No. Panggilan[\box]
+[box 3.90" 0.70"]No. Aksesyen[\box]
+[box 4.70" 0.65"]Rekod Peminjaman[\box]
+[boxr 6.20" 0.50"]Tempoh Lewat/Denda[\box][b][ul]
+[n]{LATEITEMS}
+[n] 
+[box 0.00" 2.50"]<TITLE>[\box]
+[box 2.60" 1.20"]<CALLNO>[\box]
+[box 3.90" 0.70"]<ACCNO>[\box]
+[box 4.70" 0.65"]<BORROWDATE>-<DUEDATE>[\box]
+[boxr 5.99" 0.50"]<LATEBY>/RM <FINES>[\box]
+{LOOP}
+[n]
+[n]3.        Pihak perpustakaan memohon kerjasama tuan/puan untuk memulangkan buku-buku tersebut dalam kadar segera.
+[n]
+[n]4.        Kerjasama yang diberikan dalam hal ini, kami dahului dengan ucapan terima kasih. 
+[n]
+[n]
+[n]Sekian.
+[n]
+[n]
+[n]
+[n][b]"BERKHIDMAT UNTUK NEGARA"[b]
+[n][b]"BANGSA MEMBACA BANGSA BERJAYA[b]
+[n]
+[n]Saya yang menurut perintah,
+[n]
+[n]
+[n][b]<OFFICERNAME>[b]
+[n][b]<DESIGNATION>[b]
+[n][b]Politeknik Ibrahim Sultan[b]
+[n]b.p: Pengarah
+[n]Politeknik Ibrahim Sultan
+[n]
+[n]
+[n]
+[n][b]DOKUMEN INI ADALAH CETAKAN KOMPUTER DAN TIDAK MEMERLUKAN TANDATANGAN[b]
+[n]
+END TEXT

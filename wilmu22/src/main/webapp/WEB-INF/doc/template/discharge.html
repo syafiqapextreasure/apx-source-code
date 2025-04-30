@@ -1,0 +1,195 @@
+<!-- 
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    SLIPHEADER
+    DATETIME
+    ACCESSIONNOHEADER
+    TITLEHEADER
+    PATRONID
+    PATRONBARCODEVALUE
+    PNAME
+    PATRONNAME
+    PADDRESS
+    ADDR1
+    ADDR2
+    ADDR3
+    OFFICERID
+    OFFICERNAME
+    COMPUTERNAME
+    THANKYOU
+    MEMEXPIRYDATE
+END VARIABLE
+
+BEGIN ARRAY ITEMS
+    DISCHARGEDATE
+    DISCHARGETIME
+    ACCNO
+    TITLE
+    CDATE
+    RDATE
+    DDATE
+    LATEBY
+    FINES
+END ARRAY
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	/* @page{size:auto; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;} */
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           /* font-size: 10pt !important; */
+		           font-family: "Times New Roman";
+		           text-rendering: optimizeLegibility;
+			  }
+			  
+	}
+		
+	@media print and (color) {
+		* {
+		      -webkit-print-color-adjust: exact !important;;
+		      print-color-adjust: exact !important;;
+		      -webkit-font-smoothing: antialiased;
+			  -moz-osx-font-smoothing: grayscale;
+		   }
+	}
+	
+	  body {
+	  	width: 3.87in;
+	  	height:auto;
+		/* font-size: 10pt !important;; */
+		font-family: "Times New Roman";
+		/* margin-left: 0.50in;  */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		width: 60mm;
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	/* font-size: 10pt !important;; */
+		font-family: "Times New Roman"; 
+		text-rendering: optimizeLegibility;
+	}
+	
+	</style>
+	</head>
+	<body>
+
+	<br/>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYNAME)</b></div><br>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYADD1)</b></div><br>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYADD2)</b></div><br>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYADD3)</b></div><br>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYPOSTCODE)</b></div><br>
+	<br>
+	<div class="ta-center" style="left:0.0in;width:2.25in">(SLIPHEADER)</div><br/>
+	<br>
+	
+	<div class="ta-left">---------------------------------------------------------</div><br/>
+	<div class="ta-left" style="margin-left:0.0in;width:1.95in">(DATETIME)</div><br/>
+	<div class="ta-left" style="margin-left:0.0in;width:1.00in">(ACCESSIONNOHEADER)</div><br/>
+	<div class="ta-left" style="margin-left:0.0in;width:1.95in">(TITLEHEADER)</div><br/>
+	<div class="ta-left">---------------------------------------------------------</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.95in">(DISCHARGEDATE)(DISCHARGETIME)</div><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.25in">(ACCNO)</div><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:2.25in">(TITLE)</div><br><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(CHARGEDDT)</div>
+	{LOOP}<div class="table" style="margin-left:1.0in;width:0.30in">:</div>
+	{LOOP}<div class="table" style="margin-left:1.30in;width:1.00in">(CDATE)</div><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(DUEDT)</div>
+	{LOOP}<div class="table" style="margin-left:1.0in;width:0.30in">:</div>
+	{LOOP}<div class="table" style="margin-left:1.30in;width:1.00in">(DDATE)</div><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(LATE)</div>
+	{LOOP}<div class="table" style="margin-left:1.0in;width:0.30in">:</div>
+	{LOOP}<div class="table" style="margin-left:1.30in;width:1.00in">(LATEBY)</div><br>
+	{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(FINESHEADER)</div>
+	{LOOP}<div class="table" style="margin-left:1.0in;width:0.30in">:</div>
+	{LOOP}<div class="table" style="margin-left:1.30in;width:1.00in">(FINES)</div><br><br>
+	{END LOOP}
+	
+	<div class="ta-left">---------------------------------------------------------</div><br/>
+
+	
+	<div class="ta-left" style="margin-left:0.0in;width:0.30in">ID </div>
+	<div class="ta-left" style="margin-left:0.3in;width:0.30in">: </div>
+	<div class="ta-left" style="margin-left:0.60in;width:0.70in">(PATRONID)</div><br/>
+	<div class="ta-left" style="margin-left:0.0in;width:0.30in">(PNAME)</div>
+	<div class="ta-left" style="margin-left:0.3in;width:0.30in">: </div>
+	<div class="ta-left" style="margin-left:0.60in;width:1.50in">(PATRONNAME)</div><br/><br/>
+	<div class="ta-left" style="margin-left:0.0in;width:0.30in">(PADDRESS)</div>
+	<div class="ta-left" style="margin-left:0.3in;width:0.30in">: </div>
+	<div class="ta-left" style="margin-left:0.60in;width:1.50in"> (ADDR1)</div><br/><br>
+	<div class="ta-left" style="margin-left:0.60in;width:1.50in"> (ADDR2)</div><br/>
+	<div class="ta-left" style="margin-left:0.60in;width:1.50in"> (ADDR3)</div><br/>
+	<br>
+	
+	<div class="ta-left">OFFICER :</div>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERID),</div><br/>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERNAME)</div><br/><br/>
+	<div class="ta-left">COMPUTER : (COMPUTERNAME)</div><br/><br/>
+	
+	<div class="ta-center" style="margin-left:0.0in;width:2.25in">(THANKYOU)</div><br/>
+
+
+	</body>
+	</html>

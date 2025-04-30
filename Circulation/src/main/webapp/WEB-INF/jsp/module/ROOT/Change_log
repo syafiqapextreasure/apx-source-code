@@ -1,0 +1,14 @@
+Circulation 2019.1.01
+Changes made: 
+- Don't allow to charge if charge date and due date is same
+- Add URL and library number
+- Retain patron details value even if there is error
+- Change from E to I to exclude holidays
+
+01_Charging 2023.12.20
+Change made:
+- Exclusive : Count all holiday including weekend.
+- Inclusive : Skip all holiday including weekend.
+- Charge have a loading indicator when it is getting data and charging.
+- Connection have been fixed.
+- Some function in JavaScript have been clean up but still retain some of the flow since it is working.

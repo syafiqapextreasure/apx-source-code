@@ -1,0 +1,90 @@
+/////*******************************/////
+
+/////////////////////////////////2020.1.01//////////////////////////////////////
+
+//new setup db
+
+ INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CII0007','AALM0150', 'Add Incoming Request (Request No , Control No)')
+  
+  
+  
+ INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0001','AALM0150', 'Update Incoming Request (Request No , Control No)')
+
+   INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CID0004','AALM0150', 'Delete Incoming Request (Request No , Accession No)')
+  
+  INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0002','AALM0950', 'Return of ILL (Request No , Control No)') 
+  
+    INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0003','AALM0750', 'Receive of ILL (Request No)') 
+  
+  INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0004','AALM0350', 'ILL Request Authorisation Reject(Request No)') 
+  
+  INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0005','AALM0350', 'ILL Request Authorisation Approve(Request No)') 
+  
+    INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CII0008','AALM0650', 'Add Outgoing Request(Request No)') 
+  
+  INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0006','AALM0650', 'Update Outgoing Request(Request No)') 
+  
+    INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CID0005','AALM0650', 'Delete Outgoing Request (Request No)') 
+  
+   INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CII0009','AALM0850', 'Add Request Control(Request No)')
+  
+   INSERT INTO GLACTCODE (GL69CODE, GL69PROGID, GL69DESC)
+  VALUES ('CIU0007','AALM0850', 'Update Request Control(Request No)')
+  
+  
+  
+    INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('217', '001', '153', 'Corporate/Patron  membership will not be activated until @date')
+  
+    INSERT INTO GLERRMSTR(GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES('218', '001', '154', 'Invalid Requestor ID')
+  
+    INSERT INTO GLERRMSTR(GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES('219', '001', '155', 'Patron has exceeded the eligibility to charge/borrow items')
+  
+   INSERT INTO GLERRMSTR(GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES('220', '001', '156', 'The borrower has requested this item by Control Number')
+  
+    INSERT INTO GLERRMSTR(GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES('221', '001', '157', 'The borrower is not eligible to charge/borrow this item')
+  
+    INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('222', '001', '158', 'Invalid ILL Reference Number')
+  
+   INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('223', '001', '159', 'Items have been received for this ILL Reference Number')
+  
+   INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('226', '001', '162', 'Invalid Library Id')
+
+    INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('227', '001', '163', 'Borrowing account expired!')
+  
+  
+    INSERT INTO GLERRMSTR (GL79ERRID, GL79LANGCODE, GL79ERRCODE, GL79ERRMSG)
+  VALUES ('228', '001', '164', 'Exceed Maximum of Request Allowed')
+  
+  
+    INSERT INTO GLNUMB (GL98FUNC, GL98VALUE) VALUES ('ILLACCNO', '0')
+	
+	  INSERT INTO GLFLAG2 (GL99FUNC, GL99VALUE, GL99DESC)
+  VALUES ('ILLACCNOLEN', '10', 'maxmimum ill accession number length')
+  
+  
+  
+  INSERT INTO GLFLAG2 (GL99FUNC, GL99VALUE, GL99DESC)
+  VALUES ('ILLACCNO', 'ILL', 'ILL prefix accession number')
+
+
+

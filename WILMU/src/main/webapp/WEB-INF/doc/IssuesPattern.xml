@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IssuesPattern>
+	<Pattern id="1">
+		<Item>Spring</Item>
+		<Item>Summer</Item>
+		<Item>Autumn</Item>
+		<Item>Winter</Item>
+	</Pattern>
+	<Pattern id="2">
+		<Item>Jan</Item>
+		<Item>Feb</Item>
+		<Item>Mar</Item>
+		<Item>Apr</Item>
+		<Item>May</Item>
+		<Item>Jun</Item>
+		<Item>Jul</Item>
+		<Item>Aug</Item>
+		<Item>Sept</Item>
+		<Item>Oct</Item>
+		<Item>Nov</Item>
+		<Item>Dec</Item>
+	</Pattern>
+	<Pattern id="3">
+		<Item>JAN</Item>
+		<Item>FEB</Item>
+		<Item>MAR</Item>
+		<Item>APR</Item>
+		<Item>MAY</Item>
+		<Item>JUN</Item>
+		<Item>JUL</Item>
+		<Item>AUG</Item>
+		<Item>SEPT</Item>
+		<Item>OCT</Item>
+		<Item>NOV</Item>
+		<Item>DEC</Item>
+	</Pattern>
+	<Pattern id="4">
+		<Item>January</Item>
+		<Item>February</Item>
+		<Item>March</Item>
+		<Item>April</Item>
+		<Item>May</Item>
+		<Item>June</Item>
+		<Item>July</Item>
+		<Item>August</Item>
+		<Item>September</Item>
+		<Item>October</Item>
+		<Item>November</Item>
+		<Item>December</Item>
+	</Pattern>
+	<Pattern id="5">
+		<Item>JANUARY</Item>
+		<Item>FEBRUARY</Item>
+		<Item>MARCH</Item>
+		<Item>APRIL</Item>
+		<Item>MAY</Item>
+		<Item>JUNE</Item>
+		<Item>JULY</Item>
+		<Item>AUGUST</Item>
+		<Item>SEPTEMBER</Item>
+		<Item>OCTOBER</Item>
+		<Item>NOVEMBER</Item>
+		<Item>DECEMBER</Item>
+	</Pattern>
+	<Pattern id="6">
+		<Item>Januari</Item>
+		<Item>Februari</Item> 
+		<Item>Mac</Item>      
+		<Item>April</Item>    
+		<Item>Mei</Item>      
+		<Item>Jun</Item>      
+		<Item>Julai</Item>    
+		<Item>Ogos</Item>     
+		<Item>September</Item>
+		<Item>Oktober</Item>  
+		<Item>November</Item> 
+		<Item>Disember</Item>
+	</Pattern>
+	<Pattern id="7">
+		<Item>Jan-Mar</Item>
+		<Item>Apr-Jun</Item>
+		<Item>Jul-Sep</Item>
+		<Item>Oct-Dec</Item>
+	</Pattern>
+	<Pattern id="8">
+		<Item>Jan/Feb</Item>
+		<Item>Mac/Apr</Item>
+		<Item>May/Jun</Item>
+		<Item>Jul/Aug</Item>
+		<Item>Sep/Oct</Item>
+		<Item>Nov/Dec</Item>
+	</Pattern>
+	<Pattern id="9">
+		<Item>Feb/Mac</Item>
+		<Item>Apr/May</Item>
+		<Item>Jun/Jul</Item>
+		<Item>Aug/Sep</Item>
+		<Item>Oct/Nov</Item>
+		<Item>Dec/Jan</Item>
+	</Pattern>
+	<Pattern id="10">
+		<Item>no.1(Jan)</Item>
+		<Item>no.2(Feb)</Item> 
+		<Item>no.3(Mar)</Item>
+		<Item>no.4(Apr)</Item>
+		<Item>no.5(May)</Item> 
+		<Item>no.6(Jun)</Item> 
+		<Item>no.7(Jul)</Item> 
+		<Item>no.8(Aug)</Item>
+		<Item>no.9(Sep)</Item>
+		<Item>no.10(Oct)</Item>
+		<Item>no.11(Nov)</Item>
+		<Item>no.12(Dec)</Item>
+	</Pattern>
+	<Pattern id="11">
+		<Item>no.1(Jan/Feb)</Item>
+		<Item>no.2(Mac/Apr)</Item>
+		<Item>no.3(May/Jun)</Item>
+		<Item>no.4(Jul/Aug)</Item>
+		<Item>no.5(Sep/Oct)</Item>
+		<Item>no.6(Nov/Dec)</Item>
+	</Pattern>
+	<Pattern id="12">
+		<Item>no.1</Item>
+		<Item>no.2</Item>
+		<Item>no.3</Item>
+		<Item>no.4</Item>
+		<Item>no.5</Item>
+		<Item>no.6</Item>
+		<Item>no.7</Item>
+		<Item>no.8</Item>
+		<Item>no.9</Item>
+		<Item>no.10</Item>
+		<Item>no.11</Item>
+		<Item>no.12</Item>
+		<Item>no.13</Item>
+		<Item>no.14</Item>
+		<Item>no.15</Item>
+		<Item>no.16</Item>
+		<Item>no.17</Item>
+		<Item>no.18</Item>
+		<Item>no.19</Item>
+		<Item>no.20</Item>
+		<Item>no.21</Item>
+		<Item>no.22</Item>
+	</Pattern>
+	<Pattern id="13">
+		<Item>no.1(Mac)</Item>
+		<Item>no.2(Jun)</Item>
+		<Item>no.3(Sep)</Item>
+		<Item>no.4(Dec)</Item>
+	</Pattern>
+	<Pattern id="14">
+		<Item>no.1(Feb)</Item>
+		<Item>no.2(May)</Item>
+		<Item>no.3(Aug)</Item>
+		<Item>no.4(Nov)</Item>
+	</Pattern>
+	<Pattern id="15">
+		<Item>no.1(Apr)</Item>
+		<Item>no.2(Aug)</Item>
+		<Item>no.3(Dec)</Item>
+	</Pattern>
+	<Pattern id="16">
+		<Item>pt.1(May)</Item>
+		<Item>pt.2(Nov)</Item>
+	</Pattern>
+	<Pattern id="17">
+		<Item>no.1(Jun)</Item>
+		<Item>no.2(Dec)</Item>
+	</Pattern>
+	<Pattern id="18">
+		<Item>no.1(Sep/Oct)</Item>
+		<Item>no.2(Nov/Dec)</Item>
+		<Item>no.3(Jan/Feb)</Item>
+		<Item>no.4(Mar/Apr)</Item>
+		<Item>no.5(May/Jun)</Item>
+		<Item>no.6(Jul/Aug)</Item>
+	</Pattern>
+	<Pattern id="19">
+		<Item>pt.1</Item>
+		<Item>pt.2</Item>
+		<Item>pt.3 </Item>
+		<Item>pt.4 </Item>
+		<Item>pt.5 </Item>
+		<Item>pt.6 </Item>
+		<Item>pt.7 </Item>
+		<Item>pt.8 </Item>
+		<Item>pt.9 </Item>
+		<Item>pt.10</Item>
+		<Item>pt.11</Item>
+		<Item>pt.12</Item>
+		<Item>pt.13</Item>
+		<Item>pt.14</Item>
+		<Item>pt.15</Item>
+		<Item>pt.16</Item>
+		<Item>pt.17</Item>
+		<Item>pt.18</Item>
+		<Item>pt.19</Item>
+		<Item>pt.20</Item>
+		<Item>pt.21</Item>
+		<Item>pt.22</Item>
+		<Item>pt.23</Item>
+		<Item>pt.24</Item>
+		<Item>pt.25</Item>
+		<Item>pt.26</Item>
+		<Item>pt.27</Item>
+		<Item>pt.28</Item>
+		<Item>pt.29</Item>
+		<Item>pt.30</Item>
+		<Item>pt.31</Item>
+		<Item>pt.32</Item>
+		<Item>pt.33</Item>
+		<Item>pt.34</Item>
+		<Item>pt.35</Item>
+		<Item>pt.36</Item>
+		<Item>pt.37</Item>
+		<Item>pt.38</Item>
+		<Item>pt.39</Item>
+		<Item>pt.40</Item>
+		<Item>pt.41</Item>
+		<Item>pt.42</Item>
+		<Item>pt.43</Item>
+		<Item>pt.44</Item>
+		<Item>pt.45</Item>
+		<Item>pt.46</Item>
+		<Item>pt.47</Item>
+		<Item>pt.48</Item>
+		<Item>pt.49</Item>
+		<Item>pt.50</Item>
+		<Item>pt.51</Item>
+		<Item>pt.52</Item>
+	</Pattern>
+	<Pattern id="20">
+		<Item>issue 1</Item>
+		<Item>issue 2 </Item>
+		<Item>issue 3 </Item>
+		<Item>issue 4 </Item>
+		<Item>issue 5 </Item>
+		<Item>issue 6 </Item>
+		<Item>issue 7 </Item>
+		<Item>issue 8 </Item>
+		<Item>issue 9 </Item>
+		<Item>issue 10</Item>
+		<Item>issue 11</Item>
+		<Item>issue 12</Item>
+	</Pattern>
+	<Pattern id="21">
+		<Item>v.1 </Item>
+		<Item>v.2 </Item>
+		<Item>v.3 </Item>
+		<Item>v.4 </Item>
+		<Item>v.5 </Item>
+		<Item>v.6 </Item>
+		<Item>v.7 </Item>
+		<Item>v.8 </Item>
+		<Item>v.9 </Item>
+		<Item>v.10</Item>
+		<Item>v.11</Item>
+		<Item>v.12</Item>
+	</Pattern>
+	<Pattern id="22">
+		<Item>BIL.1 </Item>
+		<Item>BIL.2 </Item>
+		<Item>BIL.3 </Item>
+		<Item>BIL.4 </Item>
+		<Item>BIL.5 </Item>
+		<Item>BIL.6 </Item>
+		<Item>BIL.7 </Item>
+		<Item>BIL.8 </Item>
+		<Item>BIL.9 </Item>
+		<Item>BIL.10</Item>
+		<Item>BIL.11</Item>
+		<Item>BIL.12</Item>
+		<Item>BIL.13</Item>
+		<Item>BIL.14</Item>
+		<Item>BIL.15</Item>
+		<Item>BIL.16</Item>
+		<Item>BIL.17</Item>
+		<Item>BIL.18</Item>
+		<Item>BIL.19</Item>
+		<Item>BIL.20</Item>
+		<Item>BIL.21</Item>
+		<Item>BIL.22</Item>
+		<Item>BIL.23</Item>
+		<Item>BIL.24</Item>
+	</Pattern>
+	<Pattern id="23">
+		<Item>Iss01</Item>
+		<Item>Iss02</Item>
+		<Item>Iss03</Item>
+		<Item>Iss04</Item>
+	</Pattern>
+	<Pattern id="24">
+		<Item>no.1(Fall)</Item>  
+		<Item>no.2(Winter)</Item>
+		<Item>no.3(Spring)</Item>
+		<Item>no.4(Summer)</Item>
+	</Pattern>
+	<Pattern id="25">
+		<Item>no.1 (Jan)</Item>
+		<Item>no.2 (Feb)</Item> 
+		<Item>no.3 (Mar)</Item>
+		<Item>no.4 (Apr)</Item>
+		<Item>no.5 (May)</Item> 
+		<Item>no.6 (Jun)</Item> 
+		<Item>no.7 (Jul)</Item> 
+		<Item>no.8 (Aug)</Item>
+		<Item>no.9 (Sep)</Item>
+		<Item>no.10 (Oct)</Item>
+		<Item>no.11 (Nov)</Item>
+		<Item>no.12 (Dec)</Item>
+	</Pattern>
+
+</IssuesPattern>

@@ -1,0 +1,48 @@
+##Prod uncomment while deploy
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmudevmariadbw?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+#MYSQL staging
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+
+#Save PDF files
+PDF = C:\\Users\\User\\workspace\\Serials_ISSUE\\WebContent\\WEB-INF\\doc\\PDF\\
+#TPL = C:\\Users\\User\\workspace\\Serials_ISSUE\\WebContent\\WEB-INF\\doc\\template\\
+FO = C:\\Users\\User\\workspace\\Serials_ISSUE\\WebContent\\WEB-INF\\doc\\fo\\
+ISSUEPATTERN = C:\\Users\\User\\workspace\\Serials_ISSUE\\WebContent\\WEB-INF\\doc\\IssuesPattern.xml
+#template = F:\\Users\\Seng\\kmlink mvn\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+#template = F:\\Users\\kmlink\\trunk\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+#template =D:\\ILMUWEB(MSSQL)\\tomcat-7.0.62\\webapps\\wilmuCS\\WEB-INF\\doc\\template\\
+#template = D:\\WILMU_PROJECT\\wilmu2\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+#template = F:\\kmlink\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+
+template =  C:\\Users\\Wan Nur Hafizah\\Latest Collection Code\\kmlink\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+
+
+Sender=admin@ppaj.gov.my
+
+#SMTPHost=172.17.1.29
+SMTPHost=mail.kmlink.com.my
+#SMTPHost=smtppro35.mschosting.com
+#SMTPHost=mail.ppaj.gov.my
+#SMTPHost=smtp.gmail.com
+SMTPPort=587
+SMTPStartTLS=false
+
+SMTPUsername=neucanvas@kmlink.com.my
+SMTPPassword=Kl$b!@#$
+
+#SMTPUsername=admin@ppaj.gov.my
+#SMTPPassword=Pp@j1234
+
+
+

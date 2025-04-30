@@ -1,0 +1,429 @@
+/*****   Body   *****/
+
+    body {
+        margin-top:0;
+        margin-left:0;
+        font-size:8pt;
+        background-color:#FFFFFF;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+
+
+
+
+/*****   Anchor   *****/
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover,a:active {
+        color:#FF0000;
+        text-decoration: underline;
+    }
+
+    a.leftmenu {
+        color:#FFFFFF;
+        font-size:10pt;
+        font-weight:bold;
+        text-decoration: none;
+    }
+
+    a.menuItem {
+        color:#FFFFFF;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+    a.mainMenu {
+        text-decoration: none;
+        color:#000000;
+        font-size:9pt;
+        font-weight : bold;
+    }
+
+    .repoMenu {
+        text-decoration: none;
+        color:#0000FF;
+        font-size:9pt;
+    }
+
+
+
+/*****   Header   *****/
+
+    .colorHeader {
+        background-color:#A3C6ED;
+    }
+    .colorLeft {
+        background-color:#A3C6ED;
+    }
+    .colorBg {
+        background-color:#FFFFFF;
+    }
+    .colorBg1 {
+        background-color:#E6F2F7;
+    }
+    .colorBg2 {
+        background-color:#D2E8F0;
+    }
+    .colorTop {
+        background-color:#5295C7;
+    }
+    .imgIcon {
+        background-image: url('../images/icon.gif');
+    }
+    .imgLogo {
+        background-image: url('../images/clientlogo_blue.gif');
+    }
+    .imgBanner1 {
+        background-image: url('../images/banner1_blue.gif');
+    }
+    .imgBanner2 {
+        background-image: url('../images/banner2_blue.gif');
+    }
+    .imgBanner3 {
+        background-image: url('../images/banner3_blue.gif');
+    }
+
+
+
+/*****   Menu   *****/
+
+    .menu {
+        background-color:#FFC164;
+    }
+
+    .function {
+        color:#800000;
+        font-size:10pt;
+        font-family:Arial, Helvetica, sans-serif;
+        font-weight:bold;
+    }
+
+
+
+
+/*****   Footer   *****/
+
+    .footer {
+        color:#800000;
+        font-size:8pt;
+        font-family:Arial;
+        text-align:center;
+    }
+
+
+
+
+/*****   Font Colour and Style   *****/
+
+    .welcome {
+        background-color:#F4F9FD;
+        color:#000000;
+        font-size:12pt;
+        font-family:Arial, Helvetica, sans-serif;
+        font-weight:bold;
+    }
+
+    .text-display {
+        color:#000000;
+        font-size:9pt;
+    }
+
+    .text-label {
+        color:#000000;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+    .details-text-display {
+        color:#000000;
+        font-size:8pt;
+    }
+
+    .details-text-label {
+        color:#000000;
+        font-size:8pt;
+        font-weight:bold;
+    }
+
+    .alert {
+        color:#FF0000;
+        font-size:8pt;
+        font-weight:bold;
+    }
+
+    .warning {
+        color:#FF0000;
+        font-size:8pt;
+        font-weight:bold;
+    }
+
+    .hint {
+        color:#FF0000;
+        font-size:8pt;
+    }
+
+    .subTitle {
+        color:#000000;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+    .subTitleDetail {
+        color:#FF0000;
+        font-size:10pt;
+        font-weight:bold;
+    }
+
+    .totalFound {
+        color:#000000;
+        font-size:8pt;
+    }
+
+    .pageTitle {
+        color:#800000;
+        font-size:11pt;
+        font-weight:bold;
+    }
+
+    .help {
+        font-size = 8pt;
+        color =#000000;
+    }
+
+    .helpTitle {
+        color:#800040;
+        font-size:9pt;
+        font-weight: bold;
+    }
+
+    .sub {
+        font-size = 8pt;
+        color =#000099;
+    }
+
+    .message {
+        background-color:#D0E4FF;
+        text-align:center;
+        color:#000000;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+    .alert-message {
+        background-color:#D0E4FF;
+        text-align:center;
+        color:#FF0000;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+    .page-set {
+        color:#307AB8;
+        font-size:9pt;
+        font-weight: bold;
+    }
+
+
+
+
+
+/*****   Table   *****/
+
+    .theadrow1 {
+        background-color:#5295C7;
+        color:#FFFFFF;
+        font-size:9pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+
+    .theadrow2 {
+        background-color:#5295C7;
+        color:#FFFFFF;
+        font-size:9pt;
+        font-weight: bold;
+    }
+
+    .tdatarow1 {
+        background-color:#F4F9FD;
+        color:#000000;
+        font-size:8pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .tdatarow2 {
+        background-color:#D0E4FF;
+        color:#000000;
+        font-size:8pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+
+  /* WebOPAC & WebInfoline specials */
+
+    .search-caption {
+        color:#800000;
+        font-family:Arial;
+        font-size:14pt;
+        font-weight:bold;
+    }
+
+    .search-caption-hi {
+        color:#FF0000;
+        font-family:Arial;
+        font-size:14pt;
+        font-weight:bold;
+    }
+
+    .search-alert {
+        color:#FF0000;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+
+
+
+/*****   Calendar   *****/
+
+    .tdFederalHoliday {
+        background-color:#FF0000;
+        color:#FFFFFF;
+        font-size:10pt;
+        font-weight:bold;
+    }
+
+    .tdStateHoliday {
+        background-color:#999966;
+        color:#FFFFFF;
+        font-size:10pt;
+        font-weight:bold;
+    }
+
+    .tdTermBreak {
+        background-color:#669999;
+        color:#FFFFFF;
+        font-size:10pt;
+        font-weight:bold;
+    }
+
+    .tdWeekend {
+        background-color:#999999;
+        color:#FFFFFF;
+        font-size:10pt;
+        font-weight:bold;
+    }
+
+    .tdSide {
+        background-color:#A3C6ED;
+
+    }
+
+    .tdBackground {
+        background-color:#F0FAFF;
+    }
+
+
+
+
+/*****   Booking Detail (FM)  *****/
+
+    .border{
+        background-color : #9A5303;
+    }
+
+    .content{
+        background-color : #FDE6B0;
+    }
+
+    .current-date {
+        color:#FF0000;
+    }
+
+    .booking-status {
+        color:#FF0000;
+    }
+
+    .booked-time {
+        color:#0000FF;
+        font-size:9pt;
+        font-weight:bold;
+    }
+
+
+
+
+/*****   Facility (FM)   *****/
+
+    .facility-title {
+        color:#000000;
+        font-size:12pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .facility-label {
+        color:#000000;
+        font-size:10pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-weight:bold
+    }
+
+    .facility-text {
+        color:#000000;
+        font-size:9pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+
+
+
+
+/*****   Attribute List (FM)   *****/
+
+    .selection-title {
+        color:#990000;
+        font-size:9pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-weight:bold;
+    }
+
+    .selection-header {
+        background-color:#CC6600;
+        color:#FFFFFF;
+        font-size:9pt;
+        font-family:Arial;
+        font-weight:bold;
+    }
+
+    .selected-attribute-list {
+        background-color:#FFE2C6;
+        color:#000000;
+        font-size:8pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif
+    }
+
+    .available-attribute-list {
+        background-color:#FFFFCC;
+        color:#000000;
+        font-size:8pt;
+        font-family:Verdana, Arial, Helvetica, sans-serif
+    }
+
+
+
+/*****   Other   *****/
+
+    .line{
+        color : #B47C32;
+    }
+
+    .hide {
+        visibility: hidden;
+    }
+    .none {
+        display: none;
+    }
+    .show {
+        visibility: visible;
+    }

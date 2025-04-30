@@ -1,0 +1,87 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="30pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+<fo:block font-weight="bold" text-align="center" font-size="13px">PERPUSTAKAAN AL-MUKHTAR</fo:block>
+<fo:block font-weight="bold" text-align="center">UNIVERSITI SULTAN ZAINAL ABIDIN, KAMPUS GONG BADAK</fo:block>
+<fo:block font-weight="bold" text-align="center">Gong Badak, 21300 Kuala Terengganu, Terengganu</fo:block>
+<fo:block font-weight="bold" text-align="center">MALAYSIA</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 09-6661731 Fax: 09-6653106</fo:block>
+
+<fo:block space-before.optimum="12pt">Acquisition</fo:block>
+
+<fo:block space-before.optimum="12pt">Our Ref: undefined</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 05/11/2018</fo:block>
+<fo:block>Time: 03:25:25 PM</fo:block>
+
+<fo:block space-before.optimum="12pt" font-weight="bold">Gift Request</fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="20mm"/>
+<fo:table-column column-width="20mm"/>
+<fo:table-column column-width="40mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="7mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="20mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Order</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">ISBN</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Description</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Edition</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Qty</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Unit Price</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Foreign Price</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Amount</fo:block>
+    </fo:table-cell>
+       <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Expected Date</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Publication</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+<fo:table-row><fo:table-cell><fo:block font-size='8.5pt'>0000026260</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>9789812832597</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>The rainbow and the worm:the physics of organisms/Mae-Wan Ho</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>|a3rd ed</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>1</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM 167.20</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM 167.20</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM 167.20</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>05/12/2018</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'> </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell number-columns-spanned='4' text-align='right'><fo:block font-size='10pt' font-weight='bold'>Total : </fo:block></fo:table-cell><fo:table-cell><fo:block font-size='10pt' font-weight='bold'>1</fo:block></fo:table-cell><fo:table-cell><fo:block font-size='10pt' font-weight='bold'>167.20</fo:block></fo:table-cell><fo:table-cell><fo:block font-size='10pt' font-weight='bold'> RM 167.20</fo:block></fo:table-cell></fo:table-row>
+
+</fo:table-body>
+
+</fo:table>
+
+
+<fo:block space-before.optimum="12pt" text-align="justify">We would  be  most grateful  if  you  could  send  us  the  above publication(s), as we find the item(s) to be  useful  addition to our Library collection. 
+Kindly include our Library in your mailing list to  receive  your  future publications </fo:block>
+
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="24pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+ </fo:flow>
+  </fo:page-sequence>
+</fo:root>

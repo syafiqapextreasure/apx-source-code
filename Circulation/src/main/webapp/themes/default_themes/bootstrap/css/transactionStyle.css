@@ -1,0 +1,115 @@
+@media print {
+	@page {
+		margin: 0;
+	}
+	body {
+		margin: 0.5cm;
+	}
+	.no-print {
+		display: none !important;
+		height: 0;
+		align:center;
+	}
+	.no-print, .no-print * {
+		display: none !important;
+		height: 0;
+	}
+}
+
+@page {
+	size: auto;
+	margin: 0mm;
+}
+
+html {
+	width: 300px;
+}
+
+body {
+	font-size: 12px;
+	font-family: sans-serif;
+}
+
+.ta-right {
+	text-align: right;
+}
+
+.ta-center {
+	text-align: center;
+}
+
+.padd-right-5 {
+	padding-right: 5px;
+}
+
+.margin-top-15 {
+	margin-top: 15px;
+}
+
+.margin-btm-15 {
+	margin-bottom: 15px;
+}
+
+.float-left {
+	text-align: left;
+	display: table-cell; text-align: right
+}
+
+.float-right {
+	float: right;
+}
+
+.float-lefts {
+	float: left;
+}
+
+.float-rights {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+table td {
+	font-weight: normal;
+}
+
+table.transaction-table {
+	width: 100%;
+	margin-top: 15px;
+	/*margin-bottom: 15px;*/
+	border-collapse: collapse;
+}
+
+table.transaction-table thead {
+	border-top: 1px dashed #333;
+	border-bottom: 1px dashed #333;
+}
+
+table.transaction-table thead tr th {
+	text-align: left;
+	padding: 5px;
+	font-weight: normal;
+}
+
+table.transaction-table tfoot {
+	border-top: 1px dashed #333;
+	border-bottom: 1px dashed #333;
+}
+hr{
+	border-top: 1px dashed black;
+	margin-top:1px;
+	margin-bottom:1px;
+}
+
+table.gst-table {
+	width: 100%;
+}
+
+table.gst-table thead tr th {
+	text-align: left;
+	padding: 5px;
+	font-weight: normal;
+}
+

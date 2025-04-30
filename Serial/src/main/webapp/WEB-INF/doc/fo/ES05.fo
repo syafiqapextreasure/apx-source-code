@@ -1,0 +1,132 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="left">(LOGO)</fo:block>
+<fo:block font-weight="bold" text-align="left" font-size="13px">PERPUSTAKAAN AL-MUKHTAR</fo:block>
+<fo:block font-weight="bold" text-align="left">UNIVERSITI SULTAN ZAINAL ABIDIN, KAMPUS GONG BADAK</fo:block>
+<fo:block font-weight="bold" text-align="left">Gong Badak, 21300 Kuala Terengganu, Terengganu</fo:block>
+<fo:block font-weight="bold" text-align="left">MALAYSIA</fo:block>
+<fo:block font-weight="bold" text-align="left">Tel: 09-6661731 Fax: 09-6653106</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 18/12/2018</fo:block>
+<fo:block>Time: 11:52:28 AM</fo:block>
+
+
+<fo:block>Attn: </fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: Proforma Order</fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="22mm"/>
+<fo:table-column column-width="20mm"/>
+<fo:table-body>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Reference No : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>0000011322 </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Order Date : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>18/12/2018 </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Amount : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>(AMOUNT) </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Invoice No. : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>(INVNO) </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Bank Draft No./Cheque : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>(CHEQUENO) </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+<fo:table-row>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>Bank Draft/Cheque Date : </fo:block>
+	</fo:table-cell>
+	<fo:table-cell>
+		<fo:block font-size='8.5pt'>(CHEQUEDATE) </fo:block>
+	</fo:table-cell>
+</fo:table-row>
+</fo:table-body>
+
+</fo:table>
+
+<fo:block space-before.optimum="12pt" font-weight="bold">Order Details</fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="20mm"/>
+<fo:table-column column-width="20mm"/>
+<fo:table-column column-width="40mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="20mm"/>
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Order</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">ISSN</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Description</fo:block>
+    </fo:table-cell>
+      <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Quantity</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Volume/Issues From</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Issues</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+<fo:table-row><fo:table-cell><fo:block font-size='8.5pt'>0000001915</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'></fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>British journal of nursingBJN</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>1set</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM/null</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>null</fo:block></fo:table-cell></fo:table-row>
+
+</fo:table-body>
+
+</fo:table>
+
+
+<fo:block space-before.optimum="24pt">Attached herewith is the invoice and bank draft for the above order.  Please supply the above subscription according to the terms and conditions of our Library. </fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">Sysadmin</fo:block>
+<fo:block>Pensyarah</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

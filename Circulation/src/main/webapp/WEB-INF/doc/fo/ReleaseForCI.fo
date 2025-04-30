@@ -1,0 +1,53 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">Library PSB</fo:block>
+<fo:block font-weight="bold" text-align="center">Tingkat 4</fo:block>
+<fo:block font-weight="bold" text-align="center">Ibu Pejabat MARA</fo:block>
+<fo:block font-weight="bold" text-align="center">21 Jalan Raja Laut</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 26910075 Fax: 03-26927573</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 17/04/2017</fo:block>
+<fo:block>Time: 10:03:27 AM</fo:block>
+
+<fo:block space-before.optimum="12pt">ISWARDY ADHA MOHAMAD</fo:block>
+<fo:block></fo:block>
+<fo:block>NO.1-160F,PANDAN VILLA CONDO,</fo:block>
+<fo:block>JALAN PANDAN INDAH</fo:block>
+<fo:block></fo:block>
+<fo:block> W001</fo:block>
+<fo:block>Home Tel : </fo:block>
+<fo:block>Office Tel : EXT : 3644</fo:block>
+
+
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">ITEM RESERVATION</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">2.  We are pleased to inform you that the item reserved by you had be returned and its available for you to be borrowed.Please obtain the item within 7 days from the issue date of this letter</fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">3.  Do inform us if you need to cancel that reservation.</fo:block>
+
+<fo:block>Title			: </fo:block>
+<fo:block>Call No.		: </fo:block>
+<fo:block>ISBN			: |a9789831953143</fo:block>
+<fo:block>Accession No.	: 0000014069</fo:block>
+<fo:block>DueDate		: 24/04/2017</fo:block>
+<fo:block>PERPUSTAKAAN IP MARA		  PERPUSTAKAAN MARA	</fo:block>
+
+
+<fo:block space-before.optimum="24pt">Please neglect this letter if action has been taken.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">NORAYU AHMAD JAMAL</fo:block>
+<fo:block>0001</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

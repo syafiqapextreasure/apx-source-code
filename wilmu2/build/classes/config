@@ -1,0 +1,65 @@
+#MYSQL prod
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.8:3306/wilmuppkp
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.8;databaseName=ILMUWEB_MBPJ
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+
+
+#template =  C:\\Users\\wnurh\\SYSTEM WILMU\\kmlink\\wilmu2\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+
+
+Sender= ppkwilmu@ppj.gov.my
+SMTPpassword = Ppk08091116
+
+SMTPHost=smtp.ppj.gov.my
+SMTPPort=25
+SMTPStartTLS=
+SMTPAuth=true
+
+
+
+SMTPUsername= ppkwilmu@ppj.gov.my
+SMTPPassword=Ppk08091116
+
+
+#################Stageing===================below=================
+
+
+#MYSQL
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.43:3306/wilmuppkp-dev
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://localhost:3306/wilmuppkp
+#username=root
+#password=QazWsx@54321
+#dbtype=mysql
+ template ==C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\RPT\\
+#template = D:\\liferay6_2\\eclipse_back\\WILMUPPKP\\WILMUPPKP\\tomcat-7.0.62\webapps\\RPT\\
+
+
+Sender= ppkwilmu@ppj.gov.my
+SMTPpassword = Ppk08091116
+
+SMTPHost=smtp.ppj.gov.my
+SMTPPort=25
+SMTPStartTLS=
+SMTPAuth=true
+
+
+
+SMTPUsername= ppkwilmu@ppj.gov.my
+SMTPPassword=Ppk08091116

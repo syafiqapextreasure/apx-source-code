@@ -1,0 +1,241 @@
+<!-- BEGIN ARRAY ORDERITEMS
+    NO
+    ORDERNO
+    ISBN
+    SINGLEISBN
+    TITLE
+    PUBLISHER
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    TOTALFOREIGNPRICE
+    TOTALLOCALPRICE
+    EXCHANGERATE
+    ORDERDATE
+    AUTHOR
+    PUBLICATION
+    EDITION
+    SERIES
+    NOTES
+    NOTES502
+    BIBSOURCE
+    FOREX
+    REFERENCENO
+    REQUESTOR
+    DEPARTMENT
+    REMARKS
+    ANNOTE
+    MEETINGNAME
+    CONTROLNO
+    EXPDATE
+    UNIT
+    ROWNO
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    ORDERTOTAL
+    ORDERTOTALINWORD
+    TOTALQUANTITY
+    UNITCURRENCY
+    ORDERFOREIGN
+    BATCHREQUESTORID
+    EXPDATE
+    LOGINOFFICER
+    OFFICERNAME
+    DESIGNATION  
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+    
+     --newww--
+    BRANCHBRANCHNAME
+    BRANCHBRANCHADD1
+    BRANCHBRANCHADD2
+    BRANCHBRANCHADD3
+    BRANCHBRANCHPOSTCODE
+    BRANCHBRANCHTOWN
+    BRANCHBRANCHOFFICER
+    BRANCHBRANCHOFFICERNAME
+END VARIABLE -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 11pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 11pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 11pt !important;;
+		font-family: "Times New Roman";
+		margin-left: 0.10in; 
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 11pt !important;;
+		font-family: "Times New Roman"; 
+	}
+	
+	/*.footer {
+	   position: fixed;
+	   top: 6.0in;
+	   left: 0;
+	   bottom: 0;
+	   width: 100%;
+	}*/
+	
+	.footer {
+	  position: fixed;
+	  top: 6.5in;
+	}
+		
+	</style>
+	</head>
+	<body>
+		
+		<br/><br/><br/><br/><br>
+		<div class="table" style="margin-left:5.80in;width:2.10in">(REFERENCENO)</div><br/><br/>
+		<div class="ta-left">(VENDORNAME)</div><br/>
+		<div class="ta-left">(VENDORADDRESS1)</div><div class="table" style="margin-left:5.80in;width:2.10in">(LETTERDATE)</div><br/>
+		<div class="ta-left">(VENDORADDRESS2)</div><br/>
+		<div class="ta-left">(VENDORADDRESS3)</div>
+		<div class="table" style="margin-left:5.80in;width:2.10in">UPSI/LIB/KEW/BPO/267.1</div><br/>
+		
+		<br/><br/><br/>
+		
+		<table>
+		  {LOOP}<tr>
+		    {LOOP}<td style="width:0.40in">(NO)</td>
+		    {LOOP}<td style="width:1.80in">ISSN: (ISSN)</td>
+		    {LOOP}<td style="width:2.30in">Order No: (ORDERNO)</td>
+		    {LOOP}<td style="width:1.85in;text-align:center">(QUANTITY)</td>
+		    {LOOP}<td style="width:1.10in">(UNITFOREIGNPRICE)</td>
+			{LOOP}<td style="width:0.90in">(UNITCURRENCY)</td>
+			{LOOP}<td style="width:0.80in;text-align:right">(TOTALLOCALPRICE)</td></tr>
+			{LOOP}<tr><td></td><td style="margin-left:0.60in;" colspan="2">(TITLE)</td></tr><tr><td><td></tr>
+		  {END LOOP} 
+		</table>
+
+		
+		<div class="footer">
+		    <div class="ta-left" style="margin-left:0.70in;width:1.50in">Exchange: 1 (UNITCURRENCY)</div><div class="table" style="margin-left:2.00in;width:3.00in">      = RM</div></br></br>
+			<div class="ta-left" style="margin-left:0.70in;width:2.50in">Pencadang:(BATCHREQUESTORID)</div><br><br>
+			<br/>
+
+			<div class="ta-left" style="margin-left:1.40in;width:3.00in">(ORDERTOTALINWORD)</div>
+			<div class="table" style="width:7.80in;text-align:right">(ORDERTOTAL)</div><br/>
+		
+			<br/><br/><br/>
+		
+			<table>
+				<tr>
+					<td style="margin-left:0.10in; width:5.70in">PERPUSTAKAAN - PEJABAT IKHTISAS</td>
+					<td style="width:1.20in">527000</td>
+				</tr>
+				<tr>
+					<td>106012</td>
+				<tr>
+			</table>
+			
+			<br/>
+			
+			<table>
+				<tr>
+					<td style="width:1.00in"></td>
+					<td style="width:2.60in">(EXPDATE)</td>
+					<td style="width:1.15in;">(LOGINOFFICER)</td>
+					<td style="width:2.80in;text-align:right">(ORDERTOTAL)</td>
+				</tr>
+			</table>
+
+		</div>
+		
+		
+</div>
+</div>
+
+	</body>
+	</html>

@@ -1,0 +1,69 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="30pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+<fo:block font-weight="bold" text-align="center" font-size="13px">(LIBRARY_ORG_NAME)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_1)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_2)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_3)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_TEL) (LIBRARY_FAX)</fo:block>
+
+<fo:block space-before.optimum="12pt">Our Ref: (REF)</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: (DATE)</fo:block>
+<fo:block>Time: (TIME)</fo:block>
+
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">Request For Payment</fo:inline></fo:block>
+
+<fo:block space-before.optimum="12pt" text-align="justify">As per enclosure, we seek your cooperation in managing the bank draft under the vendor name by following the given information in the invoice. </fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="40mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="40mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Item Order</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Invoice No.</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Description</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Quantity</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Foreign Unit Price</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Amount</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+(INVOICE)
+
+</fo:table-body>
+
+</fo:table>
+
+<fo:block space-before.optimum="36pt">Please forward the mentioned bank draft to us for further action.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="24pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+ </fo:flow>
+  </fo:page-sequence>
+</fo:root>

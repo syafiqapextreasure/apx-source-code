@@ -1,0 +1,202 @@
+<!-- 
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    LETTERSUBJECT
+    LETTERDATE
+    LETTERTIME
+    REFERENCENO
+    REFERENCEDATE
+    TITLE
+    AUTHOR
+    ISBN
+    PUBLISHER
+    QUANTITY
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		/* margin-left: 0.20in; */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		/* position:absolute; */
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt !important;;
+		font-family: "Times New Roman"; 
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYNAME)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD1)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD2)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD3)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br/>
+		
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Our Ref : </div>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Date : (LETTERDATE)</div><br/>
+		<div class="ta-left">Time : (LETTERTIME)</div><br/>
+		<br/>
+		
+		<div class="ta-left">(VENDORNAME)</div><br/>
+		<div class="ta-left">(VENDORADDRESS1)</div><br/>
+		<div class="ta-left">(VENDORADDRESS2)</div><br/>
+		<div class="ta-left">(VENDORADDRESS3)</div><br/>
+		<div class="ta-left">(VENDORPOSTCODE)</div>
+		<br/><br/>
+		
+		<div class="ta-left">Attn. : (VENDORCONTACT)</div>
+		<br/><br/>
+		
+		<div class="ta-left">Dear Sir/Madam,</div>
+		<br/><br/>
+		
+		<div class="ta-left"><b><u>Acknowledgement</u></b></div>
+		<br/><br/>
+		
+		<div class="ta-left">Reference No : (REFERENCENO)</div>
+		<br/>
+	
+		<div class="ta-left">Reference Date : (REFERENCEDATE)</div>
+		<br/><br/>
+		
+		<div class="table" style="margin-left:0.0in;width:1.00in">Title:</div>
+		<div class="table" style="margin-left:1.2in;width:4.00in">(TITLE)</div><br/>
+		<div class="table" style="margin-left:0.0in;width:1.00in">Author:</div>
+		<div class="table" style="margin-left:1.2in;width:4.00in">(AUTHOR)</div><br/>
+		<div class="table" style="margin-left:0.0in;width:1.00in">ISBN:</div>
+		<div class="table" style="margin-left:1.2in;width:4.00in">(ISBN)</div><br/>
+		<div class="table" style="margin-left:0.0in;width:1.00in">Publisher:</div>
+		<div class="table" style="margin-left:1.2in;width:4.00in">(PUBLISHER)</div><br/>
+		<div class="table" style="margin-left:0.0in;width:1.00in">Quantity:</div>
+		<div class="table" style="margin-left:1.2in;width:4.00in">(QUANTITY)</div><br/>
+		
+		<br/>
+		
+		<div class="ta-left">We are pleased to acknowledge receipt of the above item(s).</div>
+		<br/>
+		
+		<div class="ta-left">We shall be grateful if you could keep our Library on your mailing list to receive 
+		future publications from your organisation.</div>
+		<br/><br/>
+
+		<div class="ta-left">Thank You.</div><br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Yours sincerely,</div><br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+	
+		<br/>
+
+	</body>
+	</html>

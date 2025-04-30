@@ -1,0 +1,3 @@
+Authority 2019.1.01
+Changes made: 
+- It's not checking if the hit count from data is more than 0. Check data hit count if more than 0 before merging data.

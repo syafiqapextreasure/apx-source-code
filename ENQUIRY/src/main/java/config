@@ -1,0 +1,64 @@
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=ILMUWEB_MBPJ
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost;databaseName=ILMUUNI
+#username=ilmuweb
+#password=root
+#dbtype=mssql
+
+#UMT Oracle
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@10.0.0.13:1521:ILMU2007
+#username=ilmu2007
+#password=ilmu2007
+#dbtype=oracle
+
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmuppkp_patch
+#url=jdbc:mysql://172.16.0.12:3306/wilmuppkp
+#url=jdbc:mysql://172.16.0.12:3306/wilmustagemariadbw
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=WILMUSTAGEMSSQL
+#url=jdbc:sqlserver://172.16.0.12;databaseName=WILMUPKPJ
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.8:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://wilmu.trglib.gov.my:3306/ilmuweb_ppat?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.43:3306/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+
+#MYSQL
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://10.10.0.112:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+
+
+
+template = C:\\Users\\Wan Nur Hafizah\\Latest Collection Code\\kmlink\\WebReceipting\\WebContent\\WEB-INF\\doc\\template\\

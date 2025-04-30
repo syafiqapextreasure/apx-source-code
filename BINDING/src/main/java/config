@@ -1,0 +1,40 @@
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=WILMUDEVMSSQL
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost;databaseName=ILMUUNI
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#url=jdbc:mysql://10.10.0.112:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://10.32.0.43:3306/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12/wilmumindef_trn?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.28.72.13:3306/wilmumindef_trn
+
+
+##Prod uncomment
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmumindef_trn?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#template = C:\\Users\\wnurh\\SYSTEM WILMU\\workspace3\\BINDING\\WebContent\\WEB-INF\\doc\\template\\
+
+
+##Stage
+
+#MYSQL
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+template = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\RPT\\

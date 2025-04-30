@@ -1,0 +1,141 @@
+@charset "ISO-8859-1";
+
+body {
+  background: rgb(204,204,204); 
+}
+page {
+  background: white;
+  display: block;
+  margin: 1cm auto;
+/*   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);  */
+}
+
+page[size="A4"][layout="landscape"] {
+  width: 29.7cm;
+  height: 21cm;  
+}
+
+@media print {
+* {
+   -webkit-transition: none !important;
+   transition: none !important;
+ }
+  html, body, page {
+  	-webkit-print-color-adjust: exact;
+  	height:100vh;
+  	overflow:hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: 0;
+  }
+  @page {size: A4 landscape;box-shadow: 0;margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0;}
+/*   @page {size: A4 landscape;box-shadow: 0;margin-top: 0.25cm; margin-bottom: 0; margin-left: 0; margin-right: 0;} */
+  @page :left {margin-left: 0;}
+  @page :right {margin-right: 0;}
+   
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+	
+/* FOR PRINT START */
+/* 
+table { border-collapse: separate; display: inline-block;
+  	font-family:Arial Black; font-size: 12px; font-weight: bold; text-align:center; border: 0px solid white; line-height: 1; border-spacing: 0 0.2mm;}
+td {height: 5mm;width: 55mm; line-height: 1; border: 0.1mm solid black; border-right: 0.1mm solid black; padding:0mm;  }
+td {height: 4.5mm;width: 48mm; line-height: 1; border: 0.3mm solid black; border-right: 0.3mm solid black; padding:0mm;  }
+.noBorder{border: 0.3mm solid white; padding-top:0.9mm; }
+.hiddenTableLeft{height: 37.72mm;width: 148mm; border: 0.3mm solid white; visibility:none; color:white;}
+.hiddenTableRight{height: 37.72mm;width: 136mm; border: 0.3mm solid white; visibility:none; color:white;}
+.hiddenTable{visibility:show;}
+.hiddenTable td{border: 0.3mm solid black; color:white;}
+.verticalBarcodeCell{padding-left:0mm;width: 19mm; border: 0.2mm solid white; }
+.verticalBarcodeCell{padding-left:0mm;width: 19mm; border: 0.3mm solid white;}
+.emptyCell20mm{width: 19mm; border: 0mm solid white;} 
+.emptyCell20mm{width: 10mm; border: 0.3mm solid white;}
+.emptyCell11mm{width: 12mm; border: 0mm solid white; margin: 0;}
+.emptyCell11mm{width: 25mm; border: 0.3mm solid white; margin: 0;}
+.logoBar {	width: 50mm; border: 0mm solid white; font-family:Arial; font-size: 9px; font-weight: normal;}
+.logoBar {	width: 50mm; border: 0mm solid white; font-family:Arial; font-size: 9px; font-weight: normal;}
+.logoImage{	display: block;	width:auto; height:1.4cm; margin-left: auto; margin-right: auto; border: 0px solid white;}
+.tableLeft{	display: inline-block;	float:left; margin-left: 9.5mm;}
+.tableRight{display: inline-block;	float:right;}
+.tableTop{margin-top: 4mm;}
+.tableBottom{margin-bottom: 4mm;}
+.cellBottomMargin{margin-bottom: 2.5mm;}
+.barcodeVertical{width:160%; height:180%; transform-origin: left; transform: translate(20%, 180%) rotate(270deg) ;}
+.textLabel{font-family:Arial; font-size: 10px;font-weight: bold;}
+.accessionNo{margin-bottom:0;margin-top:4px;font-family:Arial; font-size: 10px;}
+.barcodeImage{width:100%;}
+#table1,#table2{margin-top: 5.8mm;}
+#table1,#table2{margin-top: 4mm;}
+#table2,#table4,#table6,#table8,#table10{margin-left: 30mm;}
+#table1,#table2,#table3,#table4,#table5,#table6,#table7,#table8{margin-bottom: 2.5mm;}
+#table9,#table10{margin-bottom: 4mm;}
+ */
+/* #table1,#table3,#table5,#table7,#table9{margin-left: 9.5mm;margin-right: 0mm;} */
+
+
+/* FOR PRINT END */	
+	
+}    /* close @media print */
+
+/* FOR WEB IN MM START */
+
+table { border-collapse: separate; display: inline-block; 
+  	font-family:Arial Black; font-size: 12px; font-weight: bold; text-align:center; border: 0px solid white; line-height: 1; border-spacing: 0 0.2mm;}
+td {height: 5mm;width: 55mm; line-height: 1; border: 0.1mm solid black; border-right: 0.1mm solid black; padding:0mm;  }
+td {height: 4.5mm;width: 48mm; line-height: 1; border: 0.3mm solid black; border-right: 0.3mm solid black; padding:0mm;  }
+.noBorder{border: 0.3mm solid white; padding-top:0.9mm; }
+.hiddenTableLeft{height: 37.72mm;width: 148mm; border: 0.3mm solid white; visibility:none; color:white;}
+.hiddenTableRight{height: 37.72mm;width: 136mm; border: 0.3mm solid white; visibility:none; color:white;}
+.hiddenTable{visibility:show;}
+.hiddenTable td{border: 0.3mm solid black; color:white;}
+.verticalBarcodeCell{padding-left:0mm;width: 19mm; border: 0.2mm solid white; }
+.verticalBarcodeCell{padding-left:0mm;width: 19mm; border: 0.3mm solid white;}
+.emptyCell20mm{width: 19mm; border: 0mm solid white;} 
+.emptyCell20mm{width: 10mm; border: 0.3mm solid white;}
+.emptyCell11mm{width: 13mm; border: 0mm solid white; margin: 0;}
+.emptyCell11mm{width: 25mm; border: 0.3mm solid white; margin: 0;}
+.logoBar {	width: 50mm; border: 0mm solid white; font-family:Arial; font-size: 9px; font-weight: normal;}
+.logoBar {	width: 50mm; border: 0mm solid white; font-family:Arial; font-size: 9px; font-weight: normal;}
+.logoImage{	display: block;	width:auto; height:1.4cm; margin-left: auto; margin-right: auto; border: 0px solid white;}
+.tableLeft{	display: inline-block;	float:left; margin-left: 10mm; margin-bottom: 4mm;}
+/* .tableLeft{	display: inline-block; margin-left: 13mm;} */
+.tableRight{display: inline-block;	float:right;}
+.tableTop{margin-top: 4mm;}
+.tableBottom{margin-bottom: 4mm;}
+.cellBottomMargin{margin-bottom: 2.5mm;}
+.barcodeVertical{width:160%; height:180%; transform-origin: left; transform: translate(20%, 180%) rotate(270deg) ;}
+.textLabel{font-family:Arial; font-size: 10px;font-weight: bold;}
+.accessionNo{margin-bottom:0;margin-top:4px;font-family:Arial; font-size: 10px;}
+.barcodeImage{width:100%;}
+#table1,#table2{margin-top: 6mm;}
+#table2,#table4,#table6,#table8,#table10{margin-left: 34mm;}
+/* #table1,#table2,#table3,#table4,#table5,#table6,#table7,#table8{margin-bottom: 3mm;} */
+#table9,#table10{margin-bottom: 4mm;}
+
+/* #table1,#table3,#table5,#table7,#table9{margin-left: 9.5mm;margin-right: 0mm;} */
+
+
+/* FOR WEB IN MM END */
+
+
+/* FOR WEB IN PX START */
+
+/* table { border-collapse: collapse; margin-bottom: 4mm; margin-left: 9.5mm; margin-right: 9.5mm; display: inline-block; */
+/*   	font-family:Arial Black; font-size: 11px; font-weight: bold; text-align:center; border: 0px solid white; line-height: 1;} */
+/* th {border: 0.5mm solid black;} */
+/* td {height: 17.5px; 	width: 179px; line-height: 1;	border: 0.5mm solid black;border-right: 0px solid white;padding:0px;} */
+/* .noBorder{border: 0.5mm solid white;} */
+/* .withBorder{border: 0.5mm solid black;} */
+/* .logoBar {	width: 210px; border: 0mm solid white;} */
+/* .logoImage{	display: block;	width:auto; height:1.4cm; margin-left: auto; margin-right: auto;border: 0px solid white;} */
+/* .emptyCell{	width: 61px; height: 146px; border: 0.1mm solid white;} */
+/* .fictCellSingle{vertical-align: center;	height: 37.2px;} */
+/* .tableLeft{	display: inline-block;	float:left;} */
+/* .tableRight{display: inline-block;	float:left;} */
+
+/* FOR WEB IN PX END */

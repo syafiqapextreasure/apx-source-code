@@ -1,0 +1,74 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="70pt" margin-bottom="70pt" margin-left="70pt" margin-right="70pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center">Paradigm Systems Berhad</fo:block>
+<fo:block font-weight="bold" text-align="center">Suite A605, Phileo Damansara II</fo:block>
+<fo:block font-weight="bold" text-align="center">15, Jalan 16/11,</fo:block>
+<fo:block font-weight="bold" text-align="center">Petaling Jaya</fo:block>
+<fo:block font-weight="bold" text-align="center">46350 Selangor</fo:block>
+<fo:block space-before.optimum="20pt">Our Ref: 0000007194</fo:block>
+<fo:block space-before.optimum="12pt">Date: 20101230</fo:block>
+<fo:block>Time: 104822</fo:block>
+<fo:block space-before.optimum="24pt">Finance Department</fo:block>
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">REQUEST FOR PAYMENT</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt">As per enclosure, we seek your cooperation in managing the bank draft under the vendor name by following the given information in the invoice</fo:block>
+<fo:block space-before.optimum="12pt">Vendor Details :-</fo:block>
+<fo:block>                 BOOS</fo:block>
+<fo:block>                 PETALING JAYA</fo:block>
+<fo:block space-before.optimum="24pt">                 null</fo:block>
+<fo:block>Vendor Account: null</fo:block>
+<fo:block>Vendor Bank:    null</fo:block>
+<fo:block space-before.optimum="12pt">Vote Center :-</fo:block>
+<!-- Table -->
+<fo:table table-layout="fixed" width="100%" space-before.optimum="12pt">
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="2cm"/>
+  <fo:table-column column-width="2cm"/>
+  <fo:table-body>
+    <fo:table-row>
+      <fo:table-cell>
+        <fo:block>
+          Item Count
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Order No
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Description
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Quantity
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Amount
+        </fo:block>
+      </fo:table-cell>
+    </fo:table-row>
+    <fo:table-row><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006482</fo:block></fo:table-cell><fo:table-cell><fo:block>Malaysia at 50 : achivements and aspirations / edited by Syed Arabi Idid.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>129.42</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>2</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006483</fo:block></fo:table-cell><fo:table-cell><fo:block>The Wiley - Blackwell handbook of family psychology / edited by James H. Bray, Mark Stanton.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>755.82</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>3</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006484</fo:block></fo:table-cell><fo:table-cell><fo:block>Best practices in school neuropsychology : guidelines for effective practice, assessment, and evidence - based intervention / edited by Daniel C. Miller.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>305.82</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>4</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006485</fo:block></fo:table-cell><fo:table-cell><fo:block>Substance abuse treatment for youth and adults / edited by David W. Springer & Allen Rubin.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>197.82</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>5</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006486</fo:block></fo:table-cell><fo:table-cell><fo:block>Classroom that sparks! : recharge and revive your teaching / Emma S. McDonald, Dyan M. Hershman.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>86.22</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>6</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006487</fo:block></fo:table-cell><fo:table-cell><fo:block>Cheating in school : what we know and what we can do / Stephen F. Davis, Patrick F. Drinan, Tricia Bertram Gallant.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>284.22</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>7</fo:block></fo:table-cell><fo:table-cell><fo:block>0000006488</fo:block></fo:table-cell><fo:table-cell><fo:block>Leadership for a better world : understanding the social change model of leadership development / Susan R. Komives, Wendy Wagner and Associates.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>100.62</fo:block></fo:table-cell></fo:table-row>
+  </fo:table-body>
+</fo:table>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

@@ -1,0 +1,223 @@
+<!--BEGIN ARRAY INVDETAILS
+   INVOICE
+   DESC
+   INVOICEDESC
+   FOREIGNUNITPRICE
+   CURRENCY
+   QUANTITY
+   FOREIGNAMOUNT
+   AMOUNT
+   ITEMCOUNT
+END ARRAY
+
+BEGIN VARIABLE
+   LETTERSUBJECT
+   LIBRARYNAME
+   LIBRARYADD1
+   LIBRARYADD2
+   LIBRARYADD3
+   LIBRARYPOSTCODE
+   LIBRARYTOWN
+   LIBRARYPHONE
+   BRANCHNAME
+   BRANCHADD1   
+   BRANCHADD2   
+   BRANCHADD3   
+   BRANCHPOSTCODE   
+   BRANCHTOWN
+   LETTERDATE
+   LETTERTIME
+   LETTERREF
+   VENDORID
+   VENDORNAME
+   VENDORADD1
+   VENDORADD2
+   VENDORADD3
+   VENDORPOSTCODE
+   VENDORCONTACT
+   OFFICERNAME
+   DESIGNATION
+   LOGINOFFICER
+   LOGINOFFICERDESIGNATION
+   REFERENCENO
+   CURRENCYLBL
+   VENDORACCOUNTNO
+   VENDORBANK
+   POREFERNO
+   TOTALAMOUNT
+   TOTALFOREIGNAMOUNT
+   VOTECENTER  (remove)
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 8pt !important;
+		           font-family: "Tahoma";
+		           text-rendering: optimizeLegibility;
+		}
+			  
+		h1.entry-title {
+			  font-size: 8pt !important;
+			  font-family: "Tahoma";
+		}
+	}
+	
+	body {
+		font-size: 10pt !important;;
+		font-family: "Tahoma";
+		margin-left: 0.50in; 
+		margin-right: 0.50in; 
+		text-rendering: optimizeLegibility;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 8pt !important;;
+		font-family: "Tahoma"; 
+		margin-left: 0.50in; 
+		margin-right: 0.50in; 
+		text-rendering: optimizeLegibility;
+	}
+	
+	</style>
+	</head>
+	<body>
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYNAME)</b></div>
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYADD1)</b></div>
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYADD2)</b></div>
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYADD3)</b></div>
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYPOSTCODE)</b></div>
+		<div class="ta-center" style="left:0.0in;width:6.50in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br/>
+		
+		<br>
+		<br>
+		Our Ref : (LETTERREF)<br/>
+		<br>
+		Date : (LETTERDATE)<br/>
+		Time : (LETTERTIME)<br/>
+		<br>
+		<br>
+		Finance Department<br/>
+		(LIBRARYNAME)<br/>
+		<br>
+		<br>
+		Dear Sir/Madam,<br>
+		<br>
+		<b>RE: <u>(LETTERSUBJECT)</u></b><br>
+		<br>
+		As per enclosure, we seek your cooperation in managing the bank draft under the vendor name by following the given information in the invoice.<br>
+		<br>
+		
+		Vendor Details :- <br>
+		<div class="ta-left" style="left:0.8in;width:3.00in">(VENDORNAME)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">(VENDORADD1)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">(VENDORADD2)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">(VENDORADD3)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">(VENDORCONTACT)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">Vendor Account : (VENDORACCOUNTNO)</div><br/>
+		<div class="ta-left" style="left:0.8in;width:3.00in">Vendor Bank : (VENDORBANK)</div><br/>
+		<br><br>
+		
+		<table>
+		  <tr>
+		    <th style="margin-left:0.0in;width:0.75in"><u>Item Count</u></th>
+		    <th style="margin-left:0.8in;width:1.00in"><u>Invoice No.</u></th>
+		  	<th style="margin-left:1.8in;width:2.5in"><u>Description</u></th>
+		  	<th style="margin-left:4.35in;width:0.50in"><u>Quantity</u></th>
+		  	<th style="margin-left:5.00in;width:1.00in"><u>Foreign Unit Price</u></th>
+		  	<th style="margin-left:6.00in;width:1.00in"><u>Amount</u></th>
+		  </tr>
+		  {LOOP}<tr>
+		    {LOOP}<td style="margin-left:0.0in;width:0.75in">(ITEMCOUNT)</td>
+		    {LOOP}<td style="margin-left:0.8in;width:1.00in">(INVOICE)</td>
+		    {LOOP}<td style="margin-left:1.8in;width:2.5in">(INVOICEDESC)(DESC)</td>
+		    {LOOP}<td style="margin-left:4.35in;width:0.50in">(QUANTITY)</td>
+		    {LOOP}<td style="margin-left:5.00in;width:1,00in;">(FOREIGNUNITPRICE)</td>
+		     {LOOP}<td style="margin-left:6.00in;width:1.00in">(CURRENCY) (AMOUNT)</td>
+		  {LOOP}</tr>
+		  	{END LOOP} 
+		  	 <tfoot>
+			    <tr>
+			      <td></td>
+			      <td colspan="2"><b>Total Amount:</b></td>
+			      <td>(TOTALAMOUNT)</td>
+			    </tr>
+			 </tfoot>
+		</table>
+		
+		<!-- <br><br>
+		<div class="ta-left" style="left:1.00in;width:1.00in"><b>Total Amount:</b></div>
+		<div class="ta-left" style="right:6.00in;width:1.00in">(TOTALAMOUNT)</div> -->
+		<br><br><br>
+		
+		<div class="ta-left">Please forward the mentioned bank draft to us for further action.</div><br>
+		<br><br>
+		
+		<div class="ta-left">Thank You.</div><br>
+		<br>
+		
+		<div class="ta-left">Yours sincerely,</div><br>
+		<br><br><br><br><br>
+		
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+		<br>
+
+	</body>
+	</html>

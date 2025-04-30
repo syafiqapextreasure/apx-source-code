@@ -1,0 +1,203 @@
+<!-- BEGIN ARRAY ORDERITEMS
+    NO
+    ORDERNO
+    ISBN
+    SINGLEISBN
+    TITLE
+    PUBLISHER
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    TOTALFOREIGNPRICE
+    TOTALLOCALPRICE
+    EXCHANGERATE
+    ORDERDATE
+    AUTHOR
+    PUBLICATION
+    EDITION
+    SERIES
+    NOTES
+    NOTES502
+    BIBSOURCE
+    FOREX
+    REFERENCENO
+    REQUESTOR
+    DEPARTMENT
+    REMARKS
+    ANNOTE
+    MEETINGNAME
+    CONTROLNO
+    EXPDATE
+    UNIT
+    ROWNO
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    ORDERTOTAL
+    ORDERTOTALINWORD
+    TOTALQUANTITY
+    UNITCURRENCY
+    ORDERFOREIGN
+    BATCHREQUESTORID
+    EXPDATE
+    LOGINOFFICER
+    OFFICERNAME
+    DESIGNATION  
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt;
+		font-family: "Times New Roman";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		/* position:absolute; */
+		white-space: nowrap;
+		overflow: hidden;
+	  	/* font-size: 10pt;
+		font-family: "Times New Roman"; */
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	
+	<div class="table" style="margin-left:1.0in;width:1.60in">Tarikh Pesanan/<i>Order Date  </i>: </div>
+	<div class="table" style="width:4.00in"> (LETTERDATE)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">No. Pesanan/<i>Order No </i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> <b><u>(ORDERNO)</u></b></div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">ISBN:</div>
+	{LOOP}<div class="table" style="width:2.00in">(SINGLEISBN)</div>
+	{LOOP}<div class="table" style="width:1.10in">Control No :</div>
+	{LOOP}<div class="table" style="width:1.60in">(CONTROLNO)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Pengarang/<i>Author</i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> (AUTHOR)</div><br/><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Judul/<i>Title</i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> (TITLE)</div><br/><br>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Penerbit/<i>Publication</i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> (PUBLICATION)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Kuantiti/<i>Quantity</i>: </div>
+	{LOOP}<div class="table" style=" text-align: right;width:0.80in;"> (QUANTITY)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Harga seunit/<i>Unit Price</i>: </div>
+	{LOOP}<div class="table" style=" text-align: right;width:0.80in;"> (UNITFOREIGNPRICE)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Jumlah/<i>Total</i>: </div>
+	{LOOP}<div class="table" style=" text-align: right;width:0.80in;"> RM (TOTALFOREIGNPRICE)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Catitan/<i>Remarks</i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> (ANNOTE)</div><br/><br/>
+	
+	{LOOP}<div class="table" style="margin-left:1.0in;width:1.60in">Pemohon/<i>Requestor</i>: </div>
+	{LOOP}<div class="table" style="width:4.00in"> (REQUESTOR)</div><br/><br/>
+	{END LOOP}
+	
+	<div class="table" style="margin-left:1.0in;width:1.20in">Pembekal/<i>Supplier</i>: </div>
+	<div class="table" style="width:4.50in"> (VENDORNAME)</div><br/>
+	
+	<div class="table" style="margin-left:2.2in;width:4.50in">(VENDORADDRESS1)</div><br/>
+	<div class="table" style="margin-left:2.2in;width:4.50in">(VENDORADDRESS2)</div><br/>
+	<div class="table" style="margin-left:2.2in;width:4.50in">(VENDORADDRESS3)</div><br/>
+	<div class="table" style="margin-left:2.2in;width:4.50in">(VENDORPOSTCODE)</div><br/>
+	
+	<div class="table" style="margin-left:5.20in">................................</div><br/>
+	
+	<div class="table" style="margin-left:5.20in">Pustakawan /<i>Librarian</i></div>
+	</body>
+	</html>

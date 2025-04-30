@@ -1,0 +1,19 @@
+#Save PDF files
+#Cataloging files 
+PDF_E11=C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\PDF\\Circulation\\
+PDF_E03=C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\PDF\\Circulation\\
+PDF_ER01=C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\PDF\\Circulation\\
+#Template files for PF
+#Cataloging
+ER11 = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\template\\ER11.fo
+ER03 = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\template\\ER03.fo
+ER01 = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\template\\ER01.fo
+logo = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\template\\logo\\WILMU.PNG
+#FO files
+#Cataloging
+Fo_E11 = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\fo\\
+Fo_E03 = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\fo\\
+Fo_E01=  C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Circulation\\WebContent\\WEB-INF\\doc\\fo\\
+
+#SmartCard
+SC_Path = C:\\SmartCardReader\\Patron.txt

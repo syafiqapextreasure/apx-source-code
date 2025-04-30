@@ -1,0 +1,65 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="30pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+<fo:block font-weight="bold" text-align="center" font-size="13px">Perpustakaan Tuanku Bainun</fo:block>
+<fo:block font-weight="bold" text-align="center">Universiti Pendidikan Sultan Idris</fo:block>
+<fo:block font-weight="bold" text-align="center">35900 Tanjong Malim </fo:block>
+<fo:block font-weight="bold" text-align="center">Perak Darul Ridzuan</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 05-4581599 Fax: 05-4506779</fo:block>
+
+<fo:block space-before.optimum="12pt">Our Ref: (REF)</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 19/12/2018</fo:block>
+<fo:block>Time: 10:32:46 AM</fo:block>
+
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">Invoice Payment</fo:inline></fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Invoice No.</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Voucher No</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Voucher Date</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Nett Amount</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold">Amount(RM)</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+<fo:table-row><fo:table-cell><fo:block>I05120244</fo:block></fo:table-cell><fo:table-cell><fo:block>ss</fo:block></fo:table-cell><fo:table-cell><fo:block>19/12/2018</fo:block></fo:table-cell><fo:table-cell><fo:block> RM 9329.14</fo:block></fo:table-cell><fo:table-cell><fo:block> 9329.14</fo:block></fo:table-cell></fo:table-row>
+
+</fo:table-body>
+
+</fo:table>
+
+<fo:block space-before.optimum="36pt">Enclosed herewith is a bankdraft no. :<fo:inline font-weight="bold">ds</fo:inline>  dated  <fo:inline font-weight="bold">19/12/2018</fo:inline> 
+ as a payment to the above mentioned, copy is attached.</fo:block>
+<fo:block space-before.optimum="24pt">Kindly acknowledge upon receipt.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="24pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">Sysadmin</fo:block>
+<fo:block>Pensyarah</fo:block>
+ </fo:flow>
+  </fo:page-sequence>
+</fo:root>

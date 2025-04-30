@@ -1,0 +1,262 @@
+<!-- 
+	BEGIN ARRAY ORDERITEMS
+    NO
+    ORDERNO
+    ISBN
+    SINGLEISBN
+    TITLE
+    PUBLISHER
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    TOTALFOREIGNPRICE
+    TOTALLOCALPRICE
+    EXCHANGERATE
+    ORDERDATE
+    AUTHOR
+    PUBLICATION
+    EDITION
+    SERIES
+    NOTES
+    NOTES502
+    BIBSOURCE
+    FOREX
+    REFERENCENO
+    REQUESTOR
+    DEPARTMENT
+    REMARKS
+    ANNOTE
+    MEETINGNAME
+    CONTROLNO
+    EXPDATE
+    UNIT
+    ROWNO
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    ORDERDATE
+    INVOICENO
+    INVOICEAMOUNT
+    CHEQUENO
+    CHEQUEDATE
+    ORDERTOTAL
+    TOTALQUANTITY
+    UNITCURRENCY
+    ORDERFOREIGN
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	  @media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		} 
+		
+		@media print and (color) {
+		   * {
+		      -webkit-print-color-adjust: exact !important;;
+		      print-color-adjust: exact !important;;
+		      -webkit-font-smoothing: antialiased;
+			  -moz-osx-font-smoothing: grayscale;
+		   }
+		}
+	
+	  body {
+		font-size: 10pt;
+		font-family: "Times New Roman";
+		margin-left: 0.20in;
+		/* -webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale; */
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		position:absolute;
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt;
+		font-family: "Times New Roman"; 
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYNAME)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD1)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD2)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD3)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">(VENDORNAME)</div><br/>
+		<div class="ta-left">(VENDORADDRESS1)</div><br/>
+		<div class="ta-left">(VENDORADDRESS2)</div><br/>
+		<div class="ta-left">(VENDORADDRESS3)</div><br/>
+		<div class="ta-left">(VENDORPOSTCODE)</div><br/>
+		<div class="ta-left">(VENDORTELEPHONE)</div><br/>
+		<br/>
+
+		<div class="ta-left">ATTENTION : (VENDORCONTACT)</div><br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">(REFERENCENO)</div><br/>
+		<div class="ta-left">(LETTERDATE)</div><br/>
+		<div class="ta-left">(LETTERTIME)</div><br/>
+		<br/>
+		
+		<div class="ta-left"><b>(LETTERSUBJECT)</b></div><br/>
+		<br/>
+
+		<div class="table" style="margin-left:0.00in;width:1.25in">Reference No :</div>
+		<div class="table" style="margin-left:1.30in;width:1.80in">(REFERENCENO)</div>
+		<div class="table" style="margin-left:3.50in;width:1.50in">Order Date :</div>
+		<div class="table" style="margin-left:5.05in;width:1.20in">(ORDERDATE)</div><br/>
+		
+		<div class="table" style="margin-left:0.00in;width:1.25in">Invoice No. :</div>
+		<div class="table" style="margin-left:1.30in;width:1.80in">(INVOICENO)</div>
+		<div class="table" style="margin-left:3.50in;width:1.50in">Invoice Amount :</div>
+		<div class="table" style="margin-left:5.05in;width:1.20in">(INVOICEAMOUNT)</div><br/>
+		
+		<div class="table" style="margin-left:0.00in;width:1.25in">Bank Draft/Cheque No. :</div>
+		<div class="table" style="margin-left:1.30in;width:1.80in">(CHEQUENO)</div>
+		<div class="table" style="margin-left:3.50in;width:1.50in">Bank Draft/Cheque Date :</div>
+		<div class="table" style="margin-left:5.05in;width:1.20in">(CHEQUEDATE)</div><br/>
+		<br/>
+		<br/>
+		
+		<div class="table" style="margin-left:0.0in;width:0.75in"><u>ORDER #</u></div>
+		<div class="table" style="margin-left:0.8in;width:0.75in"><u>ISBN</u></div>
+		<div class="table" style="margin-left:1.6in;width:2.0in"><u>DESCRIPTION</u></div>
+		<div class="table" style="margin-left:3.65in;width:0.50in"><u>EDITION</u></div>
+		<div class="table" style="margin-left:4.20in;width:0.50in"><u>QUANTITY</u></div>
+		<div class="table" style="margin-left:4.75in;width:0.50in"><u>UNIT PRICE</u></div>
+		<div class="table" style="margin-left:5.55in;width:0.75in"><u>FOREIGN AMOUNT</u></div>
+		<div class="table" style="margin-left:6.35in;width:0.75in"><u>AMOUNT</u></div>
+		<div class="table" style="margin-left:7.20in;width:0.65in"><u>EXPECTED DATE</u></div> 
+		<br/><br/>
+		
+		{LOOP}<div class="table" style="margin-left:0.00in;width:0.75in">(ORDERNO)</div>
+		{LOOP}<div class="table" style="margin-left:0.80in;width:0.75in">(ISBN)</div>
+		{LOOP}<div class="table" style="margin-left:1.60in;width:2.00in">(TITLE)</div>
+		{LOOP}<div class="table" style="margin-left:3.65in;width:0.50in">(EDITION)</div>
+		{LOOP}<div class="table" style="margin-left:4.20in;width:0.50in">(QUANTITY)</div>
+		{LOOP}<div class="table" style="margin-left:4.75in;width:0.50in">(UNITCURRENCY) (UNITFOREIGNPRICE)</div>
+		{LOOP}<div class="table" style="margin-left:5.55in;width:0.75in">(UNITCURRENCY) (TOTALFOREIGNPRICE)</div>
+		{LOOP}<div class="table" style="margin-left:6.35in;width:0.75in">RM (TOTALLOCALPRICE)</div>
+		{LOOP}<div class="table" style="margin-left:7.20in;width:0.65in">(EXPDATE)</div>
+		{END LOOP} 
+		<br/>
+
+		<div class="ta-left" style="margin-left:4.75in;width:0.75in">TOTAL : </div>
+		<div class="ta-left" style="margin-left:5.55in;width:0.75in">(UNITCURRENCY) (ORDERFOREIGN)</div>
+		<div class="ta-left" style="margin-left:6.35in;width:0.75in">RM (ORDERTOTAL)</div>
+		<br/>
+		<br/>
+
+		<div class="ta-left">Attached herewith  is the invoice  and bank  draft for  the above order.  Please  supply the item(s) 
+		according  to  the terms  and conditions of our Library.</div><br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Thank You.</div>
+		<br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Yours sincerely,</div><br/>
+		<br/>
+		<br/>
+		<br/>
+
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+		<br/>
+
+	</body>
+	</html>

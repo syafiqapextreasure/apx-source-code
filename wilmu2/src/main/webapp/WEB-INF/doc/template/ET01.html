@@ -1,0 +1,155 @@
+<!--
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    LETTERSUBJECT   
+    PATRONID
+    PATRONNAME
+    PATRONADD1
+    PATRONADD2
+    PATRONADD3
+    POSTCODE
+    TOWN 
+    TITLE
+    DATEFORWARD
+    GRACEPERIOD
+    DATERETURN
+    OFFICERNAME
+    DESIGNATION    
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt;
+		font-family: "Times New Roman";
+		margin-left: 0.20in;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		/* position:absolute; */
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt;
+		font-family: "Times New Roman"; 
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+	<br/><br/>
+	<div class="table" style="padding-top:0.80in;margin-left:4.8in;width:1.00in">(REFERENCENO)</div><br/>
+	<br/>
+	<div class="table" style="margin-left:0.3in;width:3.50in">(VENDORNAME)</div><br/>
+	<div class="table" style="margin-left:0.3in;width:3.50in">(VENDORADDRESS1)</div>
+	<div class="table" style="margin-left:1.0in;width:1.00in">(LETTERDATE)</div><br/>	
+	<div class="table" style="margin-left:0.3in;width:3.50in">(VENDORADDRESS2)</div><br/>
+	<div class="table" style="margin-left:0.3in;width:3.50in">(VENDORADDRESS3)</div>
+	<div class="table" style="margin-left:1.0in;width:2.10in">UPSI(ISO)/LIB/P01/B01</div><br/>	
+	
+	{LOOP}<div class="table" style="padding-top:1.40in;margin-left:0.0in;width:0.5in">(NO)</div>
+	{LOOP}<div class="table" style="width:0.9in">ISBN:</div>
+	{LOOP}<div class="table" style="width:2.0in">(SINGLEISBN)</div>
+	{LOOP}<div class="table" style="width:0.80in">Order No.:</div>
+	{LOOP}<div class="table" style="width:1.0in">(ORDERNO)</div>
+	{LOOP}<div class="table" style="width:0.80in">(QUANTITY)</div>
+	{LOOP}<div class="table" style="width:0.80in">(UNITFOREIGNPRICE)</div>
+	{LOOP}<div class="table" style="width:0.80in">(UNITCURRENCY)</div>
+	{LOOP}<div class="table" style="width:0.80in">(TOTALLOCALPRICE)</div><br/>
+	
+	{LOOP}<div class="table" style="margin-left:0.5in;width:0.40in">Tajuk: </div>
+	{LOOP}<div class="table" style="margin-left:0.5in;width:3.20in">(TITLE)</div><br/>
+	{END LOOP}
+	
+	<div class="table" style="padding-top:4.00in;margin-left:0.7in;width:0.7in">Exchange: 1</div>
+	<div class="table" style="width:0.3in">(UNITCURRENCY)</div>
+	<div class="table" style="margin-left:0.7in;width:1.0in">= RM <!-- (EXCHANGERATE)  --> </div><br/>
+	
+	<div class="table" style="margin-left:0.7in;width:0.7in">Pencadang:</div>
+	<div class="table" style="margin-left:0.7in;width:2.5in">(BATCHREQUESTORID)</div><br/>
+	
+	<div class="table" style="margin-left:1.4in;width:3.00in">(ORDERTOTALINWORD)</div>
+	<!-- <div class="table" style="margin-left:4.0in;width:0.90in"> (ORDERTOTAL)</div> --><br/>
+	
+	<div class="table" style="margin-left:2.0in;width:4.00in">PERPUSTAKAAN - PEJABAT IKHTISAS</div>
+	<div class="table" style="margin-left:1.5in;width:0.8in">527000</div>
+	<div class="table" style="width:0.5in">(ORDERTOTAL)</div><br/>
+	
+	<div class="table" style="margin-left:1.2in;width:1.50in">(EXPDATE)</div>
+	<div class="table" style="margin-left:2.1in;width:2.0in">(LOGINOFFICER)</div>
+	<div class="table" style="margin-left:1.5in;width:0.5in">(ORDERTOTAL)</div><br/>
+	
+
+	</body>
+	</html>

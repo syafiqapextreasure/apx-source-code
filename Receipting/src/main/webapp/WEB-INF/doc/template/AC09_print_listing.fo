@@ -1,0 +1,17 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="8px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one"
+                  page-height="29.7cm"
+                  page-width="21cm">
+<fo:region-body margin-top="30pt" margin-bottom="30pt" margin-left="20pt" margin-right="20pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+  <fo:page-sequence master-reference="one">
+	<fo:flow flow-name="xsl-region-body">
+	<fo:block font-weight="bold" font-size="12px">Number of item(s): (ITEM_COUNT)</fo:block>
+
+   	(LISTING)
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

@@ -1,0 +1,64 @@
+Cataloging 2019.1.01
+Changes made: 
+- Change the design of BO record 
+- Display error message for tag, indicator and subfield ( Reason of fail to save and index)
+- Change the functions for index, unindex and save record
+- Added error message code 129, 130 in GLERRMSTR
+- Store z390 record into memory and don't have to download file
+- Check min and max acc no in javascript
+- Add into database ACCNOLEN and ACCNOMINLEN
+- Can view ISBD record with punctuation field
+- If data is blank or not, it will retrieve all the data that have been predefault
+- View with Marc Record 
+- There is linkage for certain tag
+
+Cataloging 2019.1.02
+Changes made : 
+1) Template Maint - Validation check if template is empty
+				  - Delete all the existing tag before adding new tags
+2) z390			  - Able to download next record, after save and index
+				  - After download record, it will display buffer no
+				  - Enable all the actions after downloading data
+				  - Able to save, index and unindex record 
+3) BO 			  - Able to view default data when add tag
+				  - Checks for duplicate data 
+				  - Able to index record successfully
+				  - Remove subfield without data when index 
+				  - Able to retrieve data from tag 880 
+				  - Get filling indicator
+				  - Check subfield before save and index 
+				  - Add tag with linkage 
+				  
+Cataloging 2019.2.03
+1) Accession Maint - Edited design of add, edit and view form
+					- Able to select and get rate based on currency selection
+					- Modal popup automatically closes if search by accession
+					- Vendor and catalog search modal displayed in front of other modal
+					- Can search by control no 
+					- All the displayed record can be edited and deleted
+					- When change codes and control no, title and description changes 
+					- Can preview currently clicked record 
+					- When invalid accession is searched, message is displayed
+					- Accession max length is set to 10 
+					- Able to search accession using accession maint
+					
+2)BO				- Added type to cataloging such as acq, serial, etc..
+					- Retain value for control tags 
+					- Enable normal tag textbox and disable control tag 
+					- Disable indicators textbox
+					- Retain value in template selection 
+					- After save and index back to original template 
+					- After add tag, can use marc uploader data
+					- Can accept double quote to index and save record
+					- If tag 000 does not exist, it will not be indexed or unable to search
+					
+Cataloging - Authority 2019.2.03
+1) Template Maintenance - Unable to retrieve selected module type. Passes module type to reload the page
+						- Not checking template with marc type when adding new template. Checks template name and marc type
+						- Couldn't refresh after delete particular tag
+
+Cataloging 2019.2.04
+1)BO				- When user untick security, checkbox is not checked
+					- Disabled security action for all the actions except for indexed record. 
+					  User able to change the security of record for indexed record only
+

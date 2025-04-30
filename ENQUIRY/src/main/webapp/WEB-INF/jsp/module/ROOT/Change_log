@@ -1,0 +1,63 @@
+/////*******************************/////
+
+/////////////////////////////////2019.1.01//////////////////////////////////////
+# Develop the module
+
+/////////////////////////////////2019.1.02/////////////////////////////////////
+###Monograph Binding Maintenance
+- suggest that when user search the record by Date, should search in range  
+- able to save the record even not insert the accession no, happen when want to add status = "pending". Happen when user click on accession column and then proceed to insert other data
+- there isno prompt message inform if user inert invalid user id or invalid binder 
+- there is no prompt message if user insert accession that have status unable to bind (Lost, missing)
+- there no checkbox to retain the value after successfully add 
+- unable to add the record it prompt "unsuccessful" 
+
+
+
+###Serials Binding Maintenance
+- only record with status pending can be edit, as now all status can be edit, happen when user retrieve the record 
+- only record with status pending can be delete, as now all status can be delete
+- it prompt invalid control no for binding, but user still able to add the new record for that control no
+- when user view the record and then add new record, the form will displayed status follow the view record status. Unable to add the record as there is no retrieve button
+- the expected date shouldn't less than date sent
+- should't allowed user to save the record if user didnt retrieve the Serial issue 
+- unable to perform search after user view the record 
+- in BIINST table in BI02ISSN not update the ISSN no 
+- the expected date should be reset to the current date when user add the second record 
+- the label for radio button should be Returned not received 
+- suggest when user retrieve record using control no should limit to 10 digit only 
+
+###Bindery Claims
+- Suggest that the radio button should be in line under the search column
+
+###Binding Check-In
+- Unable to search using title 
+- should have prompt message "No current record in this range" when user insert invalid search value 
+- suggest that no need to insert exact word to search the record  (only for 4)
+- spine is the mandatory field to be enter when check in item
+- suggest that when user insert the details of accession, should add the seletion for currency 
+
+###Binding Management
+- suggest that the Monograph label should placed beside the radio button 
+- ellipsis button for cntrol no not working
+- the search & cancel button should be place in line under search column
+- suggest should have refresh button 
+- suggest should change the status from P to Pending
+
+////////////////////////////////2019.1.03///////////////////////////////////////////////////
+###Monograph Binding Maintenance
+- suggest that when user search the record by Date, should search in range  *the column for date should be wider
+- Numbering for column No not increase when successfully add record.
+
+###Binding Management
+- ellipsis button for cntrol no not working  *as now it search the record, but it not retrieve the data
+
+###Binding Check-In 
+- should't update the Spine data in CTDOCM at CT03spine column as when user check in spine label the label will become in one row 
+- Unable to search using title  *as now it search the record, but it not retrieve the data 
+- suggest that no need to insert exact word to search the record  *as now when user didnt insert exact word, the search result displayed, but the data exceed from it margin table 
+- when user click save, didnt generate accession no and then click generate accession, it still prompt "Accession is required"
+
+###Serials Binding Maintenance
+- suggest when user retrieve record using control no should limit to 10 digit only should also change for monograph binding
+

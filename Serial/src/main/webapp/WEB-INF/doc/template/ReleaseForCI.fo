@@ -1,0 +1,53 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">(LIBRARY_ORG_NAME)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_1)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_2)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_3)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_TEL) (LIBRARY_FAX)</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: (DATE)</fo:block>
+<fo:block>Time: (TIME)</fo:block>
+
+<fo:block space-before.optimum="12pt">(PATRONNAME)</fo:block>
+<fo:block>(COURSE)</fo:block>
+<fo:block>(PATRONADD1)</fo:block>
+<fo:block>(PATRONADD2)</fo:block>
+<fo:block>(PATRONADD3)</fo:block>
+<fo:block>(POSTCODE) (TOWN)</fo:block>
+<fo:block>Home Tel : (HOMETEL)</fo:block>
+<fo:block>Office Tel : (OFFTEL)</fo:block>
+
+
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">ITEM RESERVATION</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">2.  We are pleased to inform you that the item reserved by you had be returned and its available for you to be borrowed.Please obtain the item within (COLLECTIONDAYS) days from the issue date of this letter</fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">3.  Do inform us if you need to cancel that reservation.</fo:block>
+
+<fo:block>Title			: (TITLE)</fo:block>
+<fo:block>Call No.		: (CALLNO)</fo:block>
+<fo:block>ISBN			: (ISBN)</fo:block>
+<fo:block>Accession No.	: (ACCNO)</fo:block>
+<fo:block>DueDate		: (DUEDATE)</fo:block>
+<fo:block>(PICKVAR)		  (PICKBRNC)	</fo:block>
+
+
+<fo:block space-before.optimum="24pt">Please neglect this letter if action has been taken.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

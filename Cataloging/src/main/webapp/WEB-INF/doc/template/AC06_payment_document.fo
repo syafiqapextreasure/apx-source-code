@@ -1,0 +1,45 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">(LIBRARY_ORG_NAME)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_1)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_2)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_3)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_TEL) (LIBRARY_FAX)</fo:block>
+<fo:block space-before.optimum="20pt">Our Ref: (PAYMENT_REFERENCE_NO)</fo:block>
+<fo:block space-before.optimum="12pt">Date: (DATE)</fo:block>
+<fo:block>Time: (TIME)</fo:block>
+<fo:block space-before.optimum="24pt">Finance Department</fo:block>
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">REQUEST FOR PAYMENT</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">As per enclosure, we seek your cooperation in managing the bank draft under the vendor name by following the given information in the invoice</fo:block>
+<fo:block space-before.optimum="12pt">Vendor Details :-</fo:block>
+<fo:block start-indent="70pt">(VENDOR_NAME)</fo:block>
+<fo:block start-indent="70pt">(VENDOR_ADDRESS_1)</fo:block>
+<fo:block start-indent="70pt">(VENDOR_ADDRESS_2)</fo:block>
+<fo:block start-indent="70pt">(VENDOR_ADDRESS_3)</fo:block>
+<fo:block start-indent="70pt">(PERSON_NAME)</fo:block>
+<fo:block>Vendor Account: (ACCOUNT_NO)</fo:block>
+<fo:block>Vendor Bank:    (BANK_NAME)</fo:block>
+<fo:block space-before.optimum="12pt">Vote Center :-</fo:block>
+
+(INVOICE)
+
+<fo:block space-before.optimum="24pt">Please forward the mentioned bank draft to us for further action.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

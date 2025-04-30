@@ -1,0 +1,292 @@
+<!-- BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    SLIPHEADER
+    ACCESSIONNOHEADER
+    TITLEHEADER
+    CHARGEDDT
+    DUEDT
+    PNAME
+    PADDRESS
+    PATRONID
+    PATRONBARCODEVALUE
+    PATRONNAME
+    ADDR1
+    ADDR2
+    ADDR3
+    OFFICERID
+    OFFICERNAME
+    COMPUTERNAME
+    THANKYOU
+    MEMEXPIRYDATE
+END VARIABLE
+
+BEGIN ARRAY ITEMS
+    CHARGEDATE
+    CHARGETIME
+    BIL
+    ACCNO
+    DUEDATE
+    DUETIME
+    TITLE
+END ARRAY
+-->
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+<style>
+	@page{
+        margin:0;
+    }
+	
+/* @page{size:auto; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;} */
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 11pt !important;
+					font-family: "Tahoma";
+		           text-rendering: optimizeLegibility;
+			  }
+			  
+	}
+		
+	@media print and (color) {
+		* {
+		      -webkit-print-color-adjust: exact !important;;
+		      print-color-adjust: exact !important;;
+		      -webkit-font-smoothing: antialiased;
+			  -moz-osx-font-smoothing: grayscale;
+		   }
+	}
+	
+	  body {
+	  	width: 3.87in;
+        /*min-height:4in;*/
+		font-size: 11pt !important;
+        font-family: "Tahoma";
+		/* margin-left: 0.50in;  
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;*/
+		
+		color:black;
+        -webkit-text-stroke: 0.45px;
+        -webkit-text-stroke: 0.45px rgba(0, 0, 0, 0.1);
+        text-shadow: #fff 0px 1px 1px;
+        -webkit-font-smoothing: antialiased;
+         -moz-osx-font-smoothing: grayscale;
+
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		/*width: 60mm;*/
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+	  	font-size: 11pt !important;
+        font-family: "Tahoma";
+		text-rendering: optimizeLegibility;
+	}
+	
+
+</style>
+</head>
+<body>
+
+    
+	<div class="ta-center" style="left:0.0in;width:3.25in"><b>Perpustakaan Al-Wathiqu Billah</b></div>
+	<div class="ta-center" style="left:0.0in;width:3.25in"><b>Universiti Sultan Zainal Abidin</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>Kampus Gong Badak</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>Kuala Terengganu</b></div><br>
+	<br>
+	<div class="ta-center" style="left:0.0in;width:2.25in">RESIT PINJAMAN</div><br/>
+	
+	<div class="ta-left">Date: (DATETIME)</div><br/><br/>
+     
+      <table>
+
+            <tr>
+
+                  <td style="width:0.30in">ID</td>
+
+                  <td  align="right">:</td>
+
+                  <td syle="width:0.70in"><b>(PATRONID)</b></td>
+
+            </tr>
+
+            <tr>
+
+                  <td valign="top" style="width:0.30in">Name</td>
+
+                  <td align="right">:</td>
+
+                  <td style="width:2.50in">(PATRONNAME)</td>
+
+            </tr>
+
+      </table>
+     
+
+      <br>---------------------------------------------------------<br/>
+
+     
+
+      <table>
+
+            <tr>
+
+                  <th style="width:0.30in">No.</th>
+
+                  <th align="left" style="width:1.00in">Accession No.</th>
+
+            </tr>
+
+            <tr>
+
+                  <th style="width:0.30in"></th>
+
+                  <th align="left" style="width:1.95in">Title</th>
+
+            </tr>
+
+            <tr>
+
+                  <th style="width:0.30in"></th>
+
+                  <th align="left" style="width:1.95in">Charge Date & Time</th>
+
+            </tr>
+
+            <tr>
+
+                  <th style="width:0.30in"></th>
+
+                  <th align="left" style="width:1.95in">Due Date & Time</th>
+
+            </tr>
+
+
+            <tr>
+
+                  <td colspan="2" style="width:3.00in">------------------------------------------------------</td>
+            </tr>
+
+            {LOOP}<tr>
+
+                  {LOOP}<td valign="top" style="width:0.30in">(BIL)</td>
+
+                  {LOOP}<td valign="top" style="width:1.00in"><b>(ACCNO)</b></td>
+
+            {LOOP}</tr>
+
+            {LOOP}<tr>
+
+                  {LOOP}<td valign="top" style="width:0.30in"></td>
+
+                  {LOOP}<td valign="top" style="width:1.95in">(TITLE)</td>
+
+            {LOOP}</tr>
+
+            {LOOP}<tr>
+
+                  {LOOP}<td valign="top" style="width:0.30in"></td>
+
+                  {LOOP}<td valign="top" style="width:1.95in">(CHARGE_DATE) (CHARGE_TIME)</td>
+
+            {LOOP}</tr>
+
+            {LOOP}<tr>
+
+                  {LOOP}<td valign="top" style="width:0.30in"></td>
+
+                  {LOOP}<td valign="top" style="width:1.95in">(DUE_DATE) (DUE_TIME)</td>
+
+            {LOOP}</tr>
+
+            {END LOOP}
+
+      </table>
+
+      ---------------------------------------------------------<br/><br/>
+
+     
+
+	<div class="ta-left">OFFICER :</div>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERID),</div><br/>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERNAME)</div><br/><br/>
+
+     
+
+      <br>
+
+     
+
+      <div class="ta-left">COMPUTER: (COMPUTERNAME)</div><br/>
+
+     
+
+      <br>
+
+      <div class="ta-center" style="margin-left:0.00in;width:2.25in">THANKYOU</div>
+
+     
+
+</body>
+</html>
+

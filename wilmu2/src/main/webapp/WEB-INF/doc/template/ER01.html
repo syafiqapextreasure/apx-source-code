@@ -1,0 +1,200 @@
+<!-- 
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    LETTERSUBJECT
+    LETTERDATE
+    LETTERTIME
+    OFFICERNAME
+    DESIGNATION
+    ORDERNO
+    COPY
+    CONTROLNO
+    TITLE
+    REQUESTOR
+    REQUESTORID
+    REQUESTORNAME
+    REQUESTORDESIGNATION
+    REQUESTORADD1
+    REQUESTORADD2
+    REQUESTORADD3
+    REQUESTORCODE
+    REQUESTORTOWN
+    PUBLISHER
+    ISBN
+    EDITION
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    DEPT
+    DEPTCODE
+    DEPTDESC
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	/* @page{size:auto; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;} */
+	@page{size:60mm 80mm; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+		           text-rendering: optimizeLegibility;
+			  }
+			  
+	}
+		
+	@media print and (color) {
+		* {
+		      -webkit-print-color-adjust: exact !important;;
+		      print-color-adjust: exact !important;;
+		      -webkit-font-smoothing: antialiased;
+			  -moz-osx-font-smoothing: grayscale;
+		   }
+	}
+	
+	  body {
+	  	width: 60mm; height: 80mm;
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		margin-left: 0.50in; 
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		width: 60mm;
+		display:inline-block;
+		/* position:absolute; */
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt !important;;
+		font-family: "Times New Roman"; 
+		text-rendering: optimizeLegibility;
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+	<br/>
+	<br/><div class="ta-center"><b>(LIBRARYNAME)</b></div>
+	<br/><div class="ta-center"><b>(LIBRARYADD1)</b></div>
+	<br/><div class="ta-center"><b>(LIBRARYADD2)</b></div>
+	<br/><div class="ta-center"><b>(LIBRARYADD3)</b></div>
+	<br/><div class="ta-center"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div>
+	<br/>
+	
+	<br/><div class="ta-left">Date : (LETTERDATE)</div>
+	<br/><div class="ta-left">Time : (LETTERTIME)</div>
+	<br/>
+	<br/><div class="ta-left">(PATRONNAME) : ((PATRONID))</div>
+	<br/><div class="ta-left">(COURSE)</div>
+	<br/><div class="ta-left">(PATRONADD1)</div>
+	<br/><div class="ta-left">(PATRONADD2)</div>
+	<br/><div class="ta-left">(PATRONADD3)</div>
+	<br/><div class="ta-left">(POSTCODE) (TOWN)</div>
+	
+	<br/>
+	<br/><div class="ta-left">Home Tel : (HOMETEL)</div> 
+	<br/><div class="ta-left">Office Tel : (OFFTEL)</div>  
+	<br/>
+	
+	<br/><div class="ta-left">Dear Sir/Madam,</div>
+	<br/>
+	<br/><div class="ta-left"><b>(LETTERSUBJECT)</b></div>
+	<br/>
+	<br/><div class="ta-left">2.  We are pleased to inform you that the item reserved by you had be returned and it's available for you to be borrowed.Please obtain the item within (COLLECTIONDAYS) days from the issue date of this letter.</div>
+	
+	<br/>
+	<br/>3.  Do inform us if you need to cancel that reservation.
+	<br/>
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in">Title          </div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (TITLE)</div>
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in"> Call No.      </div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (CALLNO)</div>	
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in"> ISBN          </div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (ISBN)</div>	
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in">Accession No. </div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (ACCNO)</div>	
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in">DueDate      </div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (DUEDATE)</div>	
+	<br/><div class="table" style="margin-left:0.0in;width:1.20in"> (PICKVAR)</div>
+	<div class="table" style="margin-left:1.3in;width:4.00in">: (PICKBRNC)</div>	
+	<br/>
+	<br/><div class="ta-left">Please neglect this letter if action has been taken.</div>
+	<br/>
+	<br/><div class="ta-left">Thank You.</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/><div class="ta-left">Yours sincerely,</div>
+	<br/>
+	<br/>
+	<br/><div class="ta-left">(OFFICERNAME)</div>
+	<br/><div class="ta-left">(DESIGNATION)</div>
+	<br/>
+
+	</body>
+	</html>

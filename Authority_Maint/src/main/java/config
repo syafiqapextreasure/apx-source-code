@@ -1,0 +1,15 @@
+#MYSQL  prod
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmudevmariadbw
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MYSQL - wilmuppkp-dev (PPJ) - need to access CISCO.
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.43/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+template = D:\\WILMUDEVMARIADBW\\tomcat-7.0.62\\webapps\\RPT\\

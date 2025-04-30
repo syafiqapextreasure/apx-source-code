@@ -1,0 +1,53 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">PERPUSTAKAAN AL-MUKHTAR DEV</fo:block>
+<fo:block font-weight="bold" text-align="center">UNIVERSITI SULTAN ZAINAL ABIDIN, KAMPUS GONG BADAK</fo:block>
+<fo:block font-weight="bold" text-align="center">Gong Badak, 21300 Kuala Terengganu, Terengganu</fo:block>
+<fo:block font-weight="bold" text-align="center">MALAYSIA</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 09-6661731 Fax: 09-6653106</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 22/09/2018</fo:block>
+<fo:block>Time: 04:08:41 PM</fo:block>
+
+<fo:block space-before.optimum="12pt">SITI AISYAH BINTI MOHAMAD</fo:block>
+<fo:block>811</fo:block>
+<fo:block>D-40 TAMAN PERUMAHAN GONG BADAK 4</fo:block>
+<fo:block></fo:block>
+<fo:block>KUALA TERENGGANU, TERENGGANU</fo:block>
+<fo:block>21300 </fo:block>
+<fo:block>Home Tel : 0195060457  </fo:block>
+<fo:block>Office Tel : </fo:block>
+
+
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">ITEM RESERVATION</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">2.  We are pleased to inform you that the item reserved by you had be returned and its available for you to be borrowed.Please obtain the item within 1 days from the issue date of this letter</fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">3.  Do inform us if you need to cancel that reservation.</fo:block>
+
+<fo:block>Title			: Balik awal</fo:block>
+<fo:block>Call No.		:  </fo:block>
+<fo:block>ISBN			: </fo:block>
+<fo:block>Accession No.	: 1000174275</fo:block>
+<fo:block>DueDate		: 23/09/2018</fo:block>
+<fo:block>Badak General Collection		  Gong Badak Campus	</fo:block>
+
+
+<fo:block space-before.optimum="24pt">Please neglect this letter if action has been taken.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">PELAJAR PRAKTIKAL 2</fo:block>
+<fo:block></fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

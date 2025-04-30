@@ -1,0 +1,240 @@
+<!--
+BEGIN ARRAY ORDERITEMS
+    NO
+    ORDERNO
+    ISBN
+    SINGLEISBN
+    TITLE
+    PUBLISHER
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    TOTALFOREIGNPRICE
+    TOTALLOCALPRICE
+    EXCHANGERATE
+    ORDERDATE
+    AUTHOR
+    PUBLICATION
+    EDITION
+    SERIES
+    NOTES
+    NOTES502
+    BIBSOURCE
+    FOREX
+    REFERENCENO
+    REQUESTOR
+    DEPARTMENT
+    REMARKS
+    ANNOTE
+    MEETINGNAME
+    CONTROLNO
+    EXPDATE
+    UNIT
+    ROWNO
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    ORDERTOTAL
+    ORDERTOTALINWORD
+    TOTALQUANTITY
+    UNITCURRENCY
+    ORDERFOREIGN
+    BATCHREQUESTORID
+    EXPDATE
+    LOGINOFFICER
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+-->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;text-rendering: optimizeLegibility;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 11pt !important;
+		           font-family: "Times New Roman"";
+		           text-rendering: optimizeLegibility;
+		}
+			  
+		h1.entry-title {
+			  font-size: 11pt !important;
+			  font-family: "Times New Roman"";
+		}
+	}
+	
+	body {
+		font-size: 11pt !important;;
+		font-family: "Times New Roman"";
+		margin-left: 0.30in; 
+		text-rendering: optimizeLegibility;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	/* .table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 11pt !important;;
+		font-family: "Times New Roman""; 
+		margin-left: 0.30in;  
+		text-rendering: optimizeLegibility;
+	} */
+	
+	</style>
+	</head>
+	<body>
+		
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYNAME)</b></div>
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYADD1)</b></div>
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYADD2)</b></div>
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYADD3)</b></div>
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYPOSTCODE)</b></div>
+		<div class="ta-center" style="left:0.0in;width:7.00in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br/>
+		
+		<br/><br/>
+		
+		<div class="ta-left">(VENDORNAME)</div>
+		<div class="ta-left">(VENDORADDRESS1)</div>
+		<div class="ta-left">(VENDORADDRESS2)</div>
+		<div class="ta-left">(VENDORADDRESS3)</div>
+		<div class="ta-left">(VENDORPOSTCODE)</div><br/>
+		
+		<div class="ta-left">ATTENTION : (VENDORCONTACT)</div><br/>
+		<br/><br/>
+		
+		<div class="ta-left">(REFERENCENO)</div><br/>
+		<div class="ta-left">(LETTERDATE)</div><br/>
+		<div class="ta-left">(LETTERTIME)</div><br/>
+		<br/>
+
+		<div class="ta-left"><b>RE : <u>ORDERING LIST</u></b></div><br/>
+		<br/>
+		
+		<table>
+		  <tr>
+		    <th style="width:0.75in"><u>ORDER #</u></th>
+		  	<th style="width:0.75in"><u>ISBN</u></th>
+		  	<th style="width:1.50in"><u>DESCRIPTION</u></th>
+		  	<th style="width:0.55in"><u>EDITION</u></th>
+		  	<th style="width:0.30in"><u>QTY</u></th>
+		  	<th align="right" valign="top" style="width:0.75in"><u>UNIT PRICE</u></th>
+		  	<th align="right" style="width:0.75in"><u>FOREIGN AMOUNT</u></th>
+		  	<th align="right" style="width:0.75in"><u>AMOUNT</u></th>
+		  	<th align="right" style="width:0.75in"><u>EXPECTED DATE</u></th>
+		  </tr>
+		  {LOOP}<tr>
+		    {LOOP}<td valign="top" style="width:0.75in">(ORDERNO)</td>
+		    {LOOP}<td valign="top" style="width:0.75in">(ISBN)</td>
+		    {LOOP}<td valign="top" style="width:1.50in">(TITLE)</td>
+		    {LOOP}<td valign="top" style="width:0.55in">(EDITION)</td>
+		    {LOOP}<td valign="top" align="right" style="width:0.30in">(QUANTITY)</td>
+		    {LOOP}<td valign="top" align="right" style="width:0.75in">(UNITCURRENCY) (UNITFOREIGNPRICE)</td>
+		    {LOOP}<td valign="top" align="right" style="width:0.75in">(UNITCURRENCY) (TOTALFOREIGNPRICE)</td>
+		    {LOOP}<td valign="top" align="right" style="width:0.75in">RM (TOTALLOCALPRICE)</td>
+		    {LOOP}<td valign="top" align="right" style="width:0.75in">(EXPDATE)</td>
+		 {LOOP}</tr>
+		 {END LOOP} 
+		  	 <tfoot>
+			    <tr>
+			      <td colspan="3"></td>
+			      <td align="right"><b>TOTAL :</b></td>
+			      <td align="right"><b>(TOTALQUANTITY)</b></td>
+			      <td></td>
+			      <td><b>(UNITCURRENCY) (ORDERFOREIGN)</b></td>
+			      <td><b>RM (ORDERTOTAL)</b></td>
+			    </tr>
+			 </tfoot>
+		</table>
+		
+		<br/>
+		<div class="ta-left">Please  supply  the  item(s)  according  to  the terms  and  conditions  of  our  Library.</div>
+		<br/><br/>
+		
+		<div class="ta-left">Thank You.</div><br/>
+		<br/><br/>
+		
+		<div class="ta-left">Yours sincerely,</div><br/>
+		<br><br><br><br><br>
+		
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br>
+		<br>
+
+	</body>
+	</html>

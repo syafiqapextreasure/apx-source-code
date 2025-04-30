@@ -1,0 +1,38 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">(LIBRARY_ORG_NAME)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_1)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_2)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_ADDRESS_3)</fo:block>
+<fo:block font-weight="bold" text-align="center">(LIBRARY_TEL) (LIBRARY_FAX)</fo:block>
+<fo:block space-before.optimum="24pt">Date: (DATE)</fo:block>
+<fo:block>Time: (TIME)</fo:block>
+<fo:block space-before.optimum="24pt">(VENDOR_NAME)</fo:block>
+<fo:block>(VENDOR_ADDRESS_1)</fo:block>
+<fo:block>(VENDOR_ADDRESS_2)</fo:block>
+<fo:block>(VENDOR_ADDRESS_3)</fo:block>
+<fo:block space-before.optimum="24pt">Attn.: (VENDOR_PERSON_IN_CHARGE)</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">Reminder (CLAIM_ATTEMPT)</fo:inline></fo:block>
+
+(CLAIM_TABLE)
+
+<fo:block space-before.optimum="12pt" text-align="justify">We have not received the above orders. Please provide us the status report immediately.</fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">Looking forward to hear from you.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

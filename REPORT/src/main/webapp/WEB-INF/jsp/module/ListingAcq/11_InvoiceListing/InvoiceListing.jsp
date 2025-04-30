@@ -1,0 +1,225 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/ListingAcq/Invoice Listing.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/plugin/moment.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script> 
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css"> 
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js"></script>
+    
+    
+   <!--  <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script> -->
+    
+    <script type="text/javascript" src=" //cdn.datatables.net/plug-ins/1.10.24/api/sum().js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/plugin/buttons.print.js"></script>
+	
+
+
+	<!-- <style type="text/css">	
+	
+		@media print
+		{
+			html, body {  border: 1px solid white;
+            height: 99%;
+            page-break-after: avoid;
+            page-break-before: avoid;}
+			.dt-print-table, .dt-print-table thead, .dt-print-table th, .dt-print-table tr 
+			{border: 0 none !important;}
+			
+		}
+		
+		.center {
+			text-align: center;
+		}	
+		
+		.right {
+			text-align: right;
+		}	
+		
+		#red {
+			color: red;
+		}
+		
+		
+
+	</style> -->
+	
+	<style>
+	.account_info {
+		    padding-top: 20px;
+		    /*margin: 10px 0 20px 0;*/
+		    background-color: rgba(214, 224, 226, 0.2);
+		    border-top-width: 0;
+		    border-bottom-width: 2px;
+		    -webkit-border-radius: 3px;
+		    -moz-border-radius: 3px;
+		    border-radius: 3px;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+		    box-shadow: none;
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- START MAIN CONTENT -->
+			<div class="box box-default">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						
+						<!-- <div class="clearfix"></div> -->
+					</div>
+
+					<!--div class="panel-body" id="display_cirAct">
+						<form class="form-horizontal" name="cirActForm" id="cirActForm">
+							<input type="hidden" class="patrSelection" value = "m">
+							<jsp:include page="../../PatronID.jsp"></jsp:include--> 
+							
+							<div class="form-group">
+								<div class="col-sm-2 col-md-2">
+									<input class="form-check-input" type="checkbox" value="account" id="chkAccount">
+								  			<label class="form-check-label" for="chkAccount">Account</label>
+								</div>
+								<div class='col-sm-4'>
+									<div class="form-check">
+										<select id="account" multiple="multiple" name="account">
+											<jsp:include page="../../Select_Brnc.jsp"></jsp:include> 
+										</select>
+									</div>
+								</div>
+
+							</div>
+							
+				
+							
+							<div class="btn-group pull-right ">	
+								<div class="col-md-1"><button type="button" id="Reterive" class="btn btn-primary" title="Retrieve"> Retrieve</button></div>
+					  				<!-- <div class="col-md-1"></div>
+					  				<div class="col-md-1"><button type="button" id="print" class="btn btn-primary" title="Print"><i class="glyphicon glyphicon-print" aria-hidden="true"></i></button></div> -->
+							</div>
+						</form>
+						
+				<!--  div class="col-md-10 col-lg-10 branch_info" style="border:1px solid #ddd">
+					               
+					                
+						                <div class="row">
+						                	<div class="form-group">
+							               	    <div class="col-md-2 col-lg-2">
+							               			<label>Patron ID</label>
+							                	</div>	
+							                	<div class="col-md-3 col-lg-3 patrID"></div>
+							                	
+							                	<div class="col-md-2 col-lg-2">
+							               			<label>Patron Name</label>
+							                	</div>	
+							                	<div class="col-md-5 col-lg-5 patrName"></div>
+							                </div>
+							                
+							                <br>
+							                
+							                <div class="form-group">
+							               	    <div class="col-md-2 col-lg-2">
+							               			<label>Address</label>
+							                	</div>
+							                	<div class="col-md-5 col-lg-5 add1"></div>	
+							                	
+							                </div>
+							                
+							                <br>
+							                 
+							                 <div class="form-group">
+							               	    <div class="col-md-2 col-lg-2"> </div>	
+							                	<div class="col-md-5 col-lg-5 add2"></div>
+							                </div>
+							                
+							                <br>
+							                 
+							                 <div class="form-group">
+							               	    <div class="col-md-2 col-lg-2"> </div>	
+							                	<div class="col-md-5 col-lg-5 add3"></div>
+							                </div>
+							                
+							                <br>
+							                
+							                <div class="form-group">
+							               	    <div class="col-md-2 col-lg-2">
+							               			<label>Patron Status</label>
+							                	</div>	
+							                	<div class="col-md-3 col-lg-3 patrStat"></div>
+							                	
+							                	<div class="col-md-2 col-lg-2">
+							               			<label>Patron Category</label>
+							                	</div>	
+							                	<div class="col-md-5 col-lg-5 patrCate"></div>
+							                </div>
+							                
+							                 <br>
+							                
+							                <div class="form-group">
+							               	    <div class="col-md-2 col-lg-2">
+							               			<label>Membership Date</label>
+							                	</div>	
+							                	<div class="col-md-3 col-lg-3 memDate"></div>
+							                	
+							                	<div class="col-md-2 col-lg-2">
+							               			<label>Expiry Date</label>
+							                	</div>	
+							                	<div class="col-md-5 col-lg-5 expDate"></div>
+							                </div>
+						                </div>
+							               
+						                </div>
+						             </div -->
+						
+						<br><br>
+						<table id="reportTable" class="table table-bordered table-striped">
+						 <thead>
+						 	<tr>
+						 		<th>No</th>
+								<th>Title</th>
+								<th>Call No</th>
+						 		<th>Accession No</th>
+								<th>Icat</th>
+								<th>Smd</th>
+								<th>Isbn</th>
+								<th>Author</th>
+							    <th>Volume</th>
+								<th>Officer</th>
+								<th>Status</th>
+								<th>Branch</th>
+								<th>Location</th>
+								<th>Date</th>
+						 	</tr>
+						 </thead>
+						 <!--<tfoot align="right">
+							<tr><th></th><th>Total</th><th></th><th></th><th></th></tr>
+						</tfoot>-->
+						</table>
+					</div>
+				</div>
+			</div>
+		<!-- END MAIN CONTENT -->
+		
+		
+	
+		
+		
+</body>
+</html>

@@ -1,0 +1,74 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="70pt" margin-bottom="70pt" margin-left="70pt" margin-right="70pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center">Paradigm Systems Berhad</fo:block>
+<fo:block font-weight="bold" text-align="center">Suite A605, Phileo Damansara II</fo:block>
+<fo:block font-weight="bold" text-align="center">15, Jalan 16/11,</fo:block>
+<fo:block font-weight="bold" text-align="center">Petaling Jaya</fo:block>
+<fo:block font-weight="bold" text-align="center">46350 Selangor</fo:block>
+<fo:block space-before.optimum="20pt">Our Ref: 0000008891</fo:block>
+<fo:block space-before.optimum="12pt">Date: 20121105</fo:block>
+<fo:block>Time: 105634</fo:block>
+<fo:block space-before.optimum="24pt">Finance Department</fo:block>
+<fo:block>Paradigm Systems Berhad</fo:block>
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">REQUEST FOR PAYMENT</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt">As per enclosure, we seek your cooperation in managing the bank draft under the vendor name by following the given information in the invoice</fo:block>
+<fo:block space-before.optimum="12pt">Vendor Details :-</fo:block>
+<fo:block>                 04</fo:block>
+<fo:block>                 KUALA LUMPUR</fo:block>
+<fo:block space-before.optimum="24pt">                 ABDULLAH B. MAT ASEH</fo:block>
+<fo:block>Vendor Account: 1234567</fo:block>
+<fo:block>Vendor Bank:    CIMB BANK</fo:block>
+<fo:block space-before.optimum="12pt">Vote Center :-</fo:block>
+<!-- Table -->
+<fo:table table-layout="fixed" width="100%" space-before.optimum="12pt">
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="3cm"/>
+  <fo:table-column column-width="2cm"/>
+  <fo:table-column column-width="2cm"/>
+  <fo:table-body>
+    <fo:table-row>
+      <fo:table-cell>
+        <fo:block>
+          Item Count
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Order No
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Description
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Quantity
+        </fo:block>
+      </fo:table-cell>
+      <fo:table-cell>
+        <fo:block>
+          Amount
+        </fo:block>
+      </fo:table-cell>
+    </fo:table-row>
+    <fo:table-row><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>0000008135</fo:block></fo:table-cell><fo:table-cell><fo:block>RESEPI MASAKAN CHEF 2011.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>45.00</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block>2</fo:block></fo:table-cell><fo:table-cell><fo:block>0000008136</fo:block></fo:table-cell><fo:table-cell><fo:block>Cinta bersemi.</fo:block></fo:table-cell><fo:table-cell><fo:block>1</fo:block></fo:table-cell><fo:table-cell><fo:block>39.00</fo:block></fo:table-cell></fo:table-row>
+  </fo:table-body>
+</fo:table>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

@@ -1,0 +1,184 @@
+<!-- 
+BEGIN ARRAY LATEITEMS
+    ORDERNO
+    INVOICE
+    REASON
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    LETTERDATE
+    LETTERSUBJECT  
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		/* margin-left: 0.20in; */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt !important;;
+		font-family: "Times New Roman"; 
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYNAME)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD1)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD2)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYADD3)</b></div><br/>
+		<div class="ta-center" style="left:0.0in;width:7in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br/>
+		
+		<br/>
+		<br/>
+		
+		<div class="ta-left">ACQUISITION</div><br/>
+		<div class="ta-left">REF:</div><br/>
+		<div class="ta-left">DATE : (LETTERDATE)</div><br/>
+		<br/>
+		<div class="ta-left">(VENDORNAME)</div>
+		<br/>
+		<div class="ta-left">(VENDORADDRESS1)</div>
+		<br/>
+		<div class="ta-left">(VENDORADDRESS2)</div>
+		<br/>
+		<div class="ta-left">(VENDORADDRESS3)</div>
+		<br/>
+		<div class="ta-left">(VENDORPOSTCODE)</div>
+		<br/>
+		<div class="ta-left">(VENDORTELEPHONE)</div>
+		<br/>
+
+		<br/>
+		<div class="ta-left">ATTENTION : (VENDORCONTACT)</div>
+		<br/>
+		
+		<br/>
+		<div class="ta-left">Sir/Madam,</div><br/>
+		<br/>
+		
+		<div class="ta-left"><b><u>LETTERSUBJECT</u></b></div><br/> 
+		<br/>
+		
+		<div class="ta-left">Please be informed that the following invoice has not been received yet.</div><br/> 
+		<br/>
+		
+		<div class="table" style="margin-left:0.0in;width:1.00in"><u>Order No#</u></div>
+		<div class="table" style="margin-left:1.2in;width:2.20in"><u>Invoice No#</u></div>
+		<div class="table" style="margin-left:2.4in;width:4.00in"><u>Reason</u></div>
+		<br/>
+		<br/>
+
+		{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(ORDERNO)</div>
+		{LOOP}<div class="table" style="margin-left:1.2in;width:2.20in">(INVOICE)</div>
+		{LOOP}<div class="table" style="margin-left:2.4in;width:4.00in">(REASON)</div><br/>
+		{END LOOP} 
+	
+		<br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Thank you.</div><br/>
+		<br/>
+		<br/>
+		
+		<div class="ta-left">Yours sincerely,</div>
+		<br/>
+
+	</body>
+	</html>

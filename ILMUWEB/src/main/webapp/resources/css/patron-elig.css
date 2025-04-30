@@ -1,0 +1,263 @@
+/* http://stackoverflow.com/questions/19140702/bootstrap-3-set-height-of-modal-window-according-to-screen-size */
+.modal-body {
+	max-height: 900px;
+	max-width: 1000px;
+	overflow: auto;
+	margin: 0px;
+}
+
+body {
+	padding: 0px;
+}
+
+/* https://stackoverflow.com/questions/5234971/removing-border-from-tab-ui-control */
+#infoTab.ui-widget {
+	font-family: inherit !important;
+	font-size: inherit !important;
+}
+
+#infoTab.ui-widget-content {
+	border: none;
+	background: none;
+}
+
+#infoTab .ui-widget-header {
+	border: none;
+	background: none;
+}
+
+.center {
+	text-align: center;
+}
+
+div[id^="collapse"] {
+	max-height: 250px;
+	overflow-y: scroll;
+}
+
+.search {
+	max-height: 250px;
+	overflow-y: scroll;
+}
+
+/* http://bootsnipp.com/snippets/featured/form-wizard-using-tabs*/
+.wizard {
+	margin: 20px auto;
+	background: #fff;
+}
+
+.wizard .nav-tabs {
+	position: relative;
+	margin: auto;
+	margin-bottom: 0;
+	border-bottom-color: #e0e0e0;
+}
+
+.wizard>div.wizard-inner {
+	position: relative;
+}
+
+.connecting-line {
+	height: 2px;
+	background: #e0e0e0;
+	position: absolute;
+	width: 70%;
+	margin: 0 auto;
+	left: 15%;
+	right: 30%;
+	top: 50%;
+	z-index: 1;
+}
+
+.wizard .nav-tabs>li[role].active>a, .wizard .nav-tabs>li[role].active>a:hover,
+	.wizard .nav-tabs>li[role].active>a:focus {
+	color: #555555;
+	cursor: default;
+	border: 0;
+	border-bottom-color: transparent;
+}
+
+span.round-tab {
+	width: 70px;
+	height: 70px;
+	line-height: 65px;
+	display: inline-block;
+	border-radius: 100px;
+	background: #fff;
+	border: 2px solid #e0e0e0;
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	font-size: 22px;
+}
+
+span.round-tab i {
+	color: #555555;
+}
+
+.wizard li[role].active span.round-tab {
+	background: #fff;
+	border: 2px solid #5bc0de;
+}
+
+.wizard li[role].active span.round-tab i {
+	color: #5bc0de;
+}
+
+span.round-tab:hover {
+	color: #333;
+	border: 2px solid #333;
+}
+
+.wizard .nav-tabs>li[role] {
+	width: 33%;
+}
+
+.wizard li[role]:after {
+	content: " ";
+	position: absolute;
+	left: 46%;
+	opacity: 0;
+	margin: 0 auto;
+	bottom: 0px;
+	border: 5px solid transparent;
+	border-bottom-color: #5bc0de;
+	transition: 0.1s ease-in-out;
+}
+
+.wizard li[role].active:after {
+	content: " ";
+	position: absolute;
+	left: 46%;
+	opacity: 1;
+	margin: 0 auto;
+	bottom: 0px;
+	border: 10px solid transparent;
+	border-bottom-color: #5bc0de;
+}
+
+.wizard .nav-tabs>li[role] a {
+	width: 70px;
+	height: 70px;
+	margin: 20px auto;
+	border-radius: 100%;
+	padding: 0px;
+}
+
+.wizard .nav-tabs>li[role] a:hover {
+	background: transparent;
+}
+
+.wizard .tab-pane[id^="step"] {
+	position: relative;
+	padding-top: 50px;
+}
+
+.tab-pane #finesTable {
+	position: relative;
+	padding-top: 10px;
+}
+
+.wizard h3 {
+	margin-top: 0;
+}
+
+@media ( max-width : 585px ) {
+	.wizard {
+		width: 90%;
+		height: auto !important;
+	}
+	span.round-tab {
+		font-size: 16px;
+		width: 50px;
+		height: 50px;
+		line-height: 50px;
+	}
+	.wizard .nav-tabs>li[role] a {
+		width: 50px;
+		height: 50px;
+		line-height: 50px;
+	}
+	.wizard li[role].active:after {
+		content: " ";
+		position: absolute;
+		left: 35%;
+	}
+}
+
+.red-inline {
+	color: Red;
+}
+
+#finesTable th, #indicatorTable th, #finalTable th {
+	background-color: rgba(52, 73, 94, 0.94);
+	color: white;
+}
+
+#loading {
+	display: none;
+	width: 69px;
+	height: 89px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 2px;
+}
+
+#loading-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	z-index: 100;
+}
+
+img {
+	width: 64;
+	height: 64;
+}
+
+.header-fixed {
+	width: 100%;
+}
+
+.header-fixed>thead, .header-fixed>tbody, .header-fixed>thead>tr,
+	.header-fixed>tbody>tr, .header-fixed>thead>tr>th, .header-fixed>tbody>tr>td
+	{
+	display: block;
+}
+
+.header-fixed>tbody>tr:after, .header-fixed>thead>tr:after {
+	content: ' ';
+	display: block;
+	visibility: hidden;
+	clear: both;
+}
+
+.header-fixed>tbody {
+	overflow-y: auto;
+	height: 150px;
+}
+
+.header-fixed>tbody>tr>td, .header-fixed>thead>tr>th {
+	/* 	width: 100%; */
+	float: left;
+}
+
+.header-fixed>thead>tr>th, .header-fixed>thead>tr>td {
+	white-space: nowrap;
+}
+
+.col-font {
+	font-size: medium;
+/* 	text-align: center; */
+}
+
+.col10 {
+	width: 10%;
+}
+
+.col20 {
+	width: 20%;
+}

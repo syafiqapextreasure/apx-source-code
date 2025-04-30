@@ -1,0 +1,45 @@
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=ILMUWEB_MBPJ
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost;databaseName=ILMUUNI
+#username=ilmuweb
+#password=root
+#dbtype=mssql
+
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=ILMURTM2
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MYSQL prod uncomment
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmumindef_trn?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=WILMUDEVMSSQL
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+
+##Stage comment while move on prod
+
+#MYSQL staging
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql

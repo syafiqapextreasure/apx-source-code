@@ -1,0 +1,10 @@
+#MSSQL Local
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost:1433;databaseName=ILMU2013
+#username=suithasql
+#password=password
+
+#MSSQL Server
+patron_id=sysadmin
+
+

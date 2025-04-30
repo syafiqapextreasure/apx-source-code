@@ -1,0 +1,40 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="70pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+
+<fo:block font-weight="bold" text-align="center" font-size="13px">Library PSB</fo:block>
+<fo:block font-weight="bold" text-align="center">Tingakt 4, Medan MARA 2</fo:block>
+<fo:block font-weight="bold" text-align="center">Jalan Raja Laut 5 </fo:block>
+<fo:block font-weight="bold" text-align="center">Sogo</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 0326910075 Fax: 0326932357</fo:block>
+
+<fo:block space-before.optimum="12pt" font-weight="bold">Circulation & Readers Services Department</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 19/12/2017</fo:block>
+
+<fo:block space-before.optimum="12pt">RAKIAH YUSOF (ID: )</fo:block>
+
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">RECALL NOTICE</fo:inline></fo:block>
+<fo:block space-before.optimum="12pt" text-align="justify">Refering to the above, due to a certain reason, the books listed below that you borrrowed have to return to the libarary immediately. Kindly return the items in 3 days.</fo:block>
+
+<fo:block>Title			: Kamus Al-Qur'anSyeikh Dr.Hasanain Muhammad Makhluf</fo:block>
+<fo:block>Call No.		: </fo:block>
+<fo:block>ISBN			: (ISBN)</fo:block>
+<fo:block>Accession No.	: 0000000008</fo:block>
+
+
+<fo:block space-before.optimum="24pt">Your coorperation is appreciated.</fo:block>
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="36pt">Yours sincerely,</fo:block>
+
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
+
+

@@ -1,0 +1,56 @@
+#driverClassName=OyEbgM5Wc6xUn62KfALZcmAHBjRY2P7arxxlok3tqBRVU1dwD2+0//CppCS/9F0R
+#url=YMiZEYTSXoq87E1X04Mmx8dwWIO0mA3DnZqBDtauD/hTXMfRDvJXh0GNOAfjkDbeyXuAqLLkboK1coHoMUL04Q==
+#username=SHfKVoaagH6MWHQKEgvV0Q==
+#password=SHfKVoaagH6MWHQKEgvV0Q==
+#dbtype=mssql
+
+#UMT Oracle
+#driverClassName=krzYc4REWYNptEsRDy7EzwavjsDJ7gziKmkOKkO45ZU=
+#url=/osicqQMAlcu7qc8QYP1ONxODRoUi88bABiUVV1EDV47XDtBGzORIt91TzDvbn4E
+#username=/mknW0eQj8YKV9PkFS3u4A==
+#password=/mknW0eQj8YKV9PkFS3u4A==
+#dbtype=oracle
+
+
+#MYSQL mariadb wilmudevmariadbw
+#driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+#url=z7WV06xZB5ETD+fLseqwhHFHbRknEeZR/7d4/UtltLv5EZD41YKqy5/4ciy9j0svERsIfJi2I4ZxZJ7l60nx4MTHV8ZWcm5gMB58EP9SXNf7ZRSSAVThvQlGXRFqXyFx
+#username=SHfKVoaagH6MWHQKEgvV0Q==
+#password=SHfKVoaagH6MWHQKEgvV0Q==
+#dbtype=mysql
+
+
+#MYSQL PPAT
+##driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+#url=5Yh6UOH1EVNp5IwMCd5wxcVxb1vKHQSvbFXUWyiDVsUFacfJ2E0s/HNaHVN7Xq1Y0JBvG34ul4d6O4qYgpurtg==
+##url=5Yh6UOH1EVNp5IwMCd5wxVCS9WSCpHCire53Vfh6BvhcP8Vx7GO1mpCMiidvH/OHz2RLJaWapmzS02LxhGvEOtA1YCyDJwE/NKyXrpRu5rHhbRkGK3ZWFVCR022y/ixt
+##username=SHfKVoaagH6MWHQKEgvV0Q==
+##password=SHfKVoaagH6MWHQKEgvV0Q==
+##dbtype=mysql
+
+#driverClassName=OyEbgM5Wc6xUn62KfALZcmAHBjRY2P7arxxlok3tqBRVU1dwD2+0//CppCS/9F0R
+#url=YMiZEYTSXoq87E1X04Mmx8dwWIO0mA3DnZqBDtauD/jn37Q0wX9kS0Jnj0vC3df6yH0glCVt2c9bOjOg8bAikg==
+#PKPJ
+#url=YMiZEYTSXoq87E1X04Mmx8dwWIO0mA3DnZqBDtauD/jmD4x/J+iumDWbA4HtaqsrxzXjq5VH0CgxW1cV7CoNTg==
+#SSL
+#url=YMiZEYTSXoq87E1X04Mmxxrkqhn7mmZtq9MiWenLhX4e6t1aZH/cabqptm/fQMlLMologF7seZXxeLJ9Iv2ujw==
+#username=SHfKVoaagH6MWHQKEgvV0Q==
+#password=SHfKVoaagH6MWHQKEgvV0Q==
+#dbtype=mssql
+
+#MYSQL mariadb WILMU PPKP
+#driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+#url=z7WV06xZB5ETD+fLseqwhHFHbRknEeZR/7d4/UtltLvRl4PWnaf/gOloUpBcCFkkanuwdkB/6PmFweeZwUPh3mwd0uj6yv9VV8ViZjYzq1U=
+#url=z7WV06xZB5ETD+fLseqwhHFHbRknEeZR/7d4/UtltLv5EZD41YKqy5/4ciy9j0svERsIfJi2I4ZxZJ7l60nx4MTHV8ZWcm5gMB58EP9SXNf7ZRSSAVThvQlGXRFqXyFx
+#url=z7WV06xZB5ETD+fLseqwhHFHbRknEeZR/7d4/UtltLv19zZ4XVjlnpfRgq7Q6QKYEBLXRGCtqH5F7QrPEbHXA+U2mY06S13TkqygEmTVBvsk17936YT8sCLIMIXiERZ1
+#url=z7WV06xZB5ETD+fLseqwhMZX8zxPN4dvY6eRleS2Cf/Ct2PRZfXdTxjhipQd+QnS+N3xt88p46s6sLhwxm4C4cY23/VFYPEA9BrbitDEEw4=
+url=Iec183KyiSpXNEc/Urfb522P7Q0UjfmiP2OlVIjAbaVa1Eygs2aKKW4xqORL96TTjb3jlCra+KUcTXe1T4qx5GP6jI/0zy9QVwI+B/TdeqFAH3HAs8RP1JC7KGaQhyCT
+#url=z7WV06xZB5ETD+fLseqwhMZX8zxPN4dvY6eRleS2Cf/Ct2PRZfXdTxjhipQd+QnS+N3xt88p46s6sLhwxm4C4cY23/VFYPEA9BrbitDEEw4=
+username=SHfKVoaagH6MWHQKEgvV0Q==
+password=SHfKVoaagH6MWHQKEgvV0Q==
+dbtype=mysql
+
+
+template = C:\\Users\\MUAZ\\Desktop\\KLSB\\WILMU\\wilmu\\src\\main\\webapp\\WEB-INF\\doc\\template\\
+

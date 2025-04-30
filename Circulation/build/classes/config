@@ -1,0 +1,33 @@
+#MYSQL
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://192.168.1.3:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MSSQL Server prod
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.8;databaseName=WILMUSSL;characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MYSQL - wilmuppkp-dev (PPJ) - need to access CISCO.
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.43/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+#MYSQL
+#driverClassName=com.mysql.jdbc.Driver
+##url=jdbc:mysql://172.16.0.12:3306/wilmujmm?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmudevmariadbw?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmutreasury?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://10.32.0.43:3306/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmustagemariadbw?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://localhost:3307/wilmu?useUnicode=yes&characterEncoding=UTF-8
+#username=root
+#password=ilmuweb
+#dbtype=mysql

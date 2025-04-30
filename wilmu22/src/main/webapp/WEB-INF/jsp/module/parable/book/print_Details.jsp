@@ -1,0 +1,399 @@
+<%@page import="com.kmlink.ilmu.parable.parable_beta.object.patron, com.kmlink.ilmu.parable.parable_beta.*"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@page import="javax.swing.event.ListDataEvent"%>
+<%@ page import="java.io.File" %>
+<%@ include file="print_bookLabel_controller.jsp" %><html>
+
+
+
+	<div class = "print-bar">
+		<div style="position:relative;width:100%;text-align:center;margin-top:5;">
+			<div style="position:relative;width:100%;"><button class = "printMe">Print Book Label</button></div>
+		</div>
+	</div>
+<%-- 		
+		<style>
+    <% for(String cssStyle : cssList){%>
+		
+		<%=cssStyle%>
+		
+	<%}%>
+	</style>
+	<style>
+
+	.printMe{
+		background-color:teal;
+		color:white;
+		border:1px solid white;
+		border-radius:20px;
+		height:35px;
+	}
+	 body {
+       background: rgb(204, 204, 204);
+		-webkit-text-stroke: 0.Xpx;
+		-webkit-text-stroke: 0.5px rgba(0,0,0,0.1);
+		-webkit-text-stroke-color: #34343b;
+		-webkit-font-smoothing:antialiased;
+
+	}
+	{
+       box-sizing: border-box;
+       -moz-box-sizing: border-box;
+	}
+	
+	.book-label{
+		position:relative;
+	}
+			.page {
+			margin-top:0.5cm;
+			margin-left:auto;
+			margin-right:auto;
+			 background: white;
+
+	}
+	
+
+  @media print {
+   body {
+      width: 210mm;
+    height: 297mm;
+
+    	   a[href]:after { content: none !important; }
+   	       <% for(String cssStyle : cssList){%>
+		
+		<%=cssStyle%>
+		
+	<%}%>
+      
+  	}
+ 
+	</style>
+	 --%>
+	
+	<style>
+    <% for(String cssStyle : cssList){%>
+		
+		<%=cssStyle%>
+		
+	<%}%>
+	</style>
+
+	<style>
+
+	.printMe{
+		background-color:teal;
+		color:white;
+		border:1px solid white;
+		border-radius:20px;
+		height:35px;
+	}
+	 body {
+       background: rgb(204, 204, 204);
+      /*  color:black; */
+		-webkit-text-stroke: 0.Xpx;
+		-webkit-text-stroke: 0.5px rgba(0,0,0,0.1);
+		-webkit-text-stroke-color: #34343b;
+		-webkit-font-smoothing:antialiased;
+		/* text-shadow: #fff 0px 1px 1px;
+		-moz-osx-font-smoothing: grayscale; */
+	}
+	*{
+       box-sizing: border-box;
+       -moz-box-sizing: border-box;
+	}
+	
+	.book-label{
+		position:relative;
+	}
+			.page {
+			margin-top:0.5cm;
+			margin-left:auto;
+			margin-right:auto;
+			 background: white;
+	}
+
+  @media print {
+   body {
+       background: rgb(204, 204, 204);
+      /*  color:black; */
+		-webkit-text-stroke: 0.Xpx;
+		-webkit-text-stroke: 0.5px rgba(0,0,0,0.1);
+		-webkit-text-stroke-color: #34343b;
+		-webkit-font-smoothing:antialiased;
+		/* text-shadow: #fff 0px 1px 1px;
+		-moz-osx-font-smoothing: grayscale; */
+	}
+  .page {
+        page-break-after: avoid;
+        page-break-before: avoid;
+     }
+	  @page { margin: 0; }
+
+   	.print-bar{
+   		display:none;
+   		}
+   		.page {
+           width: inherit;
+           min-height: inherit;
+           background: initial;
+           left:inherit;
+           top:inherit;
+       } 
+       
+       body {
+    margin: 0;
+    color: #000;
+    background-color: #fff;
+  }
+
+   	   a[href]:after { content: none !important; }
+   	       <% for(String cssStyle : cssList){%>
+		
+		<%=cssStyle%>
+		
+	<%}%>
+      
+
+  	}
+ 
+	</style>
+
+	 	<link type="text/css" rel="stylesheet" href="<%= request.getContextPath() %>/css/kickstart.min.css"/>	
+	 	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/plugins/JsBarcode.min.js"></script>
+		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/moment/moment.js"></script>	
+		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/moment/moment-with-locales.js"></script>		
+		
+		<script src="${pageContext.request.contextPath}/plugins/qrcode.min.js"></script>
+		
+		<script>	
+		
+		$(document).ready(function(){
+			
+			var input=<%=number%>;
+			
+		});
+		
+		function barcode(accessionNo){
+			var idAccession= ".acession_"+ accessionNo.replace(/\s/g, '').replace("/", "\\/"); 
+			  JsBarcode(idAccession, accessionNo, {
+				    displayValue:false,
+				    format: "<%=barcFormat%>",
+				    width:1
+				  });
+			  $(idAccession)
+			   .removeAttr("width").removeAttr("height").removeAttr("viewBox")
+			    .css({ width: "<%=barcWidth%>", height: "<%=barcHeight%>", viewBox:"auto" }); 
+		
+		}
+
+			function qrcode(accessionNo){
+				var idAccession= "acession_"+ accessionNo;
+				var qrcode = new QRCode(idAccession, {
+				    text: accessionNo,
+				    width:70,
+				    height:40,
+				    colorDark : "#000000",
+				    colorLight : "#ffffff",
+				    correctLevel : QRCode.CorrectLevel.H
+				});
+				
+				qrcode.makeCode(accessionNo);
+			
+			}
+
+			$(function(){
+				$('.AccessionDate').each(function(){
+					var date = $(this).text();
+					var dateFormat = $(".AccessionDate").css( "CONTENT" );
+					var fromDate = new Date(date);
+                	date =moment(date).format(dateFormat);
+               		$(this).text(date.split('"').join(''));
+				});
+				var news = $('.Barcode').length;
+				if(news !=0){
+					$("svg").each(function(){
+						var classVal = $(this).attr("key");
+						barcode(classVal);
+					});
+				}else{
+					$(".Qrcode").each(function(){
+						var  i = 0;
+						var classVal = $(this).attr("key");
+						qrcode(classVal);
+					});
+				}
+			})
+
+			$('.printMe').click(function(){
+			   
+				var news = $('.Barcode').length;
+				var accNo = [];
+				if(news !=0){
+					
+					$("svg").each(function(){
+						var classVal = $(this).attr("key");
+						accNo.push(classVal.trim());
+					});
+				}else{
+					$(".Qrcode").each(function(){
+						var classVal = $(this).attr("key");
+						accNo.push(classVal.trim());
+					});
+				}
+
+				 $.get("update_print",{accession:accNo.toString()},function(text){
+					 if(text.trim()=="Done"){
+						 window.print();
+					 }
+				  });
+			})
+	
+		</script>
+		
+
+	<body>
+		
+<div class="book">
+
+			<%	
+        	if(listData.size()> 0){			
+        		int i = 0;
+				int total = 0;
+				int currentTotal = 0;
+				int count = 0;
+				int startPoint = 0;
+				int newRow  = 0;
+				int totalRow = 0;
+				int totalData = 0;
+				int totalPerPage = Integer.parseInt(lCols)*Integer.parseInt(lRows);
+				
+				currentTotal = totalPerPage;
+   				String position= "left";
+   				total = listData.size()-1;
+   				if(total < totalPerPage){
+   					currentTotal = listData.size()-1;
+   				}
+   				totalRow = Integer.parseInt(lRows);
+   				totalData = listData.size();
+   				
+   				Double totalPage = Math.ceil((double)listData.size()/totalPerPage);
+   				totalPage = Math.ceil(totalPage); 
+   			%>
+   			<%
+   				for( int j = 1; j <= totalPage.intValue() ; j++){
+   			%>
+			
+		    <div class="page" style="page-break-after:always">
+				<div class="subpage">		    
+		    	<input type = "hidden" value ="<%=printStyle %>" id ="printStyle">   
+		    	     			
+                     <%
+                        for (int row=newRow;row<totalRow;row++){
+
+                      %>
+                            <%
+                            String patrValList = null;
+                              for (int cols=0; cols < Integer.parseInt(lCols); cols++){
+                            		if(startPoint > total){
+                            			break;
+	    							}
+                            	book_spine accession = listData.get(startPoint);
+                             	
+
+                            	accDetails =  PatronDetails.loadAccession(listCol, accession.getAccessionNo());
+                          
+    						 %>
+                              <div class = "book-label" style="float:left">
+                               <% 
+                               	for(int listlbl=0;listlbl<lblData.size()&& listlbl < accDetails.size();listlbl++){
+                               	%>
+                              	<%
+									if(listlbl==0){
+                             			int label=0;
+                             			
+		                        %>
+<%-- 		                             	 <div class=<%=listlabel.get(label) %>>
+		                             	 	<%=format.get(label) %>
+		                              	 </div> --%>
+		                              	  
+		                       <%
+									}
+		                       %>  
+                               <%
+                               		if((lblData.get(listlbl).equals("Barcode"))){
+                               %>
+                             	<svg class="<%=lblData.get(listlbl) %> acession_<%=accession.getAccessionNo().replaceAll("\\s+", "").replaceAll("/", "\\/")%>" id ="acession_<%=accession.getAccessionNo().replaceAll("\\s+", "").replaceAll("/", "\\/")%>"  key="<%=accession.getAccessionNo()%>">line 317</svg>
+                               <%
+                               		}else if((lblData.get(listlbl).equals("Qrcode"))){System.out.println("Qr");
+                               %>	
+                             	<div class="<%=lblData.get(listlbl) %> " key="<%=accession.getAccessionNo().replaceAll("\\s+", "")%>" id ="acession_<%=accession.getAccessionNo().replaceAll("\\s+", "")%>" >line 322</div>
+                               <%
+                               		}else{
+                               %>	
+                                 <div class="<%=lblData.get(listlbl)%>">
+										
+					                    <%=accDetails.get(listlbl) %>
+					             </div>
+                               	<%
+                               		}
+                               	%>
+							  <%
+                               	
+                               
+								}
+							  %>
+<%-- 								 <%
+                  				//Print labels
+
+                             	for(int label=0;label<listlabel.size()&& label < format.size();label++){
+
+		                             	%>
+		                             	
+		                             	 <div class=<%=listlabel.get(label) %>>
+		                             	 	<%=format.get(label) %>
+		                              	 </div>
+		                             	<%
+                             	}
+                             	%> --%>
+ 								<%
+ 									if(printSpine.equals("Y")){
+ 								%>
+                             	<jsp:include page="print_Details_bookAndSpine.jsp">
+ 										 <jsp:param name="accession" value="<%=accession.getAccessionNo()%>"/>
+								</jsp:include>
+								<%
+ 									}
+								%>
+                             	  <%--  <%@ include file="print_Details_bookAndSpine.jsp" %> --%>
+                             	   
+                             </div>
+
+                              <%
+                              startPoint++;
+                              } 
+                               %>
+                           
+             	         <%
+                        	}
+                   //     }
+             	         %>
+				</div>
+		    </div>
+		    <%	
+        		}
+          	}
+
+      		%>
+		</div>
+		
+
+
+		
+	</body>
+	
+</html>
+

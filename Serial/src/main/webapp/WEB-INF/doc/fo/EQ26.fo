@@ -1,0 +1,82 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="30pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+<fo:block font-weight="bold" text-align="center" font-size="13px">PERPUSTAKAAN AL-MUKHTAR</fo:block>
+<fo:block font-weight="bold" text-align="center">UNIVERSITI SULTAN ZAINAL ABIDIN, KAMPUS GONG BADAK</fo:block>
+<fo:block font-weight="bold" text-align="center">Gong Badak, 21300 Kuala Terengganu, Terengganu</fo:block>
+<fo:block font-weight="bold" text-align="center">MALAYSIA</fo:block>
+<fo:block font-weight="bold" text-align="center">Tel: 09-6661731 Fax: 09-6653106</fo:block>
+
+<fo:block space-before.optimum="12pt">Acquisition</fo:block>
+
+<fo:block space-before.optimum="12pt">Our Ref: sas</fo:block>
+
+<fo:block space-before.optimum="12pt">Date: 26/10/2018</fo:block>
+<fo:block>Time: 05:15:48 PM</fo:block>
+
+<fo:block space-before.optimum="24pt">Dear Sir/Madam,</fo:block>
+<fo:block space-before.optimum="12pt" font-weight="bold">RE: <fo:inline text-decoration="underline">REQUESTED ITEM HAS BEEN ORDERED</fo:inline></fo:block>
+
+<fo:block space-before.optimum="12pt" text-align="justify">By refering to the above mentioned subject, we would like to inform sir/madam that the item as listed below has  been ordered. </fo:block>
+
+<fo:table space-before.optimum="24pt">
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="24mm"/>
+<fo:table-column column-width="40mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="15mm"/>
+<fo:table-column column-width="25mm"/>
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Order Number</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Control No.</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Title</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">ISBN</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Edition</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Publication</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Quantity</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Unit Price</fo:block>
+    </fo:table-cell>
+     <fo:table-cell>
+      <fo:block text-decoration="underline" font-weight="bold" font-size="8.5pt">Amount</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+<fo:table-row><fo:table-cell><fo:block font-size='8.5pt'>0000026265</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>0000066596</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>Non-chemical weed management:principles, concepts and technology/edited by Mahesh K. Upadhyaya and Robert E. Blackshaw</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>1845932900 (alk. paper)</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'> </fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'> </fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>1</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM 353.40</fo:block></fo:table-cell><fo:table-cell><fo:block  font-size='8.5pt'>RM 353.40</fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell number-columns-spanned='8' text-align='right'><fo:block font-size='10pt' font-weight='bold'>Total : </fo:block></fo:table-cell><fo:table-cell><fo:block font-size='10pt' font-weight='bold'> RM 353.40</fo:block></fo:table-cell></fo:table-row>
+
+</fo:table-body>
+
+</fo:table>
+
+<fo:block space-before.optimum="24pt">Thank You.</fo:block>
+<fo:block space-before.optimum="24pt">Yours sincerely,</fo:block>
+<fo:block space-before.optimum="36pt">(OFFICER_NAME)</fo:block>
+<fo:block>(OFFICER_DESIGNATION)</fo:block>
+ </fo:flow>
+  </fo:page-sequence>
+</fo:root>

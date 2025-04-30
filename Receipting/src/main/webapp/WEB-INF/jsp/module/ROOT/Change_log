@@ -1,0 +1,13 @@
+Receipting 2019.1.01
+Changes made: 
+- Select all for transactions (Pending List - Receipt Maintenance)
+- Override button available (Pending List - Receipt Maintenance)
+- Added last receipt no (Receipt Maintenance)
+- User level check for user to override (Receipt Maintenance)
+- Add error message code=128 n GLERRMSTR (database)
+
+
+Receipting 2019.1.02
+Changes made: 
+- Able to retrieve right pending payment list
+- Able to make payment 

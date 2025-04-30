@@ -1,0 +1,34 @@
+#MSSQL Local
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost:1433;databaseName=ILMU2013
+#username=suithasql
+#password=password
+
+#MSSQL Server
+driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+url=jdbc:sqlserver://dev.paradigm.com.my;databaseName=ILMUWEB
+username=ilmuweb
+password=ilmuweb
+
+#Email configuration
+mail.smtp.host = mail.kmlink.com.my
+mail.smtp.port = 587
+
+#Save PDF files
+#Cataloging files 
+PDF_Release_For_CI=D:\\ILMUWEB\\tomcat-7.0.62\\webapps\\Cataloging\\WEB-INF\\doc\\PDF\\
+
+#Template files for PF
+#Cataloging
+Release_For_CI_Tpl = D:\\ILMUWEB\\tomcat-7.0.62\\webapps\\Cataloging\\WEB-INF\\doc\\template\\
+
+#FO files
+#Cataloging
+Fo_Release_For_CI = C:D:\\ILMUWEB\\tomcat-7.0.62\\webapps\\Cataloging\\WEB-INF\\doc\\fo\\
+
+PDF = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\PDF\\
+TPL = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\template\\
+FO = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\fo\\
+
+
+

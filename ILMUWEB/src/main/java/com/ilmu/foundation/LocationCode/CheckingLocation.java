@@ -1,0 +1,64 @@
+/*
+ * Decompiled with CFR 0.152.
+ * 
+ * Could not load the following classes:
+ *  javax.servlet.ServletException
+ *  javax.servlet.annotation.WebServlet
+ *  javax.servlet.http.HttpServlet
+ *  javax.servlet.http.HttpServletRequest
+ *  javax.servlet.http.HttpServletResponse
+ */
+package com.ilmu.foundation.LocationCode;
+
+import com.ilmu.global.connection.DBConnection;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(value={"/CheckingLocation"})
+public class CheckingLocation
+extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection con = null;
+        System.out.println("dfg");
+        String GL05LOCA = request.getParameter("GL05LOCA").toUpperCase();
+        PrintWriter out = response.getWriter();
+        Object message = null;
+        con = DBConnection.getConnection();
+        System.out.println("Connected!");
+        if (String.valueOf(GL05LOCA) != null) {
+            try {
+                System.out.println(GL05LOCA);
+                String query = "Select GL05LOCA from GLLOCA where GL05LOCA='" + GL05LOCA + "'";
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                System.out.println(query);
+                System.out.println("next222");
+                if (rs.next()) {
+                    out.print("{\"valid\" : false }");
+                    System.out.println("false");
+                } else {
+                    out.print("{\"valid\" : true }");
+                    System.out.println("true");
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
+
+    public String getServletInfo() {
+        return "Short description";
+    }
+}

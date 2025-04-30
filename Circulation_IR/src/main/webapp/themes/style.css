@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+
+.tagdesc{ font-size:12px;}
+
+#subfTable td{padding-bottom:15px;}
+.titleTr{
+  height:auto;  
+  color:#f6f3f7; 
+  background:#2c3e50;  
+  border:0px solid;
+}
+
+.subfield, .Cstatus, .bufferno, .Cmatno, 
+.Ctype, .Cuser, .Cdate, .Ctime, .Muser, .Mdate, .Mtime{
+font-weight: bold;
+}
+/*  .disableDelete, .disableUnindex, .disableDuplicate{
+   cursor: no-drop;
+    pointer-events: none;
+} */
+
+li.saveBO, li.deleteBO, li.indexBO, li.saveIndexBO, li.unindexBO, li.modifyBO, li.addTagBO, li.duplicate {
+  cursor: not-allowed;
+}
+li.saveBO a, li.deleteBO a, li.indexBO a, li.saveIndexBO a, li.unindexBO a, li.modifyBO a, li.addTagBO a,
+li.duplicate a {
+  pointer-events: none;
+}
+ 
+
+.headingTr{
+    height:30px;
+    font-size:10pt;
+} 
+
+.disabled {
+   cursor: no-drop;
+}

@@ -1,0 +1,1152 @@
+$(document).ready(function() {
+
+	var d = new Date();
+
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+
+	var output = d.getFullYear() + '/' +
+	    ((''+month).length<2 ? '0' : '') + month + '/' +
+	    ((''+day).length<2 ? '0' : '') + day;
+	
+	  $("#GL14EXPDATEDIV").datepicker({
+          format: 'dd/mm/yyyy',
+          startDate: 'output',
+          autoclose: true,
+          
+      })
+      .datepicker({
+                onSelect: function(date, inst) {
+                    /* Revalidate the field when choosing it from the datepicker */
+                    $('#patronForm').bootstrapValidator('revalidateField', 'GL14EXPDATEDIV');
+                }
+      });
+	  
+	  $("#PassportNo").hide();  
+	  $("input[name=GL14AGE]").prop('readonly', true);
+
+	  var loginid = $("#liferayLogin").val();
+
+	  $("#loginid").val(loginid); 
+	  
+	$('#patronForm').bootstrapValidator({
+        framework: 'bootstrap',
+        // Only disabled elements are excluded
+        // The invisible elements belonging to inactive tabs must be validated
+        excluded: [':disabled'],
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        
+        fields: {
+        	GL14PATR: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Patron ID is required'
+                    },
+                    remote: {
+                    	type: "GET",
+                        url: 'CheckingPatDetails',
+                        data: function(validator) {
+                            return {
+                            	GL14PATR: validator.getFieldElements('GL14PATR').val(),
+                            };
+                        },
+                        message: 'Patron ID already exist!',
+                    }
+                }
+            },
+            /*GL14PASW: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Password is required'
+                    }
+                }
+            },*/
+            GL14NAMETITLE:{
+            	enabled: false,
+            },
+            GL14NAME: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Name is required'
+                    }
+                }
+            },
+            /*GL14GRID: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select Group ID'
+                    }
+                }
+            },*/
+            GL14GRID: {
+                validators: {
+                	callback: {
+                        message: 'Please select Group ID',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=GL14GRID] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14GRID', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('DESC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },DESC: {
+                validators: {
+                	callback: {
+                        message: 'Please select Group ID',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=DESC] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14GRID', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('DESC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },
+            /*GL14CATE: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select Category'
+                    }
+                }
+            },*/
+            GL14CATE: {
+                validators: {
+                	callback: {
+                        message: 'Please select Category',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=GL14CATE] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14CATE', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('cateDESC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },cateDESC: {
+                validators: {
+                	callback: {
+                        message: 'Please select Category',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=cateDESC] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('cateDESC', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('GL14CATE', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },
+            /*GL14STAT: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select Patron Status'
+                    }
+                }
+            },*/
+            GL14STAT: {
+                validators: {
+                	callback: {
+                        message: 'Please select Patron Status',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=GL14STAT] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14STAT', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('statDESC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },statDESC: {
+                validators: {
+                	callback: {
+                        message: 'Please select Patron Status',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=statDESC] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('statDESC', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('GL14STAT', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },
+           /* GL14BRNC: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select Registered Branch'
+                    }
+                }
+            },*/
+            GL14BRNC: {
+                validators: {
+                	callback: {
+                        message: 'Please select Registered Branch',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=GL14BRNC] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14BRNC', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('regDESC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },regDESC: {
+                validators: {
+                	callback: {
+                        message: 'Please select Registered Branch',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=regDESC] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('regDESC', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('GL14BRNC', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },
+            GL14MEMDATE: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Date Enrolled is required'
+                    },date: {
+                        format: 'DD/MM/YYYY',
+                        message: 'The value is not a valid date'
+                    }
+                }
+            },
+            GL14EXPDATE: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Expiry Date is required'
+                    },date: {
+                        format: 'DD/MM/YYYY',
+                        message: 'The value is not a valid date'
+                    }
+                }
+            },
+            /*GL14NEWIC: {
+            	trigger: 'blur',
+                validators: {
+                	notEmpty: {
+                        message: 'The New IC is required'
+                    },
+                    numeric: {
+                        message: 'The value is not an integer'
+                    },
+                    remote: {
+                    	type: "GET",
+                        url: 'CheckingPatDetails2',
+                        data: function(validator) {
+                            return {
+                            	GL14PATR: validator.getFieldElements('GL14PATR').val(),
+                            	GL14NEWIC: validator.getFieldElements('GL14NEWIC').val(),
+                            };
+                        },
+                        message: 'New IC already exist!',
+                    }
+                }
+            },*/
+            /*GL14IPADD: {
+                validators: {
+                    notEmpty: {
+                        message: 'The E-Mail Address is required'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    },
+                    remote: {
+                    	type: "GET",
+                        url: 'CheckingIPADD',
+                        data: function(validator) {
+                            return {
+                            	GL14PATR: validator.getFieldElements('GL14PATR').val(),
+                            	GL14IPADD: validator.getFieldElements('GL14IPADD').val(),
+                            };
+                        },
+                        message: 'E-Mail Address already exist!',
+                    }
+                }
+            },*/
+            /*GL14DEPT: {
+                validators: {
+                	callback: {
+                        message: 'Please select Department',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=GL14DEPT] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14DEPT', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('dept', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },
+            dept: {
+                validators: {
+                	callback: {
+                        message: 'Please select Department',
+                        callback: function(value, validator, $field) {
+
+                            if ($("select[name=dept] option:selected").val()) {
+                                // Update the status of callback validator for all fields
+                                validator.updateStatus('GL14DEPT', validator.STATUS_VALID, 'callback');
+                                validator.updateStatus('dept', validator.STATUS_VALID, 'callback');
+                                return true;
+                            }
+                            return false;
+                        }
+                    },
+                }
+            },*/
+        }
+        
+    })
+     .on('err.field.fv', function(e, data) {
+            // data.fv --> The FormValidation instance
+            // Get the first invalid field
+            var $invalidFields = data.fv.getInvalidFields().eq(0);
+
+            // Get the tab that contains the first invalid field
+            var $tabPane     = $invalidFields.parents('.tab-pane'),
+                invalidTabId = $tabPane.attr('id');
+            // If the tab is not active
+            if (!$tabPane.hasClass('active')) {
+                // Then activate it
+                $tabPane.parents('.tab-content')
+                        .find('.tab-pane')
+                        .each(function(index, tab) {
+                            var tabId = $(tab).attr('id'),
+                                $li   = $('a[href="#' + tabId + '"][data-toggle="tab"]').parent();
+
+                            if (tabId === invalidTabId) {
+                                // activate the tab pane
+                                $(tab).addClass('active');
+                                // and the associated <li> element
+                                $li.addClass('active');
+                            } else {
+                                $(tab).removeClass('active');
+                                $li.removeClass('active');
+                            }
+                        });
+
+                // Focus on the field
+                $invalidFields.focus();
+            }else{
+            }
+        })
+        .on('success.form.fv', function(e) {
+        	// Prevent form submission
+        	 e.preventDefault();
+
+             var $form = $(e.target),
+                 fv    = $form.data('bootstrapValidator');
+
+             // Use Ajax to submit form data
+             $.ajax({
+                 success: function(result) {
+                     // ... Process the result ...
+                	 swal("Successfully", "success");
+                 }
+             });
+        });
+	
+	/*$('#GL14EXPDATEDIV').on('dp.change dp.show', function(e) {
+        $('#patronForm').data('bootstrapValidator').revalidateField('GL14EXPDATE');
+    });*/
+
+	 $("input[name=GL14STAFFLEVEL]").attr('maxlength','2');
+	 $("input[name=GL14OFFCODE], input[name=GL14CODE2], input[name=GL14CODE]").attr('maxlength','5');
+	 $("input[name=GL14RECEIPT], input[name=GL14OLDIC]").attr('maxlength','10');
+	 $("input[name=passportNo], input[name=GL14RELID], input[name=GL14NEWIC], input[name=GL14PATR], input[name=GL14PASW]").attr('maxlength','12'); 
+	 $("input[name=GL14EMPLOYEE], input[name=GL14COLOR]").attr('maxlength','20');
+	 $("input[name=GL14REGISTER]").attr('maxlength','30');
+	 $("input[name=GL14ADD21], input[name=GL14ADD22], input[name=GL14ADD23]").attr('maxlength','40');
+	 $("input[name=GL14SUPERVISOR], input[name=GL14NAME]").attr('maxlength','50');
+	 $("input[name=GL14ADD1], input[name=GL14ADD2], input[name=GL14ADD3], input[name=GL14OFFADD1], input[name=GL14OFFADD2], input[name=GL14OFFADD3]").attr('maxlength','80');
+	  
+	 
+	//Call error message page
+	/*function messageBox(code, criteria, label){
+		var url = "Error_Page?GL79ERRCODE="+code+"" +
+		      "&criteria=" + criteria + "&label="+label+"";
+		      //alert(url);
+		$.ajax({
+			url: url,
+			success: function(result) {
+				swal(result); //, 'warning' 
+			}
+		});
+	}*/
+		
+	 /////hide checkbox for activate
+	 $("#hideshowactivate").hide();
+	 
+	 /////check Corporate ID/Parent ID alredy register or not 
+	 $("input[name=GL14RELID]").focusout(function(e){
+		 
+		 var corporateID = $("input[name=GL14RELID]").val();
+		 //alert("corporateID"+corporateID);
+		 
+		 $.get('getPatronValid', {
+	     	patrid : corporateID
+			}, function(responseJson) {
+				//alert("responseJsonresponseJson" +responseJson);
+			 	if(responseJson==''){
+			 		$("#hideshowactivate").hide();
+			 		$("input[name=GL14RELID]").val('');
+			 		$("#activateStatus").val("h");
+			 		//messageBox("036","","");
+			 		swal("Invalid Patron ID");
+				 }else{	
+					$.each(responseJson, function(key,value) {
+						$("input[name=GL14RELID]").val(value['Id']);
+						$("#hideshowactivate").show();
+						$('#activate').prop('checked', true);
+						$("#activateStatus").val("s");
+					});
+				 }
+		 });
+	 });
+	 
+	 ///////view for Corporate ID/Parent ID
+	 /*var activateStatusview = $("#activateStatusview").val();
+	 //alert("activateStatusview" +activateStatusview);
+	 if(activateStatusview == 'N'){
+		 $('input[name="activate"]').prop("checked", true);
+		 $("#hideshowactivate").show();
+	 }else if(activateStatusview == 'Y'){
+		 $('input[name="activate"]').prop("checked", false);
+		 $("#hideshowactivate").show();
+	 }else{
+		 $("#hideshowactivate").hide();
+	 }*/
+	 var corpval = $("input[name='GL14RELID']").val();
+	 /*alert("corpval"+corpval+";");
+	 alert(corpval.length);*/
+	 if(corpval.length == 12){
+		 //alert("jkl");
+		 var activateStatusview = $("#activateStatusview").val();
+		 //alert("activateStatusview" +activateStatusview);
+		 if(activateStatusview == 'N'){
+			 $('input[name="activate"]').prop("checked", true);
+			 $("#hideshowactivate").show();
+		 }else if(activateStatusview == 'Y'){
+			 $('input[name="activate"]').prop("checked", false);
+			 $("#hideshowactivate").show();
+		 }else{
+			 $("#hideshowactivate").hide();
+		 }
+	 }else{
+		 //alert("lll");
+		 $("#hideshowactivate").hide();
+	 }
+	 
+	 /*var shactivebox = $("#activateStatus").val();
+	 
+	 if(shactivebox == "s"){
+		 $("#hideshowactivate").show();
+	 }
+	 
+	 if(shactivebox == "h"){
+		 $("#hideshowactivate").hide();
+	 }*/
+	 
+	 
+	 /////view miscellaneous at patron detail
+	 var patridview = $("#GL14PATR").val();
+	 //alert("patridview : " +patridview);
+	 $('#miscellaneousView').DataTable( {
+			destroy: true,
+			searching: false,
+			bLengthChange: false,
+			info: false,
+		    ajax: {
+		        url: "GetAllMiscellaneousPatronDetail",
+		        data:{
+			    	partid : patridview,
+			    },
+		        type: "GET",
+		        dataSrc: function (json) {
+		            var return_data = new Array();
+
+		            for(var i=0;i< json.length; i++){
+		              return_data.push({
+		                '' : '',
+		                'Description' : json[i].description, 
+		                'Value' :  json[i].value,
+		              })
+		            }
+		            return return_data;
+		          },
+		     },//This is the end of the AJAX object from the example above
+		     	columns    : [
+					{'data': ''},
+					{'data': 'Description'},
+					{'data': 'Value'},
+				]
+	  });
+	 
+	 /////ADD miscellaneous at patron detail
+	 $('#miscellaneousadd').DataTable( {
+			destroy: true,
+			searching: false,
+			bLengthChange: false,
+			info: false,
+			/*columnDefs: [
+				{
+					"targets": [ 0 ],
+					"visible": false,
+					"searchable": false,
+				}
+			],*/
+		    ajax: {
+		        url: "GetAllMiscellaneous",
+		        type: "GET",
+		        dataSrc: function (json) {
+		            var return_data = new Array();
+		            //alert(json.length + " jkl");
+		            $('#countrowmiscellaneousadd').val(json.length);
+		            for(var i=0;i< json.length; i++){
+		            	
+		              return_data.push({
+		                'No' : "<input type='hidden' id='code"+(i+1)+"' name='code"+(i+1)+"' value='"+json[i].code+"'>"+(i+1), 
+		                'Description' : json[i].description, 
+		                'Value' :  '<input type="text" class="form-control" id="miscellaneousValue" name="miscellaneousValue'+(i+1)+'">',
+		              })
+		            }
+		            return return_data;
+		          },
+		     },//This is the end of the AJAX object from the example above
+		     	columns    : [
+					{'data': 'No'},
+					{'data': 'Description'},
+					{'data': 'Value'},
+				],
+				
+	  });
+	 
+	 
+	 //////FOR EDIT
+	 var miscellaneousedit = $('#miscellaneousedit').DataTable( {
+			destroy: true,
+			searching: false,
+			bLengthChange: false,
+			info: false,
+		    ajax: {
+		        url: "GetAllMiscellaneousPatronDetail",
+		        data:{
+			    	partid : patridview,
+			    },
+		        type: "GET",
+		        dataSrc: function (json) {
+		            var return_data = new Array();
+
+		            $("#countrowmiscellaneousedit").val(json.length);
+
+		            for(var i=0;i< json.length; i++){
+		              return_data.push({
+		                'No' : "<input type='hidden' id='code"+(i+1)+"' name='code"+(i+1)+"' value='"+json[i].code+"'>"+(i+1),
+		                'Description' : json[i].description, 
+		                'Value' :  '<input type="text" class="form-control" id="miscellaneousValueEdit" name="miscellaneousValueEdit'+(i+1)+'" value="'+json[i].value+'">',//json[i].value,
+		              })
+		            }
+		            return return_data;
+		          },
+		     },//This is the end of the AJAX object from the example above
+		     	columns    : [
+					{'data': 'No'},
+					{'data': 'Description'},
+					{'data': 'Value'},
+				]
+	  });
+
+	 
+	 
+	 ///////////////////////////////////////
+	 
+	  $('body').on('hidden.bs.modal', '.modal', function () {
+		    $(this).removeData('bs.modal');
+	  });
+	  
+	  
+  
+	  $("input[name=GL14HTEL], input[name=GL14HTELX], input[name=GL14HTEL2], input[name=GL14OTEL], input[name=GL14FAX]").keypress(function (e) {
+          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+              return false;
+          }
+		  var curchr = this.value.length;
+          var curval = $(this).val();
+          if (curchr == 2) {
+              $(this).val(curval + "-");
+          }
+          $(this).attr('maxlength', '12');
+	  });
+	  
+	  $("input[name=GL14MTEL]").keypress(function (e) {
+          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+              return false;
+          }
+		  var curchr = this.value.length;
+          var curval = $(this).val();
+          if (curchr == 3) {
+              $(this).val(curval + "-");
+          }
+          $(this).attr('maxlength', '13');
+	  });
+	  
+	  $("input[name=GL14NEWIC]").keypress(function (e) {
+          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+              return false;
+          }
+	  });
+	
+	$(':checkbox').on('change',function(){
+		// var th = $(this), name = th.prop('name'); 
+		var name = $(this).attr("name");
+		 if((':checked')){
+		     //$(':checkbox[name="'  + name + '"]').not($(this)).prop('checked',false);   
+			 $(':checkbox[id="GL14MAILFLAG"]').not($(this)).prop('checked',false);
+			 
+			 switch(name){
+	         case "chkMailFlag(2)":
+//	        	 $("[name='chkMailFlag(2)']").val();
+	        	 $("#GL14MAILFLAG").val("S");
+	        	 break;
+	         case "chkMailFlag(1)":
+//	        	 $("[name='chkMailFlag(1)']").val();
+	        	 $("#GL14MAILFLAG").val("O");
+	        	 break;
+	         case "chkMailFlag(0)":
+//	        	 $("[name='chkMailFlag(0)']").val();
+	        	 //$('input[value="Admin3"]').prop("checked", true);
+	        	 //$("input[type=checkbox][value=5]").prop("checked",true);
+	        	 $("#GL14MAILFLAG").val("R");
+	        	 break;
+	         default:
+	         
+	         }
+			 
+		  }
+	});
+	
+	$("[name='GL14DEPOSIT']").on('change', function() {
+		this.value = parseFloat(this.value).toFixed(2);
+	});
+	
+	$("[name='GL14MEMFEE']").on('change', function() {
+		this.value = parseFloat(this.value).toFixed(2);
+	});
+	
+	$( "#update" ).click(function() {
+		$('#GL14DOB').attr('disabled', false);
+		var GL14SEX = $('input[name=GL14SEX]:checked' ).val();
+		switch(GL14SEX){
+			case "M":
+				 $("input[name=GL14SEX]").val("M");
+	        	 break;
+		   case "F":
+			   	$("input[name=GL14SEX]").val("F");
+		       	 break;
+		}
+	});
+		
+	//function getGL14MAILFLAG(){
+		mailFlagValue = $("#GL14MAILFLAG").val();
+		switch(mailFlagValue){
+        case "S":
+       	 	$("[name='chkMailFlag(2)']").prop("checked", true);
+       	 break;
+        case "O":
+        	$("[name='chkMailFlag(1)']").prop("checked", true);
+       	 break;
+        case "R":
+       	 $("[name='chkMailFlag(0)']").prop("checked", true);
+       	 break;
+        default:
+		} 
+	//}
+		radioBtn = $("input[name=GL14SEX]").val();
+		switch(radioBtn){
+        case "M":
+        	$("input[name=GL14SEX][value='M']").prop("checked",true);
+       	 break;
+        case "F":
+        	//$("#optGender(1)").prop("checked", true);
+        	$("input[name=GL14SEX][value='F']").prop("checked",true);
+       	 break;
+        default:
+		} 
+		
+		$("input[name=GL14NEWIC]").on('focusout',function () {
+			var inputStr = $("#GL14NEWIC").val();
+			///alert("inputStr : " +inputStr);
+			//CheckingPatDetails2
+			/*$.get('getCountTotal', {
+				orderno : ordernoissue
+			 	}, function(responseJson) {
+				if(responseJson != null){
+					$.each(responseJson, function(key,value) {
+						$("#countVal").val(value['codeDescription']);
+					});
+				}
+			});*/
+			
+			
+			 if(inputStr.length<12){
+			    	$("#ICResponse").html("Invalid IC Number.");
+			    	$("#icResponse").html("");
+			       // $("#error_msg").innerHTML
+			    }else{
+			    	var dob = inputStr.substring(0,6);
+			    	var year =  parseInt(dob.substring(0,2));
+			    	var month =  dob.substring(2,4);
+			    	var date =  dob.substring(4,6);
+			    	
+			    	//var sex = inputStr.substring(10,11)
+			    	var sex = inputStr.substring(11);
+			    	
+					if(year > 40){
+						year = year+1900;
+					}else {
+						year = year+2000;
+					}
+			    	
+			    	var fullDate = date + "/" + month + "/" + year;
+
+			    	$("#GL14DOB").val(fullDate);
+			    	$("#GL14DOB2").val(fullDate);
+			    	document.getElementById("GL14DOB").disabled = true;
+			    	
+			    	$("#date").css("pointer-events", "none");
+			    	if (isDate($('#GL14DOB').val())) {
+				        var age = calculateAge(parseDate($('#GL14DOB').val()), new Date());
+				        //alert(age + " : AGE");
+				      	$("input[name=GL14AGE]").val(age);   
+				    } else {
+				        $("input[name=GL14AGE]").val('');   
+				    }  
+			    	
+			    	if (sex%2 == 0){
+			    		$("input[name=GL14SEX][value='F']").prop("checked",true);
+			    	} else{
+			    		$("input[name=GL14SEX][value='M']").prop("checked",true);
+			    	}
+			    }
+		});
+		
+		 $('input[name=GL14SEX]').change(function(){
+			 
+			 var getGL14SEX = $(this).val();
+
+				switch(getGL14SEX){
+		        case "M":
+		        	$("input[name=GL14SEX][value='M']").prop("checked",true);
+		       	 break;
+		        case "F":
+		        	$("input[name=GL14SEX][value='F']").prop("checked",true);
+		       	 break;
+		        default:
+				} 
+		 })
+	
+});
+
+
+/*function IcLength(){
+    var inputStr = $("#GL14NEWIC").val();
+
+    if(inputStr.length<12){
+    	$("#ICResponse").html("Invalid IC Number.");
+    	$("#icResponse").html("");
+       // $("#error_msg").innerHTML
+    }else{
+    	var dob = inputStr.substring(0,6);
+    	var year =  parseInt(dob.substring(0,2));
+    	var month =  dob.substring(2,4);
+    	var date =  dob.substring(4,6);
+    	
+    	//var sex = inputStr.substring(10,11)
+    	var sex = inputStr.substring(11);
+    	
+		if(year > 40){
+			year = year+1900;
+		}else {
+			year = year+2000;
+		}
+    	
+    	var fullDate = date + "/" + month + "/" + year;
+
+    	$("#GL14DOB").val(fullDate);
+    	$("#GL14DOB2").val(fullDate);
+    	document.getElementById("GL14DOB").disabled = true;
+    	
+    	$("#date").css("pointer-events", "none");
+    	if (isDate($('#GL14DOB').val())) {
+	        var age = calculateAge(parseDate($('#GL14DOB').val()), new Date());
+	        //alert(age + " : AGE");
+	      	$("input[name=GL14AGE]").val(age);   
+	    } else {
+	        $("input[name=GL14AGE]").val('');   
+	    }  
+    	
+    	if (sex%2 == 0){
+    		$("input[name=GL14SEX][value='F']").prop("checked",true);
+    	} else{
+    		$("input[name=GL14SEX][value='M']").prop("checked",true);
+    	}
+    }
+	
+}*/
+
+
+	//listener on date of birth field
+	function handleDOBChanged() {
+	    $('#GL14DOB').on('change', function () {
+	          
+	    });
+	}
+
+	//convert the date string in the format of dd/mm/yyyy into a JS date object
+	function parseDate(dateStr) {
+	  var dateParts = dateStr.split("/");
+	  return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+	}
+
+	//is valid date format
+	function calculateAge (dateOfBirth, dateToCalculate) {
+	    var calculateYear = dateToCalculate.getFullYear();
+	    var calculateMonth = dateToCalculate.getMonth();
+	    var calculateDay = dateToCalculate.getDate();
+
+	    var birthYear = dateOfBirth.getFullYear();
+	    var birthMonth = dateOfBirth.getMonth();
+	    var birthDay = dateOfBirth.getDate();
+
+	    var age = calculateYear - birthYear;
+	    var ageMonth = calculateMonth - birthMonth;
+	    var ageDay = calculateDay - birthDay;
+
+	    if (ageMonth < 0 || (ageMonth == 0 && ageDay < 0)) {
+	        age = parseInt(age) - 1;
+	    }
+	    return age;
+	}
+
+	function isDate(txtDate) {
+	  var currVal = txtDate;
+	  if (currVal == '')
+	    return true;
+
+	  //Declare Regex
+	  var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+	  var dtArray = currVal.match(rxDatePattern); // is format OK?
+
+	  if (dtArray == null)
+	    return false;
+
+	  //Checks for dd/mm/yyyy format.
+	  var dtDay = dtArray[1];
+	  var dtMonth = dtArray[3];
+	  var dtYear = dtArray[5];
+
+	  if (dtMonth < 1 || dtMonth > 12)
+	    return false;
+	  else if (dtDay < 1 || dtDay > 31)
+	    return false;
+	  else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+	    return false;
+	  else if (dtMonth == 2) {
+	    var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+	    if (dtDay > 29 || (dtDay == 29 && !isleap))
+	      return false;
+	  }
+
+	  return true;
+	}
+	
+	function CompareDOB() {
+	       
+		 var GL14MEMDATE = $('#GL14MEMDATE').val(); //Year, Month, Date
+		 var GL14DOB = $('#GL14DOB').val(); //Year, Month, Date
+		 
+		 //alert(GL14MEMDATE);
+		 //alert(GL14EXPDATE);
+		 
+		 var smallDateArr = Array();
+		 var largeDateArr = Array(); 
+		 
+		    smallDateArr = GL14DOB.split("/");
+		    largeDateArr = GL14MEMDATE.split("/"); 
+		    
+		    //alert(smallDateArr);
+			//alert(largeDateArr);
+		    
+		    var smallDt = smallDateArr[0];
+		    var smallMt = smallDateArr[1];
+		    var smallYr = smallDateArr[2];  
+		    var largeDt = largeDateArr[0];
+		    var largeMt = largeDateArr[1];
+		    var largeYr = largeDateArr[2];
+		    
+		    if(smallYr>largeYr) 
+		    	
+		    	swal({   
+					text: 'The Date Enrolled should be greater than Date of Birth',
+					type: 'warning',   showCancelButton: false,
+					
+					}).then(function(dismiss) {
+						
+						if (dismiss === 'cancel') {
+						    swal(
+						      'Cancelled',
+						      'Your imaginary file is safe :)',
+						      'error'
+						    );
+						  }
+						})
+						
+		else if(smallYr<=largeYr && smallMt>largeMt)
+			
+			swal({   
+				text: 'The Date Enrolled should be greater than Date of Birth',
+				type: 'warning',   showCancelButton: false,
+				
+				}).then(function(dismiss) {
+					
+					if (dismiss === 'cancel') {
+					    swal(
+					      'Cancelled',
+					      'Your imaginary file is safe :)',
+					      'error'
+					    );
+					  }
+					})
+					else if(smallYr<=largeYr && smallMt>largeMt && smallDt>largeDt)
+			
+			swal({   
+				text: 'The Date Enrolled should be greater than Date of Birth',
+				type: 'warning',   showCancelButton: false,
+				
+				}).then(function(dismiss) {
+					
+					if (dismiss === 'cancel') {
+					    swal(
+					      'Cancelled',
+					      'Your imaginary file is safe :)',
+					      'error'
+					    );
+					  }
+					})
+					
+		else if(smallYr<=largeYr && smallMt==largeMt && smallDt>largeDt)
+			swal({   
+				text: 'The Date Enrolled should be greater than Date of Birth',
+				type: 'warning',   showCancelButton: false,
+				
+				}).then(function(dismiss) {
+					
+					if (dismiss === 'cancel') {
+					    swal(
+					      'Cancelled',
+					      'Your imaginary file is safe :)',
+					      'error'
+					    );
+					  }
+					})
+		
+		    
+		    
+	}
+	 
+	 function showPassword() {
+		    
+		    var key_attr = $('#GL14PASW').attr('type');
+		    
+		    if(key_attr != 'text') {
+		        
+		        $('.checkbox').addClass('show');
+		        $('#GL14PASW').attr('type', 'text');
+		        
+		    } else {
+		        
+		        $('.checkbox').removeClass('show');
+		        $('#GL14PASW').attr('type', 'password');
+		        
+		    }
+		    
+		}
+	 
+	 
+	 $(document).ready(function () {
+		  DOBChanged();
+		});
+
+		//listener on date of birth field
+		function DOBChanged() {
+			
+			var dob = $("#GL14DOB").val();
+			//alert(dob);
+			if(dob!=null){
+				
+		        var age = calculateAge(parseDate(dob), new Date());
+		      	$("#GL14AGE").val(age); 
+		      	
+		      	
+		      } else {
+		        $("#GL14AGE").val('');   
+		      }      
+		   
+		}
+
+		//convert the date string in the format of dd/mm/yyyy into a JS date object
+		function parseDate(dateStr) {
+		  var dateParts = dateStr.split("/");
+		  return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+		}
+
+		//is valid date format
+		function calculateAge (dateOfBirth, dateToCalculate) {
+		    var calculateYear = dateToCalculate.getFullYear();
+		    var calculateMonth = dateToCalculate.getMonth();
+		    var calculateDay = dateToCalculate.getDate();
+
+		    var birthYear = dateOfBirth.getFullYear();
+		    var birthMonth = dateOfBirth.getMonth();
+		    var birthDay = dateOfBirth.getDate();
+
+		    var age = calculateYear - birthYear;
+		    var ageMonth = calculateMonth - birthMonth;
+		    var ageDay = calculateDay - birthDay;
+
+		    if (ageMonth < 0 || (ageMonth == 0 && ageDay < 0)) {
+		        age = parseInt(age) - 1;
+		    }
+		    return age;
+		}
+
+		function isDate(txtDate) {
+		  var currVal = txtDate;
+		  if (currVal == '')
+		    return true;
+
+		  //Declare Regex
+		  var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+		  var dtArray = currVal.match(rxDatePattern); // is format OK?
+
+		  if (dtArray == null)
+		    return false;
+
+		  //Checks for dd/mm/yyyy format.
+		  var dtDay = dtArray[1];
+		  var dtMonth = dtArray[3];
+		  var dtYear = dtArray[5];
+
+		  if (dtMonth < 1 || dtMonth > 12)
+		    return false;
+		  else if (dtDay < 1 || dtDay > 31)
+		    return false;
+		  else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+		    return false;
+		  else if (dtMonth == 2) {
+		    var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+		    if (dtDay > 29 || (dtDay == 29 && !isleap))
+		      return false;
+		  }
+
+		  return true;
+		}
+		
+		//function pp(){
+			var IC =  $("#GL14NEWIC").val();
+			//alert(IC);
+			var year = parseInt(IC.substring(0,2));
+			if(year > 40){
+				year = year+1900;
+			}else {
+				year = year+2000;
+			}
+			
+			var currentYear =  new Date();
+			var getCurrentYear = parseInt(currentYear.getFullYear());
+			
+			var age = getCurrentYear - year;
+			//alert(age + 'age');
+			$("input[name=GL14AGE]").val(age);
+		//}
+			
+			$("#card").click(function(){
+			    $.ajax({ 
+			    	url: 'generateID',
+			    	type : "GET",
+			    	success: function(data) {
+			    		$('input[name=GL14PATR').val(data);
+			    		$("#card").off('click');
+		 
+		            },
+		            error: function(data) {
+		                alert("Failed");
+		            }
+		        });
+			});
+		
+			//$(".userid").val($("#liferayLogin").val());
+			
+			var b = document.querySelector("input"); 
+
+			////////////////b.setAttribute("name", $(".userid").val($("#liferayLogin").val()));
+			///b.setAttribute("disabled", "");
+
+			/*$.get('GetAcl', {
+	        	id : $("#liferayLogin").val()
+			 	}, function(responseJson) {
+				if(responseJson != null){
+					$.each(responseJson, function(key,value) {
+						$(".acclevel").val(value['acclevel']);
+					});
+				}
+			});*/
+			/*$.get('GetGroupIdByAcclevel', function(responseJson) {
+				if(responseJson != null){
+					$.each(responseJson, function(key,value) {
+						var checkbox = '<div class="checkbox"><label><input type="checkbox" name="chgval" value="'+value["Code"]+'">'+value["Code"]+','+value["Description"]+'</lable></div>';    
+						$('.chgVal').append(checkbox);
+					});
+				}
+			});*/
+		
+
+		

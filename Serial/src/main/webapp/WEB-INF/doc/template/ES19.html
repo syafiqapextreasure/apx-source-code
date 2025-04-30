@@ -1,0 +1,193 @@
+<!-- BEGIN ARRAY INVDETAILS
+   INVOICE
+   VOUCHER
+   VCHDATE
+   FOREX
+   FOREIGN
+   AMOUNT
+END ARRAY
+
+BEGIN VARIABLE
+   LETTERSUBJECT
+   LIBRARYNAME
+   LIBRARYADD1
+   LIBRARYADD2
+   LIBRARYADD3
+   LIBRARYPOSTCODE
+   LIBRARYTOWN
+   LIBRARYPHONE
+   BRANCHNAME
+   BRANCHADD1   
+   BRANCHADD2   
+   BRANCHADD3   
+   BRANCHPOSTCODE   
+   BRANCHTOWN     
+   LETTERDATE
+   VENDORNAME
+   VENDORADDRESS1
+   VENDORADDRESS2
+   VENDORADDRESS3
+   VENDORPOSTCODE
+   VENDORTELEPHONE
+   VENDORCONTACT
+   BANKDRAFT
+   DRAFTDATE
+   FOREX
+   TOTALAMOUNT
+   OFFICERNAME
+   DESIGNATION
+   STAFFNAME
+   STAFFDESIGNATION
+   HODNAME
+   HODDESIGNATION
+END VARIABLE -->
+
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 11pt !important;
+		           font-family: "Arial";
+			  }
+			  h1.entry-title {
+			  font-size: 11pt !important;
+			  font-family: "Arial";
+		         }
+		}
+	
+	  body {
+		font-size: 11pt !important;;
+		font-family: "Arial";
+		margin-left: 0.10in; 
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		font-size: 11pt;
+		font-family:Arial;
+		/* display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 11pt !important;;
+		font-family: "Times New Roman";  */
+	}
+		
+	.footer {
+	  position: fixed;
+	  top: 6.5in;
+	}
+		
+	</style>
+	</head>
+	<body>
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYNAME)</b></div>
+		<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD1)</b></div>
+		<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD2)</b></div>
+		<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD3)</b></div>
+		<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div>
+		<br>
+		<br>
+		Our Ref : <br/>
+		<br>
+		Date : (LETTERDATE)<br/>
+		Time : (LETTERTIME)<br/>
+		<br>
+		<div class="ta-left">(VENDORNAME)</b></div><br/>
+		<div class="ta-left">(VENDORADDRESS1)</b></div><br/>
+		<div class="ta-left">(VENDORADDRESS2)</b></div><br/>
+		<div class="ta-left">(VENDORADDRESS3)</b></div><br/>
+		<br>
+		<div class="ta-left">Attn : <b>(VENDORCONTACT)</b></div><br/>
+		<br>
+		<div class="ta-left">Dear Sir/Madam,</div><br/>
+		<br>
+		<div class="ta-left"><b>RE: <u>(LETTERSUBJECT)</u></b></div><br/>
+		<br>
+		
+		<table class="table">
+			<tr>
+				<th align="center" valign="top" style="width:1.00in">Invoice No</th>
+				<th align="center" valign="top" style="width:1.00in">Voucher No</th>
+				<th align="center" valign="top" style="width:1.00in">Voucher Date</th>
+				<th align="right" valign="top" style="width:2.00in">Nett Price</th>
+				<th align="right" valign="top" style="width:1.00in">Amount (RM)</th>
+			</tr>
+			{LOOP}<tr>
+				{LOOP}<td align="center" valign="top" style="width:1.0in">(INVOICE)</td>
+				{LOOP}<td align="center" valign="top" style="width:1.00in">(VOUCHER)</td>
+				{LOOP}<td align="center" valign="top" style="width:1.00in">(VCHDATE)</td>
+				{LOOP}<td align="right" valign="top" style="width:2.00in">(FOREX) (FOREIGN)</td>
+				{LOOP}<td align="right" valign="top" style="width:1.00in">(AMOUNT)</td>
+			{LOOP}</tr>
+			{END LOOP} 
+		</table>
+		
+		<br>
+		<div class="ta-left">Enclosed herewith is a bankdraft no. : (BANKDRAFT) dated (DRAFTDATE),</div><br/>
+		<div class="ta-left">Invoice Amount:  <FOREX> <TOTALAMOUNT> as a payment to</div><br/>
+		<div class="ta-left">the above mentioned, copy is attached.</div><br/>
+		<br>
+		<div class="ta-left">Kindly acknowledge upon receipt.</div><br/>
+		<br>
+		<br>
+		<div class="ta-left">Thank You.</div><br/>
+		<br>
+		<div class="ta-left">Yours sincerely,</div><br/>
+		<br>
+		<br>
+		<br>
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+		<br>
+
+	</body>
+	</html>

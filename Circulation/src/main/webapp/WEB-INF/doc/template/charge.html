@@ -1,0 +1,185 @@
+<!-- BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    SLIPHEADER
+    ACCESSIONNOHEADER
+    TITLEHEADER
+    CHARGEDDT
+    DUEDT
+    PNAME
+    PADDRESS
+    PATRONID
+    PATRONBARCODEVALUE
+    PATRONNAME
+    ADDR1
+    ADDR2
+    ADDR3
+    OFFICERID
+    OFFICERNAME
+    COMPUTERNAME
+    THANKYOU
+    MEMEXPIRYDATE
+END VARIABLE
+
+BEGIN ARRAY ITEMS
+    CHARGE_DATE
+    CHARGE_TIME
+    BIL
+    ACCNO
+    DUE_DATE
+    DUE_TIME
+    TITLE
+END ARRAY
+-->
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+<style>
+
+body {
+	font-size: 8.5pt;
+}
+
+.ta-right {
+	text-align: right;
+	float: right;
+}
+
+.ta-center {
+	margin-left: auto;
+  	 margin-right: auto;
+/*   	 text-align:center; */
+}
+
+.padd-right-5 {
+	padding-right: 5px;
+}
+
+.margin-top-15 {
+	margin-top: 15px;
+}
+
+.margin-btm-15 {
+	margin-bottom: 15px;
+}
+
+.ta-left {
+	float: left;
+	display:inline-block;
+	position:absolute;
+}
+
+.float-right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.table{
+	display:inline-block;
+	position:absolute;
+	white-space: nowrap;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+  	font-size:10pt;
+}
+
+</style>
+</head>
+<body onload="window.print()">
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>Perpustakaan Komuniti Petaling Jaya</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYADDRESS1)</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYADDRESS2)</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>(LIBRARYPOSTCODE)</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>Email: info@mbpjlibrary.com.my</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>Website : www.mbpjlibrary.gov.my</b></div>
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>RENEWAL DIRECT NO : 03-7781 0411</b></div><br>
+	
+	
+	<div class="ta-center" style="left:0.0in;width:2.25in"><b>CHARGING SLIP</b></div><br/>
+	<br>
+	---------------------------------------------------------<br/>
+	
+	<table>
+		<tr>
+			<th style="width:0.30in">No.</th>
+			<th align="left" style="width:1.00in">Accession No.</th>
+		</tr>
+		<tr>
+			<th style="width:0.30in"></th>
+			<th align="left" style="width:1.95in">Title</th>
+		</tr>
+		<tr>
+			<th style="width:0.30in"></th>
+			<th align="left" style="width:1.95in">Charge Date & Time</th>
+		</tr>
+		<tr>
+			<th style="width:0.30in"></th>
+			<th align="left" style="width:1.95in">Due Date & Time</th>
+		</tr>
+		<tr>
+			<th colspan="2" style="width:1.95in">-----------------------------------------</th>
+		</tr>
+		{LOOP}<tr>
+			{LOOP}<td valign="top" style="width:0.30in">(BIL)</td>
+			{LOOP}<td valign="top" style="width:1.00in">(ACCNO)</td>
+		{LOOP}</tr>
+		{LOOP}<tr>
+			{LOOP}<td valign="top" style="width:0.30in"></td>
+			{LOOP}<td valign="top" style="width:1.95in">(TITLE)</td>
+		{LOOP}</tr>
+		{LOOP}<tr>
+			{LOOP}<td valign="top" style="width:0.30in"></td>
+			{LOOP}<td valign="top" style="width:1.95in">(CHARGE_DATE) (CHARGE_TIME)</td>
+		{LOOP}</tr>
+		{LOOP}<tr>
+			{LOOP}<td valign="top" style="width:0.30in"></td>
+			{LOOP}<td valign="top" style="width:1.95in">(DUE_DATE) (DUE_TIME)</td>
+		{LOOP}</tr>
+		{END LOOP} 
+	</table>
+	---------------------------------------------------------<br/><br/>
+	
+	<table>
+		<tr>
+			<td style="width:0.30in">ID</td>
+			<td  align="right">:</td>
+			<td style="width:0.70in">(PATRONID)</td>
+		</tr>
+		<tr>
+			<td valign="top" style="width:0.30in">Name</td>
+			<td align="right">:</td>
+			<td style="width:2.50in">(PATRONNAME)</td>
+		</tr>
+	</table>
+	
+	<br>
+	
+		<div class="ta-left">OFFICER :</div>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERID),</div><br/>
+	<div class="ta-left" style="margin-left:0.70in;width:2.25in">(OFFICERNAME)</div><br/><br/>
+	
+	<div class="ta-left">COMPUTER: (COMPUTERNAME)</div><br/>
+	
+	<br>
+	<div class="ta-center" style="margin-left:0.00in;width:2.25in">THANKYOU</div>
+	
+</body>
+</html>
+

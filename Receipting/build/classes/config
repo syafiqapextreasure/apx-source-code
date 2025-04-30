@@ -1,0 +1,150 @@
+#MSSQL Local
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=ILMUMINDEF2
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MYSQL
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.8:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+#MYSQL
+#driverClassName=com.mysql.jdbc.Driver
+##url=jdbc:mysql://172.16.0.12:3306/wilmujmm?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmudevmariadbw?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmutreasury?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://10.32.0.43:3306/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://172.16.0.12:3306/wilmustagemariadbw?useUnicode=yes&characterEncoding=UTF-8
+#url=jdbc:mysql://localhost:3307/wilmu?useUnicode=yes&characterEncoding=UTF-8
+#username=root
+#password=ilmuweb
+#dbtype=mysql
+
+#MSSQL Local
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.8;databaseName=WILMUSSL;characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#local Isyraf
+#driverClassName=com.mysql.cj.jdbc.Driver
+#url=jdbc:mysql://localhost:3306/wilmuppkp?useUnicode=yes&characterEncoding=UTF-8
+#username=root
+#password=root
+#dbtype=mysql
+
+
+#MSSQL Unisza Server
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@172.16.0.12:1521:ILMU2007
+#username=WILMUSTAGEORACLE
+#password=Kl$b1234
+#dbtype=oracle
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://mbpjlib1:1433;databaseName=WILMU-DEV
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#Oracle
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://wilmu.trglib.gov.my:3306/ilmuweb_ppat
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://192.168.1.3;databaseName=UNISZA
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+
+#UPSI
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@10.99.4.19:1521:MYUPSIDB
+#username=paradigm
+#password=paradigm
+#dbtype=oracle
+
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://10.71.97.13;databaseName=ILMU2008
+#username=sslilmu
+#password=cyber2320
+#dbtype=mssql
+
+
+#PKPJ-LIVE
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://mbpjlib1:1433;databaseName=ilmu2006
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#UMT Oracle
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@192.168.110.1:1521:ilmu
+#username=ilmu2007
+#password=ilmu2007
+#dbtype=oracle
+
+#Save PDF files
+PDF = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\PDF\\
+TPL = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\template\\
+FO = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\fo\\
+
+#template = C:\\ILMUWEB\\tomcat-7.0.62\\webapps\\RPT\\Receipting\\
+
+#template = F:\\kmlink\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+template = D:\\Workspace\\KMLINK\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+
+#template = D:\\WILMUDEVMSSQL\\tomcat-7.0.62\\webapps\\RPT\\Receipting\\
+
+#template = D:\\WILMU_PROJECT\\WILMU_workspace\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+
+
+######################Stage################################################
+  
+#MSSQL Local
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=WILMUDEVMSSQL
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+
+#MYSQL staging
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+  
+#Save PDF files
+PDF = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\Acquisition\\WebContent\\WEB-INF\\doc\\PDF\\
+TPL = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\Acquisition\\WebContent\\WEB-INF\\doc\\template\\
+FO = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\Acquisition\\WebContent\\WEB-INF\\doc\\fo\\
+
+#template = C:\\ILMUWEB\\tomcat-7.0.62\\webapps\\RPT\\Receipting\\
+
+#template = F:\\kmlink\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+template = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+#template = D:\\WILMUDEVMSSQL\\tomcat-7.0.62\\webapps\\RPT\\Receipting\\
+
+#template = D:\\WILMU_PROJECT\\WILMU_workspace\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+

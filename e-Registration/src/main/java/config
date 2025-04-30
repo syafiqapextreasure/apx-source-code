@@ -1,0 +1,22 @@
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.16.0.12;databaseName=ILMUWEB_MBPJ
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#MSSQL Server  prod
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://localhost;databaseName=ILMUUNI
+#username=ilmuweb
+#password=root
+#dbtype=mssql
+
+
+
+#MYSQL
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql

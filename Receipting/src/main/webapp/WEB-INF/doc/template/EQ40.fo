@@ -1,0 +1,38 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" font-size="10px">
+<fo:layout-master-set>
+<fo:simple-page-master master-name="one">
+<fo:region-body margin-top="50pt" margin-bottom="70pt" margin-left="30pt" margin-right="50pt"/>
+</fo:simple-page-master>
+</fo:layout-master-set>
+<fo:page-sequence master-reference="one">
+<fo:flow flow-name="xsl-region-body">
+<fo:table>
+<fo:table-column column-width="25mm"/>
+<fo:table-column column-width="25mm"/>
+
+<fo:table-header>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block font-weight="bold">Order#</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block font-weight="bold">ISBN</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-header>
+
+<fo:table-body>
+  <fo:table-row>
+    <fo:table-cell>
+      <fo:block>(ORDERNO)</fo:block>
+    </fo:table-cell>
+    <fo:table-cell>
+      <fo:block>(ISBN)</fo:block>
+    </fo:table-cell>
+  </fo:table-row>
+</fo:table-body>
+
+</fo:table>
+ </fo:flow>
+  </fo:page-sequence>
+</fo:root>

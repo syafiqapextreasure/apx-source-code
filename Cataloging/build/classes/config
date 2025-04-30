@@ -1,0 +1,41 @@
+
+
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://10.32.0.43/wilmuppkp-dev?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+###Prod uncoment
+
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://172.16.0.12:3306/wilmudevmariadbw?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MSSQL Unisza Server
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@172.16.0.12:1521:ILMU2007
+#username=WILMUDEVORACLE
+#password=Kl$b1234
+#dbtype=oracle
+#Save PDF files
+#PDF = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\PDF\\
+#TPL = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\template\\
+#FO = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Acquisition\\WebContent\\WEB-INF\\doc\\fo\\
+
+#template = C:\\Users\\Suitha\\Desktop\\workspace_oriV3\\Receipting\\WebContent\\WEB-INF\\doc\\template\\
+
+##Stage
+
+
+driverClassName=com.mysql.jdbc.Driver
+
+#url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+ template =C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\RPT\\
+#template = D:\\liferay6_2\\eclipse_back\\WILMUPPKP\\WILMUPPKP\\tomcat-7.0.62\webapps\\RPT\\

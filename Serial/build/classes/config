@@ -1,0 +1,83 @@
+#PPAT Server    
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://wilmu.trglib.gov.my:3306/ilmuweb-dev?useUnicode=yes&characterEncoding=UTF-8
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+#MYSQL
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://10.32.0.44:3306/wilmuppkp
+username=ilmuweb
+password=ilmuweb
+dbtype=mysql
+
+template = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\RPT\\
+ISSUEPATTERN = C:\\WILMUPPKP\\tomcat-7.0.62\\webapps\\Serial\\WEB-INF\\doc\\IssuesPattern.xml
+
+
+#MSSQL Server  Prod uncomment
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://110.4.41.243;databaseName=ILMUUNI
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#UMT Oracle
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@192.168.110.1:1521:ilmu
+#username=WILMU
+#password=cyber2320
+#dbtype=oracle
+
+#Oracle
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@10.99.1.27:1521:UPSIDEV
+#username=wilmu
+#password=wilmu123456
+#dbtype=oracle
+
+#MSSQL Server
+#driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#url=jdbc:sqlserver://172.17.20.3;databaseName=WILMU-DEV
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mssql
+
+#UPSI Oracle LIVE
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@10.99.4.19:1521:MYUPSIDB
+#username=paradigm
+#password=paradigm
+#dbtype=oracle
+
+#Oracle
+#driverClassName=oracle.jdbc.driver.OracleDriver
+#url=jdbc:oracle:thin:@110.4.41.40:1521:ORCL
+#username=ilmu
+#password=ilmu
+
+#MySQL Server    
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://wilmu.trglib.gov.my:3306/ilmuweb_ppat
+#username=ilmuweb
+#password=ilmuweb
+#dbtype=mysql
+
+
+#Save PDF files
+#Cataloging files 
+PDF_Release_For_CI=C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Cataloging\\WebContent\\WEB-INF\\doc\\PDF\\
+#Template files for PF
+#Cataloging
+#Release_For_CI_Tpl = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Cataloging\\WebContent\\WEB-INF\\doc\\template\\
+
+#FO files
+#Cataloging
+#FO_Release_For_CI = C:\\Users\\Suitha\\Desktop\\workspace_Oracle\\Cataloging\\WebContent\\WEB-INF\\doc\\fo\\
+
+template = C:\\Users\\User\\workspace3\\Serial\\WebContent\\WEB-INF\\doc\\template\\
+ISSUEPATTERN = C:\\Users\\User\\workspace3\\Serial\\WebContent\\WEB-INF\\doc\\IssuesPattern.xml
+
+
+

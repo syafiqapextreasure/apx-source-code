@@ -1,0 +1,74 @@
+#driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGex/btzKsRb5uIM
+#url=Iec183KyiSpXNEc/Urfb522P7Q0UjfmiP2OlVIjAbaVikw51vHI
+#username=SHfKVoaagH6MWHQKEgvV0Q==
+#password=SHfKVoaagH6MWHQKEgvV0Q==0w1w=
+#dbtype=mysql
+
+driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+url=Iec183KyiSpXNEc/Urfb522P7Q0UjfmiP2OlVIjAbaVikw51vHIx/btzKsRb5uIM
+username=SHfKVoaagH6MWHQKEgvV0Q==
+password=SHfKVoaagH6MWHQKEgvV0Q==
+dbtype=mysql
+
+
+#ppj live
+#driverClassName=floo/OgpU1gwUI2UaVLm4lO9s2yzdkYlEZ51fGe0w1w=
+#url=Iec183KyiSpXNEc/Urfb564e1x6z6O/a5GKwqwh7eruFOXnnSnBJk+KKkRVuU593
+#username=SHfKVoaagH6MWHQKEgvV0Q==
+#password=SHfKVoaagH6MWHQKEgvV0Q==
+#dbtype=mysql
+
+template = C:\\Users\\wnurh\\SYSTEM WILMU\\PPJ\\ppj\\src\\main\\webapp\\WEB-INF\\doc\\
+billingRenewal =  C:\\Users\\wnurh\\SYSTEM WILMU\\PPJ\\ppj\\src\\main\\webapp\\WEB-INF\\doc\\
+billingLostDamage = C:\\Users\\wnurh\\SYSTEM WILMU\\PPJ\\ppj\\src\\main\\webapp\\WEB-INF\\doc\\
+billingdaftarahli = C:\\Users\\wnurh\\SYSTEM WILMU\\PPJ\\ppj\\src\\main\\webapp\\WEB-INF\\doc\\
+urlreceipt = https://wilmudev.ppj.gov.my/fpx/PaymentProcess?bil=
+urlreject = https://wilmudev.ppj.gov.my:8080/PPJ/template?MODULE=Reject/01_Reject&ACTION=Reject.jsp?patrid=
+postBill = https://fpxuat.ppj.gov.my/pay-api/pay/access
+payInquiry = https://fpxuat.ppj.gov.my/pay-api/pay/inquiry
+sms = https://mysmsdvsb.azurewebsites.net/api/messages
+SMS_Authorization = J9C/BBLO45hCl3+oYiQJ7u7psQx+k0Lskn8s23LjzqI=
+SMS_Keyword = Perpustakaan Putrajaya
+admin = _ADMIN
+resitdescregister = dan Kad Ahli (RM 1.00)
+
+subsysid = PPK
+subsysassword = pPk@2022WLm
+
+
+###  mcm biasa email smtp configuration  mailSender
+###mailHost = smtp.ppj.gov.my
+###mailSender = ppkwilmu@ppj.gov.my
+###mailPasswordSender = Ppk08091116
+###mailPort = 25
+###mailReceived = ainol@kmlink.com.my
+#nurfiza01112016@gmail.com
+#sms@ppj.gov.my
+#mailCC = 
+#mailTo = 
+#enableTls = true
+#protocolsVersion = TLSv1.2
+###smtpAuth = true
+#sms@ppj.gov.my
+
+
+
+
+
+
+mailHost = webmail.kmlink.com.my
+mailSender = PPK01@kmlink.com.my
+mailPasswordSender = Kl$b1234
+mailPort = 587
+mailReceived = nurfiza01112016@gmail.com 
+smtpAuth = true
+#protocolsVersion = TLSv1.2
+#enableTls = true
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+#RCtable {
+	table-layout: fixed;
+}
+
+#RCtable tr td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}
+
+th {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}

@@ -1,0 +1,194 @@
+<!-- 
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    REVIEWLISTNO
+    LETTERSUBJECT
+    LETTERDATE
+    LETTERTIME
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+
+BEGIN ARRAY REVIEWITEMS
+    REQUESTNO
+    REQUESTOR
+    REQUESTORNAME
+    ISBN
+    TITLE
+    CURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    REMARKS
+    RATING
+END ARRAY
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		/* margin-left: 0.20in; */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+
+
+	</style>
+	</head>
+	
+	<body>
+
+	<table>
+	    <colgroup>
+	       <col span="1" style="width: 20%;">
+	       <col span="1" style="width: 65%;">
+	       <col span="1" style="width: 20%;">
+	    </colgroup>
+			<tr>
+				<td>
+					<img src="">
+				</td>
+				<td style="padding-top: 20px;">
+					<b>PERPUSTAKAAN SULTAN ISMAIL</b><br>
+					MAJLIS BANDARAYA JOHOR BAHRU<br>
+					JALAN DATIN HALIMAH, LARKIN<br>
+					80350,  JOHOR BAHRU<br>
+					JOHOR
+				</td>
+				<td>TEL :  07-2391792 / 99<br>
+					FAX : 07-2373845<br>
+					email : admin@psi.gov.my
+				</td>
+			</tr>
+	</table>
+
+	<br/><hr style="height:1px;border:none;color:#333;background-color:#333;" /><br/><br/><br/><br/>
+	<div class="ta-left" style="left:0.0in;width:7.00in"><b>Circulation & Readers Services Department</b></div><br>
+	
+
+	<br>
+	Date        : (LETTERDATE)<br/>
+	Time        :  (LETTERTIME)<br/>
+	<br/>
+	(PATRONNAME)<br/>
+	(LIBRARYADD1)<br/>
+	(LIBRARYADD2)<br/>
+	(LIBRARYADD3)<br/>
+	No Ahli     : (PATRONID)
+
+	<br/>
+	<br/>
+	Dear Sir/Madam,
+	<br>
+	<br>
+	<b>RE: <u>DUEDATE REMINDER (Third Reminder)</u></b><br>
+	<br>
+	<div class="ta-left">Please be informed that the item that you borrowed as listed below are/will due</div><br/>
+	<br>
+	<br>
+	
+ 	<table style="font-size: 10pt;font-family:Times New Roman;">
+		<tr>
+			<th align="left" valign="top" style="width:3.60in">Title</th>
+			<th align="left" valign="top" style="width:3.60in">Author</th>
+			<th align="left" valign="top" style="width:2.00in">Calling No</th>
+			<th align="left" valign="top" style="width:1.30in">Accession No</th>
+			<th align="left" valign="top" style="width:0.50in">Borrow Date</th>
+			<th align="left" valign="top" style="width:0.50in">Due Date</th>
+			<th align="left" valign="top" style="width:1.30in">Remark</th>
+		</tr>
+		{LOOP}<tr>
+			{LOOP}<td valign="top" style="width:3.60in">(TITLE)</td>
+			{LOOP}<td valign="top" style="width:3.60in">(AUTHOR)</td>
+			{LOOP}<td valign="top" style="width:2.00in">(CALLNO)</td>
+			{LOOP}<td valign="top" style="width:1.30in">(ACCNO)</td>
+			{LOOP}<td valign="top" style="width:0.50in">(BORROWDATE),(BORROWTIME)</td>
+			{LOOP}<td valign="top" style="width:0.50in">(DUEDATE),(DUETIME)</td>
+			{LOOP}<td valign="top" style="width:1.30in">(REMINDER)</td>
+		{END LOOP}</tr>  
+	</table> 
+	<br>
+	<br>
+	<div class="ta-left">Kindly return the items before the due date. Your cooperation is appreciated</div><br/>
+	<br/>
+	<div class="ta-left">Thank you</div><br/>
+	<br/>
+	<br/>
+	<div class="ta-left">Your sincerely,</div><br/>
+
+	<br>
+		(OFFICERNAME)
+	<br/>
+	</body>
+	</html>

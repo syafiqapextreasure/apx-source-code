@@ -1,0 +1,240 @@
+<!-- 
+BEGIN ARRAY ISSUEDETAILS
+    ISSCOPYNO
+    ISSVOLUME
+    ISSLABEL
+    ISSTATUS
+END ARRAY
+
+BEGIN VARIABLE
+    LETTERSUBJECT
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN    
+    LETTERDATE
+    LETTERTIME
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    ORDERNO
+    ORDDATE
+    TITLE
+    ISSN
+    DTSTART
+    DTSTOP
+    INVOICENO
+    AMOUNT
+    FOREIGN
+    FOREX
+    CHEQUENO
+    CHEQUEDATE
+    VOUCHERNO
+    VOUCHERDATE
+    OFFICERNAME
+    DESIGNATION
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+
+ --newww--
+    BRANCHBRANCHNAME
+    BRANCHBRANCHADD1
+    BRANCHBRANCHADD2
+    BRANCHBRANCHADD3
+    BRANCHBRANCHPOSTCODE
+    BRANCHBRANCHTOWN
+    BRANCHBRANCHOFFICER
+    BRANCHBRANCHOFFICERNAME
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		/* margin-left: 0.20in; */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	</style>
+	</head>
+	
+	<body>
+	
+	<br/><br/><br/><br/><br/>
+	
+	<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYNAME)</b></div>
+	<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD1)</b></div>
+	<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD2)</b></div>
+	<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYADD3)</b></div>
+	<div class="ta-center" style="left:0.0in;width:8.00in"><b>(LIBRARYPOSTCODE) (LIBRARYTOWN)</b></div><br>
+	<br>
+	<br>
+	
+	Our Ref : <br/>
+	<br/>
+	Date : (LETTERDATE)<br/>
+	Time : (LETTERTIME)<br/>
+	<br/>
+	
+	<div class="ta-left">(VENDORNAME)</div><br/>
+	<div class="ta-left">(VENDORADDRESS1)</div><br/>
+	<div class="ta-left">(VENDORADDRESS2)</div><br/>
+	<div class="ta-left">(VENDORADDRESS3)</div><br/>
+	<br/>
+	
+	<div class="ta-left">Attn : (VENDORCONTACT)</div><br/>
+	<br>
+	Dear Sir/Madam,<br>
+	<br>
+	
+	<b>RE: <u>(LETTERSUBJECT)</u></b><br>
+	<br>
+	
+	<table style="font-size: 10pt;font-family:Times New Roman;">
+		<tr>
+			<td valign="top" >Reference No</td>
+			<td valign="top" >: (REFERENCENO) &emsp; Order Date: (ORDDATE)</td>
+		</tr>
+		<tr>
+			<td valign="top" >Issn</td>
+			<td valign="top" >: (ISSN)</td>
+		</tr>
+		<tr>
+			<td valign="top" >Title</td>
+			<td valign="top" >: (TITLE)</td>
+		</tr>
+	</table>
+	<br>
+	
+	<table style="font-size: 10pt;font-family:Times New Roman;">
+		<tr>
+			<th align="left" valign="top" style="width:1.00in"><u>AMOUNT</u></th>
+			<th align="center" valign="top" style="width:1.00in"><u>INVOICE NO</u></th>
+			<th align="center" valign="top" style="width:1.00in"><u>CHEQUE NO</u></th>
+			<th align="center" valign="top" style="width:1.00in"><u>CHEQUE DATE</u></th>
+			<th align="center" valign="top" style="width:1.00in"><u>VOUCHER NO</u></th>
+			<th align="center" valign="top" style="width:1.00in"><u>VOUCHER DATE</u></th>
+		</tr>
+		<tr>
+			<td align="left" valign="top" style="width:1.00in">(AMOUNT)</td>
+			<td align="center" valign="top" style="width:1.00in">(INVOICENO)</td>
+			<td align="center" valign="top" style="width:1.00in">(CHEQUENO)</td>
+			<td align="center" valign="top" style="width:1.00in">(CHEQUEDATE)</td>
+			<td align="center" valign="top" style="width:1.00in">(VOUCHERNO)</td>
+			<td align="center" valign="top" style="width:1.00in">(VOUCHERDATE)</td>
+		</tr>
+	</table>
+	<br>
+	<br><div class="ta-left">Issue Details</div><br/><br/>
+
+	<table style="font-size: 10pt;font-family:Times New Roman;">
+		<tr>
+			<td align="center" valign="top" style="width:1.00in">Copy No</td>
+			<td align="center" valign="top" style="width:1.00in">Volume No</td>
+			<td align="center" valign="top" style="width:1.00in">Issue No</td>
+			<td align="center" valign="top" style="width:1.00in">Status</td>
+		</tr>
+		{LOOP}<tr>
+			{LOOP}<td align="center" valign="top" style="width:1.00in">(ISSCOPYNO)</td>
+			{LOOP}<td align="center" valign="top" style="width:1.00in">(ISSVOLUME)</td>
+			{LOOP}<td align="center" valign="top" style="width:1.00in">(ISSLABEL)</td>
+			{LOOP}<td align="center" valign="top" style="width:1.00in">(ISSTATUS)</td>
+		{LOOP}</tr>
+		{END LOOP} 
+	</table>
+	
+	<br>
+
+	<div class="ta-left">We  have  been  informed that the above  publication  has  been ceased.</div><br/>
+	<br>
+	
+	<div class="ta-left">Please  send us your credit note for issues which have  not  been supplied.</div><br/>
+	<br>
+	<br>
+	
+	<div class="ta-left">Thank You.</div><br/>
+	<br/>
+	<div class="ta-left">Yours sincerely,</div><br/>
+	<br/>
+	<br/>
+	<br/>
+	<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+	<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+	<br/>
+	
+	</body>
+	</html>

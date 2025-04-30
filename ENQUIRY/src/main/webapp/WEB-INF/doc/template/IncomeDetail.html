@@ -1,0 +1,242 @@
+<!-- BEGIN ARRAY ORDERITEMS
+    NO
+    ORDERNO
+    ISBN
+    SINGLEISBN
+    TITLE
+    PUBLISHER
+    QUANTITY
+    UNITCURRENCY
+    UNITFOREIGNPRICE
+    UNITLOCALPRICE
+    TOTALFOREIGNPRICE
+    TOTALLOCALPRICE
+    EXCHANGERATE
+    ORDERDATE
+    AUTHOR
+    PUBLICATION
+    EDITION
+    SERIES
+    NOTES
+    NOTES502
+    BIBSOURCE
+    FOREX
+    REFERENCENO
+    REQUESTOR
+    DEPARTMENT
+    REMARKS
+    ANNOTE
+    MEETINGNAME
+    CONTROLNO
+    EXPDATE
+    UNIT
+    ROWNO
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADD1
+    LIBRARYADD2
+    LIBRARYADD3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    REFERENCENO
+    LETTERDATE
+    LETTERTIME
+    LETTERSUBJECT
+    ORDERTOTAL
+    ORDERTOTALINWORD
+    TOTALQUANTITY
+    UNITCURRENCY
+    ORDERFOREIGN
+    BATCHREQUESTORID
+    EXPDATE
+    LOGINOFFICER
+    OFFICERNAME
+    DESIGNATION  
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet">
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 10pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 10pt !important;;
+		font-family: "Times New Roman";
+		margin-left: 0.50in; 
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	/*.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt !important;;
+		font-family: "Times New Roman"; 
+		margin-left: 0.30in; 
+		word-break:break-all;
+	
+	*/
+	table {
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	  width: 85%;
+	  font-size: 10pt !important;;
+	  font-family: "Times New Roman";
+	  margin-left: 0.50in; 
+	}
+	
+/*	.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 10pt !important;;
+		font-family: "Times New Roman"; 
+		margin-left: 0.50in; 
+	}*/
+	
+	th, td {
+	  padding: 4px;
+	  text-align: left;
+	 /*  border-bottom: 1px solid #ddd; */
+	}
+	
+	</style>
+	</head>
+	<body>
+		<br/><br/><br/><br/><br/><br/><br/><br/>
+		<div>Income Details(&emsp;&emsp;) </div>
+		
+		
+		
+		<!-- <br><br>
+		<table style="margin-left:0.0in">
+		  <tr>
+		    <th align="left" valign="top" style="margin-left:0.0in;width:0.75in"><u>No. Pesanan</u></th>
+		    <th align="left" valign="top" style="margin-left:0.8in;width:1.00in"><u>ISBN</u></th>
+		  	<th align="left" valign="top" style="margin-left:1.9in;width:3.40in"><u>Judul/Penerbit</u></th>
+		  	<th align="left" valign="top" style="margin-left:5.30in;width:0.60in"><u>Kuantiti</u></th>
+		  	<th align="left" valign="top" style="margin-left:6.00in;width:0.70in;text-align:right"><u>Harga Per Unit</u></th>
+			<th align="left" valign="top" style="margin-left:7.00in;width:0.80in;text-align:right"><u>Jumlah Harga RM</u></th>
+		  </tr>
+  
+		  {LOOP}<tr>
+		    {LOOP}<td align="left" valign="top" style="margin-left:0.0in;width:0.75in">(ORDERNO)</td>
+		    {LOOP}<td align="left" valign="top" style="margin-left:0.8in;width:1.00in">(ISBN)</td>
+		    {LOOP}<td align="left" valign="top" style="margin-left:1.9in;width:3.40in">(TITLE)</td>
+		    {LOOP}<td align="left" valign="top" style="margin-left:5.30in;width:0.60in;text-align:center">(QUANTITY)</td>
+		    {LOOP}<td align="left" valign="top" style="margin-left:6.00in;width:0.70in;text-align:right">(UNITCURRENCY) (UNITFOREIGNPRICE)</td>
+			{LOOP}<td align="left" valign="top" class="table" style="margin-left:7.00in;width:0.90in;text-align:right">(TOTALLOCALPRICE)</td>
+		  {LOOP}</tr>
+		  	{END LOOP} 
+		</table>
+
+		
+		<br/><br/>
+
+		<div class="ta-left" style="margin-left:5.00in;width:1.00in"><b>Jumlah Harga Besar : </b></div>
+		<div class="ta-left" style="margin-left:6.00in;width:0.85in"><b>RM <u>(ORDERTOTAL)</u></b></div><br/>
+		
+		<br/><br/>
+		<div class="ta-left">2.&emsp;&emsp;Sila kemukakan invois dalam 4 salinan beserta dengan invois penerbit.</div><br/><br/>
+		<div class="ta-left">3.&emsp;&emsp;Sekiranya pesanan tidak diterima dalam jangkamasa enam (6) bulan dari tarikh pesanan dibuat dan tiada sebarang notis diterima,</div><br/>
+		<div class="ta-left">maka pihak Perpustakaan Universiti Sultan Zainal Abidin berhak membatalkan pesanan ini dengan serta-merta selepas tarikh tersebut.</div><br/><br/>
+		<div class="ta-left">4.&emsp;&emsp;Sila bekalkan judul-judul seperti dalam senarai mengikut syarat-syarat yang telah ditetapkan oleh Perpustakaan.</div><br/><br/>
+		<br/><br/>
+		<div class="ta-left">Sekian, terima kasih.</div><br/>
+		<br/>
+		<div class="ta-left"><b>"BERKHIDMAT UNTUK NEGARA"</b></div><br/>
+		<br/>
+		<div class="ta-left"><b>"Ilmu dan Akhlak"</b></div><br/>
+		<br/>
+		<div class="ta-left">Saya yang menjalankan amanah</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div class="ta-left"><b>NORULHUDA BINTI MAKHTAR</b></div><br/>
+		<div class="ta-left">Ketua Pustakawan</div><br/>
+		<div class="ta-left">Menjalankan Fungsi</div><br/>
+		<div class="ta-left">Universiti Sultan Zainal Abidin</div><br/> -->
+
+
+
+	</body>
+	</html>

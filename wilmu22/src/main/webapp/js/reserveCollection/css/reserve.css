@@ -1,0 +1,22 @@
+	#rsvCollectionMaster_table {
+		table-layout: fixed;
+
+	}
+
+	#rsvCollectionMaster_table tr td {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		color: black;
+	}
+
+	th {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		}
+/* 	
+	#createModal {
+		overflow-y: scroll;
+		}
+	 */

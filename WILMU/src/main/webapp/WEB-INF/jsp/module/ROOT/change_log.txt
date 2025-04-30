@@ -1,0 +1,37 @@
+
+
+
+****************2019.0.1 ***************************************************************
+**NEW update 21/02/2019
+- add corporate ID -SSL
+- add new miscellaneous program and new tab at patron detail - SSL
+- solve issue at search patron detail when "enter" screan blank - UNISZA
+- Patron search shouldn't be case sensitive - UPSI
+- To do checking on  New IC column for existing record. Now New IC mandatory - PKPJ
+
+**NEW update 17/06/2019   
+- Patron Miscllaneous  -> should clear the data if  user want to perfrom second search or change the radio button 
+					   -> Unable to add the record if have (' ) for example (Parent's) 
+					   -> there is no limit for patron Attribute 
+					   
+- Flag				   -> Function column should be wider as unable to view in full the code 
+					   -> Suggest that no need to insert exact word to search the record
+					   
+- Academic Subject     -> there a few record unable to be edit or view  (i.e : BKE 4053, BKS 3013)
+
+****************2019.0.2 ***************************************************************
+**NEW update 17/06/2019  
+- PATRON DETAIL - Corparate Id effect discahrge 
+
+**NEW update 24/06/2019  
+-Patron Miscllaneous -> Unable to search the record if have (' ) for example (Parent's) 
+-Flag -> Suggest that no need to insert exact word to search the record
+
+
+
+
+
+
+
+
+

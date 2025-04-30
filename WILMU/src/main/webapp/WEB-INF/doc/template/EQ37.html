@@ -1,0 +1,189 @@
+<!-- 
+BEGIN ARRAY ORDERDETAILS
+    ORDERNO
+    ORDERDATE
+    ISBN
+    TITLE
+    EDITION
+    PUBLISHER
+    QTYORDERED
+    RECEIVED
+    UNITFOREIGNPRICE
+    UNITCURRENCY
+    EXPDATE
+END ARRAY
+
+BEGIN VARIABLE
+    LIBRARYNAME
+    LIBRARYADDRESS1
+    LIBRARYADDRESS2
+    LIBRARYADDRESS3
+    LIBRARYPOSTCODE
+    LIBRARYTOWN
+    LIBRARYPHONE
+    BRANCHNAME
+    BRANCHADD1   
+    BRANCHADD2   
+    BRANCHADD3   
+    BRANCHPOSTCODE   
+    BRANCHTOWN
+    LETTERSUBJECT 
+    LETTERTIME
+    REFERENCENO
+    OFFICERNAME
+    DESIGNATION
+    VENDORNAME
+    VENDORADDRESS1
+    VENDORADDRESS2
+    VENDORADDRESS3
+    VENDORPOSTCODE
+    VENDORTELEPHONE
+    VENDORCONTACT
+    STAFFNAME
+    STAFFDESIGNATION
+    HODNAME
+    HODDESIGNATION
+END VARIABLE
+ -->
+
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- <link id="stylesheet" href="<%= request.getContextPath() %>/css/receiptStyle.css" rel="stylesheet"> -->
+	<style>
+	@page{size:auto; margin-bottom:5mm;margin-top:5mm;}
+	
+	@media print {
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+		           font-size: 10pt !important;
+		           font-family: "Times New Roman";
+			  }
+			  h1.entry-title {
+			  font-size: 8pt !important;
+			  font-family: "Times New Roman";
+		         }
+		}
+	
+	  body {
+		font-size: 8pt !important;;
+		font-family: "Times New Roman";
+		margin-left: 0.30in; 
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		
+	}
+	
+	.ta-right {
+		text-align: right;
+		float: right;
+	}
+	
+	.ta-center {
+		margin-left: auto;
+	  	 margin-right: auto;
+	  	 text-align:center;
+	}
+	
+	.padd-right-5 {
+		padding-right: 5px;
+	}
+	
+	.margin-top-15 {
+		margin-top: 15px;
+	}
+	
+	.margin-btm-15 {
+		margin-bottom: 15px;
+	}
+	
+	.ta-left {
+		float: left;
+		display:inline-block;
+		position:absolute;
+	}
+	
+	.float-right {
+		float: right;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	.table{
+		display:inline-block;
+		position:absolute; 
+		top:auto;
+		white-space: pre-wrap;
+		overflow: hidden;
+	  	font-size: 8pt !important;;
+		font-family: "Times New Roman"; 
+		margin-left: 0.30in; 
+	}
+	
+	</style>
+	</head>
+	<body>
+	
+		<br/><br/><br/><br/><br/>
+		
+		<div class="ta-left">Our Ref : </div><br/>
+		<div class="ta-left">Date : (LETTERDATE)</div><br/>
+		<div class="ta-left">Time : </div><br/>
+		<br/>
+		
+		<div class="ta-left">(VENDORNAME)</div><br/>
+		<div class="ta-left">(VENDORADDRESS1)</div><br/>
+		<div class="ta-left">(VENDORADDRESS2)</div><br/>
+		<div class="ta-left">(VENDORADDRESS3)</div><br/>
+		<br/>
+		
+		<div class="ta-left">Up : (VENDORCONTACT)</div><br/>
+		<br/>
+		
+		<div class="ta-left">Dear Sir/Madam,</div><br/>
+		<br/>
+
+		<div class="ta-left"><b>RE: (LETTERSUBJECT)</b></div><br/>
+		<br/>
+		
+		<div class="table" style="margin-left:0.0in;width:1.00in"><u>ORDER NO</u></div>
+		<div class="table" style="margin-left:1.10in;width:3.00in"><u>TITLE</u></div>
+		<div class="table" style="margin-left:4.20in;width:0.70in"><u>ORDER DATE</u></div>
+		<div class="table" style="margin-left:5.00in;width:0.90in"><u>EXPECTED DATE</u></div>
+		<div class="table" style="margin-left:6.00in;width:0.70in"><u>COPIES/SETS</u></div>
+		<div class="table" style="margin-left:6.60in;width:0.70in"><u>RECEIVED</u></div>
+		<br/>
+		<br/>
+		
+		{LOOP}<div class="table" style="margin-left:0.0in;width:1.00in">(ORDERNO)</div>
+		{LOOP}<div class="table" style="margin-left:1.10in;width:3.00in">(TITLE)</div><br/>
+		{LOOP}<div class="table" style="margin-left:4.20in;width:0.70in">(ORDERDATE)</div>
+		{LOOP}<div class="table" style="margin-left:5.00in;width:0.90in">(EXPDATE)</div>
+		{LOOP}<div class="table" style="margin-left:6.00in;width:0.70in">(QTYORDERED)</div>
+		{LOOP}<div class="table" style="margin-left:6.60in;width:0.70in">(RECEIVED)</div><br/>
+		{END LOOP} 
+		<br/>
+		
+		<div class="ta-left">We have not received the above orders. Please provide us the status report immediately.<br/>
+		Looking forward to hear from you.</div><br/>
+
+		<br/>
+		<br/>
+		<br/>
+
+		<div class="ta-left">Thank You.</div><br/>
+		<br/>
+		
+		<div class="ta-left">Yours sincerely,</div><br/>
+		<br/>
+		<br/>
+		<br/>
+
+		<div class="ta-left"><b>(OFFICERNAME)</b></div><br/>
+		<div class="ta-left"><b>(DESIGNATION)</b></div><br/>
+		<br/>
+
+	</body>
+	</html>
