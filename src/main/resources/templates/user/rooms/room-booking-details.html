@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Booking Details</title>
+    <style>
+        .time-slot-group label { margin-right: 10px; }
+        .disabled-slot { color: #ccc; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+<section>
+    <div class="container mt-4">
+        <h1>Borang Tempahan Bilik - Langkah 2</h1>
+        <hr/>
+
+        <div th:if="${currentRoom}" class="card mb-3">
+            <div class="card-header" th:text="'Maklumat Bilik:' + ${currentRoom.labelName}">Room Details</div>
+            <div class="card-body">
+                <p><strong>Jenis Bilik:</strong> <span th:text="${currentRoom.roomType}"></span></p>
+                <p><strong>Kapasiti:</strong> <span th:text="${currentRoom.capacity} + ' Orang'"></span></p>
+                <p><strong>Harga:</strong> RM <span th:text="${#numbers.formatDecimal(currentRoom.price, 1, 'COMMA', 2, 'POINT')}"></span> sejam</p>
+                <p><strong>Lokasi:</strong> <span th:text="${currentRoom.location}"></span></p>
+                <img th:if="${currentRoom.imgName}"
+                     th:src="${currentRoom.imgName.startsWith('/') ? currentRoom.imgName : '/eforms/room-images/' + currentRoom.imgName}"
+                     onerror="this.src='/eforms/img/room2.jpg';" alt="Room Image" style="max-width: 300px; height: auto;" class="img-thumbnail mb-2"/>
+            </div>
+        </div>
+        <div th:unless="${currentRoom}">
+             <p class="alert alert-warning">Maklumat bilik tidak dijumpai.</p>
+        </div>
+
+        <form th:action="@{/eforms/save-room-booking}" th:object="${bookingDetails}" method="post" class="mt-3">
+            <!-- Hidden field for roomId, taken from currentRoom -->
+            <input type="hidden" name="roomId" th:if="${currentRoom}" th:value="${currentRoom.id}"/>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="startDate" class="form-label">Tarikh Mula<span style="color:red;">*</span>:</label>
+                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="endDate" class="form-label">Tarikh Tamat<span style="color:red;">*</span>:</label>
+                    <input type="date" class="form-control" id="endDate" th:field="*{endDate}" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Pilih Masa<span style="color:red;">*</span>:</label>
+                
+                <!-- Alert for when a slot is already booked -->
+                <div id="bookedSlotAlert" class="alert alert-warning mt-2 mb-3" style="display: none;">
+                    <strong>Perhatian!</strong> Beberapa slot masa sudah ditempah pada tarikh yang dipilih. Sila pilih slot masa yang lain.
+                </div>
+                
+                <div class="time-slot-group">
+                    <!-- Example time slots. These should ideally come from backend or be configurable -->
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="time" id="time0900" value="09:00-10:00" th:field="*{time}" required>
+                        <label class="form-check-label" for="time0900">09:00 - 10:00</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="time" id="time1000" value="10:00-11:00" th:field="*{time}">
+                        <label class="form-check-label" for="time1000">10:00 - 11:00</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="time" id="time1100" value="11:00-12:00" th:field="*{time}">
+                        <label class="form-check-label" for="time1100">11:00 - 12:00</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="time" id="time1400" value="14:00-15:00" th:field="*{time}">
+                        <label class="form-check-label" for="time1400">14:00 - 15:00</label>
+                    </div>
+                     <!-- Add more time slots as needed -->
+                </div>
+                 <div th:if="${#fields.hasErrors('time')}" th:errors="*{time}" class="text-danger">Time Error</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="attendees" class="form-label">Bilangan Kehadiran<span style="color:red;">*</span>:</label>
+                <input type="number" class="form-control" id="attendees" th:field="*{attendees}" min="1" required>
+                 <div th:if="${#fields.hasErrors('attendees')}" th:errors="*{attendees}" class="text-danger">Attendees Error</div>
+            </div>
+            
+            <!-- Add other fields from RoomBookingDetails as necessary -->
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Seterusnya (Pilih Peralatan)</button>
+                <a th:href="@{/eforms/room-booking}" class="btn btn-secondary ms-2">Batal / Kembali ke Senarai Bilik</a>
+                <a th:href="@{/eforms/}" class="btn btn-info ms-2">Home</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Basic date validation: endDate cannot be before startDate
+        document.addEventListener('DOMContentLoaded', function () {
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            function validateDates() {
+                if (startDateInput.value && endDateInput.value) {
+                    if (endDateInput.value < startDateInput.value) {
+                        endDateInput.setCustomValidity('Tarikh Tamat tidak boleh sebelum Tarikh Mula.');
+                    } else {
+                        endDateInput.setCustomValidity('');
+                    }
+                }
+            }
+            if(startDateInput) startDateInput.addEventListener('change', validateDates);
+            if(endDateInput) endDateInput.addEventListener('change', validateDates);
+            
+            // Fetch and disable booked time slots (Placeholder for AJAX call)
+            // This would require a backend endpoint to provide booked slots for currentRoom.id and selected dates
+            // For example: /api/booked-slots?roomId=...&startDate=...&endDate=...
+            const currentRoomId = document.querySelector('input[name="roomId"]')?.value;
+            if (currentRoomId) {
+                function checkBookedSlots() {
+                    const startDate = startDateInput.value;
+                    const endDate = endDateInput.value;
+                    
+                    if (!startDate || !endDate) return;
+                    
+                    // Reset all slots to enabled
+                    document.querySelectorAll('.time-slot-group .form-check-input').forEach(input => {
+                        input.disabled = false;
+                        input.parentElement.querySelector('label').classList.remove('disabled-slot');
+                    });
+                    
+                    // Hide the alert by default
+                    document.getElementById('bookedSlotAlert').style.display = 'none';
+                    
+                    // API endpoint to check booked slots
+                    fetch(`/eforms/api/booked-slots?roomId=${currentRoomId}&startDate=${startDate}&endDate=${endDate}`)
+                        .then(response => response.json())
+                        .then(bookedSlots => {
+                            let hasBookedSlots = false;
+                            
+                            // Disable booked slots
+                            bookedSlots.forEach(slot => {
+                                const timeSlotId = `time${slot.time.split(':')[0]}`;
+                                const timeSlot = document.getElementById(timeSlotId);
+                                if (timeSlot) {
+                                    timeSlot.disabled = true;
+                                    timeSlot.checked = false; // Uncheck if it was checked
+                                    timeSlot.parentElement.querySelector('label').classList.add('disabled-slot');
+                                    hasBookedSlots = true;
+                                }
+                            });
+                            
+                            // Show alert if there are booked slots
+                            if (hasBookedSlots) {
+                                document.getElementById('bookedSlotAlert').style.display = 'block';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching booked slots:', error);
+                        });
+                }
+                
+                // Check for booked slots when dates change
+                if(startDateInput) startDateInput.addEventListener('change', checkBookedSlots);
+                if(endDateInput) endDateInput.addEventListener('change', checkBookedSlots);
+                
+                // Initial check
+                if (startDateInput.value && endDateInput.value) {
+                    checkBookedSlots();
+                }
+            }
+        });
+    </script>
+</section>
+</body>
+</html> 

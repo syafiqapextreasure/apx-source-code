@@ -3,19 +3,19 @@
 	th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Register - PPK System</title>
 </head>
 <body>
 	<section>
 		<div class="container mt-5 p-5">
 			<div class="row">
 				<div class="col-md-5 p-5">
-					<img alt="" src="img/ecom.png" width="100%" height="400px">
+					<img alt="Library Registration" th:src="@{/img/library-registration.jpg}" width="100%" height="400px">
 				</div>
 				<div class="col-md-7 p-2">
 					<div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
 						<div class="card-header text-center">
-							<p class="fs-4 text-center">Register</p>
+							<p class="fs-4 text-center">Register for Library Access</p>
 							<th:block th:if="${session.succMsg}">
 								<p class="text-success fw-bold">[[${session.succMsg}]]</p>
 								<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
@@ -27,8 +27,11 @@
 							</th:block>
 						</div>
 						<div class="card-body">
-							<form action="/saveUser" enctype="multipart/form-data" id="userRegister" novalidate
+							<form th:action="@{/saveUser}" enctype="multipart/form-data" id="userRegister" novalidate
 								method="post">
+								<!-- Hidden field to maintain redirectUrl -->
+								<input type="hidden" name="redirectUrl" th:value="${redirectUrl}">
+								
 								<div class="row">
 									<div class="col">
 										<label class="form-label">Full Name</label> <input required
@@ -85,7 +88,7 @@
 									<div class="col">
 										<label class="form-label">Confirm Password</label> <input
 											required class="form-control" name="confirmpassword"
-											type="password">
+											type="password" id="confirmpass">
 									</div>
 
 								</div>
@@ -97,26 +100,31 @@
 										class="form-control" name="img" type="file">
 								</div>
 
-
-
-
-
-
 								<button type="submit"
 									class="btn bg-primary text-white col-md-12">Register</button>
 							</form>
 						</div>
 
 						<div class="card-footer text-center">
-
-							have an account ? <a href="/signin" class="text-decoration-none">Login
-							</a>
+							Already have an account? <a th:href="${redirectUrl != null ? '/login?redirectUrl=' + redirectUrl : '/login'}" class="text-decoration-none">Login</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- JavaScript for form validation -->
+		<script>
+			document.getElementById('userRegister').addEventListener('submit', function(e) {
+				const password = document.getElementById('pass').value;
+				const confirmPassword = document.getElementById('confirmpass').value;
+				
+				if (password !== confirmPassword) {
+					e.preventDefault();
+					alert("Passwords do not match!");
+				}
+			});
+		</script>
 	</section>
 </body>
 </html>

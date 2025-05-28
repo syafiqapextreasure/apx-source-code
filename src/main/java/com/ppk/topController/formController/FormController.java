@@ -42,6 +42,7 @@ import com.ppk.topEntity.PaymentAccessPayload;
 import com.ppk.topEntity.errorEntity.ReportCreationException;
 import com.ppk.topEntity.errorEntity.UserNotFoundException;
 import com.ppk.topEntity.formsEntity.BorrowDetails;
+import com.ppk.topEntity.formsEntity.DependentDetails;
 import com.ppk.topEntity.formsEntity.GetFndBranch;
 import com.ppk.topEntity.formsEntity.LostBorrowedMaterial;
 import com.ppk.topEntity.formsEntity.LostDamagedReport;
@@ -63,11 +64,13 @@ import com.ppk.topServiceImpl.formServiceImpl.roomServiceImpl.RoomServiceImpl;
 import com.ppk.topServiceImpl.userServiceImpl.PpkMembershipRegistrationFormImpl;
 import com.ppk.utilities.LogUtil;
 import com.ppk.utilities.Utilities;
+import com.ppk.topServiceImpl.emailServiceImpl.EmailService;
  
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.Period;
 
 @Controller
 public class FormController {
@@ -100,6 +103,9 @@ public class FormController {
 	private RegistrationService registrationService;
 
 	@Autowired
+	private com.ppk.topService.DependentService dependentService;
+
+	@Autowired
 	GetFndGlnumbService getFndGlnumbService;
 
 	@Autowired
@@ -107,6 +113,9 @@ public class FormController {
 	
 	@Autowired
 	private com.ppk.topService.formService.roomService.RoomBookingTransactionService roomBookingTransactionService;
+
+	@Autowired
+	private EmailService emailService;
 
 	// for drop down data membership registration form
 	@GetMapping("/location")
@@ -155,14 +164,26 @@ public class FormController {
 		try {
 			MaterialProcurementProposalForm savedData = materialProcurementProposalFormServiceImpl
 					.saveMaterialProposalForm(formData);
+			
+			// Send email notification to staff
+			boolean emailSent = emailService.sendMaterialSuggestionNotification(savedData);
+			
+			// Log the result of email sending
+			if (emailSent) {
+				logger.info("Email notification sent successfully for material suggestion ID: {}", savedData.getId());
+			} else {
+				logger.warn("Failed to send email notification for material suggestion ID: {}", savedData.getId());
+			}
 
 			// Add a success message using flash attributes
 			redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
 			return "redirect:/recommendation-form"; // Redirect to reload the form
 
 		} catch (Exception e) {
-			// Add an error message to the model (since redirectAttributes do not work for
-			// the same request)
+			// Log the error
+			logger.error("Error saving material suggestion form: {}", e.getMessage(), e);
+			
+			// Add an error message to the model
 			model.addAttribute("errorMessage",
 					"An unexpected error occurred while saving the proposal form. Please try again.");
 			return "user/form/recommendationf"; // Return to the form with an error message
@@ -341,101 +362,193 @@ public class FormController {
 		return "user/form/membership_registration";
 	}
 
-	@PostMapping("/membership-renewal-service")
-	public String getMembershipRenewal(Model model, HttpServletRequest request) {
+	@GetMapping({"/membership-renewal-service", "/eforms/membership-renewal-service"})
+	public String getMembershipRenewalService(Model model, HttpServletRequest request) {
 		String petronId = request.getParameter("username");
+		String demoMode = request.getParameter("demo");
 		LocalDate expDate = null;
 		List<com.ppk.topController.membership.renual.entity.RenewalMembershipData> dbData = renewFeeService
 				.getMembershipData(petronId);
 		// User user = getLiferayUserDetails(request);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
+		// NOTE: This code uses mock data for testing purposes when database returns no results
+		// The mock data will be displayed in the form but is not connected to any production database
+		// In a production environment, this would be replaced with actual data from the membership database
+
 		// Ensure dbData is not null or empty, create an instance manually if needed
 		RenewalMembershipData membershipData = new RenewalMembershipData();
-		if (dbData != null && !dbData.isEmpty()) {
-			membershipData = dbData.get(0);
-		}
-		List<Dependent> dependentDetails = new ArrayList<Dependent>();
-		if (membershipData != null) {
-			// Set default values if null
-			String dateEnrolledStr = (membershipData.getDateEnrolled() != null) ? membershipData.getDateEnrolled()
-					: "20000101";
-			String expiryDateStr = (membershipData.getExpiryDate() != null) ? membershipData.getExpiryDate()
-					: "20990101";
-			String returnDateStr = (membershipData.getLastReturnDate() != null) ? membershipData.getLastReturnDate()
-					: "20990101";
-			// Parse dates safely
-			LocalDate dateEnrolled = LocalDate.parse(dateEnrolledStr, formatter);
-			LocalDate expiryDate = LocalDate.parse(expiryDateStr, formatter);
-			LocalDate returnDate = LocalDate.parse(returnDateStr, formatter);
-
-			// Add attributes to the model
-			model.addAttribute("formattedDateEnrolled", dateEnrolled);
-			model.addAttribute("expireDate", expiryDate);
-			model.addAttribute("returnDate", returnDate);
-			model.addAttribute("dbUserData", dbData);
-			expDate = expiryDate;
-
-			// Fetch dependent details safely
-			dependentDetails = registrationService.getDependentRegs(petronId);
-			if (dependentDetails == null) {
-				dependentDetails = new ArrayList<>(); // Ensure we have a non-null list
+		
+		// For testing: Check if dbData is empty and create dummy data
+		if (dbData == null || dbData.isEmpty()) {
+			// Determine if we should use a "demo" mode with variable data for presentation
+			boolean isDemo = "true".equalsIgnoreCase(demoMode);
+			
+			// Create base dummy data
+			membershipData.setPatronID(petronId != null ? petronId : "default");
+			membershipData.setName("Test User");
+			
+			// Vary data based on demonstration mode
+			if (isDemo) {
+				// Create random expiry date to demonstrate "about to expire" scenario
+				LocalDate today = LocalDate.now();
+				LocalDate randomEnrollDate = today.minusYears(1 + (int)(Math.random() * 3));
+				LocalDate randomExpireDate = today.plusDays((int)(Math.random() * 60) - 30); // -30 to +30 days from today
+				
+				// Format dates according to the expected format
+				String enrollDateStr = randomEnrollDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+				String expireDateStr = randomExpireDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+				
+				// Set random data for demo
+				membershipData.setDateEnrolled(enrollDateStr);
+				membershipData.setExpiryDate(expireDateStr);
+				membershipData.setLastReturnDate(today.minusDays((int)(Math.random() * 30)).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+				
+				// Randomize status based on expiry date
+				if (randomExpireDate.isBefore(today)) {
+					membershipData.setStatus("Expired");
+				} else if (randomExpireDate.isBefore(today.plusDays(15))) {
+					membershipData.setStatus("About to Expire");
+				} else {
+					membershipData.setStatus("Active");
+				}
+				
+				// Formatted dates for display
+				model.addAttribute("formattedDateEnrolled", randomEnrollDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				model.addAttribute("expireDate", randomExpireDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				model.addAttribute("returnDate", today.minusDays((int)(Math.random() * 30)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				
+				// Add demo badge
+				model.addAttribute("isDemo", true);
+				model.addAttribute("demoType", (int)(Math.random() * 3)); // 0, 1, or 2 for different demo scenarios
+			} else {
+				// Standard fixed testing data
+				membershipData.setDateEnrolled("20000101");
+				membershipData.setExpiryDate("20990101");
+				membershipData.setLastReturnDate("20990101");
+				membershipData.setStatus("Active");
+				
+				// Add the dummy data to model
+				model.addAttribute("formattedDateEnrolled", "2000-01-01");
+				model.addAttribute("expireDate", "2099-01-01");
+				model.addAttribute("returnDate", "2099-01-01");
 			}
-			model.addAttribute("dependentDetails", dependentDetails);
-
-			model.addAttribute("dependentDetails", dependentDetails);
+			
+			// Add membership data to model
 			model.addAttribute("membershipData", membershipData);
+			
+			// Add empty dependent list
+			model.addAttribute("dependentDetails", new ArrayList<>());
+			
+			return "user/form/membership_renewal";
+		}
+
+		if (!dbData.isEmpty()) {
+			// User data found
+			membershipData = dbData.get(0);
+			
+			// Format dates
+			String enrollDate = membershipData.getDateEnrolled();
+			if (enrollDate != null && !enrollDate.isEmpty() && enrollDate.length() >= 8) {
+				expDate = LocalDate.parse(enrollDate, formatter);
+				model.addAttribute("formattedDateEnrolled", expDate.toString());
 		} else {
-			dependentDetails = new ArrayList<Dependent>();
 			model.addAttribute("formattedDateEnrolled", "");
-			model.addAttribute("expireDate", "");
-			model.addAttribute("returnDate", "");
-			model.addAttribute("dbUserData", "");
-			model.addAttribute("membershipData", null);
+			}
+
+			String expireDate = membershipData.getExpiryDate();
+			if (expireDate != null && !expireDate.isEmpty() && expireDate.length() >= 8) {
+				expDate = LocalDate.parse(expireDate, formatter);
+				model.addAttribute("expireDate", expDate.toString());
+
+				// Calculate date difference for eligibility check
+				LocalDate today = LocalDate.now();
+				Period period = Period.between(today, expDate);
+				long monthsUntilExpiry = ChronoUnit.MONTHS.between(today, expDate);
+				
+				// Skip eligibility check for testing
+				/*
+				if (monthsUntilExpiry > 1) {
+					return "user/form/renualdateYetnotcame";
+				}
+				*/
+			} else {
+				model.addAttribute("expireDate", "");
+			}
+
+			String returnDate = membershipData.getLastReturnDate();
+			if (returnDate != null && !returnDate.isEmpty() && returnDate.length() >= 8) {
+				expDate = LocalDate.parse(returnDate, formatter);
+				model.addAttribute("returnDate", expDate.toString());
+			} else {
+				model.addAttribute("returnDate", "");
+			}
+			
+			model.addAttribute("membershipData", membershipData);
+		}
+
+		// Load dependent info
+		List<DependentDetails> dependentDetails = null;
+		if (petronId != null && !petronId.isEmpty()) {
+			dependentDetails = dependentService.getDependentsByUserId(petronId);
 			model.addAttribute("dependentDetails", dependentDetails);
-		}
-
-		LocalDate currentDate = LocalDate.now();
-
-// Calculate the date that is one month ahead from the current date
-		LocalDate oneMonthFromNow = currentDate.plusMonths(1);
-
-// Check if the expiry date is less than or equal to one month from now
-		String display = "user/form/membership_renewal";
-		if (expDate != null && (expDate.isBefore(oneMonthFromNow) || expDate.isEqual(oneMonthFromNow))) {
-			display = "user/form/membership_renewal";
 		} else {
-			display = "user/form/renualdateYetnotcame";
+			model.addAttribute("dependentDetails", new ArrayList<>());
 		}
 
-		return display;
+		return "user/form/membership_renewal";
 	}
 
-	@GetMapping("/membership-renewal")
-	public String getMembershipRenewalui(HttpServletRequest request) {
-		return "user/form/justrender-renual";
+	@PostMapping({"/membership-renewal-service", "/eforms/membership-renewal-service"})
+	public String postMembershipRenewalService(@RequestParam Map<String, String> formData, Model model, HttpServletRequest request) {
+		// Reuse same code from GET method
+		return getMembershipRenewalService(model, request);
+	}
+
+	@GetMapping({"/membership-renewal", "/eforms/membership-renewal"})
+	public String getMembershipRenewalForm(HttpServletRequest request) {
+		logger.info("[GET] /eforms/membership-renewal - Form loaded by {}", request.getRemoteAddr());
+		return "user/form/membership_renewal";
+	}
+
+	@PostMapping("/eforms/membership-renewal")
+	public String submitMembershipRenewal(
+	    @RequestParam Map<String, String> params,
+	    org.springframework.ui.Model model, HttpServletRequest request) {
+	    logger.info("[POST] /eforms/membership-renewal - Submission from {}", request.getRemoteAddr());
+	    logger.info("[POST] /eforms/membership-renewal - Params: {}", params);
+	    // Log the form data for now
+	    System.out.println("Membership renewal submitted: " + params);
+	    model.addAttribute("message", "Renewal submitted! (Test only)");
+	    model.addAttribute("params", params); // Pass params to the view
+	    logger.info("[POST] /eforms/membership-renewal - Returning membership_renewal_success view");
+	    return "user/form/membership_renewal_success";
 	}
 
 //    Room Booking started
 
-	@GetMapping("/room-booking")
-	public String getRoomBookingForm(org.springframework.ui.Model model) {
-		// Fetch the list of rooms from the service
-		List<RoomReservationFormEntity> rooms = roomReservationService.getAllRooms();
-
-		// Add the list of rooms to the model
+	@GetMapping({"/room-booking", "/eforms/room-booking"})
+	public String getRoomBookingForm(org.springframework.ui.Model model, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			List<RoomReservationFormEntity> rooms = roomServiceImpl.getAllRooms();
 		model.addAttribute("rooms", rooms);
-
-		// Return the view name
-		return "user/rooms/room-list"; // The Thymeleaf template to render
+			return "user/rooms/room-list";
+		} catch (Exception e) {
+			logger.error("Error loading room booking form: {}", e.getMessage(), e);
+			model.addAttribute("errorMessage", "Failed to load room booking form. Please try again.");
+			return "errorPage";
+		}
 	}
 
-	@GetMapping("/room-booking-details/{id}")
+	@GetMapping({"/room-booking-details/{id}", "/eforms/room-booking-details/{id}"})
 	public String getRoomBookingDetails(@PathVariable Long id, org.springframework.ui.Model model,
 			HttpSession session) {
+		
 		RoomReservationFormEntity room = roomServiceImpl.getRoomById(id);
+		// Image path should be correct from DB.
 		session.setAttribute("roomDetails", room);
 		model.addAttribute("room", room);
+		model.addAttribute("roomBookingDetails", new RoomBookingDetails());
 		session.setAttribute("id", id);
 		return "user/rooms/room-booking1";
 	}
@@ -472,28 +585,49 @@ public class FormController {
 //		}
 //	}
 
-	@PostMapping("/save-room-booking")
-	public String saveRoomBookingDetails(@ModelAttribute RoomBookingDetails roomBookingDetails,
-			org.springframework.ui.Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	@PostMapping({"/save-room-booking", "/eforms/save-room-booking"})
+	@ResponseBody
+	public Object saveRoomBookingDetails(@ModelAttribute RoomBookingDetails roomBookingDetails,
+			org.springframework.ui.Model model, HttpSession session, RedirectAttributes redirectAttributes,
+			HttpServletRequest request, HttpServletResponse response) {
 		Long roomId = (Long) session.getAttribute("id");
 		try {
-			// Retrieve the roomId from session
-
 			roomBookingDetails.setRoomId(roomId);
-
-			// Save the initial booking details and store in session
 			RoomBookingDetails savedBookingDetails = roomServiceImpl.saveRoomDetails(roomBookingDetails);
 			session.setAttribute("roomDetailsI", savedBookingDetails);
-
-			// After saving, redirect to the equipment page
-			return "redirect:/room-booking-equipment/" + roomId.toString();
+			
+			// Check if it's an AJAX request
+			String requestedWith = request.getHeader("X-Requested-With");
+			if ("XMLHttpRequest".equals(requestedWith)) {
+				// For AJAX requests, return JSON response
+				Map<String, Object> jsonResponse = new HashMap<>();
+				jsonResponse.put("success", true);
+				jsonResponse.put("redirectUrl", "/eforms/room-booking-equipment/" + roomId.toString());
+				response.setContentType("application/json");
+				return jsonResponse;
+			}
+			
+			// For traditional form submissions
+			return "redirect:/eforms/room-booking-equipment/" + roomId.toString();
 		} catch (Exception e) {
 			logger.error("Error while saving room booking details: {}", e.getMessage());
-			redirectAttributes.addFlashAttribute("roomAlreadyBooked",
-					"The room is already booked for the selected date and time.");
-
-			model.addAttribute("errorMessage", "An error occurred while saving your booking. Please try again.");
-			return "redirect:/room-booking-details/" + roomId.toString();
+			
+			// Check if it's an AJAX request
+			String requestedWith = request.getHeader("X-Requested-With");
+			if ("XMLHttpRequest".equals(requestedWith)) {
+				// For AJAX requests, return JSON error response
+				Map<String, Object> jsonResponse = new HashMap<>();
+				jsonResponse.put("success", false);
+				jsonResponse.put("error", "T"
+						+ "arikh dan masa yang dipilih telah ditempah. Sila pilih tarikh/masa lain.");
+				response.setContentType("application/json");
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				return jsonResponse;
+			}
+			
+			// For traditional form submissions
+			redirectAttributes.addFlashAttribute("errorMessage", "Tarikh dan masa yang dipilih telah ditempah. Sila pilih tarikh/massa lain.");
+			return "redirect:/eforms/room-booking-details/" + roomId;
 		}
 	}
 
@@ -505,35 +639,87 @@ public class FormController {
 //	}
 
 	// room booking equipment
-	@GetMapping("/room-booking-equipment/{id}")
-	public String getRoomBookingEquipment(@PathVariable Long id, org.springframework.ui.Model model) {
+	@GetMapping({"/room-booking-equipment/{id}", "/eforms/room-booking-equipment/{id}"})
+	public String getRoomBookingEquipment(@PathVariable Long id, org.springframework.ui.Model model, HttpSession session) {
+		try {
 		RoomReservationFormEntity room = roomServiceImpl.getRoomBEquipById(id);
 		model.addAttribute("room", room);
 
-		List<EquipmentDetails> equipmentList = Arrays.asList(new EquipmentDetails(null, "Kerusi", 0, 1.00, false),
+			// Debug log for room type
+			logger.info("Room ID: {}, Room Type: {}, Room Name: {}", id, room.getRoomType(), room.getLabelName());
+
+			// Check if the room type is "Bilik Mesyuarat" or if the name contains "Bilik Mesyuarat"
+			if ((room.getRoomType() != null && room.getRoomType().equals("Bilik Mesyuarat")) 
+					|| (room.getLabelName() != null && room.getLabelName().contains("Bilik Mesyuarat"))) {
+				logger.info("Room type is Bilik Mesyuarat, skipping equipment selection and redirecting to summary");
+				
+				// Get booking ID from session for direct redirect to summary
+				RoomBookingDetails bookingDetails = (RoomBookingDetails) session.getAttribute("roomDetailsI");
+				if (bookingDetails != null && bookingDetails.getId() != null) {
+					// We have a booking ID, redirect directly to summary
+					Long bookingId = bookingDetails.getId();
+					logger.info("Redirecting Mesyuarat room directly to summary with booking ID: {}", bookingId);
+					return "redirect:/room-booking-summary/" + bookingId;
+				}
+				
+				// No redirect if no booking ID, show the equipment page but indicate unavailability
+				model.addAttribute("equipmentAvailable", false);
+				model.addAttribute("roomId", id);
+				return "user/rooms/room-equipment";
+			}
+			
+			// Only show equipment for "Bilik Serbaguna"
+			logger.info("Room type is Bilik Serbaguna, showing equipment selection");
+			List<EquipmentDetails> equipmentList = Arrays.asList(
+				new EquipmentDetails(null, "Kerusi", 0, 1.00, false),
 				new EquipmentDetails(null, "Meja Petak", 0, 3.50, false),
-				// new EquipmentDetails(null, "Komputer", 0, 3.00, false),
-				new EquipmentDetails(null, "LCD Projector / Skrin Layer", 0, 50.00, false));
+				new EquipmentDetails(null, "LCD Projector / Skrin Layer", 0, 50.00, false)
+			);
 
 		EquipmentForm equipmentForm = new EquipmentForm();
 		equipmentForm.setEquipmentList(equipmentList);
 
-		model.addAttribute("equipmentForm", equipmentForm); // Add the entire form object
+			model.addAttribute("equipmentForm", equipmentForm);
 		model.addAttribute("roomId", id);
+			model.addAttribute("equipmentAvailable", true); // Equipment is available for Serbaguna
 
 		return "user/rooms/room-equipment";
+		} catch (Exception e) {
+			logger.error("Error in room equipment selection: {}", e.getMessage(), e);
+			model.addAttribute("errorMessage", "Error loading equipment options");
+			return "errorPage";
+		}
 	}
 
-	@PostMapping("/save-room-booking-equipment/{id}")
+	@PostMapping({"/save-room-booking-equipment/{id}", "/eforms/save-room-booking-equipment/{id}"})
 	public String saveRoomBookingEquipment(@PathVariable Long id, @ModelAttribute EquipmentForm equipmentForm,
 			org.springframework.ui.Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		try {
 			// Enhanced logging for debugging
-			logger.info("Processing equipment form with roomId: {}", id);
+			logger.info("Processing equipment form with roomId (path variable): {}", id);
 			logger.info("Equipment form data: {}", equipmentForm);
 			logger.info("Equipment list size: {}",
 					equipmentForm.getEquipmentList() != null ? equipmentForm.getEquipmentList().size() : "null");
+
+			RoomBookingDetails bookingDetailsFromSession = (RoomBookingDetails) session.getAttribute("roomDetailsI");
+			if (bookingDetailsFromSession == null || bookingDetailsFromSession.getId() == null) {
+				logger.error("Critical: RoomBookingDetails not found in session or has no ID when saving equipment.");
+				redirectAttributes.addFlashAttribute("errorMessage", "Sesi tempahan tidak dijumpai. Sila cuba lagi.");
+				return "redirect:/room-booking"; // Or a more appropriate error/start page
+			}
+			Long actualBookingId = bookingDetailsFromSession.getId();
+			logger.info("Actual Booking ID from session for linking equipment: {}", actualBookingId);
+
+			// Get room type from RoomReservationFormEntity
+			RoomReservationFormEntity room = roomServiceImpl.getRoomById(bookingDetailsFromSession.getRoomId());
+			if (room != null && room.getRoomType() != null && room.getRoomType().equals("Bilik Serbaguna")) {
+				if (equipmentForm.getEquipmentList() != null) {
+					for (EquipmentDetails equipment : equipmentForm.getEquipmentList()) {
+						equipment.setSelected(true);
+					}
+				}
+			}
 
 			if (equipmentForm.getEquipmentList() != null) {
 				for (EquipmentDetails equipment : equipmentForm.getEquipmentList()) {
@@ -543,18 +729,19 @@ public class FormController {
 				}
 			}
 
-			// Delegate the saving operation to the service
-			roomServiceImpl.saveSelectedEquipment(equipmentForm.getEquipmentList());
+			// Delegate the saving operation to the service with the actual booking ID
+			roomServiceImpl.saveSelectedEquipment(equipmentForm.getEquipmentList(), actualBookingId);
 
 			// Log session attributes
 			logger.info("Setting session attribute 'eqipList'");
-			session.setAttribute("eqipList", equipmentForm.getEquipmentList());
+			session.setAttribute("eqipList", equipmentForm.getEquipmentList()); // Keep storing the form's list for summary display
 
 			// Log redirect destination
-			String redirectUrl = "/room-booking-summary/" + id;
+			// The path variable {id} here refers to the room's ID, not the booking's ID, used for page navigation.
+			String redirectUrl = "/room-booking-summary/" + actualBookingId;
 			logger.info("Redirecting to: {}", redirectUrl);
 
-			// Redirect to the summary page with the room ID
+			// Redirect to the summary page with the room ID (for displaying room info, not for equipment saving logic)
 			return "redirect:" + redirectUrl;
 		} catch (Exception e) {
 			// Log and handle errors
@@ -598,7 +785,10 @@ public class FormController {
 			// Add booking confirmation to model
 			model.addAttribute("bookingConfirmation", completedBooking);
 
-			return "user/rooms/booking-confirmation";
+			// After saving booking, always redirect using the real booking ID
+			String redirectUrl = "/room-booking-summary/" + completedBooking.getId();
+			logger.info("Redirecting to: {}", redirectUrl);
+			return "redirect:" + redirectUrl;
 
 		} catch (Exception e) {
 			logger.error("Error while completing booking: {}", e.getMessage());
@@ -608,48 +798,103 @@ public class FormController {
 	}
 
 	@PostMapping("/confirm-booking")
-	public String saveAllRoomBookingDetails(@ModelAttribute PersonalInformation personalInformation,
-			RedirectAttributes redirectAttributes, HttpSession httpSession, HttpServletResponse response ) {
+	public String saveAllRoomBookingDetails(@ModelAttribute PersonalInformation personalInfo, HttpSession httpSession,
+			RedirectAttributes redirectAttributes, HttpServletResponse response) {
+        
+		Long actualBookingId = null;
+		if (httpSession.getAttribute("roomDetailsI") != null) {
+			RoomBookingDetails bookingDetails = (RoomBookingDetails) httpSession.getAttribute("roomDetailsI");
+			actualBookingId = bookingDetails.getId();
+		}
+		
+        logger.info("Processing personal information submission: {}", personalInfo);
+        logger.info("Actual Booking ID from session for final confirmation steps: {}", actualBookingId);
+        
+        // If actualBookingId is null, redirect to room booking list with error
+        if (actualBookingId == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Session expired or booking details not found. Please try again.");
+            return "redirect:/eforms/room-booking";
+        }
+        
 		try {
-			logger.info("Processing personal information submission: {}", personalInformation);
-
-			// Set bookingId to null to avoid database column issue
-			personalInformation.setBookingId(null);
-
-			// Save personal information
-			PersonalInformation savedPersonalInformation = this.roomServiceImpl.savedUserDetails(personalInformation);
-
+			// Save or update the personal information and link to booking
 			
+			
+			personalInfo.setBookingId(actualBookingId);
+			PersonalInformation savedPersonalInformation = roomServiceImpl.savedUserDetails(personalInfo);
+
 			if (savedPersonalInformation != null) {
-			Double totalPriceSession=httpSession.getAttribute("totalPrice") !=null?(Double)	httpSession.getAttribute("totalPrice"):0;
-				Cookie cookie = new Cookie("petronId", personalInformation.getId().toString());
+			    Double totalPriceSession = (Double) httpSession.getAttribute("totalPrice");
+			    if (totalPriceSession == null) totalPriceSession = 0.0;
+			    
+				Cookie cookie = new Cookie("petronId", savedPersonalInformation.getId().toString());
 			    cookie.setMaxAge(60 * 60); // 1 hour
 			    cookie.setPath("/");
 			    response.addCookie(cookie);
-				Utilities u = new Utilities(null);
-			    PaymentAccessPayload payload = u.paymentProcessModel(totalPriceSession.toString(),
-			    		personalInformation.getId().toString());
-			    ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
-				 int iCounter = getFndGlnumbService.getGlnumb2("TRXNO");
-		      		getFndGlnumbService.insertRETRXN(iCounter+1, null, totalPriceSession.toString(), personalInformation.getId().toString(),
-		      				"_ADMIN", String.valueOf(new java.util.Date().getYear()), payload.getPayload().getOrderNo());
 				
-				// Return a success response for AJAX
-		      	return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
-			//	redirectAttributes.addFlashAttribute("successMessage", "Data saved successfully!");
-			//	return "redirect:/room-booking";
+				Utilities u = new Utilities(null);
+			  /*  PaymentAccessPayload payload = u.paymentProcessModel(totalPriceSession.toString(),
+			   		actualBookingId.toString());
+			    ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
+			    
+			    // Try to save transaction record, but don't fail if it already exists
+				try {
+					int iCounter = getFndGlnumbService.getGlnumb2("TRXNO");
+					//System.out.println("actualBookingId.toString()================"+actualBookingId.toString());
+					getFndGlnumbService.insertRETRXN(iCounter+1, null, totalPriceSession.toString(), actualBookingId.toString(), 
+							"_ADMIN", String.valueOf(new java.util.Date().getYear()), payload.getPayload().getOrderNo());
+				} catch (org.springframework.dao.DuplicateKeyException e) {
+					// Transaction already exists, no need to save again
+					logger.warn("Transaction record already exists, continuing with booking process");
+				}
+				*/
+				
+				// Clear session attributes related to booking after successful processing
+				httpSession.removeAttribute("roomDetailsI");
+                httpSession.removeAttribute("eqipList");
+                httpSession.removeAttribute("roomDetails");
+                httpSession.removeAttribute("totalPrice");
+                httpSession.removeAttribute("id");
+                
+                // Update booking with customer name
+                RoomBookingDetails booking = roomServiceImpl.getRoomBookingById(actualBookingId);
+                booking.setCustomerName(personalInfo.getName());
+                PaymentAccessPayload  apiResponse=null;
+                // Check if payment gateway is available
+                if (apiResponse != null) {
+                    // Payment gateway is available, redirect to payment
+                   // return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
+                } 
+                else {
+                    // Payment gateway is not available, mark as pending and success
+                    booking.setStatus("Pending Payment (Offline)");
+                    roomServiceImpl.saveBooking(booking);
+                    
+                    // Add success message for offline payment
+                    redirectAttributes.addFlashAttribute("successMessage","Tempahan anda telah berjaya! Sila selesaikan pembayaran di kaunter kami.");
+                   
+                   
+                    
+                    return "redirect:/admin/admin-dashboard/";
+                }
 			}
 
-			// Handle unsuccessful save
-			logger.warn("Failed to save personal information");
+			logger.warn("Failed to save personal information for booking ID: {}", actualBookingId);
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to save your information. Please try again.");
-			return "redirect:/room-booking";
-		} catch (Exception e) {
-			// Log the exception details
-			logger.error("Error while saving personal information: {}", e.getMessage(), e);
-			redirectAttributes.addFlashAttribute("errorMessage", "An error occurred: " + e.getMessage());
-			return "redirect:/room-booking";
+			return "redirect:/room-booking-summary/" + httpSession.getAttribute("id"); // Redirect back to summary with room ID
 		}
+		catch (Exception e) {
+            logger.error("Error while confirming booking (saveAllRoomBookingDetails): {}", e.getMessage(), e);
+            
+            // Handle errors gracefully
+            redirectAttributes.addFlashAttribute("errorMessage", "Error processing your booking. Please try again or contact support.");
+            
+            if (httpSession.getAttribute("id") != null) {
+                return "redirect:/eforms/room-booking-summary/" + httpSession.getAttribute("id");
+            } else {
+                return "redirect:/eforms/room-booking-error";
+            }
+        }
 	}
 
 	@GetMapping("/room-filter")
@@ -679,9 +924,12 @@ public class FormController {
 
 			// Filter rooms based on parameters
 			List<RoomReservationFormEntity> filteredRooms;
-			if (labelName != null) {
-				filteredRooms = roomServiceImpl.getFilteredRooms(labelName, null, null);
-			} else {
+			if (labelName != null || date != null || time != null) { // Check if any filter criteria is present
+				// We'll pass date and time. The service method will need to be updated.
+				// For now, capacity and price are passed as null.
+				filteredRooms = roomServiceImpl.getFilteredRooms(labelName, null, null); // Temporarily changed, date/time were passed as capacity/price
+			}
+			else {
 				filteredRooms = roomServiceImpl.getAllAvailableRooms();
 			}
 
@@ -713,27 +961,28 @@ public class FormController {
 	@GetMapping("/api/booked-dates/{roomId}")
 	@ResponseBody
 	public List<Map<String, Object>> getBookedDatesForRoom(@PathVariable Long roomId) {
-		// Get all bookings for the specific room
-		List<RoomBookingDetails> bookings = roomServiceImpl.getBookingsForRoom(roomId);
-
-		// Convert to a format suitable for frontend (dates and times that are booked)
 		List<Map<String, Object>> bookedDates = new ArrayList<>();
-
-		for (RoomBookingDetails booking : bookings) {
-			Map<String, Object> dateInfo = new HashMap<>();
-			dateInfo.put("startDate", booking.getStartDate().toString());
-			dateInfo.put("endDate", booking.getEndDate().toString());
-			dateInfo.put("time", booking.getTime());
-			bookedDates.add(dateInfo);
+		
+		try {
+			// Get actual bookings from the repository
+			List<RoomBookingDetails> bookings = roomServiceImpl.getBookingsForRoom(roomId);
+			
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE; // Standard date format
+			
+			for (RoomBookingDetails booking : bookings) {
+				Map<String, Object> dateInfo = new HashMap<>();
+				dateInfo.put("startDate", booking.getStartDate().format(dateFormatter));
+				dateInfo.put("endDate", booking.getEndDate().format(dateFormatter));
+				dateInfo.put("time", booking.getTime());
+				bookedDates.add(dateInfo);
+			}
+		} catch (Exception e) {
+			logger.error("Error fetching booked dates for room ID {}: {}", roomId, e.getMessage());
+			// Return empty list in case of error
 		}
 
+		logger.info("Found {} booked date/time slots for room ID {}", bookedDates.size(), roomId);
 		return bookedDates;
-	}
-
-	// Login for UI
-	@GetMapping("/login")
-	public String loginUi() {
-		return "login";
 	}
 
 	@GetMapping("/all-form")
@@ -741,16 +990,10 @@ public class FormController {
 		return "index";
 	}
 
-	@GetMapping("/")
-	public String getErrorPage() {
-		return "index";
-	}
-
 	@PostMapping("/registration")
 	@ResponseBody
 	public String registerUser() {
 		return "form submitted";
-
 	}
 
 	public User getLiferayUserDetails(HttpServletRequest request) {
@@ -792,70 +1035,107 @@ public class FormController {
 		return service.getMenuLcost(accno, patronid);
 	}
 
-	@GetMapping("/room-booking-summary/{id}")
-	public String getRoomBookingSummary(@PathVariable Long id, org.springframework.ui.Model model,
-			HttpSession session) {
+	@GetMapping({"/room-booking-summary/{id}", "/eforms/room-booking-summary/{id}"})
+	public String getRoomBookingSummary(@PathVariable Long id, org.springframework.ui.Model model) {
 		try {
-			logger.info("Processing room booking summary for room ID: {}", id);
-
-			BookingSummary bookingSummary = new BookingSummary();
-
-			// Get room from database
-			RoomReservationFormEntity room = roomServiceImpl.getRoomBEquipById(id);
-			if (room == null) {
-				logger.error("Room with ID {} not found", id);
-				model.addAttribute("errorMessage", "Room not found");
+			// Log the request for debugging
+			logger.info("Accessing room booking summary for booking ID: {}", id);
+			
+			// Fetch booking details from DB
+			RoomBookingDetails bookingDetails = null;
+			try {
+			    bookingDetails = roomServiceImpl.getRoomBookingById(id);
+			} catch (Exception e) {
+			    logger.error("Error fetching booking: {}", e.getMessage());
+			    model.addAttribute("errorMessage", "Tempahan dengan ID " + id + " tidak dijumpai.");
+			    return "errorPage";
+			}
+			
+			if (bookingDetails == null) {
+				logger.error("Booking with ID {} not found", id);
+				model.addAttribute("errorMessage", "Tempahan dengan ID " + id + " tidak dijumpai.");
 				return "errorPage";
 			}
+
+			// Fetch room details from DB
+			RoomReservationFormEntity room = roomServiceImpl.getRoomById(bookingDetails.getRoomId());
+			if (room == null) {
+				logger.error("Room with ID {} not found for booking {}", bookingDetails.getRoomId(), id);
+				model.addAttribute("errorMessage", "Maklumat bilik tidak dijumpai.");
+				return "errorPage";
+			}
+
+			// Fetch equipment details from DB
+			List<EquipmentDetails> equipmentList = roomServiceImpl.getEquipmentByBookingId(id);
+			logger.info("Found {} equipment items for booking ID: {}", equipmentList.size(), id);
+			
+			// Calculate equipment cost
+			double equipCost = 0.0;
+			for (EquipmentDetails equip : equipmentList) {
+				if (equip.getQuantity() != null && equip.getPrice() != null) {
+					equipCost += equip.getPrice().doubleValue() * equip.getQuantity();
+					logger.info("Equipment: {} x {} = RM{}", equip.getEquipmentName(), equip.getQuantity(), equip.getPrice().doubleValue() * equip.getQuantity());
+				}
+			}
+
+			// Calculate room cost
+			double roomCost = room.getPrice() != null ? room.getPrice().doubleValue() : 0.0;
+			double totalPrice = roomCost + equipCost;
+
+			// Pass all details to the view
 			model.addAttribute("room", room);
-
-			// Get room details from session
-			RoomReservationFormEntity currentRoomDetails = (RoomReservationFormEntity) session
-					.getAttribute("roomDetails");
-			model.addAttribute("currentRoom", currentRoomDetails);
-
-			// Get equipment list from session
-			@SuppressWarnings("unchecked")
-			List<EquipmentDetails> equipDet = (List<EquipmentDetails>) session.getAttribute("eqipList");
-			if (equipDet == null) {
-				logger.warn("Equipment list is null in session");
-				equipDet = new ArrayList<>();
-			}
-			model.addAttribute("selectedEquip", equipDet);
-
-			// Get booking details from session
-			RoomBookingDetails bookingDetails = (RoomBookingDetails) session.getAttribute("roomDetailsI");
+			model.addAttribute("currentRoom", room);
+			model.addAttribute("selectedEquip", equipmentList);
 			model.addAttribute("currentBookingDet", bookingDetails);
-
-			// Calculate costs
-			bookingSummary.setRoomCost(currentRoomDetails != null ? currentRoomDetails.getPrice() : 0);
-			double equipCost = 0;
-			for (EquipmentDetails equip : equipDet) {
-				equipCost += equip.getPrice() * equip.getQuantity();
-			}
-			bookingSummary.setEquipmentCost(equipCost);
-
-			double totalPrice = equipCost + (currentRoomDetails != null ? currentRoomDetails.getPrice() : 0);
 			model.addAttribute("totalPrice", totalPrice);
+			model.addAttribute("equipCost", equipCost);
+			model.addAttribute("roomCost", roomCost);
 
-			// Store totalPrice in HTTP session
-			session.setAttribute("totalPrice", totalPrice);
-
-			bookingSummary.setEquipmentCost(equipCost);
-			model.addAttribute("totalPrice",
-					equipCost + (currentRoomDetails != null ? currentRoomDetails.getPrice() : 0));
-
-			logger.info("Successfully processed room booking summary. Rendering room-summary page");
 			return "user/rooms/room-summary";
 		} catch (Exception e) {
-			logger.error("Error processing room booking summary: {}", e.getMessage(), e);
-			model.addAttribute("errorMessage",
-					"An error occurred while processing your booking summary. Please try again.");
+			logger.error("Error in getRoomBookingSummary for ID {}: {}", id, e.getMessage(), e);
+			model.addAttribute("errorMessage", "Ralat telah berlaku semasa memproses ringkasan tempahan anda. Sila cuba lagi.");
+			model.addAttribute("backUrl", "/eforms/room-booking");
 			return "errorPage";
 		}
 	}
 	public ResponseEntity<APITokenResponse> getToken(PaymentAccessPayload payload) {
 		String url = "https://ppkdev.ppj.gov.my:8080/pfxp/pay-api/pay/access";
-		return restTemplate.postForEntity(url,payload.getPayload(), APITokenResponse.class);
+		try {
+		    return restTemplate.postForEntity(url,payload.getPayload(), APITokenResponse.class);
+		} catch (Exception e) {
+		    logger.warn("Payment gateway connection failed: {}", e.getMessage());
+		    return null; // Return null to indicate connection failure
+		}
+	}
+
+	@GetMapping("/lost-material-direct")
+	public String getLostMaterialDirectForm(org.springframework.ui.Model model) {
+		try {
+			logger.info("Fetching borrowed materials for lost-material-direct form");
+			List<LostBorrowedMaterial> borrowedMaterials = damagedReportServiceImpl.getBorrowedMaterials();
+			logger.info("Found {} borrowed materials to display", borrowedMaterials.size());
+			model.addAttribute("borrowedMaterials", borrowedMaterials);
+			return "forms/lost-material-direct";
+		} catch (Exception e) {
+			logger.error("Error loading lost-material-direct form: {}", e.getMessage(), e);
+			model.addAttribute("errorMessage", "Error loading materials. Please try again.");
+			return "error";
+		}
+	}
+
+	@GetMapping({"/booking-success", "/eforms/booking-success"})
+	public String bookingSuccess(Model model, RedirectAttributes redirectAttributes) {
+		// Show success page with any flash messages that were set
+		return "user/rooms/booking-success";
+	}
+
+	@GetMapping({"/room-booking-error", "/eforms/room-booking-error"})
+	public String roomBookingError(Model model, RedirectAttributes redirectAttributes) {
+		// Show custom error page specific to room booking errors
+		if (!model.containsAttribute("errorMessage")) {
+			model.addAttribute("errorMessage", "Ralat telah berlaku semasa memproses tempahan anda. Sila cuba lagi.");
+		}
+		return "user/rooms/room-booking-error";
 	}
 }

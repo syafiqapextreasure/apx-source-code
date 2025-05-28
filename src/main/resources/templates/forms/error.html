@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Error</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card mt-4">
+						<div class="card-header bg-danger text-white">
+							<h4 class="mb-0">Error!</h4>
+						</div>
+						<div class="card-body">
+							<div class="alert alert-danger">
+								<p th:text="${message}">An error occurred while processing your request.</p>
+							</div>
+							<div class="text-center mt-4">
+								<a href="#" onclick="history.back()" class="btn btn-primary">Try Again</a>
+								<a href="/eforms/" class="btn btn-secondary ms-2">Back to Home</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html> 

@@ -16,6 +16,8 @@ public interface RoomService {
     public RoomReservationFormEntity getRoomBEquipById(Long roomId);
     public RoomReservationFormEntity getRoomSummaryId(Long roomId);
     public RoomBookingDetails saveRoomDetails(RoomBookingDetails roomBookingDetails);
-    public void saveSelectedEquipment(List<EquipmentDetails> equipmentList);
+    public RoomReservationFormEntity saveRoom(RoomReservationFormEntity room);
+    public RoomReservationFormEntity updateRoom(RoomReservationFormEntity room);
+    public void saveSelectedEquipment(List<EquipmentDetails> equipmentList, Long bookingId);
     public PersonalInformation savedUserDetails(PersonalInformation entity);
 }

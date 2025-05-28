@@ -8,6 +8,7 @@ public class CirBahanRosakHilangtblPinjaman {
     private String tarikhPinjam;
     private String tarikhPulang;
     private String mapNumber;
+    private Double bookPrice;
     
 
     // Constructor
@@ -52,5 +53,13 @@ public class CirBahanRosakHilangtblPinjaman {
 
     public void setJudul(String judul) {
         this.judul = judul;
+    }
+
+    public Double getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(Double bookPrice) {
+        this.bookPrice = bookPrice;
     }
 }

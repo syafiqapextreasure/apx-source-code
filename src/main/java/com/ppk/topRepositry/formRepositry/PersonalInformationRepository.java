@@ -10,4 +10,6 @@ import com.ppk.topEntity.roomEntity.RoomReservationFormEntity;
 public interface PersonalInformationRepository extends JpaRepository<PersonalInformation, Long> {
 
 	public PersonalInformation save(PersonalInformation entity);
+
+	PersonalInformation findByBookingId(Long bookingId);
 }

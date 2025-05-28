@@ -17,196 +17,194 @@
 					<div class="image-wrapper">
 						<i class="bi bi-house-door" style="font-size: 2rem; color: #fff;"></i>
 					</div>
-					<button class="step-button special-width flex-grow-1" tabindex="0">Langkah 3-Persediaan Bilik</button>
-					<!-- <select class="form-select filter-select flex-grow-1" id="roomType">
-						<option selected>Jenis Bilik</option>
-						<option value="1">Bilik Mesyuarat</option>
-						<option value="2">Bilik Serbaguna</option>
-					</select>  -->
-                    <!-- <select class="form-select filter-select flex-grow-1"
-						id="reservationDate">
-						<option selected>Tarikh</option>
-						<option value="1">08/12/2024</option>
-						<option value="2">09/12/2024</option> -->
-					<!-- </select> <select class="form-select filter-select flex-grow-1"
-						id="reservationTime">
-						<option selected>Masa</option>
-						<option value="1">09:00 AM</option>
-						<option value="2">10:00 AM</option>
-					</select> -->
-					<!-- <div class="w-100 d-flex justify-content-end">
-						<button class="cari_btn">Cari</button>
-					</div> -->
+                    <button class="step-button special-width flex-grow-1" tabindex="0">Langkah 3-Persediaan Bilik</button>
 				</div>
 				<div class="card-section">
 					<div class="offer-sticker" th:text="${room.labelName}">P9
 						BILIK SERBAGUNA</div>
 					<div class="room-card">
-                                <img th:src="@{/img/room2.jpg}" alt="room img" />
+                                <img th:src="@{/img/room2.jpg}" alt="room img"  style="max-width: 100%; height: auto;" class="img-fluid "/> />
 					</div>
 					<div
 						class="card-body d-flex justify-content-between flex-wrap align-items-center gap-2">
 						<div>
 							<p th:text="'Kapasiti: ' + ${room.capacity} + ' Orang'"></p>
-							<p th:text="'Harga: ' + ${#numbers.formatDecimal(room.price, 1, 2, 'POINT')} + ' MYR sejam'"></p>
-</p>
+							<p th:text="'Harga: RM' + ${#numbers.formatDecimal(room.price, 1, 'COMMA', 2, 'POINT')} + ' sejam'"></p>
 						</div>
-						<!-- <button>TEMPAH</button> -->
 					</div>
 				</div>
 
 				<div class="form_section_box custome-width mt-5">
 					<h1>TEMPAHAN BILIK</h1>
 					<div class="container">
+					
+					<!-- Show Equipment Form only if available -->
 					<form action="#" 
-      th:action="@{'/save-room-booking-equipment/' + ${roomId}}" 
-      th:object="${equipmentForm}" 
-      method="post"
-      onsubmit="return validateForm()">
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-borderless">
-    <thead>
-        <tr>
-            <th>Peralatan</th>
-            <th>Kuantiti</th>
-            <th>Harga (MYR)</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr th:each="equipment, iterStat : ${equipmentForm.equipmentList}">
-    <td>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input equipment-checkbox"
-                   th:field="*{equipmentList[__${iterStat.index}__].selected}"
-                   onchange="validateCheckbox(this)" 
-                   th:attr="data-equipment-name=${equipment.equipmentName}"/> <label th:text="${equipment.equipmentName}"></label>
-            <input type="hidden"
-                   th:field="*{equipmentList[__${iterStat.index}__].equipmentName}"
-                   th:value="${equipment.equipmentName}" />
-        </div>
-    </td>
-    <td>
-        <input type="number" class="form-control equipment-quantity"
-               th:field="*{equipmentList[__${iterStat.index}__].quantity}"
-               placeholder="0" min="0" value="0"
-               th:max="${equipment.equipmentName.contains('LCD') ? 1 : 999}"
-               onchange="calculateTotal()" /> </td>
-    <td>
-        <input type="hidden"
-               th:field="*{equipmentList[__${iterStat.index}__].price}"
-               th:value="${equipment.price}" />
-        <span th:text="${equipment.price} + ' MYR'"></span>
-    </td>
-    </tr>
-    </tbody>
-</table>
+						  th:if="${equipmentAvailable}" 
+						  th:action="@{'/save-room-booking-equipment/' + ${roomId}}" 
+						  th:object="${equipmentForm}" 
+						  method="post"
+						  onsubmit="return validateForm()">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-borderless">
+									<thead>
+										<tr>
+											<th>Peralatan</th>
+											<th>Kuantiti</th>
+											<th>Harga (RM)</th>
+										</tr>
+									</thead>
+									<tbody>
+									<tr th:each="equipment, iterStat : ${equipmentForm.equipmentList}">
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input equipment-checkbox"
+												   th:field="*{equipmentList[__${iterStat.index}__].selected}"
+												   onchange="validateCheckbox(this)" 
+												   th:attr="data-equipment-name=${equipment.equipmentName}"/> <label th:text="${equipment.equipmentName}"></label>
+											<input type="hidden"
+												   th:field="*{equipmentList[__${iterStat.index}__].equipmentName}"
+												   th:value="${equipment.equipmentName}" />
+										</div>
+									</td>
+									<td>
+										<input type="number" class="form-control equipment-quantity"
+											   th:field="*{equipmentList[__${iterStat.index}__].quantity}"
+											   placeholder="0" min="0" value="0"
+											   th:max="${(equipment.equipmentName.toLowerCase().contains('lcd') or equipment.equipmentName.toLowerCase().contains('komputer')) ? 1 : (equipment.equipmentName.toLowerCase().contains('kerusi') || equipment.equipmentName.toLowerCase().contains('chair') || equipment.equipmentName.toLowerCase().contains('meja') || equipment.equipmentName.toLowerCase().contains('table') ? room.capacity : 999)}"
+											   onchange="calculateTotal()" /> </td>
+									<td>
+										<input type="hidden"
+											   th:field="*{equipmentList[__${iterStat.index}__].price}"
+											   th:value="${equipment.price}" />
+										<span th:text="'RM' + ${#numbers.formatDecimal(equipment.price, 1, 'COMMA', 2, 'POINT')}"></span>
+									</td>
+									</tr>
+									</tbody>
+								</table>
+								
+								<!-- Submit Button with Onclick Validation -->
+								<div class="button_wrapper">
+									<button type="submit" onclick="return validateForm()">SETERUSNYA</button>
+								</div>
+								
+								<!-- Button with JavaScript validation trigger -->
+							   <!--  <div class="button_wrapper">
+									<button type="submit">SETERUSNYA</button>
+								</div> -->
+							</div>
+						</div>
+					</form>
 
-<!-- Submit Button with Onclick Validation -->
-<div class="button_wrapper">
-    <button type="submit" onclick="return validateForm()">SETERUSNYA</button>
-</div>
+					<!-- Message if equipment cannot be chosen -->
+					<div th:unless="${equipmentAvailable}"
+						 class="alert alert-info mt-3">
+						Peralatan tidak tersedia untuk jenis bilik ini.
+						<div class="button_wrapper mt-3">
+							<a th:href="@{/room-booking-summary/{id}(id=${roomId})}" class="btn-link">
+								<button type="button" class="btn btn-primary">SETERUSNYA</button>
+							</a>
+						</div>
+					</div>
 
+					<script>
+					function validateForm() {
+					    const checkboxes = document.querySelectorAll('.equipment-checkbox');
+					    const quantities = document.querySelectorAll('.equipment-quantity');
+					    const roomCapacity = parseInt(document.getElementById('roomCapacity')?.value || '0');
+					    let isAtLeastOneChecked = false;
+					    let isValid = true;
 
-            <!-- Button with JavaScript validation trigger -->
-           <!--  <div class="button_wrapper">
-                <button type="submit">SETERUSNYA</button>
-            </div> -->
-        </div>
-    </div>
-</form>
+					    checkboxes.forEach((checkbox, index) => {
+					        const quantityInput = quantities[index];
+					        const quantity = parseInt(quantityInput.value);
+					        const equipmentName = checkbox.getAttribute('data-equipment-name').toLowerCase();
+					        
+					        if (checkbox.checked) {
+					            isAtLeastOneChecked = true;
+					            if (quantity < 1) {
+					                alert(`Quantity for selected equipment must be at least 1.`);
+					                isValid = false;
+					                return; // exit forEach iteration for this item
+					            }
+					            
+					            if (equipmentName.includes('lcd') && quantity > 1) {
+					                alert('Maximum LCD quantity is 1');
+					                quantityInput.value = 1;
+					                // isValid = false; // Optionally mark as invalid if user manually inputs > 1
+					            } else if ((equipmentName.includes('kerusi') || equipmentName.includes('chair') || equipmentName.includes('meja') || equipmentName.includes('table')) && quantity > roomCapacity) {
+					                alert(`Quantity for ${equipmentName} cannot exceed room capacity of ${roomCapacity}.`);
+					                quantityInput.value = roomCapacity; // Correct to max capacity
+					                isValid = false;
+					                return; // exit forEach iteration for this item
+					            }
+					        } else {
+					            quantityInput.value = 0;
+					        }
+					    });
 
-<script>
-function validateForm() {
-    const checkboxes = document.querySelectorAll('.equipment-checkbox');
-    const quantities = document.querySelectorAll('.equipment-quantity');
-    let isAtLeastOneChecked = false;
-    let isValid = true;
+					    if (!isAtLeastOneChecked && isValid) { // only show if no other errors
+					        // Check if any equipment is available before alerting
+					        if (checkboxes.length > 0) {
+					             alert('Please select at least one equipment.');
+					             isValid = false;
+					        }
+					    }
 
-    checkboxes.forEach((checkbox, index) => {
-        const quantity = quantities[index];
-        const equipmentName = checkbox.getAttribute('data-equipment-name');
-        
-        if (checkbox.checked) {
-            isAtLeastOneChecked = true;
-            if (quantity.value < 1) {
-                alert(`Quantity for selected equipment must be at least 1.`);
-                isValid = false;
-            }
-            
-            // Check LCD quantity - enforce maximum of 1
-            if (equipmentName && equipmentName.includes('LCD') && quantity.value > 1) {
-                alert('Maximum LCD quantity is 1');
-                quantity.value = 1;
-            }
-        } else {
-            // If not selected, set the quantity to 0
-            quantity.value = 0;
-        }
-    });
+					    return isValid; 
+					}
 
-    if (!isAtLeastOneChecked) {
-        alert('Please select at least one equipment.');
-        isValid = false;
-    }
+					function validateCheckbox(checkbox) {
+					    const index = Array.from(document.querySelectorAll('.equipment-checkbox')).indexOf(checkbox);
+					    const quantityInput = document.querySelectorAll('.equipment-quantity')[index];
+					    const equipmentName = checkbox.getAttribute('data-equipment-name').toLowerCase();
+					    const roomCapacity = parseInt(document.getElementById('roomCapacity')?.value || '0');
 
-    return isValid; // Prevent form submission if validation fails
-}
+					    if (checkbox.checked) {
+					        if (equipmentName.includes('lcd') || equipmentName.includes('komputer')) {
+					            quantityInput.value = 1;
+					            quantityInput.max = 1;
+					        } else if (equipmentName.includes('kerusi') || equipmentName.includes('chair') || equipmentName.includes('meja') || equipmentName.includes('table')) {
+					            quantityInput.value = Math.min(roomCapacity, parseInt(quantityInput.value) || roomCapacity); 
+					            quantityInput.max = roomCapacity;
+					        } else {
+					            quantityInput.value = quantityInput.value > 0 ? quantityInput.value : 1; // Default to 1 if not set
+					        }
+					    } else {
+					        quantityInput.value = 0; 
+					    }
+					    // calculateTotal(); // Call if you have a total calculation function
+					}
 
-function validateCheckbox(checkbox) {
-    const index = Array.from(document.querySelectorAll('.equipment-checkbox')).indexOf(checkbox);
-    const quantityInput = document.querySelectorAll('.equipment-quantity')[index];
-    const equipmentName = checkbox.getAttribute('data-equipment-name');
-    
-    if (checkbox.checked) {
-        if (equipmentName && equipmentName.includes('LCD')) {
-            quantityInput.value = 1;
-            quantityInput.max = 1;
-        } else if (equipmentName && (equipmentName.includes('Kerusi') || equipmentName.includes('Chair'))) {
-            // Get room capacity and set as default chair count
-            const capacity = document.getElementById('roomCapacity').value;
-            quantityInput.value = capacity;
-        } else if (equipmentName && (equipmentName.includes('Meja') || equipmentName.includes('Table'))) {
-            // Calculate table count based on room capacity (assuming 1 table per 4 people)
-            const capacity = document.getElementById('roomCapacity').value;
-            const tableCount = Math.ceil(capacity / 4);
-            quantityInput.value = tableCount;
-        } else {
-            quantityInput.value = 1; // Default value for other equipment
-        }
-    } else {
-        quantityInput.value = 0; // Set value to zero when unchecked
-    }
-}
+					function calculateTotal() {
+					    // This function can be updated later for price calculations
+					}
 
-function calculateTotal() {
-    // This function can be updated later for price calculations
-}
+					// Function to initialize room capacity from the displayed value
+					function initRoomCapacity() {
+					    // Extract capacity from the display text
+					    const capacityText = document.querySelector('.card-body p:first-child').textContent;
+					    const capacityMatch = capacityText.match(/\d+/);
+					    const capacity = capacityMatch ? capacityMatch[0] : 0;
+					    
+					    // Store capacity in a hidden input for later use
+					    if (!document.getElementById('roomCapacity')) {
+					        const hiddenInput = document.createElement('input');
+					        hiddenInput.type = 'hidden';
+					        hiddenInput.id = 'roomCapacity';
+					        hiddenInput.value = capacity;
+					        document.querySelector('form').appendChild(hiddenInput);
+					    } else {
+					        document.getElementById('roomCapacity').value = capacity;
+					    }
+					}
 
-// Function to initialize room capacity from the displayed value
-function initRoomCapacity() {
-    // Extract capacity from the display text
-    const capacityText = document.querySelector('.card-body p:first-child').textContent;
-    const capacityMatch = capacityText.match(/\d+/);
-    const capacity = capacityMatch ? capacityMatch[0] : 0;
-    
-    // Store capacity in a hidden input for later use
-    if (!document.getElementById('roomCapacity')) {
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.id = 'roomCapacity';
-        hiddenInput.value = capacity;
-        document.querySelector('form').appendChild(hiddenInput);
-    } else {
-        document.getElementById('roomCapacity').value = capacity;
-    }
-}
-
-// Call initialization on page load
-window.onload = function() {
-    initRoomCapacity();
-};
-</script>
+					// Call initialization on page load
+					window.onload = function() {
+					    initRoomCapacity();
+					};
+					</script>
 
 					</div>
 				</div>
@@ -495,6 +493,11 @@ window.onload = function() {
         font-size: 12px; /* Very small font size for very small devices */
         padding: 3px 10px; /* Minimal padding for very small devices */
     }
+}
+
+.btn-link {
+    text-decoration: none;
+    display: inline-block;
 }
 </style>
 

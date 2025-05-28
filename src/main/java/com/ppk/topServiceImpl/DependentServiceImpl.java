@@ -1,5 +1,6 @@
 package com.ppk.topServiceImpl;
 
+import com.ppk.topEntity.formsEntity.DependentDetails;
 import com.ppk.topEntity.formsEntity.DependentEntity;
 import com.ppk.topRepositry.DependentRepository;
 import com.ppk.topService.DependentService;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 public class DependentServiceImpl implements DependentService {
@@ -66,6 +68,30 @@ public class DependentServiceImpl implements DependentService {
     public void deleteDependent(Integer id) {
         // For simplicity, we'll use the JPA repository here - could be updated to use JdbcTemplate if needed
         dependentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DependentDetails> getDependentsByUserId(String userId) {
+        try {
+            // Query to get dependent details for a specific user ID
+            String sql = "SELECT * FROM portal_dump.depedentreg WHERE idPengguna = ?";
+            
+            return jdbcTemplate.query(sql, new Object[]{userId}, (rs, rowNum) -> {
+                DependentDetails dependent = new DependentDetails();
+                dependent.setDependentId(rs.getInt("dependentId"));
+                dependent.setUserId(rs.getString("idPengguna"));
+                dependent.setDependentName(rs.getString("namaTanggungan"));
+                dependent.setRelationship(rs.getString("hubungan"));
+                dependent.setIdNumber(rs.getString("nokPTanggungan"));
+                dependent.setStatus(rs.getString("statusOKU"));
+                dependent.setFee(rs.getBigDecimal("harga"));
+                return dependent;
+            });
+        } catch (Exception e) {
+            // Log the error and return an empty list
+            System.err.println("Error fetching dependents for user ID: " + userId + " - " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     // Row mapper for mapping database results to DependentEntity

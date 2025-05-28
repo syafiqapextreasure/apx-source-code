@@ -29,7 +29,42 @@ public class RoomBookingDetails {
     private LocalDate endDate;
     
     private String time; 
+    private String status = "Pending"; // Default status
+    private boolean cancelled = false; // Default not cancelled
+    private String customerName; // Name of the person booking
+    private double totalCost = 0.0; // Total cost of booking
 
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    public boolean isCancelled() {
+        return cancelled;
+    }
+    
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+    
+    public String getCustomerName() {
+        return customerName;
+    }
+    
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+    
+    public double getTotalCost() {
+        return totalCost;
+    }
+    
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
    
     public String getTime() {
 		return time;
@@ -70,7 +105,7 @@ public class RoomBookingDetails {
 		this.attendees = attendees;
 	}
 	public RoomBookingDetails(Long id, Long roomId, LocalDate startDate, LocalDate endDate, String time,
-			int attendees) {
+			int attendees, String status, boolean cancelled, String customerName, double totalCost) {
 		super();
 		this.id = id;
 		this.roomId = roomId;
@@ -78,6 +113,14 @@ public class RoomBookingDetails {
 		this.endDate = endDate;
 		this.time = time;
 		this.attendees = attendees;
+		this.status = status;
+		this.cancelled = cancelled;
+		this.customerName = customerName;
+		this.totalCost = totalCost;
+	}
+
+	public RoomBookingDetails() {
+		super();
 	}
 
     
