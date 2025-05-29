@@ -11,10 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -155,17 +155,38 @@ public class AdminController {
         // Get all room bookings
         List<RoomBookingDetails> allRoomBookings = roomServiceImpl.getAllBookings();
         
+        for (RoomBookingDetails roomBookingDetails : allRoomBookings)
+        {
+        	logger.debug("#beforeSortingroom ID "+roomBookingDetails.getRoomId());
+        System.out.println("#room ID "+roomBookingDetails.getId());
+        
+        }
         // Sort bookings by latest first (using id as a proxy for creation time if creation date not available)
     
         
-        
+        /*
         allRoomBookings.sort((a, b) -> {
             if (a.getStartDate() != null && b.getStartDate() != null) {
                 return b.getId().compareTo(a.getId());
             } else {
                 return Long.compare(b.getId(), a.getId());
             }
-        });
+        });*/
+        
+    
+                
+
+
+                allRoomBookings.sort(Comparator.comparingLong(RoomBookingDetails::getId));
+                
+                
+        
+        for (RoomBookingDetails roomBookingDetails : allRoomBookings)
+        {
+        	logger.debug("#afterSortingroom ID "+roomBookingDetails.getId());
+        System.out.println("#afterSortingroom ID "+roomBookingDetails.getId());
+        
+        }
         
         // Enhance room bookings with room names and locations
         List<Map<String, Object>> enhancedBookings = new ArrayList<>();
@@ -253,17 +274,23 @@ public class AdminController {
         model.addAttribute("totalRoomBookings", totalRoomBookings);
         
         // Add limited list (up to 6 records) for display in the dashboard table
-        List<Map<String, Object>> recentRoomBookings = enhancedBookings.stream()
+        
+        
+        List<Map<String, Object>> sortedenhancedBookings = enhancedBookings.stream()
+                .sorted(Comparator.comparing(map -> (Long) map.get("id")))
+                .collect(Collectors.toList());
+        
+        Collections.reverse(sortedenhancedBookings);
+        List<Map<String, Object>> recentRoomBookings = sortedenhancedBookings.stream()
             .limit(6)
-            .collect(Collectors.toList());
-        
-        
-       // recentRoomBookings.sort(Map.Entry.comparingByValue());
+          .collect(Collectors.toList());
         
         
     
+       
         
-        model.addAttribute("recentRoomBookings", recentRoomBookings);
+        recentRoomBookings.forEach(System.out::println);
+        model.addAttribute("recentRoomBookings",recentRoomBookings);
         
         // Add all bookings for the modal view
         model.addAttribute("allRoomBookings", enhancedBookings);
@@ -774,7 +801,14 @@ public class AdminController {
         
         System.out.println("Returning " + result.size() + " bookings");
         System.out.println("============================================================");
-        return result;
+        
+        
+        List<Map<String, Object>> sortedenhancedBookings = result.stream()
+                .sorted(Comparator.comparing(map -> (Long) map.get("id")))
+                .collect(Collectors.toList());
+
+        Collections.reverse(sortedenhancedBookings);
+        return sortedenhancedBookings;
     }
     
     @GetMapping("/booking/{id}")

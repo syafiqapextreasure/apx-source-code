@@ -29,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -771,6 +772,7 @@ public class FormController {
 		try {
 			// Retrieve all booking information from session
 			RoomBookingDetails bookingDetails = (RoomBookingDetails) session.getAttribute("roomDetailsI");
+			
 			@SuppressWarnings("unchecked")
 			List<EquipmentDetails> equipmentList = (List<EquipmentDetails>) session.getAttribute("selectedEquipment");
 
@@ -804,6 +806,11 @@ public class FormController {
 		Long actualBookingId = null;
 		if (httpSession.getAttribute("roomDetailsI") != null) {
 			RoomBookingDetails bookingDetails = (RoomBookingDetails) httpSession.getAttribute("roomDetailsI");
+			//EquipmentDetails equipmentDetails = (EquipmentDetails) httpSession.getAttribute("eqipList");
+			//equipmentDetails.getTotalPrice();
+			
+		
+		
 			actualBookingId = bookingDetails.getId();
 		}
 		
@@ -824,8 +831,10 @@ public class FormController {
 			PersonalInformation savedPersonalInformation = roomServiceImpl.savedUserDetails(personalInfo);
 
 			if (savedPersonalInformation != null) {
-			    Double totalPriceSession = (Double) httpSession.getAttribute("totalPrice");
-			    if (totalPriceSession == null) totalPriceSession = 0.0;
+			    Double totalPriceSession = (Double) httpSession.getAttribute("totalBookingCost");
+			    if (totalPriceSession == null)
+			    	totalPriceSession = 0.0;
+			   
 			    
 				Cookie cookie = new Cookie("petronId", savedPersonalInformation.getId().toString());
 			    cookie.setMaxAge(60 * 60); // 1 hour
@@ -833,8 +842,9 @@ public class FormController {
 			    response.addCookie(cookie);
 				
 				Utilities u = new Utilities(null);
-			  /*  PaymentAccessPayload payload = u.paymentProcessModel(totalPriceSession.toString(),
+			    PaymentAccessPayload payload = u.paymentProcessModel(totalPriceSession.toString(),
 			   		actualBookingId.toString());
+			    /*
 			    ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
 			    
 			    // Try to save transaction record, but don't fail if it already exists
@@ -853,6 +863,8 @@ public class FormController {
 				httpSession.removeAttribute("roomDetailsI");
                 httpSession.removeAttribute("eqipList");
                 httpSession.removeAttribute("roomDetails");
+                httpSession.removeAttribute("totalBookingCost");
+                
                 httpSession.removeAttribute("totalPrice");
                 httpSession.removeAttribute("id");
                 
@@ -868,13 +880,14 @@ public class FormController {
                 else {
                     // Payment gateway is not available, mark as pending and success
                     booking.setStatus("Pending Payment (Offline)");
+                    booking.setTotalCost(totalPriceSession);
                     roomServiceImpl.saveBooking(booking);
                     
                     // Add success message for offline payment
                     redirectAttributes.addFlashAttribute("successMessage","Tempahan anda telah berjaya! Sila selesaikan pembayaran di kaunter kami.");
                    
                    
-                    //return "redirect:/eforms/room-booking";
+                    
                     return "redirect:/admin/admin-dashboard/";
                 }
 			}
@@ -1036,28 +1049,34 @@ public class FormController {
 	}
 
 	@GetMapping({"/room-booking-summary/{id}", "/eforms/room-booking-summary/{id}"})
-	public String getRoomBookingSummary(@PathVariable Long id, org.springframework.ui.Model model) {
+	public String getRoomBookingSummary(@PathVariable Long id, org.springframework.ui.Model model,HttpSession httpSession)
+	{
 		try {
 			// Log the request for debugging
 			logger.info("Accessing room booking summary for booking ID: {}", id);
 			
 			// Fetch booking details from DB
 			RoomBookingDetails bookingDetails = null;
-			try {
+			
+			try 
+			{
 			    bookingDetails = roomServiceImpl.getRoomBookingById(id);
-			} catch (Exception e) {
+			}
+			
+			catch (Exception e)
+			{
 			    logger.error("Error fetching booking: {}", e.getMessage());
 			    model.addAttribute("errorMessage", "Tempahan dengan ID " + id + " tidak dijumpai.");
 			    return "errorPage";
 			}
-			
-			if (bookingDetails == null) {
+			if (bookingDetails == null)
+			{
 				logger.error("Booking with ID {} not found", id);
 				model.addAttribute("errorMessage", "Tempahan dengan ID " + id + " tidak dijumpai.");
 				return "errorPage";
 			}
-
 			// Fetch room details from DB
+			
 			RoomReservationFormEntity room = roomServiceImpl.getRoomById(bookingDetails.getRoomId());
 			if (room == null) {
 				logger.error("Room with ID {} not found for booking {}", bookingDetails.getRoomId(), id);
@@ -1071,8 +1090,10 @@ public class FormController {
 			
 			// Calculate equipment cost
 			double equipCost = 0.0;
-			for (EquipmentDetails equip : equipmentList) {
-				if (equip.getQuantity() != null && equip.getPrice() != null) {
+			for (EquipmentDetails equip : equipmentList)
+			{
+				if (equip.getQuantity() != null && equip.getPrice() != null)
+				{
 					equipCost += equip.getPrice().doubleValue() * equip.getQuantity();
 					logger.info("Equipment: {} x {} = RM{}", equip.getEquipmentName(), equip.getQuantity(), equip.getPrice().doubleValue() * equip.getQuantity());
 				}
@@ -1087,12 +1108,15 @@ public class FormController {
 			model.addAttribute("currentRoom", room);
 			model.addAttribute("selectedEquip", equipmentList);
 			model.addAttribute("currentBookingDet", bookingDetails);
+			httpSession.setAttribute("totalBookingCost",totalPrice);
 			model.addAttribute("totalPrice", totalPrice);
 			model.addAttribute("equipCost", equipCost);
 			model.addAttribute("roomCost", roomCost);
 
 			return "user/rooms/room-summary";
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			logger.error("Error in getRoomBookingSummary for ID {}: {}", id, e.getMessage(), e);
 			model.addAttribute("errorMessage", "Ralat telah berlaku semasa memproses ringkasan tempahan anda. Sila cuba lagi.");
 			model.addAttribute("backUrl", "/eforms/room-booking");

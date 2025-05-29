@@ -27,6 +27,7 @@
 
       <!-- Include Choices.js for Dropdown Styling -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+      
       <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
       <!-- Include Flatpickr CSS and JS -->
@@ -716,79 +717,11 @@
 }
 
 /* Date input styling */
-.date-input-wrapper {
-    position: relative;
-}
 
-.date-input {
-    padding-right: 40px;
-    background-color: #f9f9f9;
-    border: 1px solid #ced4da;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
 
-.date-input:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    background-color: #fff;
-}
-
-.date-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #495057;
-    pointer-events: none;
-}
-
-/* Custom flatpickr styling */
-.flatpickr-calendar {
-    visibility: visible !important;
-    display: block !important;
-    opacity: 1 !important;
-}
-
-/* Hide calendars by default */
-.flatpickr-calendar:not(.open) {
-    display: none !important;
-}
 
 /* When the calendar is open, make sure it displays correctly */
-.flatpickr-calendar.open {
-    display: block !important;
-    animation: fpFadeInDown 300ms ease-in;
-}
 
-/* Better styling for the date picker */
-.flatpickr-calendar .flatpickr-month {
-    background-color: #2c3e50;
-    color: #fff;
-    fill: #fff;
-    height: 40px !important;
-}
-
-.flatpickr-current-month {
-    padding-top: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 40px !important;
-}
-
-.flatpickr-monthDropdown-months {
-    appearance: menulist !important;
-    background-color: #2c3e50 !important;
-    border: none !important;
-    color: #fff !important;
-    height: 24px !important;
-    line-height: inherit !important;
-    cursor: pointer !important;
-}
-
-.flatpickr-innerContainer {
-    display: block !important;
-}
 
 /* Styling for booked time slots */
 .choices__item.booked-time-slot {
@@ -820,42 +753,6 @@
     background-color: #f8d7da !important;
 }
 
-.flatpickr-day.selected {
-    background: #2c3e50;
-    border-color: #2c3e50;
-}
-
-.flatpickr-day.selected:hover {
-    background: #3498db;
-    border-color: #3498db;
-}
-
-.flatpickr-day:hover {
-    background: #f0f7ff;
-}
-
-.flatpickr-months .flatpickr-month {
-    background: #2c3e50;
-    color: #fff;
-}
-
-.flatpickr-weekdays {
-    background: #2c3e50;
-}
-
-.flatpickr-weekday {
-    color: #fff !important;
-    font-weight: 500;
-}
-
-.flatpickr-current-month .flatpickr-monthDropdown-months {
-    background: #2c3e50;
-    color: #fff;
-}
-
-.flatpickr-current-month input.cur-year {
-    color: #fff;
-}
 
 /* Responsive styles for tablets (768px to 991px) */
 @media screen and (max-width: 991px) {
@@ -1009,54 +906,12 @@
 }
 
 /* Add styling for booked dates */
-.flatpickr-day.booked-date {
-    background-color: #ffeeee;
-    border-color: #ffcccc;
-    color: #cc0000;
-    position: relative;
-}
 
-.flatpickr-day.booked-date:hover {
-    background-color: #ffdddd;
-}
-
-.flatpickr-day.booked-date::after {
-    content: "×";
-    position: absolute;
-    top: 2px;
-    right: 5px;
-    font-size: 10px;
-    color: #cc0000;
-}
 
 /* Remove custom fixed widths that are breaking the layout */
-.flatpickr-day {
-    color: #333 !important;
-    visibility: visible !important;
-    display: inline-block !important;
-}
-
-.flatpickr-days {
-    display: block !important; 
-    visibility: visible !important;
-}
-
-.dayContainer {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    visibility: visible !important;
-}
 
 /* Greyed out dates */
-.flatpickr-day.disabled,
-.flatpickr-day.disabled:hover,
-.flatpickr-day.prevMonthDay,
-.flatpickr-day.nextMonthDay {
-    color: rgba(57, 57, 57, 0.3) !important;
-    background: transparent !important;
-    border-color: transparent !important;
-    cursor: default !important;
-}
+
     </style>  
 
    
