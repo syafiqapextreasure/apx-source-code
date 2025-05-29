@@ -11,7 +11,7 @@
 <link rel="stylesheet" th:href="@{/css/rooms/room-list.css}">
 <title>LOST MATERIAL COMPLAINT FORM</title>
 </head>
-
+<body>
 <section>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -142,7 +142,8 @@
 		</div>
 	</div>
 	<script>
-    var messageResponse=document.getElementById("messageResponse").value;
+  var messageResponse=document.getElementById("messageResponse").value;
+   
 	if (messageResponse
 			&& messageResponse!== "") {
 		showSuccessAlert(messageResponse);

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -255,6 +256,9 @@ public class AdminController {
         List<Map<String, Object>> recentRoomBookings = enhancedBookings.stream()
             .limit(6)
             .collect(Collectors.toList());
+        
+        
+       // recentRoomBookings.sort(Map.Entry.comparingByValue());
         
         
     
