@@ -9,22 +9,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.asm.Handle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -418,7 +418,9 @@ public class RegistrationService {
     public void insertDependentReg(Dependent dependentReg) {
         String sql = "INSERT INTO depedentReg (loginId, idPengguna, nokPTanggungan, hubungan, statusOKU, harga) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
-        
+
+
+
         jdbcTemplate.update(sql,
 				dependentReg
 						.getLoginId(),
@@ -430,24 +432,126 @@ public class RegistrationService {
     }
 
     // Method to insert multiple DependentReg records in a batch
-    public void insertDependentRegs(List<Dependent> dependentRegs, String loginId,String billNumber) {
-        String sql = "INSERT INTO depedentReg (loginId, idPengguna, nokPTanggungan, hubungan, statusOKU, harga) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-        BigDecimal total = BigDecimal.ZERO;
-        for (Dependent dependentReg : dependentRegs) {
-            jdbcTemplate.update(sql,loginId,
-                    dependentReg.getIdPengguna(),
-                    dependentReg.getNokPTanggungan(),
-                    dependentReg.getHubungan(),
-                    dependentReg.getStatusOKU(),
-                    dependentReg.getHarga());
-            total=total.add(dependentReg.getHarga());
-           
-        }
-        int iCounter = getFndGlnumbService.getGlnumb2("TRXNO");
-      		getFndGlnumbService.insertRETRXN(iCounter+1, null, total.toString(), loginId,
-      				"_ADMIN", String.valueOf(new Date().getYear()), billNumber);
-    }
+	@Transactional
+	public void insertDependentRegs(List<Dependent> dependentRegs, String parentLoginId, String billNumber) {
+		// Get parent details
+		String parentSql = "SELECT GL14BRNC, GL14IPADD FROM GLPATR WHERE GL14PATR = ?";
+		Map<String, Object> parentDetails = jdbcTemplate.queryForMap(parentSql, parentLoginId);
+
+		String branchLocation = (String) parentDetails.get("GL14BRNC");
+		String parentEmail = (String) parentDetails.get("GL14IPADD");
+
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
+		String currentDate = LocalDate.now().format(dateFormat);
+		String expiryDate = LocalDate.now().plusYears(1).format(dateFormat);
+
+		for (Dependent dependent : dependentRegs) {
+			try {
+				String icNumber = dependent.getNokPTanggungan();
+
+				// 1. Extract birthdate from IC (first 6 digits: YYMMDD)
+				String birthYearPrefix = icNumber.substring(0, 2); // YY
+				String birthMonth = icNumber.substring(2, 4); // MM
+				String birthDay = icNumber.substring(4, 6); // DD
+
+				// 2. Convert to YYYY format (handling 1900s/2000s)
+				int currentYearShort = LocalDate.now().getYear() % 100;
+				int birthYear = Integer.parseInt(birthYearPrefix);
+				birthYear = (birthYear <= currentYearShort) ? 2000 + birthYear : 1900 + birthYear;
+
+				// 3. Format complete birthdate (YYYYMMDD)
+				String formattedDOB = String.format("%04d%s%s", birthYear, birthMonth, birthDay);
+
+				// 4. Calculate age from GL14DOB
+				LocalDate dob = LocalDate.parse(formattedDOB, dateFormat);
+				int age = Period.between(dob, LocalDate.now()).getYears();
+
+				// 5. Determine category
+				String category = determineCategory(age, dependent.getStatusOKU());
+
+				// 6. Insert with properly formatted GL14DOB
+				String sql = "INSERT INTO GLPATR " +
+						"(GL14PATR, GL14NAME, GL14NEWIC, GL14OLDIC, GL14RELID, " +
+						"GL14STAT, GL14DATEREC, GL14CATE, GL14BRNC, GL14GRID, " +
+						"GL14RMVD, GL14RECBY, GL14PATRONID, GL14IPADD, " +
+						"GL14MEMDATE, GL14EXPDATE, GL14DOB) " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+				int result = jdbcTemplate.update(sql,
+						icNumber,                          // GL14PATR
+						dependent.getIdPengguna(),           // GL14NAME
+						icNumber,                           // GL14NEWIC
+						icNumber,                           // GL14OLDIC
+						mapRelationshipCode(dependent.getHubungan()), // GL14RELID
+						"15",                               // GL14STAT
+						currentDate,                        // GL14DATEREC
+						category,                           // GL14CATE (calculated)
+						branchLocation,                     // GL14BRNC
+						"99",                               // GL14GRID
+						"N",                                // GL14RMVD
+						"EREGISTER",                        // GL14RECBY
+						parentLoginId,                      // GL14PATRONID
+						parentEmail,                        // GL14IPADD
+						currentDate,                        // GL14MEMDATE
+						expiryDate,                         // GL14EXPDATE
+						formattedDOB                        // GL14DOB (YYYYMMDD)
+				);
+
+				System.out.printf("Inserted %s (Age: %d) as category %s%n",
+						dependent.getIdPengguna(), age, category);
+
+			} catch (Exception e) {
+				System.err.println("Failed to insert dependent: " + e.getMessage());
+				throw new RuntimeException("Dependent registration failed", e);
+			}
+		}
+
+		// Payment processing remains same
+		BigDecimal total = dependentRegs.stream()
+				.map(Dependent::getHarga)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		int iCounter = getFndGlnumbService.getGlnumb2("TRXNO");
+		getFndGlnumbService.insertRETRXN(iCounter+1, null, total.toString(), parentLoginId,
+				"_ADMIN", String.valueOf(new Date().getYear()), billNumber);
+	}
+
+	// Category determination using GL14DOB-based age
+	private String determineCategory(int age, String okuStatus) {
+		boolean isOKU = "Ya".equalsIgnoreCase(okuStatus);
+
+		if (age < 5) return isOKU ? "16" : "00";  // Infant
+		if (age <= 12) return isOKU ? "16" : "06"; // Child
+		if (age <= 20) return isOKU ? "15" : "05"; // Teen
+		if (age <= 54) return isOKU ? "14" : "04"; // Adult
+		return "17"; // Senior (55+)
+	}
+	// Relationship mapping helper
+	private String mapRelationshipCode(String hubungan) {
+		String result;
+		switch (hubungan.toLowerCase()) {
+			case "anak":
+				result = "01"; // Child
+				break;
+			case "pasangan":
+				result = "02"; // Spouse
+				break;
+			case "ibu":
+			case "bapa":
+				result = "03"; // Parent
+				break;
+			default:
+				result = "99"; // Other
+				break;
+		}
+		return result;
+	}
+
+
+	// Helper method to map status
+	private String mapStatus(String statusOKU) {
+		return "tidak".equalsIgnoreCase(statusOKU) ? "N" : "Y";
+	}
     
     // Method to insert multiple DependentReg records in a batch
     public List<Dependent> getDependentRegs(String loginId) {
@@ -462,7 +566,7 @@ public class RegistrationService {
     	        dependent.setNokPTanggungan(rs.getString("nokPTanggungan"));
     	        dependent.setHubungan(rs.getString("hubungan"));
     	        dependent.setStatusOKU(rs.getString("statusOKU"));
-    	        dependent.setHarga(rs.getBigDecimal("harga"));
+    	//        dependent.setHarga(rs.getBigDecimal("harga"));
     	        dependent.setLoginId(rs.getString("loginId"));
     	        // Set other fields as needed
     	        return dependent;

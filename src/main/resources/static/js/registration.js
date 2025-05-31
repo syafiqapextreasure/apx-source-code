@@ -1,61 +1,61 @@
-var loginuser=""
+var loginuser = ""
 var tableBody = ""
-var  catF=""
-var  catF3=""
+var catF = ""
+var catF3 = ""
 document.getElementById("fileUploadfirst").addEventListener("change", function () {
-	const file = this.files[0]; // Get the selected file
-	const maxSize = 500 * 1024; // 500 KB in bytes
-	if (file && file.size > maxSize) {
-		// alert("File size exceeds 1MB. Please select a smaller file.");
-		manageFileSize();
-		this.value = ""; // Clear the input
-	}
+    const file = this.files[0]; // Get the selected file
+    const maxSize = 500 * 1024; // 500 KB in bytes
+    if (file && file.size > maxSize) {
+        // alert("File size exceeds 1MB. Please select a smaller file.");
+        manageFileSize();
+        this.value = ""; // Clear the input
+    }
 });
 document.getElementById("lampiranId1").addEventListener("change", function () {
-	const file = this.files[0]; // Get the selected file
-	const maxSize = 500 * 1024; // 500 KB in bytes
+    const file = this.files[0]; // Get the selected file
+    const maxSize = 500 * 1024; // 500 KB in bytes
 
-	if (file && file.size > maxSize) {
-		manageFileSize();
-		this.value = ""; // Clear the input
-	}
+    if (file && file.size > maxSize) {
+        manageFileSize();
+        this.value = ""; // Clear the input
+    }
 });
 document.getElementById("lampiranId2").addEventListener("change", function () {
-	const file = this.files[0]; // Get the selected file
-	const maxSize = 500 * 1024; // 500 KB in bytes
+    const file = this.files[0]; // Get the selected file
+    const maxSize = 500 * 1024; // 500 KB in bytes
 
-	if (file && file.size > maxSize) {
-		manageFileSize();
-		this.value = ""; // Clear the input
-	}
+    if (file && file.size > maxSize) {
+        manageFileSize();
+        this.value = ""; // Clear the input
+    }
 });
 document.addEventListener("DOMContentLoaded", () => {
-	const plusButton = document.querySelector(".plusSign");
-	const formSectionContainer = document.querySelector("#fieldset-design");
-	tableBody = document.getElementById('tanggunganTableBody');
+    const plusButton = document.querySelector(".plusSign");
+    const formSectionContainer = document.querySelector("#fieldset-design");
+    tableBody = document.getElementById('tanggunganTableBody');
 
-	// Function to check if the required fields are filled
-	function isFormValid(formSection) {
-		const idPengguna = formSection.querySelector('.idpengguna').value;
-		const noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
-		const statusOKU = formSection.querySelector('.statusUser:checked') ? formSection.querySelector('.statusUser:checked').value : '';
+    // Function to check if the required fields are filled
+    function isFormValid(formSection) {
+        const idPengguna = formSection.querySelector('.idpengguna').value;
+        const noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
+        const statusOKU = formSection.querySelector('.statusUser:checked') ? formSection.querySelector('.statusUser:checked').value : '';
 
-		return idPengguna && noKPTanggungan && statusOKU;
-	}
+        return idPengguna && noKPTanggungan && statusOKU;
+    }
 
-	// Function to check if the row for a specific ID Pengguna already exists
-	function rowExists(idPengguna) {
-		const rows = tableBody.querySelectorAll('tr');
-		for (let row of rows) {
-			if (row.querySelector('.idPenggunaCell') && row.querySelector('.idPenggunaCell').textContent === idPengguna) {
-				return row;
-			}
-		}
-		return null;
-	}
+    // Function to check if the row for a specific ID Pengguna already exists
+    function rowExists(idPengguna) {
+        const rows = tableBody.querySelectorAll('tr');
+        for (let row of rows) {
+            if (row.querySelector('.idPenggunaCell') && row.querySelector('.idPenggunaCell').textContent === idPengguna) {
+                return row;
+            }
+        }
+        return null;
+    }
 
-	// Function to create Edit and Delete buttons
-	/*  function createActionButtons() {
+    // Function to create Edit and Delete buttons
+    /*  function createActionButtons() {
         const editButton = document.createElement('button');
          editButton.textContent = 'Edit';
          editButton.className = 'edit-btn btn btn-warning btn-sm';
@@ -66,161 +66,162 @@ document.addEventListener("DOMContentLoaded", () => {
 
          return { deleteButton };
      } */
-	var isPlussClicked = true
-	// Function to update the table based on form input
-	function updateTable() {
-		const formSections = document.querySelectorAll('.formSection');
-		var noKPTanggungan=""
-		var statusOKU=""
-		var desability=false
-		var icDependent="";
-		isPlussClicked = true
+    var isPlussClicked = true
 
-		var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;
-		formSections.forEach((formSection) => {
-			if (!isFormValid(formSection)) return; // Only add if the form is valid
+    // Function to update the table based on form input
+    function updateTable() {
+        const formSections = document.querySelectorAll('.formSection');
+        var noKPTanggungan = ""
+        var statusOKU = ""
+        var desability = false
+        var icDependent = "";
+        isPlussClicked = true
 
-			// Get form values
-			const idPengguna = formSection.querySelector('.idpengguna').value;
-			//   const hubungan = formSection.querySelector('.hubunganselect').value;
-			const hubunganSelect = formSection.querySelector('.hubunganselect');
-			const hubungan = hubunganSelect.options[hubunganSelect.selectedIndex].text;
-			statusOKU = formSection.querySelector('.statusUser:checked').value;
-			var harga = Math.floor(Math.random() * 100) + 1;  // Random value for Harga (RM)
+        var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;
+        formSections.forEach((formSection) => {
+            if (!isFormValid(formSection)) return; // Only add if the form is valid
 
-			// Check if the row already exists
-			const existingRow = rowExists(idPengguna);
-			desability=statusOKU === 'ya' ? true:false;
-			if (existingRow) {
-				// If row exists, update the row content
-				existingRow.querySelector('.hubunganCell').textContent = hubungan;
-				existingRow.querySelector('.statusOKUCell').textContent = statusOKU === 'ya' ? 'Ya' : 'Tidak';
-				noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
+            // Get form values
+            const idPengguna = formSection.querySelector('.idpengguna').value;
+            //   const hubungan = formSection.querySelector('.hubunganselect').value;
+            const hubunganSelect = formSection.querySelector('.hubunganselect');
+            const hubungan = hubunganSelect.options[hubunganSelect.selectedIndex].text;
+            statusOKU = formSection.querySelector('.statusUser:checked').value;
+            var harga = Math.floor(Math.random() * 100) + 1;  // Random value for Harga (RM)
 
-				harga= getMembershipdAmount(noKPTanggungan,desability,false,isPlussClicked);//statusOKU === 'ya' ? '6' : '16';
-				existingRow.querySelector('.hargaCell').textContent = harga;
-				existingRow.querySelector('.icDependent').textContent=noKPTanggungan
-			} else {
-				// If no existing row, create a new row
-				const newRow = document.createElement('tr');
+            // Check if the row already exists
+            const existingRow = rowExists(idPengguna);
+            desability = statusOKU === 'ya' ? true : false;
+            if (existingRow) {
+                // If row exists, update the row content
+                existingRow.querySelector('.hubunganCell').textContent = hubungan;
+                existingRow.querySelector('.statusOKUCell').textContent = statusOKU === 'ya' ? 'Ya' : 'Tidak';
+                noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
 
-				// Checkbox for each row
-				const checkBoxCell = document.createElement('td');
-				const checkBox = document.createElement('input');
-				checkBox.type = 'checkbox';
-				checkBox.className = 'form-check-input';
+                harga = getMembershipdAmount(noKPTanggungan, desability, false, isPlussClicked);//statusOKU === 'ya' ? '6' : '16';
+                existingRow.querySelector('.hargaCell').textContent = harga;
+                existingRow.querySelector('.icDependent').textContent = noKPTanggungan
+            } else {
+                // If no existing row, create a new row
+                const newRow = document.createElement('tr');
 
-				checkBox.addEventListener('change', calculateTotalHarga);
-				checkBoxCell.appendChild(checkBox);
+                // Checkbox for each row
+                const checkBoxCell = document.createElement('td');
+                const checkBox = document.createElement('input');
+                checkBox.type = 'checkbox';
+                checkBox.className = 'form-check-input';
 
-				// ID Pengguna Cell
-				const idPenggunaCell = document.createElement('td');
-				idPenggunaCell.className = 'idPenggunaCell'; // Add class for reference
-				idPenggunaCell.textContent = idPengguna;
+                checkBox.addEventListener('change', calculateTotalHarga);
+                checkBoxCell.appendChild(checkBox);
 
-				// Hubungan Cell
-				const hubunganCell = document.createElement('td');
-				hubunganCell.className = 'hubunganCell';
-				hubunganCell.textContent = hubungan;
+                // ID Pengguna Cell
+                const idPenggunaCell = document.createElement('td');
+                idPenggunaCell.className = 'idPenggunaCell'; // Add class for reference
+                idPenggunaCell.textContent = idPengguna;
 
-				// Status OKU Cell
-				const statusOKUCell = document.createElement('td');
-				statusOKUCell.className = 'statusOKUCell';
-				statusOKUCell.textContent = statusOKU === 'ya' ? 'Ya' : 'Tidak';
+                // Hubungan Cell
+                const hubunganCell = document.createElement('td');
+                hubunganCell.className = 'hubunganCell';
+                hubunganCell.textContent = hubungan;
 
-				// Harga Cell
-				const hargaCell = document.createElement('td');
-				hargaCell.className = 'hargaCell';
-				/* var desability=  $('input[name="radioPasanganStaff"]:checked').val=='ya'?true:false;
+                // Status OKU Cell
+                const statusOKUCell = document.createElement('td');
+                statusOKUCell.className = 'statusOKUCell';
+                statusOKUCell.textContent = statusOKU === 'ya' ? 'Ya' : 'Tidak';
+
+                // Harga Cell
+                const hargaCell = document.createElement('td');
+                hargaCell.className = 'hargaCell';
+                /* var desability=  $('input[name="radioPasanganStaff"]:checked').val=='ya'?true:false;
                   var isStaf=      $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;
 
                  harga=getMembershipdAmount(null,desability,isStaf);//statusOKU === 'ya' ? '6' : '16';
                */
 
-				noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
-				const icDependent = document.createElement('td');
-				icDependent.className = 'icDependent';
-				icDependent.style.display = "none";
-				icDependent.textContent = noKPTanggungan;
+                noKPTanggungan = formSection.querySelector('.nokptanggungan').value;
+                const icDependent = document.createElement('td');
+                icDependent.className = 'icDependent';
+                icDependent.style.display = "none";
+                icDependent.textContent = noKPTanggungan;
 
-				//	  harga= getMembershipdAmount(noKPTanggungan,desability,false);//statusOKU === 'ya' ? '6' : '16';
-				harga =  getMembershipdAmount(noKPTanggungan, desability, isStaff,isPlussClicked);
-				hargaCell.textContent = harga;
+                //	  harga= getMembershipdAmount(noKPTanggungan,desability,false);//statusOKU === 'ya' ? '6' : '16';
+                harga = getMembershipdAmount(noKPTanggungan, desability, isStaff, isPlussClicked);
+                hargaCell.textContent = harga;
 
-				// Action Buttons Cell (Edit and Delete)
-				const actionCell = document.createElement('td');
+                // Action Buttons Cell (Edit and Delete)
+                const actionCell = document.createElement('td');
 
 
-				// Append all cells to the row
-				newRow.appendChild(checkBoxCell);
-				newRow.appendChild(idPenggunaCell);
-				newRow.appendChild(hubunganCell);
-				newRow.appendChild(statusOKUCell);
-				newRow.appendChild(hargaCell);
-				newRow.appendChild(icDependent);
-				newRow.appendChild(actionCell);
+                // Append all cells to the row
+                newRow.appendChild(checkBoxCell);
+                newRow.appendChild(idPenggunaCell);
+                newRow.appendChild(hubunganCell);
+                newRow.appendChild(statusOKUCell);
+                newRow.appendChild(hargaCell);
+                newRow.appendChild(icDependent);
+                newRow.appendChild(actionCell);
 
-				// Append the row to the table
-				tableBody.appendChild(newRow);
-			}
-		});
+                // Append the row to the table
+                tableBody.appendChild(newRow);
+            }
+        });
 
-		$("#fileUploadfirst").removeAttr("required");
-		resetnotification(noKPTanggungan,desability);
-		document.getElementById("fileUploadfirst").value = ""
-	}
+        $("#fileUploadfirst").removeAttr("required");
+        resetnotification(noKPTanggungan, desability);
+        document.getElementById("fileUploadfirst").value = ""
+    }
 
-	// Listen for button click to add or update row
-	plusButton.addEventListener("click", updateTable);
+    // Listen for button click to add or update row
+    plusButton.addEventListener("click", updateTable);
 
-	function calculateTotalHarga() {
-		let total = 0;
+    function calculateTotalHarga() {
+        let total = 0;
 // Create an array of promises for all checked checkboxes
-		let promises = [];
-		document.querySelectorAll('.form-check-input:checked').forEach(function (checkbox) {
-			let row = checkbox.closest('tr'); // Find the parent row
-			if (row) {
-				const id = row.querySelector('.idPenggunaCell').textContent;
+        let promises = [];
+        document.querySelectorAll('.form-check-input:checked').forEach(function (checkbox) {
+            let row = checkbox.closest('tr'); // Find the parent row
+            if (row) {
+                const id = row.querySelector('.idPenggunaCell').textContent;
 
-				// Add the promise to the array
-				let promise = checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKP", id, "#errorNoKP")
-					.then(function(duplicate) {
-						if (duplicate == false) {
-							return checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKPDep", id, "#errorNoKPDep");
-						} else {
-							checkbox.checked = false; // Uncheck if duplicate is found
-							return Promise.resolve(true); // Resolve immediately if duplicate found
-						}
-					})
-					.then(function(duplicate) {
-						if (duplicate == false) {
-							let harga = parseFloat(row.querySelector('.hargaCell').textContent) || 0;
-							total += harga;
-						}
-					})
-					.catch(function(error) {
-						console.error("Error checking for duplicates:", error);
-					});
+                // Add the promise to the array
+                let promise = checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKP", id, "#errorNoKP")
+                    .then(function (duplicate) {
+                        if (duplicate == false) {
+                            return checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKPDep", id, "#errorNoKPDep");
+                        } else {
+                            checkbox.checked = false; // Uncheck if duplicate is found
+                            return Promise.resolve(true); // Resolve immediately if duplicate found
+                        }
+                    })
+                    .then(function (duplicate) {
+                        if (duplicate == false) {
+                            let harga = parseFloat(row.querySelector('.hargaCell').textContent) || 0;
+                            total += harga;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Error checking for duplicates:", error);
+                    });
 
-				// Push the promise to the promises array
-				promises.push(promise);
-			}
-		});
+                // Push the promise to the promises array
+                promises.push(promise);
+            }
+        });
 
 // Use Promise.all to wait for all promises to resolve before updating the total
-		Promise.all(promises).then(function() {
-			// Update the total value after all the checks have been completed
-			document.getElementById('mySpan-sum').textContent = `RM ${total}`;
-		}).catch(function(error) {
-			console.error("Error in promise handling:", error);
-		});
+        Promise.all(promises).then(function () {
+            // Update the total value after all the checks have been completed
+            document.getElementById('mySpan-sum').textContent = `RM ${total}`;
+        }).catch(function (error) {
+            console.error("Error in promise handling:", error);
+        });
 
 
 // Update the total value
-		document.getElementById('mySpan-sum').textContent = `RM ${total}`;
+        document.getElementById('mySpan-sum').textContent = `RM ${total}`;
 
 
-		/* let row = checkbox.closest('tr'); // Find the parent row
+        /* let row = checkbox.closest('tr'); // Find the parent row
          if (row) {
              const id = row.querySelector('.idPenggunaCell').textContent;
 
@@ -237,446 +238,567 @@ document.addEventListener("DOMContentLoaded", () => {
              }
          }*/
 
-		//   });
+        //   });
 
-		document.getElementById('mySpan-sum').textContent = `RM ${total}`;
-	}
-	let duplicatePopupShown = false;
-	// Add this event listener to handle checkbox clicks in the payment table
-	// Enhanced event listener for payment table checkboxes
-	document.getElementById('tanggunganTableBody').addEventListener('change', function(event) {
-		if (!event.target.classList.contains('form-check-input')) return;
+        document.getElementById('mySpan-sum').textContent = `RM ${total}`;
+    }
 
-		const checkbox = event.target;
-		const row = checkbox.closest('tr');
+    let duplicatePopupShown = false;
+    // Add this event listener to handle checkbox clicks in the payment table
+    // Enhanced event listener for payment table checkboxes
+    document.getElementById('tanggunganTableBody').addEventListener('change', function (event) {
+        if (!event.target.classList.contains('form-check-input')) return;
 
-		const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
-		const parentNoKP = document.getElementById("noKP").value.trim();
+        const checkbox = event.target;
+        const row = checkbox.closest('tr');
 
-		// ✅ Parent row has NO icDependent value (empty)
-		const isParentRow = !icDependent || icDependent === "";
+        const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
+        const parentNoKP = document.getElementById("noKP").value.trim();
 
-		if (isParentRow && checkbox.checked) {
-			// ✅ Popup only for parent
-			checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKP", parentNoKP, "#errorNoKP")
-				.then(duplicate => {
-					if (duplicate) {
-						checkbox.checked = false;
-					}
-					calculateTotalHarga();
-				});
-		} else {
-			// ✅ Dependents — no popup
-			calculateTotalHarga();
-		}
-	});
+        // ✅ Parent row has NO icDependent value (empty)
+        const isParentRow = !icDependent || icDependent === "";
 
-	$("input[name='radioPasanganStaff']").change(function () {
-		//   console.log("Here is ",$('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val());
-		var isStaff=$('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;
-		var desability=  $('input[name="radioPasanganStaff"]:checked').val()=='ya'?true:false;
-		//  console.log("Here is nn",$('input[name="radioPasanganStaff"]:checked').val);
+        if (isParentRow && checkbox.checked) {
+            // ✅ Popup only for parent
+            checkDuplicateOnCheckbox("/eforms/checkDuplicateNoKP", parentNoKP, "#errorNoKP")
+                .then(duplicate => {
+                    if (duplicate) {
+                        checkbox.checked = false;
+                    }
+                    calculateTotalHarga();
+                });
+        } else {
+            // ✅ Dependents — no popup
+            calculateTotalHarga();
+        }
+    });
 
-		//  console.log(desability," here Here is console ",isStaff);
-		// updateUserDetails(desability,isStaff);
-		if ($('input[name="radioPasanganStaff"]:checked') && ($('input[name="radioPasanganStaff"]:checked').val() == 'ya' || $('input[name="radioPasanganStaff"]:checked').val() == 'tidak')){
-			var updatedCat=catogery();
-			console.log("Updated category is is ",updatedCat);
-			$("#updatedCat").val(updatedCat);
-		}
-		if ($("#ya4").is(":checked")) {
-			if ($("#ya4").is(":checked") && ($("#ya4").val() == 'ya' || $("#ya4").val() == 'tidak')) {
-				var updatedCat=catogery();
-				console.log("Updated category is is ",updatedCat);
-				$("#updatedCat").val(updatedCat);
-			}
-			else{
-				console.log("catF3 is ",catF3);
-				$("#updatedCat").val(catF3);
-			}
-			$("#lampiranId2").prop("required", true);
-			$("#errorFile3").show();
-		} else {
-			$("#lampiranId2").prop("required", false);
-			$("#errorFile3").hide();
-		}
-	});
+    $("input[name='radioPasanganStaff']").change(function () {
+        //   console.log("Here is ",$('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val());
+        var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;
+        var desability = $('input[name="radioPasanganStaff"]:checked').val() == 'ya' ? true : false;
+        //  console.log("Here is nn",$('input[name="radioPasanganStaff"]:checked').val);
 
-	$("#lampiranId2").change(function () {
-		if ($(this).val()) {
-			$("#errorFile3").hide();
-		}
-	});
+        //  console.log(desability," here Here is console ",isStaff);
+        // updateUserDetails(desability,isStaff);
+        if ($('input[name="radioPasanganStaff"]:checked') && ($('input[name="radioPasanganStaff"]:checked').val() == 'ya' || $('input[name="radioPasanganStaff"]:checked').val() == 'tidak')) {
+            var updatedCat = catogery();
+            console.log("Updated category is is ", updatedCat);
+            $("#updatedCat").val(updatedCat);
+        }
+        if ($("#ya4").is(":checked")) {
+            if ($("#ya4").is(":checked") && ($("#ya4").val() == 'ya' || $("#ya4").val() == 'tidak')) {
+                var updatedCat = catogery();
+                console.log("Updated category is is ", updatedCat);
+                $("#updatedCat").val(updatedCat);
+            } else {
+                console.log("catF3 is ", catF3);
+                $("#updatedCat").val(catF3);
+            }
+            $("#lampiranId2").prop("required", true);
+            $("#errorFile3").show();
+        } else {
+            $("#lampiranId2").prop("required", false);
+            $("#errorFile3").hide();
+        }
+    });
 
-	function updateUserDetails(desability,isStaf) {
-		//  const formSections = document.querySelectorAll('.formSection');
-		var statusOKU=""
-		// var desability=false
-		// formSections.forEach((formSection) => {
-		//   if (!isFormValid(formSection)) return; // Only add if the form is valid
+    $("#lampiranId2").change(function () {
+        if ($(this).val()) {
+            $("#errorFile3").hide();
+        }
+    });
 
-		// Get form values
-		const idPengguna =document.getElementById("portalId").value //$('#portalId').val;
-		const namaPengguna =document.getElementById("nama").value //$('#portalId').val;
-		statusOKU = $('#ya4').val;
+    function updateUserDetails(desability, isStaf) {
+        //  const formSections = document.querySelectorAll('.formSection');
+        var statusOKU = ""
+        // var desability=false
+        // formSections.forEach((formSection) => {
+        //   if (!isFormValid(formSection)) return; // Only add if the form is valid
 
-		var harga = Math.floor(Math.random() * 100) + 1;  // Random value for Harga (RM)
+        // Get form values
+        const idPengguna = document.getElementById("portalId").value //$('#portalId').val;
+        const namaPengguna = document.getElementById("nama").value //$('#portalId').val;
+        statusOKU = $('#ya4').val;
 
-		// Check if the row already exists
-		const existingRow = rowExists(idPengguna);
-		if (existingRow) {
-			// If row exists, update the row content
-			// existingRow.querySelector('.hubunganCell').textContent = hubungan;
-			existingRow.querySelector('.statusOKUCell').textContent = desability === true ? 'Ya' : 'Tidak';
+        var harga = Math.floor(Math.random() * 100) + 1;  // Random value for Harga (RM)
 
-			harga= getMembershipdAmount(null,desability,isStaf);//statusOKU === 'ya' ? '6' : '16';
-			existingRow.querySelector('.hargaCell').textContent = harga;
-		} else {
-			// If no existing row, create a new row
-			const newRow = document.createElement('tr');
+        // Check if the row already exists
+        const existingRow = rowExists(idPengguna);
+        if (existingRow) {
+            // If row exists, update the row content
+            // existingRow.querySelector('.hubunganCell').textContent = hubungan;
+            existingRow.querySelector('.statusOKUCell').textContent = desability === true ? 'Ya' : 'Tidak';
 
-			// Checkbox for each row
-			const checkBoxCell = document.createElement('td');
-			const checkBox = document.createElement('input');
-			checkBox.type = 'checkbox';
-			checkBox.className = 'form-check-input';
+            harga = getMembershipdAmount(null, desability, isStaf);//statusOKU === 'ya' ? '6' : '16';
+            existingRow.querySelector('.hargaCell').textContent = harga;
+        } else {
+            // If no existing row, create a new row
+            const newRow = document.createElement('tr');
 
-			checkBox.addEventListener('change', calculateTotalHarga);
-			checkBoxCell.appendChild(checkBox);
+            // Checkbox for each row
+            const checkBoxCell = document.createElement('td');
+            const checkBox = document.createElement('input');
+            checkBox.type = 'checkbox';
+            checkBox.className = 'form-check-input';
 
-			// ID Pengguna Cell
-			const idPenggunaCell = document.createElement('td');
-			idPenggunaCell.className = 'idPenggunaCell'; // Add class for reference
-			idPenggunaCell.textContent = namaPengguna;
-			// Hubungan Cell
-			const hubunganCell = document.createElement('td');
-			hubunganCell.className = 'hubunganCell';
-			// hubunganCell.textContent = hubungan;
+            checkBox.addEventListener('change', calculateTotalHarga);
+            checkBoxCell.appendChild(checkBox);
 
-			// Status OKU Cell
-			const statusOKUCell = document.createElement('td');
-			statusOKUCell.className = 'statusOKUCell';
-			statusOKUCell.textContent = desability === true ? 'Ya' : 'Tidak';
+            // ID Pengguna Cell
+            const idPenggunaCell = document.createElement('td');
+            idPenggunaCell.className = 'idPenggunaCell'; // Add class for reference
+            idPenggunaCell.textContent = namaPengguna;
+            // Hubungan Cell
+            const hubunganCell = document.createElement('td');
+            hubunganCell.className = 'hubunganCell';
+            // hubunganCell.textContent = hubungan;
 
-			// Harga Cell
-			const hargaCell = document.createElement('td');
-			hargaCell.className = 'hargaCell';
-			var isStaf=      $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;
-			/* var desability=  $('input[name="radioPasanganStaff"]:checked').val=='ya'?true:false;
+            // Status OKU Cell
+            const statusOKUCell = document.createElement('td');
+            statusOKUCell.className = 'statusOKUCell';
+            statusOKUCell.textContent = desability === true ? 'Ya' : 'Tidak';
+
+            // Harga Cell
+            const hargaCell = document.createElement('td');
+            hargaCell.className = 'hargaCell';
+            var isStaf = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;
+            /* var desability=  $('input[name="radioPasanganStaff"]:checked').val=='ya'?true:false;
               var isStaf=      $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;
 
              harga=getMembershipdAmount(null,desability,isStaf);//statusOKU === 'ya' ? '6' : '16';
            */
 
-			harga= getMembershipdAmount(null,desability,isStaf);//statusOKU === 'ya' ? '6' : '16';
-			hargaCell.textContent = harga;
+            harga = getMembershipdAmount(null, desability, isStaf);//statusOKU === 'ya' ? '6' : '16';
+            hargaCell.textContent = harga;
 
-			// Action Buttons Cell (Edit and Delete)
-			const actionCell = document.createElement('td');
-
-
-			// Append all cells to the row
-			newRow.appendChild(checkBoxCell);
-			newRow.appendChild(idPenggunaCell);
-			newRow.appendChild(hubunganCell);
-			newRow.appendChild(statusOKUCell);
-			newRow.appendChild(hargaCell);
-			newRow.appendChild(actionCell);
-
-			// Append the row to the table
-			tableBody.appendChild(newRow);
-		}
-		//  });
-	}
-	function updatePriceForMainUser(isDisabled, isStaff) {
-		const mainUserRow = document.querySelector('#tanggunganTableBody tr:first-child');
-		if (mainUserRow) {
-			const hargaCell = mainUserRow.querySelector('.hargaCell');
-			const newPrice = getMembershipdAmount(null, isDisabled, isStaff);
-			hargaCell.textContent = newPrice;
-			mainUserRow.querySelector('.statusOKUCell').textContent = isDisabled ? 'Ya' : 'Tidak';
-		}
-	}
-
-	function updatePricesForDependents(isStaff) {
-		const rows = document.querySelectorAll('#tanggunganTableBody tr');
-		rows.forEach(row => {
-			const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
-			if (icDependent) { // This is a dependent row
-				const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya';
-				const newPrice = getMembershipdAmount(icDependent, statusOKU, isStaff, true);
-				row.querySelector('.hargaCell').textContent = newPrice;
-			}
-		});
-	}
-	$('input[name="radioPasanganStaff"]').change(function() {
-		var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya';
-		var isDisabled = $(this).val() === 'ya';
-
-		// Update main user's price
-		updatePriceForMainUser(isDisabled, isStaff);
+            // Action Buttons Cell (Edit and Delete)
+            const actionCell = document.createElement('td');
 
 
-		updatePricesForDependents(isStaff);
+            // Append all cells to the row
+            newRow.appendChild(checkBoxCell);
+            newRow.appendChild(idPenggunaCell);
+            newRow.appendChild(hubunganCell);
+            newRow.appendChild(statusOKUCell);
+            newRow.appendChild(hargaCell);
+            newRow.appendChild(actionCell);
 
-		calculateTotalHarga();
-	});
+            // Append the row to the table
+            tableBody.appendChild(newRow);
+        }
+        //  });
+    }
 
-	$('input[name="Adakah_ahli_keluarga_anda_merupakan"]').change(function() {
-		// Check if any radio button is selected
-		if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()) {
-			var isStaff = $(this).val() === 'ya';
-			var desability = $('#ya4').is(':checked'); // Check if OKU is selected
-			var isDisabled = $('input[name="radioPasanganStaff"]:checked').val() === 'ya';
-			// Get the main user's row (it should be the first row if exists)
-			const rows = tableBody.querySelectorAll('tr');
-			const mainUserRow = rows.length > 0 ? rows[0] : null;
+    function ensureMainUserInTable() {
+        const mainUserId = document.getElementById("portalId").value;
+        const namaPengguna = document.getElementById("nama").value; // Get name from form
+        const noKP = document.getElementById("noKP").value;
+        const isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya';
+        const isDisabled = $('#ya4').is(':checked');
 
-			updatePriceForMainUser(isDisabled, isStaff);
-			updatePricesForDependents(isStaff);
-			calculateTotalHarga();
+        // Calculate price once
+        const price = getMembershipdAmount(noKP, isDisabled, isStaff);
 
-			if (mainUserRow) {
-				// Update the existing row instead of creating a new one
-				const hargaCell = mainUserRow.querySelector('.hargaCell');
-				const statusOKUCell = mainUserRow.querySelector('.statusOKUCell');
+        // Check if main user row exists (using portal ID to find it)
+        let mainUserRow = Array.from(tableBody.querySelectorAll('tr')).find(row => {
+            const icCell = row.querySelector('.icDependent');
+            return icCell && icCell.textContent === noKP;
+        });
 
-				// Update status OKU display
-				statusOKUCell.textContent = desability ? 'Ya' : 'Tidak';
+        if (!mainUserRow) {
+            // Create new row for main user (to be added at the end)
+            mainUserRow = document.createElement('tr');
+            mainUserRow.className = 'main-user-row';
 
-				// Calculate new price
-				const newPrice = getMembershipdAmount(null, desability, isStaff);
-				hargaCell.textContent = newPrice;
-			} else {
-				// If no row exists, create one (only for main user)
-				updateUserDetails(desability, isStaff);
-			}
+            // Create cells - using namaPengguna (name) instead of ID
+            const cells = [
+                createCheckboxCell(),
+                createCell(namaPengguna, 'idPenggunaCell'), // Show name here
+                createCell('Pemohon', 'hubunganCell'),
+                createCell(isDisabled ? 'Ya' : 'Tidak', 'statusOKUCell'),
+                createCell(price, 'hargaCell'),
+                createHiddenCell(noKP, 'icDependent'),
+                document.createElement('td')
+            ];
 
-			// Recalculate all prices in the table for dependents
-			rows.forEach(row => {
-				const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
-				if (icDependent) { // This is a dependent row
-					const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya';
-					const newPrice = getMembershipdAmount(icDependent, statusOKU, isStaff, true);
-					row.querySelector('.hargaCell').textContent = newPrice;
-				}
-			});
+            // Append cells
+            cells.forEach(cell => mainUserRow.appendChild(cell));
 
-			calculateTotalHarga();
+            // Add to END of table (not beginning)
+            tableBody.appendChild(mainUserRow);
+        } else {
+            // Update existing row
+            mainUserRow.querySelector('.idPenggunaCell').textContent = namaPengguna; // Update name
+            mainUserRow.querySelector('.statusOKUCell').textContent = isDisabled ? 'Ya' : 'Tidak';
+            mainUserRow.querySelector('.hargaCell').textContent = price;
+        }
+    }
 
-			// Update category if needed
-			if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').length > 0) {
-				var updatedCat = catogery();
-				$("#updatedCat").val(updatedCat);
-			} else {
-				console.log("catF3 is ", catF3);
-				$("#updatedCat").val(catF3);
-			}
+    function createCheckboxCell() {
+        const cell = document.createElement('td');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'form-check-input';
+        checkbox.addEventListener('change', calculateTotalHarga);
+        cell.appendChild(checkbox);
+        return cell;
+    }
 
-			document.querySelector(".error-message").style.display = "none";
-		} else {
-			document.querySelector(".error-message").style.display = "block";
-		}
-	});
+
+    function createCell(text, className) {
+        const cell = document.createElement('td');
+        cell.className = className;
+        cell.textContent = text;
+        return cell;
+    }
+
+    function createHiddenCell(text, className) {
+        const cell = document.createElement('td');
+        cell.className = className;
+        cell.textContent = text;
+        cell.style.display = 'none';
+        return cell;
+    }
+
+
+    function updatePriceForMainUser(isDisabled, isStaff) {
+        const mainUserRow = document.querySelector('#tanggunganTableBody tr:first-child');
+        if (mainUserRow) {
+            const hargaCell = mainUserRow.querySelector('.hargaCell');
+            const newPrice = getMembershipdAmount(null, isDisabled, isStaff);
+            hargaCell.textContent = newPrice;
+            mainUserRow.querySelector('.statusOKUCell').textContent = isDisabled ? 'Ya' : 'Tidak';
+        }
+    }
+
+    function updatePricesForDependents(isStaff) {
+        const rows = document.querySelectorAll('#tanggunganTableBody tr');
+        rows.forEach(row => {
+            const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
+            if (icDependent) { // This is a dependent row
+                const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya';
+                const newPrice = getMembershipdAmount(icDependent, statusOKU, isStaff, true);
+                row.querySelector('.hargaCell').textContent = newPrice;
+            }
+        });
+    }
+
+    $('input[name="radioPasanganStaff"]').change(function () {
+        var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya';
+        var isDisabled = $(this).val() === 'ya';
+
+        // Update main user's price
+        updatePriceForMainUser(isDisabled, isStaff);
+        updatePricesForDependents(isStaff);
+        calculateTotalHarga();
+    });
+
+    // When Maklumat Lanjut changes to "Ya"
+    $('input[name="Adakah_ahli_keluarga_anda_merupakan"]').change(function () {
+        if ($(this).val() === 'ya') {
+            // Add main user LAST after all dependents
+            ensureMainUserInTable();
+        }
+        updatePricesForDependents($(this).val() === 'ya');
+        calculateTotalHarga();
+    });
+
+// When OKU status changes
+    $('#ya4').change(function () {
+        if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya') {
+            const isDisabled = $(this).is(':checked');
+            const isStaff = true;
+            const noKP = document.getElementById("noKP").value;
+
+            // Find main user row by IC number
+            const mainUserRow = Array.from(tableBody.querySelectorAll('tr')).find(row => {
+                const icCell = row.querySelector('.icDependent');
+                return icCell && icCell.textContent === noKP;
+            });
+
+            if (mainUserRow) {
+                const newPrice = getMembershipdAmount(noKP, isDisabled, isStaff);
+                mainUserRow.querySelector('.statusOKUCell').textContent = isDisabled ? 'Ya' : 'Tidak';
+                mainUserRow.querySelector('.hargaCell').textContent = newPrice;
+            }
+        }
+        calculateTotalHarga();
+    });
+
+    $('input[name="Adakah_ahli_keluarga_anda_merupakan"]').change(function () {
+        // Check if any radio button is selected
+        if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()) {
+            var isStaff = $(this).val() === 'ya';
+            var desability = $('#ya4').is(':checked'); // Check if OKU is selected
+            var isDisabled = $('input[name="radioPasanganStaff"]:checked').val() === 'ya';
+            // Get the main user's row (it should be the first row if exists)
+            const rows = tableBody.querySelectorAll('tr');
+            const mainUserRow = rows.length > 0 ? rows[0] : null;
+            ensureMainUserInTable();
+            updatePriceForMainUser(isDisabled, isStaff);
+            updatePricesForDependents(isStaff);
+            calculateTotalHarga();
+
+            if (mainUserRow) {
+                // Update the existing row instead of creating a new one
+                const hargaCell = mainUserRow.querySelector('.hargaCell');
+                const statusOKUCell = mainUserRow.querySelector('.statusOKUCell');
+
+                // Update status OKU display
+                statusOKUCell.textContent = desability ? 'Ya' : 'Tidak';
+
+                // Calculate new price
+                const newPrice = getMembershipdAmount(null, desability, isStaff);
+                hargaCell.textContent = newPrice;
+            } else {
+                // If no row exists, create one (only for main user)
+                updateUserDetails(desability, isStaff);
+            }
+
+            // Recalculate all prices in the table for dependents
+            rows.forEach(row => {
+                const icDependent = row.querySelector('.icDependent')?.textContent?.trim();
+                if (icDependent) { // This is a dependent row
+                    const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya';
+                    const newPrice = getMembershipdAmount(icDependent, statusOKU, isStaff, true);
+                    row.querySelector('.hargaCell').textContent = newPrice;
+                }
+            });
+
+            calculateTotalHarga();
+
+            // Update category if needed
+            if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').length > 0) {
+                var updatedCat = catogery();
+                $("#updatedCat").val(updatedCat);
+            } else {
+                console.log("catF3 is ", catF3);
+                $("#updatedCat").val(catF3);
+            }
+
+            document.querySelector(".error-message").style.display = "none";
+        } else {
+            document.querySelector(".error-message").style.display = "block";
+        }
+    });
 
 });
+
 function generateSelectedList() {
-	const selectedList = [];
-	const rows = tableBody.querySelectorAll('tr');
-	const parentLoginId = document.getElementById("portalId").value;
+    const selectedList = [];
+    const rows = tableBody.querySelectorAll('tr');
+    const parentLoginId = document.getElementById("portalId").value;
 
-	rows.forEach(row => {
-		const checkBox = row.querySelector('input[type="checkbox"]');
-		if (checkBox && checkBox.checked) {
-			const idPengguna = row.querySelector('.idPenggunaCell').textContent;
-			const hubungan = row.querySelector('.hubunganCell').textContent;
-			const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya' ? 'ya' : 'tidak';
-			const hargaText = row.querySelector('.hargaCell').textContent;
-			const harga = parseFloat(hargaText) || 0;
-			const nokPTanggungan = row.querySelector('.icDependent')?.textContent?.trim() || "";
+    rows.forEach(row => {
+        const checkBox = row.querySelector('input[type="checkbox"]');
+        if (checkBox && checkBox.checked) {
+            const idPengguna = row.querySelector('.idPenggunaCell').textContent;
+            const hubungan = row.querySelector('.hubunganCell').textContent;
+            const statusOKU = row.querySelector('.statusOKUCell').textContent === 'Ya' ? 'ya' : 'tidak';
+            const hargaText = row.querySelector('.hargaCell').textContent;
+            const harga = parseFloat(hargaText) || 0;
+            const nokPTanggungan = row.querySelector('.icDependent')?.textContent?.trim() || "";
 
-			selectedList.push({
-				loginId: parentLoginId,
-				idPengguna: idPengguna,
-				nokPTanggungan: nokPTanggungan,
-				hubungan: hubungan,
-				statusOKU: statusOKU,
-				harga: harga
-				// Removed the 'file' property
-			});
-		}
-	});
-	console.log("Generated dependents JSON:", selectedList);
-	document.getElementById('selectedItems').value = JSON.stringify(selectedList);
+            selectedList.push({
+                loginId: parentLoginId,
+                idPengguna: idPengguna,
+                nokPTanggungan: nokPTanggungan,
+                hubungan: hubungan,
+                statusOKU: statusOKU,
+                harga: harga
+                // Removed the 'file' property
+            });
+        }
+    });
+    console.log("Generated dependents JSON:", selectedList);
+    document.getElementById('selectedItems').value = JSON.stringify(selectedList);
 }
+
+$("#submit-form").click(function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Generate and update the selectedItems hidden field
+    generateSelectedList();
+
+    // Verify the data is in the hidden field
+    console.log("Selected items:", document.getElementById('selectedItems').value);
+
+    // Manually submit the form after a small delay
+    setTimeout(() => {
+        document.getElementById("formId").submit();
+    }, 100);
+});
+
+
 window.addEventListener("load", () => {
-	var loginuser="sysadmin"
-	const iframeElement = window.frameElement; // Reference to the iframe
-	const parentName =iframeElement.getAttribute("name");
-	loginuser=parentName.split(",")[0];
-	document.getElementById("portalId").value=loginuser;
-	document.getElementById("noKP").value=loginuser;
-	document.getElementById("emailAddress").value=parentName.split(",")[1].trim();
+    var loginuser = "sysadmin"
+    const iframeElement = window.frameElement; // Reference to the iframe
+    const parentName = iframeElement.getAttribute("name");
+    loginuser = parentName.split(",")[0];
+    document.getElementById("portalId").value = loginuser;
+    document.getElementById("noKP").value = loginuser;
+    document.getElementById("emailAddress").value = parentName.split(",")[1].trim();
 
-	if((loginuser =="") || (loginuser !="" && (loginuser.indexOf("default@kmlink.com.my")>-1 || loginuser.indexOf("20103")>-1))){
-		Swal.fire({
-			title: 'Notification!',
-			text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
-			icon: 'Error',
-			confirmButtonText: 'OK',
-			position: 'top', // Ensures the popup is displayed at the top
-			customClass: {
-				popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
-			}
-		});
-	}else{
+    if ((loginuser == "") || (loginuser != "" && (loginuser.indexOf("default@kmlink.com.my") > -1 || loginuser.indexOf("20103") > -1))) {
+        Swal.fire({
+            title: 'Notification!',
+            text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
+            icon: 'Error',
+            confirmButtonText: 'OK',
+            position: 'top', // Ensures the popup is displayed at the top
+            customClass: {
+                popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
+            }
+        });
+    } else {
 
-		var emailAddress=parentName.split(",")[1];//'sysadmin@paradigm.com.my'//	parentName.split(",")[1];
-		console.log("emailAddress is "+emailAddress)
-		//fetch(`/eforms/getUserDetails?emailAddress=`+emailAddress.trim())
-		fetch(`/eforms/getSSOUserDetails?emailAddress=`+emailAddress.trim())
-			.then(response => response.json())
-			.then(data => {
-				// console.log("Here is data ",data);
-				data.user.name !=undefined && data.user.name !=null? $("#nama").val(data.user.name):$("#nama").val('')
+        var emailAddress = parentName.split(",")[1];//'sysadmin@paradigm.com.my'//	parentName.split(",")[1];
+        console.log("emailAddress is " + emailAddress)
+        //fetch(`/eforms/getUserDetails?emailAddress=`+emailAddress.trim())
+        fetch(`/eforms/getSSOUserDetails?emailAddress=` + emailAddress.trim())
+            .then(response => response.json())
+            .then(data => {
+                // console.log("Here is data ",data);
+                data.user.name != undefined && data.user.name != null ? $("#nama").val(data.user.name) : $("#nama").val('')
 
-				//data.dob !=undefined && data.dob !=null? $("#nama").val(data.firstName+" "+data.lastName):$("#nama").val('')
-				$("#myDate").val(data.user.dob);
-				$("#Alamat").val(data.user.address1);
-				$("#phone").val(data.user.mobile_no);
-				$("#poskodphones").val(data.user.postcode);
-				$("#bandar").val(data.user.BANDAR);
-				$("#negeriId").val(data.user.NEGERI);
-
-
-			})
-			.catch(error => console.error('Error fetching material details:', error));
-	}
-	function formatDate(dateString) {
-		const date = new Date(dateString);
-		return date.toLocaleDateString("en-US", {
-			year: "numeric",
-			month: "2-digit",
-			day: "2-digit"
-		});
-	}
+                //data.dob !=undefined && data.dob !=null? $("#nama").val(data.firstName+" "+data.lastName):$("#nama").val('')
+                $("#myDate").val(data.user.dob);
+                $("#Alamat").val(data.user.address1);
+                $("#phone").val(data.user.mobile_no);
+                $("#poskodphones").val(data.user.postcode);
+                $("#bandar").val(data.user.BANDAR);
+                $("#negeriId").val(data.user.NEGERI);
 
 
+            })
+            .catch(error => console.error('Error fetching material details:', error));
+    }
 
-	/* 	});		 */
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+    }
 
 
-	var messageResponse=document.getElementById("messageResponse").value;
-	if (messageResponse !=undefined && messageResponse=="Success") {
-		Swal.fire({
-			title: 'Success!',
-			text: 'Membership Registration successful.',
-			icon: 'success',
-			confirmButtonText: 'OK'
-		}).then((result) => {
-			// Optional: If you want to redirect or perform an action after closing the alert, you can add it here
-			if (result.isConfirmed) {
+    /* 	});		 */
 
-				window.location.href = 'https://ppk3.ppj.gov.my/';
-			}
-		});
-	}
 
-	// Add event listener for the change event
-	var element = document.getElementById("errorportalId");
-	var elementName = document.getElementById("errornameId")
-	var noKP= document.getElementById("noKPerror");
-	var myDateErrorVal=document.getElementById("myDateError");
-	var branchError=document.getElementById("branchError");
-	var warGanError=document.getElementById("warGanError");
-	var noTelefonError=document.getElementById("noTelefonError");
-	var idpengguna=document.getElementById("idErrorPengguna");
-	var errorAlamat= document.getElementById("AlamatError");
-	var errorPoskod= document.getElementById("PoskodError");
-	var errorneger=document.getElementById("negeriError");
-	var errorFile= document.getElementById("errorFile1");
-	var errorFile1= document.getElementById("errorFile2");
-	var errorFile2= document.getElementById("errorFile3");
-	// Get the value of the phone input field
-	var phoneValue = $("#phone").val().trim();
-	/* 				warGan
+    var messageResponse = document.getElementById("messageResponse").value;
+    if (messageResponse != undefined && messageResponse == "Success") {
+        Swal.fire({
+            title: 'Success!',
+            text: 'Membership Registration successful.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            // Optional: If you want to redirect or perform an action after closing the alert, you can add it here
+            if (result.isConfirmed) {
+
+                window.location.href = 'https://ppk3.ppj.gov.my/';
+            }
+        });
+    }
+
+    // Add event listener for the change event
+    var element = document.getElementById("errorportalId");
+    var elementName = document.getElementById("errornameId")
+    var noKP = document.getElementById("noKPerror");
+    var myDateErrorVal = document.getElementById("myDateError");
+    var branchError = document.getElementById("branchError");
+    var warGanError = document.getElementById("warGanError");
+    var noTelefonError = document.getElementById("noTelefonError");
+    var idpengguna = document.getElementById("idErrorPengguna");
+    var errorAlamat = document.getElementById("AlamatError");
+    var errorPoskod = document.getElementById("PoskodError");
+    var errorneger = document.getElementById("negeriError");
+    var errorFile = document.getElementById("errorFile1");
+    var errorFile1 = document.getElementById("errorFile2");
+    var errorFile2 = document.getElementById("errorFile3");
+    // Get the value of the phone input field
+    var phoneValue = $("#phone").val().trim();
+    /* 				warGan
      */
 
-	$("#lampiranId").change(function() {
-		if ($("#lampiranId").val()) {
-			errorFile.style.display = "none"; // Hide element
-		} else {
-			errorFile.style.display = "block";
+    $("#lampiranId").change(function () {
+        if ($("#lampiranId").val()) {
+            errorFile.style.display = "none"; // Hide element
+        } else {
+            errorFile.style.display = "block";
 
-		}
-	});
+        }
+    });
 
-	$("#branchLocation").change(function() {
-		if ($("#branchLocation").val().trim() != "") {
-			branchError.style.display = "none"; // Hide element
-		} else {
-			branchError.style.display = "block";
+    $("#branchLocation").change(function () {
+        if ($("#branchLocation").val().trim() != "") {
+            branchError.style.display = "none"; // Hide element
+        } else {
+            branchError.style.display = "block";
 
-		}
-	});
-
-
-	$("#lampiranId1").change(function() {
-		if ($("#lampiranId1").val()) {
-			errorFile1.style.display = "none"; // Hide element
-		} else {
-			errorFile1.style.display = "block";
-
-		}
-	});
-
-	$("#lampiranId2").change(function() {
-		if ($("#lampiranId2").val()) {
-			errorFile2.style.display = "none"; // Hide element
-		} else {
-			errorFile2.style.display = "block";
-
-		}
-	});
-
-	$("#portalId").change(function() {
-		if ($("#portalId").val().trim() != "") {
-			element.style.display = "none"; // Hide element
-		} else {
-			element.style.display = "block";
-
-		}
-	});
-
-	$("#nama").change(function() {
-		if ($("#nama").val().trim() != "") {
-			elementName.style.display = "none"; // Hide element
-		} else {
-			elementName.style.display = "block";
-
-		}
-	});
-
-	$("#noKP").change(function() {
-		if ($("#noKP").val().trim() != "") {
-			noKP.style.display = "none"; // Hide element
-		} else {
-			noKP.style.display = "block";
-
-		}
-	});
-
-	$("#myDate").change(function() {
-		if ($("#myDate").val().trim() != "") {
-			myDateErrorVal.style.display = "none"; // Hide element
-		} else {
-			myDateErrorVal.style.display = "block";
-
-		}
-	});
+        }
+    });
 
 
-	/* $("#myDate").change(function() {
+    $("#lampiranId1").change(function () {
+        if ($("#lampiranId1").val()) {
+            errorFile1.style.display = "none"; // Hide element
+        } else {
+            errorFile1.style.display = "block";
+
+        }
+    });
+
+    $("#lampiranId2").change(function () {
+        if ($("#lampiranId2").val()) {
+            errorFile2.style.display = "none"; // Hide element
+        } else {
+            errorFile2.style.display = "block";
+
+        }
+    });
+
+    $("#portalId").change(function () {
+        if ($("#portalId").val().trim() != "") {
+            element.style.display = "none"; // Hide element
+        } else {
+            element.style.display = "block";
+
+        }
+    });
+
+    $("#nama").change(function () {
+        if ($("#nama").val().trim() != "") {
+            elementName.style.display = "none"; // Hide element
+        } else {
+            elementName.style.display = "block";
+
+        }
+    });
+
+    $("#noKP").change(function () {
+        if ($("#noKP").val().trim() != "") {
+            noKP.style.display = "none"; // Hide element
+        } else {
+            noKP.style.display = "block";
+
+        }
+    });
+
+    $("#myDate").change(function () {
+        if ($("#myDate").val().trim() != "") {
+            myDateErrorVal.style.display = "none"; // Hide element
+        } else {
+            myDateErrorVal.style.display = "block";
+
+        }
+    });
+
+
+    /* $("#myDate").change(function() {
         if ($("#myDate").val().trim() != "") {
             errorneger.style.display = "none"; // Hide element
         } else {
@@ -686,38 +808,38 @@ window.addEventListener("load", () => {
     });
      */
 
-	$("#myDate").change(function() {
-		if ($("#myDate").val().trim() != "") {
-			myDateErrorVal.style.display = "none"; // Hide element
-		} else {
-			myDateErrorVal.style.display = "block";
+    $("#myDate").change(function () {
+        if ($("#myDate").val().trim() != "") {
+            myDateErrorVal.style.display = "none"; // Hide element
+        } else {
+            myDateErrorVal.style.display = "block";
 
-		}
-	});
+        }
+    });
 
 
-	$("#negeriId").change(function() {
-		if ($("#negeriId").val().trim() != "") {
-			branchError.style.display = "none"; // Hide element
-		} else {
-			branchError.style.display = "block";
+    $("#negeriId").change(function () {
+        if ($("#negeriId").val().trim() != "") {
+            branchError.style.display = "none"; // Hide element
+        } else {
+            branchError.style.display = "block";
 
-		}
+        }
 
-	});
+    });
 
-	$(".statusUser").change(function () {
-		if ($(this).val() === "ya") {
-			$("input[name='statusUser']:checked").val()=='ya'?  $("#fileUploadfirst").attr("required", "required"):"";
-			var desability=  $("input[name='statusUser']:checked").val()=='ya'?true:false;
+    $(".statusUser").change(function () {
+        if ($(this).val() === "ya") {
+            $("input[name='statusUser']:checked").val() == 'ya' ? $("#fileUploadfirst").attr("required", "required") : "";
+            var desability = $("input[name='statusUser']:checked").val() == 'ya' ? true : false;
 
-			getMembershipdAmount(desability,desability,false);
+            getMembershipdAmount(desability, desability, false);
 
-		} else {
-			$("#fileUploadfirst").removeAttr("required");
-		}
-	});
-	/*  $("#ya2, #tidak2").change(function() {
+        } else {
+            $("#fileUploadfirst").removeAttr("required");
+        }
+    });
+    /*  $("#ya2, #tidak2").change(function() {
             console.log("tidak2 is ");
             if ($("input[name='statusUser']:checked").val()) {
                 // Hide the error message by setting display to 'none'
@@ -730,77 +852,74 @@ window.addEventListener("load", () => {
             }
         });
       */
-	$("#warGanYa, #warGanTidak").change(function() {
-		// Check if any radio button is checked
-		if ($("input[name='agecate']:checked").val()) {
-			// Hide the error message by setting display to 'none'
-			document.getElementById("warGanError").style.display = "none";
-		} else {
-			// Show the error message by setting display to 'block'
-			document.getElementById("warGanError").style.display = "block";
-		}
-	});
+    $("#warGanYa, #warGanTidak").change(function () {
+        // Check if any radio button is checked
+        if ($("input[name='agecate']:checked").val()) {
+            // Hide the error message by setting display to 'none'
+            document.getElementById("warGanError").style.display = "none";
+        } else {
+            // Show the error message by setting display to 'block'
+            document.getElementById("warGanError").style.display = "block";
+        }
+    });
 
-	$('input[name="Adakah_ahli_keluarga_anda_merupakan"]').change(function() {
-		// Check if any radio button is selected
-		if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()) {
-			// Hide the error message if a radio button is selected
-			// var desability=  $("input[name='radioPasanganStaff']").val=='ya'?true:false;
-			var isStaff=$('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;
-			var desability=  $('input[name="radioPasanganStaff"]:checked').val()=='ya'?true:false;
-
-
-
-			$('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'? getMembershipdAmount(null,desability,isStaff):getMembershipdAmount(null,desability,false,isPlussClicked);
-			document.querySelector(".error-message").style.display = "none";
-		} else {
-			// Show the error message if no radio button is selected
-			document.querySelector(".error-message").style.display = "block";
-		}
-	});
-
-	$("#phone").change(function() {
+    $('input[name="Adakah_ahli_keluarga_anda_merupakan"]').change(function () {
+        // Check if any radio button is selected
+        if ($('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()) {
+            // Hide the error message if a radio button is selected
+            // var desability=  $("input[name='radioPasanganStaff']").val=='ya'?true:false;
+            var isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;
+            var desability = $('input[name="radioPasanganStaff"]:checked').val() == 'ya' ? true : false;
 
 
-		// Check if the phone number is not empty and matches the pattern
-		if (phoneValue !== "" && phoneValue.length <= 15 && /^\d{1,15}$/.test(phoneValue)) {
-			noTelefonError.style.display = "none" // Hide the error message if valid
-		} else {
-			noTelefonError.style.display = "block"; // Show the error message if invalid
-		}
-	});
+            $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? getMembershipdAmount(null, desability, isStaff) : getMembershipdAmount(null, desability, false, isPlussClicked);
+            document.querySelector(".error-message").style.display = "none";
+        } else {
+            // Show the error message if no radio button is selected
+            document.querySelector(".error-message").style.display = "block";
+        }
+    });
+
+    $("#phone").change(function () {
 
 
-	$("#idpengguna").change(function() {
-		if ($("#idpengguna").val().trim() != "") {
-			idpengguna.style.display = "none"; // Hide element
-		} else {
-			branchError.style.display = "block";
-
-		}
-	});
-
+        // Check if the phone number is not empty and matches the pattern
+        if (phoneValue !== "" && phoneValue.length <= 15 && /^\d{1,15}$/.test(phoneValue)) {
+            noTelefonError.style.display = "none" // Hide the error message if valid
+        } else {
+            noTelefonError.style.display = "block"; // Show the error message if invalid
+        }
+    });
 
 
+    $("#idpengguna").change(function () {
+        if ($("#idpengguna").val().trim() != "") {
+            idpengguna.style.display = "none"; // Hide element
+        } else {
+            branchError.style.display = "block";
 
-	$("#Alamat").change(function() {
-		if ($("#Alamat").val().trim() != "") {
-			errorAlamat.style.display = "none"; // Hide element
-		} else {
-			errorAlamat.style.display = "block";
+        }
+    });
 
-		}
-	});
 
-	$("#poskodphones").change(function() {
-		if ($("#poskodphones").val().trim() != "") {
-			errorPoskod.style.display = "none"; // Hide element
-		} else {
-			errorPoskod.style.display = "block";
+    $("#Alamat").change(function () {
+        if ($("#Alamat").val().trim() != "") {
+            errorAlamat.style.display = "none"; // Hide element
+        } else {
+            errorAlamat.style.display = "block";
 
-		}
-	});
-	/* if ($("#poskodphones").val().trim() != "") {
+        }
+    });
+
+    $("#poskodphones").change(function () {
+        if ($("#poskodphones").val().trim() != "") {
+            errorPoskod.style.display = "none"; // Hide element
+        } else {
+            errorPoskod.style.display = "block";
+
+        }
+    });
+    /* if ($("#poskodphones").val().trim() != "") {
         errorPoskod.style.display = "none"; // Hide element
     } else {
         errorPoskod.style.display = "block";
@@ -808,535 +927,527 @@ window.addEventListener("load", () => {
     } */
 
 
+    $("#negeriId").change(function () {
+        if ($("#negeriId").val().trim() != "") {
+            errorneger.style.display = "none"; // Hide element
+        } else {
+            errorneger.style.display = "block";
 
-	$("#negeriId").change(function() {
-		if ($("#negeriId").val().trim() != "") {
-			errorneger.style.display = "none"; // Hide element
-		} else {
-			errorneger.style.display = "block";
+        }
+    })
 
-		}
-	})
+    $("#submit-form").click(function () {
 
-	$("#submit-form").click(function() {
+        setTimeout(() => {
 
-		setTimeout(() => {
+            if ((loginuser == "") || (loginuser != "" && (loginuser.indexOf("default@kmlink.com.my") > -1 || loginuser.indexOf("20103") > -1))) {
+                console.log("loginuser is ", loginuser);
+                Swal.fire({
+                    title: 'Notification!',
+                    text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
+                    icon: 'Error',
+                    confirmButtonText: 'OK',
+                    position: 'top', // Ensures the popup is displayed at the top
+                    customClass: {
+                        popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
+                    }
+                });
+            } else {
 
-			if((loginuser =="") || (loginuser !="" && (loginuser.indexOf("default@kmlink.com.my")>-1 || loginuser.indexOf("20103")>-1))){
-				console.log("loginuser is ",loginuser);
-				Swal.fire({
-					title: 'Notification!',
-					text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
-					icon: 'Error',
-					confirmButtonText: 'OK',
-					position: 'top', // Ensures the popup is displayed at the top
-					customClass: {
-						popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
-					}
-				});
-			}else{
+                generateSelectedList();
+                // Convert the JavaScript list into a JSON string
+                /*]]>*/
 
-				generateSelectedList();
-				// Convert the JavaScript list into a JSON string
-				/*]]>*/
+                if ($("#nama").val().trim() != "") {
+                    elementName.style.display = "none"; // Hide element
+                } else {
+                    elementName.style.display = "block";
+                    return;
+                }
 
-				if ($("#nama").val().trim() != "") {
-					elementName.style.display = "none"; // Hide element
-				}else{
-					elementName.style.display = "block";
-					return;
-				}
+                if ($("#poskodphones").val().trim() != "") {
+                    errorPoskod.style.display = "none"; // Hide element
+                } else {
+                    errorPoskod.style.display = "block";
+                    return;
+                }
 
-				if ($("#poskodphones").val().trim() != "") {
-					errorPoskod.style.display = "none"; // Hide element
-				} else {
-					errorPoskod.style.display = "block";
-					return;
-				}
+                if ($("#portalId").val().trim() != "") {
+                    element.style.display = "none"; // Hide element
+                } else {
+                    element.style.display = "block";
+                    return;
+                }
 
-				if ($("#portalId").val().trim() != "") {
-					element.style.display = "none"; // Hide element
-				}else{
-					element.style.display = "block";
-					return;
-				}
+                if ($("#noKP").val().trim() != "") {
+                    noKP.style.display = "none"; // Hide element
+                } else {
+                    noKP.style.display = "block";
+                    return;
+                }
 
-				if ($("#noKP").val().trim() != "") {
-					noKP.style.display = "none"; // Hide element
-				}else{
-					noKP.style.display = "block";
-					return;
-				}
+                if ($("#myDate").val().trim() != "") {
+                    myDateErrorVal.style.display = "none"; // Hide element
+                } else {
+                    myDateErrorVal.style.display = "block";
+                    return;
+                }
 
-				if ($("#myDate").val().trim() != "") {
-					myDateErrorVal.style.display = "none"; // Hide element
-				}else{
-					myDateErrorVal.style.display = "block";
-					return;
-				}
+                if ($("#branchLocation").val().trim() != "") {
+                    branchError.style.display = "none"; // Hide element
+                } else {
+                    branchError.style.display = "block";
+                    return;
+                }
 
-				if ($("#branchLocation").val().trim() != "") {
-					branchError.style.display = "none"; // Hide element
-				} else {
-					branchError.style.display = "block";
-					return;
-				}
+                if ($("#Alamat").val().trim() != "") {
+                    errorAlamat.style.display = "none"; // Hide element
+                } else {
+                    errorAlamat.style.display = "block";
+                    return;
+                }
 
-				if ($("#Alamat").val().trim() != "") {
-					errorAlamat.style.display = "none"; // Hide element
-				} else {
-					errorAlamat.style.display = "block";
-					return;
-				}
-
-				/* if ($("#lampiranId").val()) {
+                /* if ($("#lampiranId").val()) {
                     errorFile.style.display = "none"; // Hide element
                 } else {
                     errorFile.style.display = "block";
                     return;
                 } */
 
-				/* 	if ($("#lampiranId1").val()) {
-						errorFile1.style.display = "none"; // Hide element
-					} else {
-						errorFile1.style.display = "block";
-						return;
-					} */
+                /* 	if ($("#lampiranId1").val()) {
+                        errorFile1.style.display = "none"; // Hide element
+                    } else {
+                        errorFile1.style.display = "block";
+                        return;
+                    } */
 
-				if ($("#lampiranId2").val()) {
-					errorFile2.style.display = "none"; // Hide element
-				} else {
-					errorFile2.style.display = "block";
-					return;
-				}
+                if ($("#lampiranId2").val()) {
+                    errorFile2.style.display = "none"; // Hide element
+                } else {
+                    errorFile2.style.display = "block";
+                    return;
+                }
 
-				if ($("#negeriId").val().trim() != "") {
-					branchError.style.display = "none"; // Hide element
-				} else {
-					branchError.style.display = "block";
-					return;
-				}
+                if ($("#negeriId").val().trim() != "") {
+                    branchError.style.display = "none"; // Hide element
+                } else {
+                    branchError.style.display = "block";
+                    return;
+                }
 
-				if ($("input[name='Warganegara']:checked").val()) {
-					document.getElementById("statusUserError").style.display = "none";
-				}else{
-					document.getElementById("statusUserError").style.display = "block";
-					return;
-				}
+                if ($("input[name='Warganegara']:checked").val()) {
+                    document.getElementById("statusUserError").style.display = "none";
+                } else {
+                    document.getElementById("statusUserError").style.display = "block";
+                    return;
+                }
 
-				// Check if any radio button is checked
-				if ($("input[name='agecate']:checked").val()) {
-					// Hide the error message by setting display to 'none'
-					document.getElementById("warGanError").style.display = "none";
-				} else {
-					// Show the error message by setting display to 'block'
-					document.getElementById("warGanError").style.display = "block";
-					return;
-				}
+                // Check if any radio button is checked
+                if ($("input[name='agecate']:checked").val()) {
+                    // Hide the error message by setting display to 'none'
+                    document.getElementById("warGanError").style.display = "none";
+                } else {
+                    // Show the error message by setting display to 'block'
+                    document.getElementById("warGanError").style.display = "block";
+                    return;
+                }
 
-				if ($("input[name='statusUser']:checked").val()) {
-					// Hide the error message by setting display to 'none'
-					document.getElementById("statusUserError").style.display = "none";
-				} else {
-					// Show the error message by setting display to 'block'
-					document.getElementById("statusUserError").style.display = "block";
-					return;
-				}
+                if ($("input[name='statusUser']:checked").val()) {
+                    // Hide the error message by setting display to 'none'
+                    document.getElementById("statusUserError").style.display = "none";
+                } else {
+                    // Show the error message by setting display to 'block'
+                    document.getElementById("statusUserError").style.display = "block";
+                    return;
+                }
 
-				if (phoneValue !== "" && phoneValue.length <= 15 && /^\d{1,15}$/.test(phoneValue)) {
-					noTelefonError.style.display = "none" // Hide the error message if valid
-				} else {
-					noTelefonError.style.display = "block";
-					return;
-					// Show the error message if invalid
-				}
+                if (phoneValue !== "" && phoneValue.length <= 15 && /^\d{1,15}$/.test(phoneValue)) {
+                    noTelefonError.style.display = "none" // Hide the error message if valid
+                } else {
+                    noTelefonError.style.display = "block";
+                    return;
+                    // Show the error message if invalid
+                }
 
-			}
-		}, 1200);
-	})
+            }
+        }, 1200);
+    })
 
 
 });
 
 
-
-
-
-
 function showSuccessAlert() {
-	// Triggering SweetAlert2 success alert
-	Swal.fire({
-		title: 'Success!',
-		text: 'Membership Registration successful.',
-		icon: 'success',
-		confirmButtonText: 'OK'
-	}).then((result) => {
-		// Optional: If you want to redirect or perform an action after closing the alert, you can add it here
-		if (result.isConfirmed) {
+    // Triggering SweetAlert2 success alert
+    Swal.fire({
+        title: 'Success!',
+        text: 'Membership Registration successful.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        // Optional: If you want to redirect or perform an action after closing the alert, you can add it here
+        if (result.isConfirmed) {
 
-			//   window.location.href = '/eforms/';
-		}
-	});
+            //   window.location.href = '/eforms/';
+        }
+    });
 }
-function resetnotification(dependent,desability) {
-	// Triggering SweetAlert2 success alert
-	Swal.fire({
-		title: 'Success!',
-		text: 'Maklumat tanggungan anda telah ditambah.',
-		icon: 'success',
-		confirmButtonText: 'OK'
-	}).then((result) => {
-		// Optional: If you want to redirect or perform an action after closing the alert, you can add it here
-		if (result.isConfirmed) {
-			$("#Tanggungan_Id_Pengguna_Tanggungan").val("")
-			$("#nokptanggungan").val("")
-			$("#hubungan-id").prop("selectedIndex", 0).trigger("change");
-			$("input[name='statusUser']").prop("checked", false);
 
-			getMembershipdAmount(dependent,desability, false);
-			//   window.location.href = '/eforms/';
-		}
-	});
+function resetnotification(dependent, desability) {
+    // Triggering SweetAlert2 success alert
+    Swal.fire({
+        title: 'Success!',
+        text: 'Maklumat tanggungan anda telah ditambah.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        // Optional: If you want to redirect or perform an action after closing the alert, you can add it here
+        if (result.isConfirmed) {
+            $("#Tanggungan_Id_Pengguna_Tanggungan").val("")
+            $("#nokptanggungan").val("")
+            $("#hubungan-id").prop("selectedIndex", 0).trigger("change");
+            $("input[name='statusUser']").prop("checked", false);
+
+            getMembershipdAmount(dependent, desability, false);
+            //   window.location.href = '/eforms/';
+        }
+    });
 }
 
 function getMembershipdAmount(noKPTanggungan, isDisabled, isStaff) {
 
-	if (noKPTanggungan) {
-		// Always dynamically get current "Maklumat Lanjut" value
-		var isStaffPPJ = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya';
-		isStaff = isStaffPPJ;
-	}
-	// For staff family members (except Senior Citizens)
-	if(isStaff) {
-		// First check if this is a Senior Citizen (should not be free)
-		var ic = noKPTanggungan == null ? $("#noKP").val().trim() : noKPTanggungan;
-		if (ic.length >= 6) {
-			var year = parseInt(ic.substring(0, 2), 10);
-			var fullYear = (year > 30) ? 1900 + year : 2000 + year;
-			var age = new Date().getFullYear() - fullYear;
+    if (noKPTanggungan) {
+        // Always dynamically get current "Maklumat Lanjut" value
+        var isStaffPPJ = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() === 'ya';
+        isStaff = isStaffPPJ;
+    }
+    // For staff family members (except Senior Citizens)
+    if (isStaff) {
+        // First check if this is a Senior Citizen (should not be free)
+        var ic = noKPTanggungan == null ? $("#noKP").val().trim() : noKPTanggungan;
+        if (ic.length >= 6) {
+            var year = parseInt(ic.substring(0, 2), 10);
+            var fullYear = (year > 30) ? 1900 + year : 2000 + year;
+            var age = new Date().getFullYear() - fullYear;
 
-			if (age >= 60) {
-				// Senior Citizen - charge RM 7.50 even for staff family
-				catF3 = 17;
-				return 7.50;
-			}
-		}
-		// Non-Senior staff family members are free
-		catF3 = 10;
-		return 0;
-	}
+            if (age >= 60) {
+                // Senior Citizen - charge RM 7.50 even for staff family
+                catF3 = 17;
+                return 7.50;
+            }
+        }
+        // Non-Senior staff family members are free
+        catF3 = 10;
+        return 0;
+    }
 
-	// For non-staff members
-	var ic = noKPTanggungan == null ? $("#noKP").val().trim() : noKPTanggungan;
-	if (ic.length < 6 || isNaN(ic)) {
-		alert("Invalid IC number. Please enter at least 6 digits.");
-		return;
-	}
+    // For non-staff members
+    var ic = noKPTanggungan == null ? $("#noKP").val().trim() : noKPTanggungan;
+    if (ic.length < 6 || isNaN(ic)) {
+        alert("Invalid IC number. Please enter at least 6 digits.");
+        return;
+    }
 
-	var year = parseInt(ic.substring(0, 2), 10);
-	var month = parseInt(ic.substring(2, 4), 10);
-	var day = parseInt(ic.substring(4, 6), 10);
+    var year = parseInt(ic.substring(0, 2), 10);
+    var month = parseInt(ic.substring(2, 4), 10);
+    var day = parseInt(ic.substring(4, 6), 10);
 
-	// Determine full year
-	var currentYear = new Date().getFullYear();
-	var fullYear = (year > 30) ? 1900 + year : 2000 + year;
+    // Determine full year
+    var currentYear = new Date().getFullYear();
+    var fullYear = (year > 30) ? 1900 + year : 2000 + year;
 
-	var birthDate = new Date(fullYear, month - 1, day);
-	var today = new Date();
-	var age = today.getFullYear() - birthDate.getFullYear();
+    var birthDate = new Date(fullYear, month - 1, day);
+    var today = new Date();
+    var age = today.getFullYear() - birthDate.getFullYear();
 
-	// Determine Fee Category
-	var fee = 0;
-	var category = "";
+    // Determine Fee Category
+    var fee = 0;
+    var category = "";
 
-	if (age >= 60) {
-		fee =  7.50; // Senior Citizen fixed at RM 7.50
-		category = "Senior Citizen";
-		catF3 = 17;
-	} else if (age >= 21) {
-		fee = isDisabled ? 7.50 : 16;
-		category = isDisabled ? "Adult with Disability" : "Adult";
-		catF3 = 4;
-	} else if (age >= 13) {
-		fee = isDisabled ? 5 : 11;
-		catF3 = 5;
-		category = isDisabled ? "Teenager with Disability" : "Teenager";
-	} else if (age >= 5) {
-		fee = isDisabled ? 2.50 : 6;
-		category = isDisabled ? "Child with Disability" : "Child";
-		catF3 = 6;
-	} else {
-		fee = 0; // Under 5 is free
-		category = "Below 5 (Free)";
-	}
+    if (age >= 60) {
+        fee = 7.50; // Senior Citizen fixed at RM 7.50
+        category = "Senior Citizen";
+        catF3 = 17;
+    } else if (age >= 21) {
+        fee = isDisabled ? 7.50 : 16;
+        category = isDisabled ? "Adult with Disability" : "Adult";
+        catF3 = 4;
+    } else if (age >= 13) {
+        fee = isDisabled ? 5 : 11;
+        catF3 = 5;
+        category = isDisabled ? "Teenager with Disability" : "Teenager";
+    } else if (age >= 5) {
+        fee = isDisabled ? 2.50 : 6;
+        category = isDisabled ? "Child with Disability" : "Child";
+        catF3 = 6;
+    } else {
+        fee = 0; // Under 5 is free
+        category = "Below 5 (Free)";
+    }
 
-	return fee;
+    return fee;
 }
 
 
-function manageFileSize(){
-	Swal.fire({
-		title: 'Error!',
-		text: 'File size exceeds 500KB. Please select a smaller file.',
-		icon: 'success',
-		confirmButtonText: 'OK'
-	}).then((result) => {
-		// Optional: If you want to redirect or perform an action after closing the alert, you can add it here
-		if (result.isConfirmed) {
+function manageFileSize() {
+    Swal.fire({
+        title: 'Error!',
+        text: 'File size exceeds 500KB. Please select a smaller file.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        // Optional: If you want to redirect or perform an action after closing the alert, you can add it here
+        if (result.isConfirmed) {
 
-			//   window.location.href = '/eforms/';
-		}
-	});
+            //   window.location.href = '/eforms/';
+        }
+    });
 }
 
 
 // Function to check if a person is an adult based on their IC number
 function isAdultFromIC(IC) {
-	const currentYear = new Date().getFullYear();
-	const birthYear = parseInt(IC.substring(0, 2), 10);
-	const birthMonth = parseInt(IC.substring(2, 4), 10);
-	const birthDay = parseInt(IC.substring(4, 6), 10);
+    const currentYear = new Date().getFullYear();
+    const birthYear = parseInt(IC.substring(0, 2), 10);
+    const birthMonth = parseInt(IC.substring(2, 4), 10);
+    const birthDay = parseInt(IC.substring(4, 6), 10);
 
-	// Assuming birth year is in the 1900s (as the format is YYMMDD)
-	const birthFullYear = (birthYear > currentYear % 100) ? 1900 + birthYear : 2000 + birthYear;
-	const age = currentYear - birthFullYear;
+    // Assuming birth year is in the 1900s (as the format is YYMMDD)
+    const birthFullYear = (birthYear > currentYear % 100) ? 1900 + birthYear : 2000 + birthYear;
+    const age = currentYear - birthFullYear;
 
-	return age >= 18; // Considered an adult if 18 or older
+    return age >= 18; // Considered an adult if 18 or older
 }
 
 // Function to determine the gender from the IC
 function getGenderFromIC(IC) {
-	const genderDigit = parseInt(IC.charAt(7), 10);
-	return (genderDigit % 2 === 0) ? 'Female' : 'Male'; // Even = Female, Odd = Male
+    const genderDigit = parseInt(IC.charAt(7), 10);
+    return (genderDigit % 2 === 0) ? 'Female' : 'Male'; // Even = Female, Odd = Male
 }
 
 // Function to calculate the category code based on IC, staff, and disability status
 function calculateCategoryCode(IC, isStaff, hasDisability) {
-	const isAdult = isAdultFromIC(IC);
-	const gender = getGenderFromIC(IC);
-	catF=catF3;
-	// Now, based on adult status, staff status, and disability status, return the category code
-	if (isAdult) {
-		if (isStaff) {
-			if (hasDisability) {
-				catF= '10'; // Adult + Staff + Disability
-				return catF;
-			} else {
-				catF= '10'; // Adult + Staff + No Disability
-				return catF;
-			}
-		} else {
-			if (hasDisability) {
-				catF= '14'; // Adult + No Staff + Disability
-				return catF;
-			} else {
-				catF= '04'; // Adult + No Staff + No Disability
-				return catF;
-			}
-		}
-	}
-	else {
-		var year = parseInt(IC.substring(0, 2), 10);
-		var month = parseInt(IC.substring(2, 4), 10);
-		var day = parseInt(IC.substring(4, 6), 10);
+    const isAdult = isAdultFromIC(IC);
+    const gender = getGenderFromIC(IC);
+    catF = catF3;
+    // Now, based on adult status, staff status, and disability status, return the category code
+    if (isAdult) {
+        if (isStaff) {
+            if (hasDisability) {
+                catF = '10'; // Adult + Staff + Disability
+                return catF;
+            } else {
+                catF = '10'; // Adult + Staff + No Disability
+                return catF;
+            }
+        } else {
+            if (hasDisability) {
+                catF = '14'; // Adult + No Staff + Disability
+                return catF;
+            } else {
+                catF = '04'; // Adult + No Staff + No Disability
+                return catF;
+            }
+        }
+    } else {
+        var year = parseInt(IC.substring(0, 2), 10);
+        var month = parseInt(IC.substring(2, 4), 10);
+        var day = parseInt(IC.substring(4, 6), 10);
 
-		var fullYear = (year > 30) ? 1900 + year : 2000 + year;
+        var fullYear = (year > 30) ? 1900 + year : 2000 + year;
 
-		var birthDate = new Date(fullYear, month - 1, day);
-		var today = new Date();
-		var age = today.getFullYear() - birthDate.getFullYear();
-		if (age >= 60) {
-			catF='17';
-		} else if (age >= 21) {
-			catF='04';
-		} else if (age >= 13) {
+        var birthDate = new Date(fullYear, month - 1, day);
+        var today = new Date();
+        var age = today.getFullYear() - birthDate.getFullYear();
+        if (age >= 60) {
+            catF = '17';
+        } else if (age >= 21) {
+            catF = '04';
+        } else if (age >= 13) {
 
-			catF='05';
-		} else if (age >= 5) {
-			catF='06'
-		} else {
-			category = "Below 5 (Free)";
-			catF='0'
-		}
-	}
+            catF = '05';
+        } else if (age >= 5) {
+            catF = '06'
+        } else {
+            category = "Below 5 (Free)";
+            catF = '0'
+        }
+    }
 }
 
 // Example usage
-function catogery(){
-	const IC = $("#noKP").val().trim() //"901202141234";  // Example IC number (Male, Born 2nd Dec 1990)
-	const isStaff =  $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val()=='ya'?true:false;        // Example staff status
-	const hasDisability = $('input[name="radioPasanganStaff"]:checked').val()=='ya'?true:false; //false; // Example disability status
-	console.log(isStaff,hasDisability);
-	const categoryCode = calculateCategoryCode(IC, isStaff, hasDisability);
-	console.log("Category Code: " + categoryCode);
-	return categoryCode;
+function catogery() {
+    const IC = $("#noKP").val().trim() //"901202141234";  // Example IC number (Male, Born 2nd Dec 1990)
+    const isStaff = $('input[name="Adakah_ahli_keluarga_anda_merupakan"]:checked').val() == 'ya' ? true : false;        // Example staff status
+    const hasDisability = $('input[name="radioPasanganStaff"]:checked').val() == 'ya' ? true : false; //false; // Example disability status
+    console.log(isStaff, hasDisability);
+    const categoryCode = calculateCategoryCode(IC, isStaff, hasDisability);
+    console.log("Category Code: " + categoryCode);
+    return categoryCode;
 }
 
 
-
 $(document).ready(function () {
-	function checkDuplicate(endpoint, inputId, errorId) {
-		let noKP = $(inputId).val().trim();
-		// If input is empty, hide error message and return
-		if (noKP === "") {
-			$(errorId).hide();
-			return;
-		}
+    function checkDuplicate(endpoint, inputId, errorId) {
+        let noKP = $(inputId).val().trim();
+        // If input is empty, hide error message and return
+        if (noKP === "") {
+            $(errorId).hide();
+            return;
+        }
 
-		// Call the API to check if No. KP is duplicate
-		$.ajax({
-			url: endpoint,
-			type: "GET",
-			data: { noKP: noKP },
-			success: function (response) {
-				console.log("API Response:", response); // Debugging log
+        // Call the API to check if No. KP is duplicate
+        $.ajax({
+            url: endpoint,
+            type: "GET",
+            data: {noKP: noKP},
+            success: function (response) {
+                console.log("API Response:", response); // Debugging log
 
-				// Only show message if duplicate is true
-				if (response.duplicate) {
-					let message = response.message || "Duplicate record found!";
-					// Show inline error message
-					$(errorId).text(message).css("color", "red").show();
+                // Only show message if duplicate is true
+                if (response.duplicate) {
+                    let message = response.message || "Duplicate record found!";
+                    // Show inline error message
+                    $(errorId).text(message).css("color", "red").show();
 
-					// Scroll to top smoothly before showing the alert
-					$("html, body").animate({ scrollTop: 0 }, "slow", function () {
-						Swal.fire({
-							icon: "error",
-							title: "Ralat!",
-							text: message,
-							confirmButtonColor: "#d33",
-							allowOutsideClick: false,
-							backdrop: true,
-							position: "top",
-							width: "auto",
-							padding: "1.5rem",
-							showClass: {
-								popup: "animate_animated animate_fadeInDown"
-							},
-							hideClass: {
-								popup: "animate_animated animate_fadeOutUp"
-							}
-						}).then((result) => {
-							// If duplicate, clear the input and focus on it
-							if (result.isConfirmed) {
-								// $(inputId).val("").focus();
-							}
-						});
-					});
-				} else {
-					duplicate=false;
-					$(errorId).hide(); // Hide the error message if no duplicate
-				}
-			},
-			error: function (xhr, status, error) {
-				console.error("Error Details:", xhr, status, error); // Debugging log
-				Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "Failed to check No. KP. Please try again later.",
-					confirmButtonColor: "#d33",
-					allowOutsideClick: false,
-					position: "top",
-					width: "auto",
-					padding: "1.5rem",
-					showClass: {
-						popup: "animate_animated animate_fadeInDown"
-					},
-					hideClass: {
-						popup: "animate_animated animate_fadeOutUp"
-					}
-				});
-			}
-		});
+                    // Scroll to top smoothly before showing the alert
+                    $("html, body").animate({scrollTop: 0}, "slow", function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Ralat!",
+                            text: message,
+                            confirmButtonColor: "#d33",
+                            allowOutsideClick: false,
+                            backdrop: true,
+                            position: "top",
+                            width: "auto",
+                            padding: "1.5rem",
+                            showClass: {
+                                popup: "animate_animated animate_fadeInDown"
+                            },
+                            hideClass: {
+                                popup: "animate_animated animate_fadeOutUp"
+                            }
+                        }).then((result) => {
+                            // If duplicate, clear the input and focus on it
+                            if (result.isConfirmed) {
+                                // $(inputId).val("").focus();
+                            }
+                        });
+                    });
+                } else {
+                    duplicate = false;
+                    $(errorId).hide(); // Hide the error message if no duplicate
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error Details:", xhr, status, error); // Debugging log
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to check No. KP. Please try again later.",
+                    confirmButtonColor: "#d33",
+                    allowOutsideClick: false,
+                    position: "top",
+                    width: "auto",
+                    padding: "1.5rem",
+                    showClass: {
+                        popup: "animate_animated animate_fadeInDown"
+                    },
+                    hideClass: {
+                        popup: "animate_animated animate_fadeOutUp"
+                    }
+                });
+            }
+        });
 
-	}
+    }
 
-	// Bind blur event to both input fields
-	$("#noKP").on("blur", function () {
-		checkDuplicate("/eforms/checkDuplicateNoKP", "#noKP", "#errorNoKP");
-	});
+    // Bind blur event to both input fields
+    $("#noKP").on("blur", function () {
+        checkDuplicate("/eforms/checkDuplicateNoKP", "#noKP", "#errorNoKP");
+    });
 
-	$("#nokptanggungan").on("blur", function () {
-		checkDuplicate("/eforms/checkDuplicateNoKPDep", "#nokptanggungan", "#errorNoKPDep");
-	});
+    $("#nokptanggungan").on("blur", function () {
+        checkDuplicate("/eforms/checkDuplicateNoKPDep", "#nokptanggungan", "#errorNoKPDep");
+    });
 });
 
 
-
-
 function checkDuplicateOnCheckbox(endpoint, inputId, errorId) {
-	return new Promise(function(resolve, reject) {
-		let noKP = inputId; //$(inputId).val().trim();
-		let duplicate = false;
+    return new Promise(function (resolve, reject) {
+        let noKP = inputId; //$(inputId).val().trim();
+        let duplicate = false;
 
-		// Call the API to check if No. KP is duplicate
-		$.ajax({
-			url: endpoint,
-			type: "GET",
-			data: { noKP: noKP },
-			success: function (response) {
-				console.log("API Response:", response); // Debugging log
+        // Call the API to check if No. KP is duplicate
+        $.ajax({
+            url: endpoint,
+            type: "GET",
+            data: {noKP: noKP},
+            success: function (response) {
+                console.log("API Response:", response); // Debugging log
 
-				// Only show message if duplicate is true
-				if (response.duplicate) {
-					let message = response.message || "Duplicate record found!";
-					duplicate = response.duplicate;
-					// Show inline error message
-					$(errorId).text(message).css("color", "red").show();
+                // Only show message if duplicate is true
+                if (response.duplicate) {
+                    let message = response.message || "Duplicate record found!";
+                    duplicate = response.duplicate;
+                    // Show inline error message
+                    $(errorId).text(message).css("color", "red").show();
 
-					// Scroll to top smoothly before showing the alert
-					$("html, body").animate({ scrollTop: 0 }, "slow", function () {
-						Swal.fire({
-							icon: "error",
-							title: "Ralat!",
-							text: message,
-							confirmButtonColor: "#d33",
-							allowOutsideClick: false,
-							backdrop: true,
-							position: "top",
-							width: "auto",
-							padding: "1.5rem",
-							showClass: {
-								popup: "animate_animated animate_fadeInDown"
-							},
-							hideClass: {
-								popup: "animate_animated animate_fadeOutUp"
-							}
-						}).then((result) => {
-							// If duplicate, clear the input and focus on it
-							if (result.isConfirmed) {
-								$(inputId).val("").focus();
-							}
-							resolve(duplicate); // Resolve the promise with the duplicate status
-						});
-					});
-				} else {
-					duplicate = false;
-					$(errorId).hide(); // Hide the error message if no duplicate
-					resolve(duplicate); // Resolve the promise with false (no duplicate)
-				}
-			},
-			error: function (xhr, status, error) {
-				console.error("Error Details:", xhr, status, error); // Debugging log
-				Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "Failed to check No. KP. Please try again later.",
-					confirmButtonColor: "#d33",
-					allowOutsideClick: false,
-					position: "top",
-					width: "auto",
-					padding: "1.5rem",
-					showClass: {
-						popup: "animate_animated animate_fadeInDown"
-					},
-					hideClass: {
-						popup: "animate_animated animate_fadeOutUp"
-					}
-				});
-				reject(error);
-			}
-		});
-	});
+                    // Scroll to top smoothly before showing the alert
+                    $("html, body").animate({scrollTop: 0}, "slow", function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Ralat!",
+                            text: message,
+                            confirmButtonColor: "#d33",
+                            allowOutsideClick: false,
+                            backdrop: true,
+                            position: "top",
+                            width: "auto",
+                            padding: "1.5rem",
+                            showClass: {
+                                popup: "animate_animated animate_fadeInDown"
+                            },
+                            hideClass: {
+                                popup: "animate_animated animate_fadeOutUp"
+                            }
+                        }).then((result) => {
+                            // If duplicate, clear the input and focus on it
+                            if (result.isConfirmed) {
+                                $(inputId).val("").focus();
+                            }
+                            resolve(duplicate); // Resolve the promise with the duplicate status
+                        });
+                    });
+                } else {
+                    duplicate = false;
+                    $(errorId).hide(); // Hide the error message if no duplicate
+                    resolve(duplicate); // Resolve the promise with false (no duplicate)
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error Details:", xhr, status, error); // Debugging log
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to check No. KP. Please try again later.",
+                    confirmButtonColor: "#d33",
+                    allowOutsideClick: false,
+                    position: "top",
+                    width: "auto",
+                    padding: "1.5rem",
+                    showClass: {
+                        popup: "animate_animated animate_fadeInDown"
+                    },
+                    hideClass: {
+                        popup: "animate_animated animate_fadeOutUp"
+                    }
+                });
+                reject(error);
+            }
+        });
+    });
 }
 
 

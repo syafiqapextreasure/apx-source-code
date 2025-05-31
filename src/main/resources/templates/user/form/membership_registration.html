@@ -25,16 +25,16 @@
 		<div id="memberform-id"
 			 class="container membership-form d-flex flex-column gap-5">
 			<form th:action="@{/submitForm}" method="POST"
-				  enctype="multipart/form-data" class="mb-3" id="formId" >
+				  enctype="multipart/form-data" class="mb-3" id="formId">
 				<div class="maklumat-section">
 					<div class="mb-5">
 						<!-- Hidden input to hold the list data -->
-						<input type="hidden" name="selectedItems" id="selectedItems" />
+						<input type="hidden" name="selectedItems" id="selectedItems"/>
 						<input type="hidden" name="messageRespon" id="messageResponse"
-							   th:value='${message}' />
-						<input type="hidden" name="emailAddress" id="emailAddress" />
+							   th:value='${message}'/>
+						<input type="hidden" name="emailAddress" id="emailAddress"/>
 						<input type="hidden"
-							   name="updatedCat" id="updatedCat" />
+							   name="updatedCat" id="updatedCat"/>
 						<fieldset id="fieldset-design">
 							<legend id="legend-title">Maklumat Peribadi</legend>
 							<div class="row mb-3">
@@ -43,7 +43,7 @@
 										Portal PPJ<span class="cus-red">*</span>
 
 									</label> <input type="text" class="form-control" id="portalId"
-													name="Tanggungan_Id_Pengguna_Portal_PPJ" /> <span
+													name="Tanggungan_Id_Pengguna_Portal_PPJ"/> <span
 										id="errorportalId" class="error-message"
 										style="display: none">Please eneter Id Pengguna Portal
 											PPJ</span>
@@ -63,21 +63,22 @@
 												style="display: none"></span>
 
 
-
 								</div>
 							</div>
 							<div class="row mb-3">
 								<div class="col-md-6">
 									<label for="nama" class="form-label">Nama<span
 											class="cus-red">*</span></label> <input type="text"
-																					class="form-control" id="nama" name="namaAhli" required /> <span
+																					class="form-control" id="nama"
+																					name="namaAhli" required/> <span
 										class="error-message" id="errornameId" style="display: none;">Please
 											enter your nama</span>
 								</div>
 								<div class="col-md-6">
 									<label for="noKP" class="form-label">No. K/P<span
 											class="cus-red">*</span></label> <input type="text"
-																					class="form-control" id="noKP" name="No_KP" /> <span
+																					class="form-control" id="noKP"
+																					name="No_KP"/> <span
 										class="error-message" id="noKPerror" style="display: none;">Please
 											enter No. KP</span>
 								</div>
@@ -87,15 +88,17 @@
 								<div class="col-md-6">
 									<label for="dob" class="form-label">Tarikh Lahir <span
 											class="cus-red">*</span></label> <input type="date"
-																					class="form-control" id="myDate" name="dob" /> <span
+																					class="form-control" id="myDate"
+																					name="dob"/> <span
 										class="error-message" id="myDateError" style="display: none;">Please
 											choose Trikh Lahir</span>
 								</div>
 								<div class="col-md-6">
 									<label for="phone" class="form-label">No. Telefon</label><span
 										class="cus-red">*</span> <input type="tel"
-																		class="form-control" id="phone" name="phone" maxlength="15"
-																		pattern="\d{1,15}" />
+																		class="form-control" id="phone" name="phone"
+																		maxlength="15"
+																		pattern="\d{1,15}"/>
 									<!-- <span class="noTelefonError"
                                     style="display: none;" id="noTelefonError">Please enter
                                     a valid No. Telefon (max length 15)</span> -->
@@ -168,13 +171,14 @@
 												Pengguna Tanggungan<span class="cus-red"></span>
 											</label> <input type="text" class="form-control idpengguna"
 															name="Tanggungan_Id_Pengguna_Tanggungan"
-															id="Tanggungan_Id_Pengguna_Tanggungan" />
+															id="Tanggungan_Id_Pengguna_Tanggungan"/>
 										</div>
 										<div class="col-md-6">
 											<label for="nokptanggungan" class="form-label">No.
 												KP Tanggungan</label> <input type="text"
-																			 class="form-control nokptanggungan" name="No_KP"
-																			 id="nokptanggungan" />
+																			 class="form-control nokptanggungan"
+																			 name="No_KP"
+																			 id="nokptanggungan"/>
 										</div>
 									</div>
 									<div class="row mb-4">
@@ -194,12 +198,12 @@
 											<div class="d-flex flex-wrap gap-md-5 gap-2">
 												<div class="form-check">
 													<input class="form-check-input statusUser" type="radio"
-														   value="ya" name="statusUser" /> <label
+														   value="ya" name="statusUser"/> <label
 														class="form-check-label" for="ya2">Ya</label>
 												</div>
 												<div class="form-check">
 													<input class="form-check-input statusUser" type="radio"
-														   name="statusUser" value="tidak" /> <label
+														   name="statusUser" value="tidak"/> <label
 														class="form-check-label" for="tidak2">Tidak</label>
 												</div>
 											</div>
@@ -208,7 +212,7 @@
 									<div class="mb-4">
 										<div class="col-md-12">
 											<input name="picImage" type="file" class="form-control"
-												   id="fileUploadfirst" />
+												   id="fileUploadfirst"/>
 										</div>
 									</div>
 								</div>
@@ -227,28 +231,33 @@
 								<div class="col-md-12">
 									<label for="alamat" class="form-label">Alamat<span
 											class="cus-red">*</span></label> <input type="text"
-																					class="form-control" id="Alamat" name="alamatSuratParent"
-																					required /> <span class="error-message" id="AlamatError"
-																									  style="display: none;">Please enter Alamat</span>
+																					class="form-control" id="Alamat"
+																					name="alamatSuratParent"
+																					required/> <span
+										class="error-message" id="AlamatError"
+										style="display: none;">Please enter Alamat</span>
 								</div>
 							</div>
 							<div class="row mb-3 d-flex gap-md-5 gap-2">
 								<div class="col-md-2 flex-grow-1">
 									<label for="poskodphone" class="form-label">Poskod<span
 											class="cus-red">*</span></label> <input type="tel"
-																					class="form-control" id="poskodphones" maxlength="5"
-																					name="poskodSuratParent" pattern="\d{1,5}" /> <span
+																					class="form-control"
+																					id="poskodphones" maxlength="5"
+																					name="poskodSuratParent"
+																					pattern="\d{1,5}"/> <span
 										class="error-message" id="PoskodError" style="display: none;">Please
 											enter Poskod</span>
 								</div>
 								<div class="col-md-2 flex-grow-1">
 									<label for="bandar" class="form-label">Bandar</label> <input
-										type="tel" class="form-control" id="bandar" name="bandar" />
+										type="tel" class="form-control" id="bandar" name="bandar"/>
 								</div>
 								<div class="col-md-2 flex-grow-1">
 									<label for="negeri" class="form-label">Negeri<span
 											class="cus-red">*</span></label> <input type="text"
-																					class="form-control" id="negeriId" name="negeri" /> <span
+																					class="form-control" id="negeriId"
+																					name="negeri"/> <span
 										class="error-message" id="negeriError" style="display: none;">This
 											field is required</span>
 								</div>
@@ -276,7 +285,7 @@
 										<div class="d-flex gap-5">
 											<div class="form-check">
 												<input class="form-check-input" type="radio" id="ya3"
-													   value="ya" required name="Adakah_ahli_keluarga_anda_merupakan" />
+													   value="ya" required name="Adakah_ahli_keluarga_anda_merupakan"/>
 												<label
 														class="form-check-label" for="ya3">Ya</label>
 											</div>
@@ -295,7 +304,7 @@
 									<!--         <label for="lampiranphone" class="form-label">Lampiran<span class="cus-red">*</span></label>
 -->
 									<input type="file" class="form-control" id="lampiranId1"
-										   name="paspekerja" />
+										   name="paspekerja"/>
 									<!--         <span class="error-message" id="errorFile2" style="display: none;">Please choose file or img</span>
 -->
 								</div>
@@ -310,12 +319,12 @@
 										<div class="d-flex gap-5">
 											<div class="form-check">
 												<input class="form-check-input" type="radio"
-													   name="radioPasanganStaff" id="ya4" value="ya" /> <label
+													   name="radioPasanganStaff" id="ya4" value="ya"/> <label
 													class="form-check-label" for="ya4">Ya</label>
 											</div>
 											<div class="form-check">
 												<input class="form-check-input" type="radio"
-													   name="radioPasanganStaff" id="tidak4" value="tidak" /> <label
+													   name="radioPasanganStaff" id="tidak4" value="tidak"/> <label
 													class="form-check-label" for="tidak4">Tidak</label>
 											</div>
 										</div>
@@ -327,7 +336,8 @@
 								<div class="col-md-12">
 									<label for="lampiranphone" class="form-label">Lampiran<span
 											class="cus-red"></span></label> <input type="file"
-																				   class="form-control" id="lampiranId2" name="paspekerjas" />
+																				   class="form-control" id="lampiranId2"
+																				   name="paspekerjas"/>
 									<span class="error-message" id="errorFile3"
 										  style="display: none;">Please choose file or img</span>
 								</div>
@@ -390,17 +400,20 @@
 						<ol class="px-4">
 							<li>Anda mestilah individu warganegara Malaysia.</li>
 							<li>Pastikan maklumat anda di Portal PPJ seperti nama,
-								alamat, email, No K/P, no telefon adalah betul dan tepat.</li>
+								alamat, email, No K/P, no telefon adalah betul dan tepat.
+							</li>
 							<li>Anda akan di kenakan caj kad keahlian sebanyak RM 1.00
 								kecuali untuk kakitangan PPJ, anak kakitangan PPJ, pasangan
-								kakitangan PPJ, warga emas dan OKU</li>
+								kakitangan PPJ, warga emas dan OKU
+							</li>
 							<li>Pengguna wajib menghantar dokumen yang betul berkaitan
 								status OKU; jika dokumen tidak sah, akaun akan ditamatkan tanpa
-								notis dan tiada pemulangan wang.</li>
+								notis dan tiada pemulangan wang.
+							</li>
 						</ol>
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value=""
-								   id="defaultCheck12" required="required" /> <label
+								   id="defaultCheck12" required="required"/> <label
 								class="form-check-label" for="flexCheckDefault12"> Saya
 							mengesahkan bahawa semua maklumat yang diberikan adalah benar
 							dan tepat. Saya bertanggungjawab sepenuhnya atas sebarang
@@ -422,8 +435,6 @@
 		</div>
 
 	</div>
-
-
 
 
 	<style>
@@ -456,12 +467,13 @@
 			transform: scale(1.1); /* Slightly enlarge on hover */
 		}
 
-		@media ( max-width : 320px) {
+		@media ( max-width: 320px) {
 			/* For very small mobile devices */
 			.plusSign {
 				font-size: 10px;
 				padding: 2px;
 			}
+
 			.table_responsive {
 				overflow-x: auto;
 			}
@@ -517,7 +529,7 @@
 			width: 30%;
 		}
 
-		.daftar_btn>button {
+		.daftar_btn > button {
 			border: none;
 			font-size: 16px;
 			font-weight: 500;
@@ -526,18 +538,18 @@
 			letter-spacing: 1px;
 		}
 
-		.daftar_btn>button:first-child {
+		.daftar_btn > button:first-child {
 			background-color: rgb(32, 78, 59);
 			color: #FFF;
 		}
 
-		.daftar_btn>button:last-child {
+		.daftar_btn > button:last-child {
 			background-color: rgb(234, 238, 237);
 			color: #000;
 			letter-spacing: 0.5px;
 		}
 
-		.daftar_btn>button:hover {
+		.daftar_btn > button:hover {
 			box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 		}
 
@@ -586,6 +598,7 @@
 				padding: 1em;
 				border: 1px solid #ddd; /* Add a light border for better visibility */
 			}
+
 			legend#legend-title {
 				font-size: 14px;
 				top: -12px;
@@ -597,6 +610,7 @@
 				width: 18px;
 				height: 18px;
 			}
+
 			input[type='radio']:before {
 				width: 50%;
 				height: 50%;
@@ -622,7 +636,7 @@
 			}
 
 			/* Adjust the form buttons */
-			.daftar_btn>button {
+			.daftar_btn > button {
 				font-size: 14px;
 				padding: 5px 12px;
 			}
@@ -654,6 +668,7 @@
 			fieldset#fieldset-design {
 				padding: 0.8em;
 			}
+
 			legend#legend-title {
 				font-size: 12px;
 				top: -10px;
@@ -665,6 +680,7 @@
 				width: 16px;
 				height: 16px;
 			}
+
 			input[type='radio']:before {
 				width: 40%;
 				height: 40%;
@@ -683,16 +699,19 @@
 				font-size: 12px;
 				padding: 3px;
 			}
+
 			.daftar_btn {
 				display: flex; /* Enable Flexbox */
 				justify-content: center; /* Center horizontally */
 				align-items: center; /* Center vertically (if needed) */
 				gap: 10px; /* Add space between buttons (optional) */
 			}
-			.daftar_btn>button {
+
+			.daftar_btn > button {
 				font-size: 12px;
 				padding: 4px 10px;
 			}
+
 			.table_responsive {
 				overflow-x: auto;
 			}

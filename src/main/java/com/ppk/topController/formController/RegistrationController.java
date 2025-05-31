@@ -49,38 +49,38 @@ import com.ppk.utilities.Utilities;
 @Controller
 public class RegistrationController {
 
-//    private static final String No_KP = null;
+	//    private static final String No_KP = null;
 	@Autowired
 	private RegistrationService registrationService;
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	GetFndGlnumbService getFndGlnumbService;
 
 	@PostMapping("/submitForm")
 	public String handleRegistration(@RequestParam("namaAhli") String namaAhli, @RequestParam("dob") String inputDOB,
-			@RequestParam("alamatSuratParent") String alamat, @RequestParam("poskodSuratParent") String poskod,
-			@RequestParam("negeri") String negeri, @RequestParam("phone") String phone,
-			@RequestParam("picImage") MultipartFile picImage, @RequestParam("paspekerjas") MultipartFile paspekerja, // @RequestParam("kadOKU")
-																														// MultipartFile
-																														// kadOKU,
-			@RequestParam(value = "statusUser", required = false) String statusUser,
-			@RequestParam(value = "picImage", required = false) MultipartFile picImageVal,
-			@RequestParam(value = "bandar", required = false) String bandar,
-			@RequestParam(value = "Tanggungan_Id_Pengguna_Tanggungan", required = false) String TanggunganIdPenggunaTanggungan,
-			@RequestParam(value = "Tanggungan_Id_Pengguna_Portal_PPJ", required = false) String Tanggungan_Id_Pengguna_Portal_PPJ,
-			@RequestParam(value = "branchLocation", required = false) String branchLocation,
-			@RequestParam(value = "No_KP", required = false) String noKP,
-			@RequestParam(value = "agecate", required = false) String citizen,
-			@RequestParam(value = "passport", required = false) String Nation,
-			@RequestParam(value = "Adakah_ahli_keluarga_anda_merupakan", required = false) String AdakahAhliKeluarga,
-			@RequestParam(value = "radioPasanganStaff", required = false) String radioPasanganStaff,
-			@RequestParam(value = "selectedItems", required = false) String selectedItemsJson,
-			@RequestParam(value = "emailAddress", required = false) String emailAddress,
-			@RequestParam(value = "updatedCat", required = false) String updatedCat,
+									 @RequestParam("alamatSuratParent") String alamat, @RequestParam("poskodSuratParent") String poskod,
+									 @RequestParam("negeri") String negeri, @RequestParam("phone") String phone,
+									 @RequestParam("picImage") MultipartFile picImage, @RequestParam("paspekerjas") MultipartFile paspekerja, // @RequestParam("kadOKU")
+									 // MultipartFile
+									 // kadOKU,
+									 @RequestParam(value = "statusUser", required = false) String statusUser,
+									 @RequestParam(value = "picImage", required = false) MultipartFile picImageVal,
+									 @RequestParam(value = "bandar", required = false) String bandar,
+									 @RequestParam(value = "Tanggungan_Id_Pengguna_Tanggungan", required = false) String TanggunganIdPenggunaTanggungan,
+									 @RequestParam(value = "Tanggungan_Id_Pengguna_Portal_PPJ", required = false) String Tanggungan_Id_Pengguna_Portal_PPJ,
+									 @RequestParam(value = "branchLocation", required = false) String branchLocation,
+									 @RequestParam(value = "No_KP", required = false) String noKP,
+									 @RequestParam(value = "agecate", required = false) String citizen,
+									 @RequestParam(value = "passport", required = false) String Nation,
+									 @RequestParam(value = "Adakah_ahli_keluarga_anda_merupakan", required = false) String AdakahAhliKeluarga,
+									 @RequestParam(value = "radioPasanganStaff", required = false) String radioPasanganStaff,
+									 @RequestParam(value = "selectedItems", required = false) String selectedItemsJson,
+									 @RequestParam(value = "emailAddress", required = false) String emailAddress,
+									 @RequestParam(value = "updatedCat", required = false) String updatedCat,
 
-			Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
+									 Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
 		/* ==================== */
 //    		@RequestParam("paspekerja") MultipartFile paspekerja,
@@ -115,8 +115,21 @@ public class RegistrationController {
 
 			selectedItems = selectedItemsJson != null && !"".equals(selectedItemsJson)
 					? objectMapper.readValue(selectedItemsJson, new TypeReference<List<Dependent>>() {
-					})
+			})
+
 					: selectedItems;
+			System.out.println("Parsed " + selectedItems.size() + " dependents");
+			System.out.println("Received selectedItemsJson: " + selectedItemsJson);
+
+			// Add detailed logging of parsed data
+			if(selectedItemsJson != null && !selectedItemsJson.isEmpty()) {
+				System.out.println("Parsed dependents:");
+				selectedItems.forEach(dep -> System.out.println(
+						"Name: " + dep.getIdPengguna() +
+								", IC: " + dep.getNokPTanggungan() +
+								", Relation: " + dep.getHubungan()
+				));
+			}
 
 			// Do something with the selected items (e.g., save to the database)
 			System.out.println(new Gson().toJson(selectedItems) + " updatedCat Received items: ");
@@ -150,30 +163,41 @@ public class RegistrationController {
 				if (selectedItems.size() > 0) {
 					BigDecimal total = selectedItems.stream().map(Dependent::getHarga).reduce(BigDecimal.ZERO,
 							BigDecimal::add);
-					
+
 					PaymentAccessPayload payload = u.paymentProcessModel(total.toString(),
 							selectedItems.get(0).getLoginId());
-					registrationService.insertDependentRegs(selectedItems, Tanggungan_Id_Pengguna_Portal_PPJ,payload.getPayload().getOrderNo());
-					
-					}
+
+					// Add debug logging before insertion
+					System.out.println("Before dependent insertion - Parent ID: " + Tanggungan_Id_Pengguna_Portal_PPJ);
+					System.out.println("Dependents to insert: " + selectedItems);
+
+					registrationService.insertDependentRegs(selectedItems, Tanggungan_Id_Pengguna_Portal_PPJ,
+							payload.getPayload().getOrderNo());
+
+					// Verification step
+					List<Dependent> insertedDependents = registrationService.getDependentRegs(selectedItems.get(0).getLoginId());
+					System.out.println("Verified inserted dependents: " + insertedDependents.size());
+				}
 			} catch (Exception ex) {
+				System.err.println("Error in dependent processing: " + ex.getMessage());
 				ex.printStackTrace();
 			}
 			// Add success message
-			
+
 			if (selectedItems.size() > 0) {
 				BigDecimal total = selectedItems.stream().map(Dependent::getHarga).reduce(BigDecimal.ZERO,
 						BigDecimal::add);
 				PaymentAccessPayload payload = u.paymentProcessModel(total.toString(),
 						selectedItems.get(0).getLoginId());
-				ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
+			  //	ResponseEntity<APITokenResponse> apiResponse = getToken(payload);
+
 				Cookie cookie = new Cookie("petronId", selectedItems.get(0).getLoginId());
-			    cookie.setMaxAge(60 * 60); // 1 hour
-			    cookie.setPath("/");
-			    response.addCookie(cookie);
-				return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
+				cookie.setMaxAge(60 * 60); // 1 hour
+				cookie.setPath("/");
+				response.addCookie(cookie);
+				//return "redirect:/pfxp/redirect-to-payment?token=" + apiResponse.getBody().getToken();
 			}
-			
+
 			redirectAttributes.addFlashAttribute("message", "Success");
 			return "redirect:/membership-registration"; // Redirect to a Thymeleaf template named 'success.html'
 		} catch (Exception e) {
@@ -200,19 +224,19 @@ public class RegistrationController {
 	public LoginUserDetail loginUserDetail(@RequestParam String emailAddress) {
 		System.out.println("emailAddress is " + emailAddress);
 		String url = "jdbc:mysql://10.32.0.44:3306/equipcms-ppkp"; //staging
-	//	String url = "jdbc:mysql://10.10.32.154:3306/equipcmsppkp"; // prod
+		//	String url = "jdbc:mysql://10.10.32.154:3306/equipcmsppkp"; // prod
 		String user = "ilmuweb"; // Change to your username
 		String password = "ilmuweb"; // Change to your password
 		LoginUserDetail loginUserDetail = new LoginUserDetail();
 		// JDBC Connection
 		try (Connection conn = DriverManager.getConnection(url, user, password);
-				Statement stmt = conn.createStatement()) {
+			 Statement stmt = conn.createStatement()) {
 
 			System.out.println("Connected to the database!");
 
 			// Execute SQL Query
 			String query = "SELECT * FROM contact_ where emailAddress=" + "'" + emailAddress + "'"; // Change to your
-																									// table name
+			// table name
 			ResultSet rs = stmt.executeQuery(query);
 
 			// Process Result
@@ -306,13 +330,13 @@ public class RegistrationController {
 		String password = "ilmuweb"; // Change to your password
 
 		try (Connection conn = DriverManager.getConnection(url, user, password);
-				Statement stmt = conn.createStatement()) {
+			 Statement stmt = conn.createStatement()) {
 
 			System.out.println("Connected to the database!");
 
 			// Execute SQL Query
 			String query = "SELECT CODE, DESCRIPTION FROM FNDCODE WHERE CODE =" + code; // Change to your
-																						// table name
+			// table name
 			ResultSet rs = stmt.executeQuery(query);
 
 			// Process Result
