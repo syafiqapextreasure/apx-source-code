@@ -113,6 +113,11 @@
 	}
 
   @media print {
+	  * {
+        page-break-before: auto !important;
+        page-break-after: auto !important;
+        page-break-inside: avoid !important; /* Avoid splitting content across pages */
+    }
    body {
        background: rgb(204, 204, 204);
       /*  color:black; */
@@ -152,8 +157,50 @@
 		<%=cssStyle%>
 		
 	<%}%>
-      
-
+	@page {
+		padding-top: 0cm;
+		padding-bottom:0.1cm;
+	}
+	.left-class.book-label {
+		margin-left: 0.1cm !important;
+	}
+     .page {
+        width: 21.00cm;
+        height: 29.70cm;
+		margin-top: 0cm;
+        padding: 1cm; /* Uniform padding */
+        box-sizing: border-box; /* Ensure padding is included in dimensions */
+        overflow: hidden; /* Prevent content overflow */
+        page-break-after: always; /* Add page breaks explicitly for clarity */
+    }
+.page {
+        page-break-after: auto !important; /* Reset */
+		    padding-top: .5cm;
+		 
+    }
+    * {
+        page-break-before: avoid !important; /* Ensure no unintended breaks */
+    }
+	div:empty {
+        display: none;
+    }
+	
+	 div:empty, span:empty, p:empty {
+        display: none; /* Ensure empty elements do not take up space */
+    }
+	 .righ-class.book-label {
+        margin-left: 2.5cm;
+     }
+	  .left-class.book-label {
+        margin-left: -0.6cm !important;
+		 margin-right: -1.2cm;
+     }
+	 .book-label {
+     width: 8.40cm;
+    height: 9.4cm;
+    padding-top: 5cm;
+    padding-left: 1.00cm;
+}
   	}
  
 	</style>
@@ -307,7 +354,10 @@
                             	accDetails =  PatronDetails.loadAccession(listCol, accession.getAccessionNo());
                           
     						 %>
-                              <div class = "book-label" style="float:left">
+                              <div class="<%= (cols % 2 == 0) ? "left-class book-label" : "righ-class book-label" %>" style="float:left">
+                              <div class="Organisation">
+								  
+								</div>	
                                <% 
                                	for(int listlbl=0;listlbl<lblData.size()&& listlbl < accDetails.size();listlbl++){
                                	%>
@@ -396,4 +446,3 @@
 	</body>
 	
 </html>
-

@@ -8,9 +8,13 @@ function noteCheck(id){
 		}, 
  	function(data,status){
 			var total = data.trim();
-			if(total >= 1){
+			/*if(total >= 1){
 				messageBox("148","","");
-			}
+			}*/
+			
+			if(total >= 1){
+                swal("This Patron ID has been attached with note(s) or instruction(s). Click on 'Patron Note' button to achieve the contents.");
+            }
 		
 		//swal("This Patron ID has been attached with note(s) or instruction(s). Click on 'Patron Note' button to achieve the contents.");
  	}).fail(function(data){
@@ -29,4 +33,3 @@ function messageBox(code, criteria, label){
           }
     });
 }
-	
