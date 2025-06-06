@@ -23,6 +23,8 @@ public class LostBorrowedMaterial {
     private String acquisitionNumber;
     private String bookTitle;
     private Double bookPrice;
+    private String patronId;
+    
 	public Long getId() {
 		return id;
 	}
@@ -46,6 +48,12 @@ public class LostBorrowedMaterial {
 	}
 	public void setBookPrice(Double bookPrice) {
 		this.bookPrice = bookPrice;
+	}
+	public String getPatronId() {
+		return patronId;
+	}
+	public void setPatronId(String patronId) {
+		this.patronId = patronId;
 	}
     
     

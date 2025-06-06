@@ -20,13 +20,22 @@ public class RoomReservationFormEntity {
 	    private Integer capacity; // Capacity field
 
 	    @Column(nullable = false)
-	    private Boolean isAvailable; // Availability field (bit(1) mapped to Boolean)
+	    private Boolean isAvailable = true; // Availability field (bit(1) mapped to Boolean), initialized to true
 
-	    @Column(nullable = false, name = "label_ame")
-	    private String labelName; // Label name field
+	    @Column(nullable = false, name = "label_ame") // Corrected column name to match database
+	    private String labelName = "Default Room"; // Label name field with default value
+
+	    @Column(nullable = false, name = "label_name") // Add the other label column to fix the error
+	    private String labelName2 = "Default Room"; // Same value as labelName
 
 	    @Column(nullable = false)
-	    private Double price; // Price field
+	    private Double price = 0.0; // Price field with default value
+
+	    @Column(nullable = false)
+	    private String location = "Main Building"; // Location field with default value
+
+	    @Column(nullable = false)
+	    private String roomType = "Bilik Mesyuarat"; // Room type field with default value
 
 	    @Column(length = 255)
 	    private String imgName; // Image name field, can be null
@@ -61,6 +70,15 @@ public class RoomReservationFormEntity {
 
 		public void setLabelName(String labelName) {
 			this.labelName = labelName;
+			this.labelName2 = labelName; // Keep both fields in sync
+		}
+
+		public String getLabelName2() {
+			return labelName2;
+		}
+
+		public void setLabelName2(String labelName2) {
+			this.labelName2 = labelName2;
 		}
 
 		public Double getPrice() {
@@ -71,6 +89,22 @@ public class RoomReservationFormEntity {
 			this.price = price;
 		}
 
+		public String getLocation() {
+			return location;
+		}
+
+		public void setLocation(String location) {
+			this.location = location;
+		}
+
+		public String getRoomType() {
+			return roomType;
+		}
+
+		public void setRoomType(String roomType) {
+			this.roomType = roomType;
+		}
+
 		public String getImgName() {
 			return imgName;
 		}
@@ -78,7 +112,5 @@ public class RoomReservationFormEntity {
 		public void setImgName(String imgName) {
 			this.imgName = imgName;
 		}
-	    
-	    
 	    
 }

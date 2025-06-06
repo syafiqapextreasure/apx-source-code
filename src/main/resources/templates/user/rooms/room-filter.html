@@ -39,11 +39,20 @@
                                 <button class="step-button">Langkah 5-Pengesahan</button>
                             </div>
                         </div>
-                        <h1 class="mt-3 mb-2">Filter</h1>
+                        <h1 class="mt-3 mb-2">Carian</h1>
                         <form id="filterForm" th:action="@{/filter-rooms}" method="get">
                             <select class="form-select filter-select" id="roomType" name="roomType" onchange="handleRoomTypeChange()">
                                 <option selected value="Jenis Bilik">Jenis Bilik</option>
                                 <option th:each="type : ${roomTypes}" th:value="${type}" th:text="${type}" th:selected="${type == selectedRoomType}"></option>
+                            </select>
+                            
+                            <!-- Location Filter -->
+                            <select class="form-select filter-select mt-3" id="location" name="location">
+                                <option selected value="">Lokasi</option>
+                                <option value="Presint 8" th:selected="${'Presint 8' == selectedLocation}">Presint 8</option>
+                                <option value="Presint 9" th:selected="${'Presint 9' == selectedLocation}">Presint 9</option>
+                                <option value="Presint 11" th:selected="${'Presint 11' == selectedLocation}">Presint 11</option>
+                                <option value="Presint 16" th:selected="${'Presint 16' == selectedLocation}">Presint 16</option>
                             </select>
                             
                             <div class="form-group mt-3">
@@ -53,7 +62,6 @@
     
                             <select class="form-select filter-select mt-3" id="time" name="time">
                                 <option selected value="">Masa</option>
-                                <option value="09:00-10:00" th:selected="${'09:00-10:00' == selectedTime}">09:00 AM</option>
                                 <option value="10:00-11:00" th:selected="${'10:00-11:00' == selectedTime}">10:00 AM</option>
                                 <option value="11:00-12:00" th:selected="${'11:00-12:00' == selectedTime}">11:00 AM</option>
                                 <option value="12:00-13:00" th:selected="${'12:00-13:00' == selectedTime}">12:00 PM</option>
@@ -61,6 +69,7 @@
                                 <option value="14:00-15:00" th:selected="${'14:00-15:00' == selectedTime}">02:00 PM</option>
                                 <option value="15:00-16:00" th:selected="${'15:00-16:00' == selectedTime}">03:00 PM</option>
                                 <option value="16:00-17:00" th:selected="${'16:00-17:00' == selectedTime}">04:00 PM</option>
+                                <option value="17:00-18:00" th:selected="${'17:00-18:00' == selectedTime}">05:00 PM</option>
                             </select>
     
                             <button type="submit" class="cari_btn mt-3">Cari</button>
@@ -78,15 +87,23 @@
                         </div>
                         
                         <!-- Loop through rooms and display each one dynamically -->
-                        <div th:each="room : ${rooms}" class="card-section" th:attr="data-room-id=${room.id}">
+                        <div th:each="room : ${rooms}" class="card-section" 
+                             th:attr="data-room-id=${room.id}, data-location=${room.location}">
                             <div th:text="'P' + ${room.id} + ' ' + ${room.labelName}" class="offer-sticker"></div>
                             <div class="room-card">
-                                <img src="/img/room2.jpg" alt="Room image" />
+                                <img th:src="${
+                                    room.imgName == null ? '/eforms/img/room2.jpg' :
+                                    room.imgName.startsWith('/') ? room.imgName :
+                                    room.imgName.startsWith('room_') ? '/eforms/room-images/' + room.imgName :
+                                    '/eforms/img/room2.jpg'
+                                }" 
+                                onerror="console.log('Image failed to load:', this.src); this.src='/eforms/img/room2.jpg';" 
+                                alt="room img" />
                             </div>
                             <div class="card-body d-flex justify-content-between flex-wrap align-items-center gap-2">
                                 <div>
                                     <p th:text="'Kapasiti: ' + ${room.capacity} + ' Orang'"></p>
-                                    <p th:text="'Harga: ' + ${room.price} + ' MYR sejam'"></p>
+                                    <p th:text="'Harga: RM' + ${#numbers.formatDecimal(room.price, 1, 'COMMA', 2, 'POINT')} + ' sejam'"></p>
                                 </div>
                                 <button>
                                     <a th:href="@{'/room-booking-details/' + ${room.id}}" style="text-decoration: none; color: inherit;">TEMPAH</a>
@@ -109,6 +126,12 @@
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 disableMobile: "true",
+                disable: [
+                    function(date) {
+                        // Disable Mondays (day 1)
+                        return date.getDay() === 1;
+                    }
+                ],
                 onOpen: function(selectedDates, dateStr, instance) {
                     updateDisabledDates();
                 }
@@ -118,9 +141,17 @@
             function updateDisabledDates() {
                 const roomTypeSelect = document.getElementById('roomType');
                 const timeSelect = document.getElementById('time');
+                const locationSelect = document.getElementById('location');
                 
+                // Base disable rule: always disable Mondays
+                let disableRules = [
+                    function(date) {
+                        return date.getDay() === 1; // Disable Mondays
+                    }
+                ];
+
                 if (roomTypeSelect.value === 'Jenis Bilik') {
-                    datepicker.set('disable', []); // No room selected, no dates disabled
+                    datepicker.set('disable', disableRules); // Only disable Mondays if no room selected
                     return;
                 }
                 
@@ -128,13 +159,19 @@
                 const roomCards = document.querySelectorAll('.card-section');
                 let selectedRoomIds = [];
                 
-                // Filter rooms based on type
+                // Filter rooms based on type and location
                 roomCards.forEach(card => {
                     const roomLabel = card.querySelector('.offer-sticker').textContent;
                     const roomId = card.getAttribute('data-room-id');
+                    const roomLocation = card.getAttribute('data-location'); // Get location attribute
                     
-                    if ((roomTypeSelect.value === 'Bilik Mesyuarat' && roomLabel.includes('Bilik Mesyuarat')) || 
-                        (roomTypeSelect.value === 'Bilik Serbaguna' && roomLabel.includes('Bilik Serbaguna'))) {
+                    let matchesType = (roomTypeSelect.value === 'Jenis Bilik') || 
+                                    (roomTypeSelect.value === 'Bilik Mesyuarat' && roomLabel.includes('Bilik Mesyuarat')) || 
+                                    (roomTypeSelect.value === 'Bilik Serbaguna' && roomLabel.includes('Bilik Serbaguna'));
+                    
+                    let matchesLocation = !locationSelect.value || (roomLocation === locationSelect.value);
+                    
+                    if (matchesType && matchesLocation) {
                         selectedRoomIds.push(roomId);
                     }
                 });
@@ -142,7 +179,7 @@
                 // Fetch booked dates for selected rooms
                 Promise.all(selectedRoomIds.map(roomId => {
                     if (!bookedDatesMap.has(roomId)) {
-                        return fetch(`/api/booked-dates/${roomId}`)
+                        return fetch(`/eforms/api/booked-dates/${roomId}`)
                             .then(response => response.json())
                             .then(data => {
                                 bookedDatesMap.set(roomId, data);
@@ -179,13 +216,20 @@
                     });
                     
                     // Update datepicker with disabled dates
-                    datepicker.set('disable', allBookedDates);
+                    datepicker.set('disable', [
+                        ...disableRules, // Include base rules (Mondays)
+                        ...allBookedDates
+                    ]);
                 });
             }
             
             // Event listeners for filter changes
             document.getElementById('roomType').addEventListener('change', updateDisabledDates);
             document.getElementById('time').addEventListener('change', updateDisabledDates);
+            document.getElementById('location').addEventListener('change', function() {
+                // Submit the form when location changes
+                document.getElementById('filterForm').submit();
+            });
             
             // Initial load
             updateDisabledDates();

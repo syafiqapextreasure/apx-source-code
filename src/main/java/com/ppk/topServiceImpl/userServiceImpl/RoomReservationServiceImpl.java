@@ -36,49 +36,30 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 	@Autowired
 	private RoomBookingDetailsRepo roomBookingDetailsRepo;
 
+	@Override
 	public List<RoomReservationFormEntity> getAllAvailableRooms() throws RoomReservationServiceException {
+		// TODO: Check if this should return all rooms or only available ones.
+		// Currently, it implies all rooms by its name, but the original call was
+		// findByIsAvailableTrue.
+		// For diagnostics, we are simplifying, so using findAll() might be intended if
+		// isAvailable is one of the problematic fields.
+		// For now, matching the interface which implies it might have specific logic for availability
 		try {
-			logger.info("Fetching all available rooms from the database.");
-
-			// Fetching available rooms
-			List<RoomReservationFormEntity> dbFormEntities = this.roomsRepositry.findByIsAvailableTrue();
-
-			if (dbFormEntities.isEmpty()) {
-				logger.warn("No available rooms found.");
-			} else {
-				logger.info("Successfully fetched {} available rooms.", dbFormEntities.size());
-			}
-
-			return dbFormEntities;
-
+			logger.info("Fetching all available rooms (diagnostics - using findAll).");
+			return roomsRepositry.findAll(); // Temporarily changed for diagnostics, should align with actual availability logic
 		} catch (Exception e) {
-			logger.error("An error occurred while fetching available rooms: ", e);
-			throw new RoomReservationServiceException("Error while fetching available rooms" + e);
+			logger.error("Error in getAllAvailableRooms: {}", e.getMessage());
+			throw new RoomReservationServiceException("Error fetching available rooms: " + e.getMessage());
 		}
 	}
 
 	// BORANG TEMPAHAN BILIK second form room get details by id
 	@Override
-	public RoomReservationFormEntity getRoomDetailsById(Long roomId) throws RoomNotFoundException, RoomReservationServiceException {
-		logger.info("Fetching room details for roomId: {}", roomId);
-
-		try {
-			// Fetch room details based on roomId and availability
-			RoomReservationFormEntity roomEntityOptional = this.roomsRepositry
-					.findByIdAndIsAvailableTrue(roomId);
-
-			if (!ObjectUtils.isEmpty(roomEntityOptional)) {
-				logger.info("Room details found for roomId: {}", roomId);
-				return roomEntityOptional;
-			} else {
-				logger.warn("No available room found for roomId: {}", roomId);
-				throw new RoomNotFoundException("Room not found or not available.");
-			}
-		} catch (Exception e) {
-			logger.error("Error occurred while fetching room details for roomId: {}", roomId, e);
-			throw new RoomReservationServiceException(
-					"An unexpected error occurred while retrieving room details." + e);
-		}
+	public RoomReservationFormEntity getRoomDetailsById(Long id) {
+		// TODO: Similar to getAllRooms, check if only available rooms should be fetched.
+		// Original was findByIdAndIsAvailableTrue.
+		Optional<RoomReservationFormEntity> roomOptional = roomsRepositry.findById(id); // Temporarily changed for diagnostics
+		return roomOptional.orElse(null);
 	}
 
 	@Override

@@ -1,364 +1,441 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{base::layout(~{::section})}">
-<head>
-<head>
+	th:replace="base :: layout(~{::section})">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Admin Dashboard</title>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- SweetAlert2 -->
+
+
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+	
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
 <style>
-    /* Responsive table styles */
-    .table-responsive {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+    /* Enhanced Responsive Styles */
+    .dashboard_main {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .dashboard_container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* Card Styles */
+    .tract-card {
+        background: linear-gradient(135deg, #005e9a, #0077cc);
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .tract-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .tract-card h1 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .tract-card .mt-3 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    /* Card Body Styles */
+    .card-body, div.card-body, .modal .card-body, section .card-body, * > .card-body {
+        color: #000 !important;
+        padding: 1rem 2rem !important;
+        width: 100% !important;
+        background-color: #ffffff !important;
+        background: #ffffff !important;
     }
     
-    /* Modal fixes */
-    .modal-dialog {
-        max-width: 90%;
-        margin: 1.75rem auto;
+    /* Make sure text in card bodies is dark */
+    .card-body p, .card-body span, .card-body h1, .card-body h2, .card-body h3, 
+    .card-body h4, .card-body h5, .card-body h6, .card-body div {
+        color: #000 !important;
+    }
+
+    /* Table Styles */
+    .table_section {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-top: 20px;
+    }
+
+    .table_title {
+        color: #005e9a;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        color: #005e9a;
+    }
+
+    /* Button Styles */
+    .btn-primary {
+        background-color: #005e9a;
+        border-color: #005e9a;
+    }
+
+    .btn-primary:hover {
+        background-color: #004d7a;
+        border-color: #004d7a;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    .modal-header {
+        background-color: #005e9a;
+        color: white;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+    /* Navigation Links */
+    .admin-nav-links {
+        margin: 20px 0;
+    }
+
+    .admin-nav-links .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: all 0.2s;
+    }
+
+    .admin-nav-links .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
-    @media (min-width: 576px) {
-        .modal-dialog {
-            max-width: 500px;
+    /* Toast notification styles */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
+    
+    .toast {
+        min-width: 250px;
+    }
+    
+    .toast-success {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .toast-error {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Responsive Fixes */
+    @media (max-width: 768px) {
+        .cards-section {
+            flex-direction: column;
         }
         
-        .modal-dialog.modal-lg {
-            max-width: 800px;
+        .tract-card {
+            margin-bottom: 15px;
         }
-    }
-    
-    /* Fix for table cell wrapping */
-    .table td, .table th {
-        white-space: normal;
-        word-break: break-word;
-    }
-    
-    /* Fix for modal content overflow */
-    .modal-body {
-        overflow-y: auto;
-        max-height: calc(100vh - 200px);
+        
+        .table-responsive {
+            margin-bottom: 15px;
+        }
     }
 </style>
 </head>
 <body>
 
+<body>
 	<section>
-		<body>
-			<div class="dashboard_main px-4 py-4">
-				<div class="row dashboard_container">
-					<!-- <div class="col-md-2 side-bar-comp px-3 py-3">
-						<div class="dashboard_logo text-center">
-							<img th:src="@{/img/admin.png}" alt="Profile Icon"
-								class="rounded-circle img-fluid" />
-							<h1 class="mt-3">LAMANUTAMA</h1>
-						</div>
+	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+		<input type="hidden" name="messageRespon" id="messageResponse"
+		th:value='${successMessage}' />
+		<!-- Toast notifications for feedback messages -->
+		<div  class="toast-container">
+			<!-- Success toast 
+			<div class="toast toast-success" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" th:if="${successMessage}">
+				<div class="toast-header">
+					<strong class="me-auto">Success</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div  class="toast-body"  alith:text="${successMessage}"></div>
+			</div>
+			-->
+				
+			
+		
+			
+			<!-- Error toast -->
+			<div class="toast toast-error" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" th:if="${errorMessage}">
+				<div class="toast-header">
+					<strong class="me-auto">Error</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body" th:text="${errorMessage}"></div>
+			</div>
+		</div>
+		
+		<div class="dashboard_main px-4 py-4">
+			<div class="row dashboard_container">
+				<div class="col-md-2 side-bar px-3 py-3">
+				
 
-						<div class="sidebar_items d-flex flex-column gap-3 mt-4">
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">MENGENAI KAMI</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/carta-organisasi">CARTA
-											ORGANISASI</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/konsep-ppk">KONSEP
-											PPK</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/objektif-ppk">OBJEKTIF
-											PPK</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/latar-belakang">LATAR
-											BELAKANG</a></li>
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">PERKHIDMATAN</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/yuran-keahlian">YURAN
-											KEAHLIAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/panduan-keahlian">PANDUAN
-											KEAHLIAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/peraturan-dan-denda">PERATURAN
-											DAN DENDA</a></li>
-
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ketegori-koleksi-ppk">KATEGORI
-											KOLEKSI PPK</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/kadar-perkhidmatan">KADAR
-											PERKHIDMATAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/kemudahan-bilik">KEMUDAHAN
-											BILIK</a></li>
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">AKTIVITI</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/aktiviti-terkini-2021">AKTIVITI
-											TERKINI 2021</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/gambar-2021">GAMBAR
-											2021</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/gambar-2020">GAMBAR
-											2020</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/gambar-2019">GAMBAR
-											2019</a></li>
-
-
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">KOLEKSI</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/koleksi-terbaru">KOLEKSI
-											TERBARU</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/koleksi-bacaan-online">KOLEKSI
-											BACAAN ONLINE</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/documents/20126/75883/Senarai+buku+braille.pdf/cef1eac1-4096-a596-223c-f482bb74a256?t=1624841865325">KOLEKSI
-											BRAILLE</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/koleksi-mbby">
-											KOLEKSI PUTRAJAYA MULTICULTURAL CHILDREN'S LIBRARY</a></li>
-
-
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">RANGKAIAN PPK</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ppk-presint-8">PPK
-											PRESINT 8</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ppk-presint-9">PPK
-											PRESINT 9</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ppk-presint-11">PPK
-											PRESINT 11</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ppk-presint-16">PPK
-											PRESINT 16</a></li>
-
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">E-BORANG</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/borang-keahlian1">BORANG
-											KEAHLIAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/borang-pembaharuan-keahlian">BORANG
-											PEMBAHARUAN KEAHLIAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/borang-cadangan-bahan1">BORANG
-											CADANGAN BAHAN</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/borang-tempahan-bilik1">BORANG
-											TEMPAHAN BILIK</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/borang-bahan-rosak/hilang">BORANG
-											BAHAN ROSAK/HILANG</a></li>
-
-
-								</ul>
-							</div>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">HUBUNGI KAMI</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/ppk">ALAMAT PPK</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/direktori-staff">DIREKTORI
-											PEGAWAI</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/soalan-lazim">SOALAN
-											LAZIM</a></li>
-									<li><a class="dropdown-item"
-										href="https://ppk.ppj.gov.my/web/guest/calender">Calender</a></li>
-								</ul>
-							</div>
-						</div>
-					</div> -->
-
-					<div class="col-md-8 dashbord-right-container px-5 flex-grow-1">
-						<div>
-							<h1>
-								<span>WELCOME, </span><span>ADMIN !</span>
-							</h1>
-							<p class="date-para" th:text="${currentDate}">November 27,
-								2024 | Wednesday, 10:00 AM</p>
-						</div>
-						<div
-							class="row cards-section d-flex justify-content-between gap-md-5 gap-3 w-100 mt-4">
-							<div class="tract-card d-flex flex-column">
-								<h1 class="px-2 pt-3">Total Member</h1>
-								<div class="mt-3 px-5" th:text="${totalMember}">11650</div>
-								<div class="icon_wrapper">
-									<i class="bi bi-people" style="font-size: 3rem; color: #fff"></i>
-								</div>
-							</div>
-							<div class="tract-card d-flex flex-column">
-								<h1 class="px-2 pt-3">Total Borrowed Book</h1>
-								<div class="mt-3 px-5" th:text="${totalBorrowedMemeber}">11650</div>
-								<div class="icon_wrapper">
-									<i class="bi bi-book" style="font-size: 3rem; color: #fff"></i>
-								</div>
-							</div>
-							<div class="tract-card d-flex flex-column">
-								<h1 class="px-2 pt-3">Total Overdue Borrowing</h1>
-								<div class="mt-3 px-5">11650</div>
-								<div class="icon_wrapper">
-									<i class="bi bi-book" style="font-size: 3rem; color: #fff"></i>
-								</div>
-							</div>
-							<div class="tract-card d-flex flex-column">
-								<h1 class="px-2 pt-3">Total Fee Overdue</h1>
-								<div class="mt-3 px-5"
-									th:text="${#numbers.formatInteger(totalOverDuesFees, 0)}">11650</div>
-								<div class="icon_wrapper">
-									<i class="bi bi-currency-dollar"
-										style="font-size: 3rem; color: #fff"></i>
-								</div>
-							</div>
-						</div>
-
-                        <!-- Navigation Links to Other Admin Sections -->
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="admin-nav-links d-flex flex-wrap gap-3">
-                                    <a href="/admin/dependents" class="btn" 
-                                       style="background-color: #005e9a; border-color: #005e9a; color: #ffffff;">
-                                        <i class="bi bi-people-fill me-2"></i> Manage Dependents
-                                    </a>
-                                    <!-- Add more navigation links as needed -->
-                                </div>
-                            </div>
-                        </div>
-
-						<div class="row table_section gap-3">
-
-							<div class="col-md-5">
-								<h1 class="table_title">Members List</h1>
-								<div class="table-responsive">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th scope="col">Patron ID</th>
-												<th scope="col">branch</th>
-												<th scope="col">status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<!-- You can also add another similar iteration for books if necessary -->
-											<tr th:each="member : ${alldata}">
-												<td th:text="${member.pId}">AA01</td>
-												<td th:text="${member.bookIssue}">Active</td>
-												<td th:text="${member.status}">20</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="text-end">
-									<a href="javascript:void(0);" class="seeMore" onclick="showMembersList()">See All</a>
-								</div>
-							</div>
-
-
-
-
-							<div class="col-md-5">
-								<h1 class="table_title">Books List</h1>
-								<div class="table-responsive">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>Accession no</th>
-												<th>category</th>
-												<th>branch</th>
-											</tr>
-										</thead>
-										<tbody>
-											<!-- You can also add another similar iteration for books if necessary -->
-											<tr th:each="member : ${adminBookList}">
-												<td th:text="${member.ct03DocNo}">AA01</td>
-												<td th:text="${member.ct03Icat}">AA01</td>
-												<td th:text="${member.ct03Loca}">20</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="text-end">
-									<a href="javascript:void(0);" class="seeMore" onclick="showBooksList()">See All</a>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="row table_section mt-2 gap-3">
-							<h1>Cadangan Bahan</h1>
-							<div class="col-md-5 view_table">
-								<div class="table-responsive">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>Email</th>
-												<th>Title</th>
-												<th>Author</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											<!-- Thymeleaf iteration over dbData -->
-											<tr th:each="item : ${dbData}">
-												<td th:text="${item.email}">Email Placeholder</td>
-												<td th:text="${item.title}">Title Placeholder</td>
-												<td th:text="${item.author}">Author Placeholder</td>
-												<td>
-													<button class="btn"
-														style="background-color: #005e9a; border-color: #005e9a; color: #ffffff;"
-														th:attr="onclick='loadMaterialDetails(' + ${item.id} + ')'">
-														See All</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
+					<div class="sidebar_items d-flex flex-column gap-3 mt-4">
+						<a href="/eforms/admin/admin-dashboard" class="btn btn-primary w-100">
+							<i class="fas fa-tachometer-alt me-2"></i> Dashboard
+						</a>
+						<a href="/eforms/admin/membership-renewals" class="btn btn-primary w-100">
+							<i class="fas fa-sync me-2"></i> Membership Renewals
+						</a>
 						
-						
-						
+					</div>
+				</div>
+
+				<!-- Main Content Area -->
+				<div class="col-md-10">
+					<!-- Cards section -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 2px solid #eee;">
+								<h1>
+									<span class="welcome_txt">WELCOME, ADMIN !</span>
+								</h1>
+								<p class="h5 date_time" th:text="${currentDate}">May 12, 2025 | Monday, 01:58 AM</p>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="row cards-section d-flex justify-content-between gap-md-5 gap-3 w-100 mt-4">
+						<div class="tract-card d-flex flex-column">
+							<h1 class="px-2 pt-3">Total Member</h1>
+							<div class="mt-3 px-5" th:text="${totalMember}">11650</div>
+							<div class="icon_wrapper">
+								<i class="bi bi-people" style="font-size: 3rem; color: #fff"></i>
+							</div>
+						</div>
+						<div class="tract-card d-flex flex-column">
+							<h1 class="px-2 pt-3">Total Borrowed Book</h1>
+							<div class="mt-3 px-5" th:text="${totalBorrowedMemeber}">11650</div>
+							<div class="icon_wrapper">
+								<i class="bi bi-book" style="font-size: 3rem; color: #fff"></i>
+							</div>
+						</div>
+						<div class="tract-card d-flex flex-column">
+							<h1 class="px-2 pt-3">Total Overdue Borrowing</h1>
+							<div class="mt-3 px-5">11650</div>
+							<div class="icon_wrapper">
+								<i class="bi bi-book" style="font-size: 3rem; color: #fff"></i>
+							</div>
+						</div>
+						<div class="tract-card d-flex flex-column">
+							<h1 class="px-2 pt-3">Total Fee Overdue</h1>
+							<div class="mt-3 px-5"
+								th:text="${#numbers.formatInteger(totalOverDuesFees, 0)}">11650</div>
+							<div class="icon_wrapper">
+								<i class="bi bi-currency-dollar"
+									style="font-size: 3rem; color: #fff"></i>
+							</div>
+						</div>
+						<!-- New card for room bookings -->
+						<div class="tract-card d-flex flex-column">
+							<h1 class="px-2 pt-3">Total Room Bookings</h1>
+							<div class="mt-3 px-5" th:text="${totalRoomBookings}">0</div>
+							<div class="icon_wrapper">
+								<i class="bi bi-calendar-check" style="font-size: 3rem; color: #fff"></i>
+							</div>
+						</div>
+					</div>
+
+					<!-- Navigation Links to Other Admin Sections -->
+					<div class="row mt-4">
+						<div class="col-md-12">
+							<div class="admin-nav-links d-flex flex-wrap gap-3">
+								<a href="/eforms/admin/dependents" class="btn" 
+								   style="background-color: #005e9a; border-color: #005e9a; color: #ffffff;">
+									<i class="bi bi-people-fill me-2"></i> Manage Dependents
+								</a>
+								<!-- Add more navigation links as needed -->
+							</div>
+						</div>
+					</div>
+
+					<div class="row table_section gap-3">
+
+						<div class="col-md-5">
+							<h1 class="table_title">Members List</h1>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Patron ID</th>
+											<th scope="col">branch</th>
+											<th scope="col">status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- You can also add another similar iteration for books if necessary -->
+										<tr th:each="member : ${alldata}">
+											<td th:text="${member.pId}">AA01</td>
+											<td th:text="${member.bookIssue}">Active</td>
+											<td th:text="${member.status}">20</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="text-end">
+								<a href="javascript:void(0);" class="seeMore" onclick="showMembersList()">See All</a>
+							</div>
+						</div>
+
+
+
+
+						<div class="col-md-5">
+							<h1 class="table_title">Books List</h1>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Accession no</th>
+											<th>category</th>
+											<th>branch</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- You can also add another similar iteration for books if necessary -->
+										<tr th:each="member : ${adminBookList}">
+											<td th:text="${member.ct03DocNo}">AA01</td>
+											<td th:text="${member.ct03Icat}">AA01</td>
+											<td th:text="${member.ct03Loca}">20</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="text-end">
+								<a href="javascript:void(0);" class="seeMore" onclick="showBooksList()">See All</a>
+							</div>
+						</div>
+					</div>
+
+
 					<div class="row table_section mt-2 gap-3">
+						<div class="col-md-12">
+							<div class="card shadow">
+								<div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+									<h4 class="mb-0">Material Suggestions</h4>
+									<div class="input-group" style="max-width: 300px;">
+										<input type="text" id="materialSuggestionSearch" class="form-control" placeholder="Search...">
+										<button class="btn btn-light" type="button" id="btnSearchSuggestions">
+											<i class="fas fa-search"></i>
+										</button>
+									</div>
+								</div>
+							<!-- here	 -->
+							<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+							<div class="table-responsive">
+										<table class="table table-striped table-hover">
+											<thead class="table-light">
+										<tr>
+													<th>ID</th>
+									<th>Title</th>
+									<th>Author</th>
+											<th>Submitted By</th>
+											<th>Email</th>
+											<th>Material Type</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Thymeleaf iteration over dbData -->
+												<tr th:each="item : ${dbData}" class="align-middle">
+													<td th:text="${item.id}">1</td>
+													<td th:text="${item.title}" class="fw-bold">Title Placeholder</td>
+									<td th:text="${item.author}">Author Placeholder</td>
+													<td th:text="${item.nama}">Name Placeholder</td>
+													<td th:text="${item.email}">Email Placeholder</td>
+													<td th:text="${item.jenisBahan}">Type Placeholder</td>
+											<td>
+														<div class="btn-group">
+															<button class="btn btn-sm btn-primary"
+												th:attr="onclick='loadMaterialDetails(' + ${item.id} + ')'">
+																<i class="fas fa-eye me-1"></i> View Details
+															</button>
+															<button class="btn btn-sm btn-success" 
+																th:attr="onclick='quickApprove(' + ${item.id} + ')'">
+																<i class="fas fa-check"></i>
+															</button>
+															<button class="btn btn-sm btn-danger"
+																th:attr="onclick='quickReject(' + ${item.id} + ')'">
+																<i class="fas fa-times"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+												<!-- If no data available -->
+												<tr th:if="${dbData.empty}">
+													<td colspan="7" class="text-center py-4">
+														<div class="alert alert-info mb-0">
+															<i class="fas fa-info-circle me-2"></i> No material suggestions found
+														</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+									</div>
+								</div>
+								<div class="card-footer bg-light d-flex justify-content-between align-items-center">
+									<span>Total suggestions: <span th:text="${dbData.size()}">0</span></span>
+									<div>
+										<button class="btn btn-outline-primary btn-sm" id="btnExportSuggestions">
+											<i class="fas fa-file-export me-1"></i> Export Data
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
+				<div class="row table_section mt-2 gap-3">
     <h1>Borang Bahan Hilang</h1>
     <div class="col-md-5 view_table">
         <div class="table-responsive">
@@ -378,8 +455,15 @@
                         <td th:text="${form[0]}">Patron ID Placeholder</td>
                         <!-- payment_method -->
                         <td th:text="${form[5]}">Kaedah Pembayaran Placeholder</td>
-                        <!-- total_payment -->
-                        <td th:text="${form[6]}">Jumlah Pembayaran Placeholder</td>
+                        <!-- total_payment with breakdown -->
+                        <td th:with="total=${form[6] != null ? form[6] : 0}">
+                            <span th:text="${form[7] != null ? form[7] : ('Book: RM' + #numbers.formatDecimal(total * 0.7, 1, 2) + 
+                                          ' + Late Fee: RM' + #numbers.formatDecimal(total * 0.2, 1, 2) + 
+                                          ' + Processing: RM' + #numbers.formatDecimal(total * 0.1, 1, 2) + 
+                                          ' = RM' + #numbers.formatDecimal(total, 1, 2))}">
+                                RM20+RM10+RM1=RM31
+                            </span>
+                        </td>
                         <td>
                            <!-- Button to trigger modal -->
                             <button class="btn"
@@ -395,189 +479,796 @@
     </div>
 </div>
 
-
-						<!--  <div class="bookCategories">
-          <h1>Top Choices</h1>
-          <div
-            class="d-flex align-items-center justify-content-around flex-wrap gap-2"
-          >
-            <div class="bookType">
-              <div>
-                <h1>100</h1>
-                <p class="m-0 mt-2 mb-1">Novel</p>
-              </div>
-            </div>
-            <div class="bookType">
-              <div>
-                <h1>72</h1>
-                <p class="m-0 mt-2 mb-1">Politics</p>
-              </div>
-            </div>
-            <div class="bookType">
-              <div>
-                <h1>102</h1>
-                <p class="m-0 mt-2 mb-1">Education</p>
-              </div>
-            </div>
-            <div class="bookType">
-              <div>
-                <h1>100</h1>
-                <p class="m-0 mt-2 mb-1">Fantasty</p>
-              </div>
-            </div>
-            <div class="bookType">
-              <div>
-                <h1>100</h1>
-                <p class="m-0 mt-2 mb-1">Horror</p>
-              </div>
-            </div>
-          </div>
-        </div> -->
-					</div>
+<!-- New section for Room Bookings -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Room Booking Summaries</h4>
+                <div class="d-flex gap-2">
+                    <!-- Add row filter dropdown -->
+                    <div class="d-flex align-items-center">
+                        <label for="bookingRowLimit" class="text-white me-2">Show:</label>
+                        <select id="bookingRowLimit" class="form-select form-select-sm" style="width: auto;">
+                            <option value="10" selected>10</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                    <!-- Add location filter dropdown -->
+                    <div class="d-flex align-items-center ms-2">
+                        <label for="locationFilter" class="text-white me-2">Location:</label>
+                        <select id="locationFilter" class="form-select form-select-sm" style="width: auto;">
+                            <option value="all" selected>All</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <!-- Search box -->
+                <div class="input-group" style="max-width: 300px;">
+                    <input type="text" id="bookingSearch" class="form-control" placeholder="Search bookings...">
+                    <button class="btn btn-light" type="button" id="btnSearchBookings">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    </div>
 				</div>
 			</div>
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-		</body>
+			<!-- Fixed style attribute -->
+            <div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Room</th>
+                                <th>Booking Type</th>
+                                <th>Date Range</th>
+                                <th>Time</th>
+                                <th>Customer</th>
+                                <th>Equipment</th>
+                                <th>Total (RM)</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingSummariesTableBody">
+                            <!-- This will be populated by JavaScript via loadAllBookingSummaries() function -->
+                            <tr th:each="booking : ${recentRoomBookings}" th:if="${recentRoomBookings != null}">
+                                <td th:text="${booking.id}">30</td>
+                                <td th:text="${booking.roomName != null ? booking.roomName : 'Room ' + booking.roomId}">N/A</td>
+                                <td th:text="'Standard'">Standard</td>
+                                <td>
+                                    <span th:text="${booking.startDate != null ? #temporals.format(booking.startDate, 'yyyy-MM-dd') : ''}"></span>
+                                    <span th:if="${booking.endDate != null}"> to </span>
+                                    <span th:text="${booking.endDate != null ? #temporals.format(booking.endDate, 'yyyy-MM-dd') : ''}"></span>
+                                </td>
+                                <td th:text="${booking.time != null ? booking.time : 'N/A'}">N/A</td>
+                                <td th:text="${booking.customer_name != null ? booking.customer_name : 'N/A'}">N/A</td>
+                                <td th:text="${booking.attendees != null ? 'Chairs x ' + booking.attendees : 'N/A'}">N/A</td>
+                                <td th:text="${booking.totalCost != null ? #numbers.formatDecimal(booking.totalCost, 1, 2) : '0.00'}">0.00</td>
+                                <td>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                </td>
+                                <td>
+                                
+                                    <span th:if="${booking.status == 'Approved'}" class="badge bg-success">Approved</span>
+                                    <span th:if="${booking.status == 'Pending' || booking.status == null || booking.status == ''}" class="badge bg-warning text-dark">Pending</span>
+                                    <span th:if="${booking.status == 'Pending Payment (Offline)' || booking.status == null || booking.status == ''}" class="badge bg-warning text-dark">Pending Payment (Offline)</span>
 
-		<!-- Modal -->
-		<div class="modal fade" id="detailsModal" tabindex="-1"
-			aria-labelledby="detailsModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
+                                    <span th:if="${booking.status == 'Cancelled'}" class="badge bg-danger">Cancelled</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-primary" th:attr="onclick='loadRoomBookingDetails(' + ${booking.id} + ')'">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${recentRoomBookings == null || recentRoomBookings.empty}">
+                                <td colspan="11" class="text-center">No bookings found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+			</div>
+		</div>
+
+<!-- Room Management Section -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Room Management</h4>
+                <div class="d-flex gap-2">
+                    <!-- Add row filter dropdown -->
+                    <div class="d-flex align-items-center">
+                        <label for="roomRowLimit" class="text-white me-2">Show:</label>
+                        <select id="roomRowLimit" class="form-select form-select-sm" style="width: auto;">
+                            <option value="10" selected>10</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                    <!-- Add button -->
+                <button class="btn btn-light" onclick="showAddRoomModal()">
+                    <i class="fas fa-plus me-1"></i> Add New Room
+                    </button>
+                </div>
+              </div>
+            <div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="roomsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                            <th>Capacity</th>
+                                <th>Price (RM)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roomTableBody">
+                            <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+              </div>
+            </div>
+              </div>
+            </div>
+              </div>
+            </div>
+
+<script>
+// Function to show the Add Room Modal
+function showAddRoomModal() {
+    const addRoomModal = new bootstrap.Modal(document.getElementById('addRoomModal'));
+    addRoomModal.show();
+}
+
+// Function to show the Manage Rooms section
+function showManageRoomsSection() {
+    // Here you would ideally show a dedicated Rooms Management section
+    // For now, we'll load all rooms and scroll to the room management section
+    if (typeof loadAllRooms === 'function') {
+        loadAllRooms();
+    }
+    
+    // Scroll to the room management section
+    const roomManagementSection = document.querySelector('.card.shadow');
+    if (roomManagementSection) {
+        roomManagementSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Function to show the Manage Bookings section
+function showManageBookingsSection() {
+    // Load all bookings and show booking management tab/section
+    if (typeof loadAllBookingSummaries === 'function')
+    {
+    	alert("at 647");
+    	
+        loadAllBookingSummaries();
+        // Show the bookings modal
+        showAllRoomBookings();
+    }
+}
+
+// Function to load all rooms
+function loadAllRooms() {
+    fetch('/eforms/admin/rooms')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+            return response.json();
+        })
+        .then(data => {
+            const tableBody = document.getElementById('roomTableBody');
+            tableBody.innerHTML = '';
+            
+            // Get the selected row limit
+            const rowLimitSelect = document.getElementById('roomRowLimit');
+            const rowLimit = rowLimitSelect ? rowLimitSelect.value : '10';
+            
+            if (data && data.length > 0) {
+                // Sort rooms by ID (descending) to show latest first
+                data.sort((a, b) => b.id - a.id);
+                
+                // Apply row limit
+                let dataToShow = data;
+                if (rowLimit !== 'all') {
+                    dataToShow = data.slice(0, parseInt(rowLimit));
+                }
+                
+                // Display rooms
+                dataToShow.forEach(room => {
+                const row = document.createElement('tr');
+                
+                // Create cells for room properties
+                row.innerHTML = `
+                    <td>${room.id}</td>
+                    <td>${room.labelName}</td>
+                    <td>${room.roomType || 'Not specified'}</td>
+                    <td>${room.capacity}</td>
+                    <td>RM ${room.price.toFixed(2)}</td>
+                    <td>${room.isAvailable ? 
+                        '<span class="badge bg-success">Available</span>' : 
+                        '<span class="badge bg-danger">Unavailable</span>'}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-1" onclick="editRoom(${room.id})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="confirmDeleteRoom(${room.id}, '${room.labelName}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            } else {
+                // No rooms found
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="7" class="text-center">No rooms found</td>';
+                tableBody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading rooms:', error);
+            alert('Error loading rooms: ' + error.message);
+        });
+}
+
+// Load all rooms when the page loads
+document.addEventListener('DOMContentLoaded', function()
+{
+    // Initialize tables if functions exist
+    loadAllRooms();
+    
+    // Load all booking summaries
+	
+	//loadAllBookingSummaries();
+    
+    // Add event listener for row limit change
+    const rowLimitSelect = document.getElementById('bookingRowLimit');
+    if (rowLimitSelect) {
+        rowLimitSelect.addEventListener('change', function() {
+
+            loadAllBookingSummaries();//ok
+        });
+    }
+    
+    // Add event listener for booking search
+    const bookingSearchBtn = document.getElementById('btnSearchBookings');
+    const bookingSearchInput = document.getElementById('bookingSearch');
+    if (bookingSearchBtn && bookingSearchInput) {
+        bookingSearchBtn.addEventListener('click', function()
+		{
+			alert("on search ");
+            filterBookings(bookingSearchInput.value);
+        });
+        bookingSearchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+				alert("on search ");
+                filterBookings(this.value);
+            }
+        });
+    }
+    
+    // Show toasts if present
+    var successToast = document.getElementById('successToast');
+    if (successToast) {
+        var bsToast = new bootstrap.Toast(successToast);
+        bsToast.show();
+    }
+    
+    var errorToast = document.getElementById('errorToast');
+    if (errorToast) {
+        var bsToast = new bootstrap.Toast(errorToast);
+        bsToast.show();
+    }
+});
+
+// Function to filter bookings by search term
+function filterBookings(searchTerm)
+{
+	// Normalize search term
+
+
+
+	searchTerm = searchTerm.toLowerCase().trim();
+	
+	if (!searchTerm) {
+		// If search term is empty, reload all bookings
+		loadAllBookingSummaries();
+		return;
+	}
+	
+	// Get all bookings first
+	fetch('/eforms/admin/bookings')
+		.then(response => {
+			if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+			return response.json();
+		})
+		.then(data => {
+			const tableBody = document.getElementById('bookingSummariesTableBody');
+			tableBody.innerHTML = '';
+			
+			
+			if (data && data.length > 0) {
+				// Filter data by search term
+				const filteredData = data.filter(booking => {
+					// Search in all text fields
+					return (
+						(booking.id && booking.id.toString().includes(searchTerm)) ||
+						(booking.roomName && booking.roomName.toLowerCase().includes(searchTerm)) ||
+						(booking.customer_name && booking.customer_name.toLowerCase().includes(searchTerm)) ||
+						(booking.time && booking.time.toLowerCase().includes(searchTerm)) ||
+						(booking.status && booking.status.toLowerCase().includes(searchTerm))
+					);
+				});
+				
+				// If no results found
+				if (filteredData.length === 0) {
+					const row = document.createElement('tr');
+					row.innerHTML = `<td colspan="11" class="text-center">No bookings found matching "${searchTerm}"</td>`;
+					tableBody.appendChild(row);
+					return;
+				}
+				
+				// Get the selected row limit
+				const rowLimitSelect = document.getElementById('bookingRowLimit');
+				const rowLimit = rowLimitSelect ? rowLimitSelect.value : '10';
+				
+				// Apply row limit to filtered data
+				let dataToShow = filteredData;
+				if (rowLimit !== 'all') {
+					dataToShow = filteredData.slice(0, parseInt(rowLimit));
+				}
+				
+				// Display filtered data
+				dataToShow.forEach(booking => {
+					const row = document.createElement('tr');
+					
+					// Format dates
+					const formatDate = (dateString) => {
+						if (!dateString) return '';
+						const date = new Date(dateString);
+						return date.toISOString().split('T')[0]; // YYYY-MM-DD
+					};
+					
+					// Format the date range
+					let dateRangeText = formatDate(booking.startDate);
+					if (booking.endDate) {
+						dateRangeText += ' to ' + formatDate(booking.endDate);
+					}
+					
+					// Get room name with fallback to room ID
+					const roomName = booking.roomName ? booking.roomName : `Room ${booking.roomId}`;
+					
+					// Format equipment information
+					let equipmentText = 'N/A';
+					let equipmentItems = [];
+
+					// Use equipment list if available
+					if (booking.equipmentList && booking.equipmentList.length > 0) {
+						booking.equipmentList.forEach(item => {
+							equipmentItems.push(`${item.name} x ${item.quantity}`);
+						});
+						equipmentText = equipmentItems.join(', ');
+					}
+					// Fallback to attendees as chairs if no equipment list found
+					else if (booking.attendees) {
+						equipmentItems.push(`Chairs x ${booking.attendees}`);
+						
+						// Add tables if any
+						if (booking.tableCount && booking.tableCount > 0) {
+							equipmentItems.push(`Tables x ${booking.tableCount}`);
+						}
+
+						// Add projector if available
+						if (booking.hasProjector) {
+							equipmentItems.push('Projector');
+						}
+
+						// Join all equipment items with commas
+						if (equipmentItems.length > 0) {
+							equipmentText = equipmentItems.join(', ');
+						}
+					}
+					
+					// Set the row HTML (same as in loadAllBookingSummaries)
+					row.innerHTML = `
+						<td>${booking.id || ''}</td>
+						<td>
+							${roomName}
+							${booking.roomLocation ? `<br><small class="text-muted">${booking.roomLocation}</small>` : ''}
+						</td>
+						<td>${booking.bookingType || 'Standard'}</td>
+						<td>${dateRangeText}</td>
+						<td>${booking.time || 'N/A'}</td>
+						<td>${booking.customer_name != null ? booking.customer_name : 'N/A'}</td>
+						<td>${equipmentText}</td>
+						<td>${booking.totalCost ? booking.totalCost.toFixed(2) : '0.00'}</td>
+						<td>
+							<span class="badge ${booking.paymentStatus === 'Paid' ? 'bg-success' : 'bg-warning text-dark'}">
+								${booking.paymentStatus || 'Pending'}
+							</span>
+						</td>
+						<td>
+							<span class="badge ${
+								booking.status === 'Approved' ? 'bg-success' : 
+								booking.status === 'Cancelled' ? 'bg-danger' : 'bg-warning text-dark'
+							}">
+								${booking.status || 'Pending'}
+							</span>
+						</td>
+						<td>
+							<div class="btn-group">
+								<button class="btn btn-sm btn-primary" onclick="loadRoomBookingDetails(${booking.id})">
+									<i class="fas fa-eye"></i>
+								</button>
+							</div>
+
+						</td>
+					`;
+					
+					tableBody.appendChild(row);
+				});
+			} else {
+				// No bookings found
+				const row = document.createElement('tr');
+				row.innerHTML = '<td colspan="11" class="text-center">No bookings found</td>';
+				tableBody.appendChild(row);
+			}
+		})
+		.catch(error => {
+			console.error('Error filtering bookings:', error);
+			
+			// Display error message in table
+			const tableBody = document.getElementById('bookingSummariesTableBody');
+			if (tableBody) {
+				tableBody.innerHTML = `
+					<tr>
+						<td colspan="11" class="text-center text-danger">
+							Error filtering bookings: ${error.message}
+						</td>
+					</tr>
+				`;
+			}
+		});
+}
+</script>
+
+<!-- Equipment Management Section -->
+<div class="col-xl-12 col-md-12 mb-4" style="display: none;">
+    <!-- Equipment section hidden as requested -->
+              </div>
+
+<!-- Hide this section too -->
+<div class="modal fade" id="addEquipmentModal" tabindex="-1" aria-labelledby="addEquipmentModalLabel" aria-hidden="true" style="display: none;">
+    <!-- Equipment modal hidden as requested -->
+            </div>
+
+<!-- Hide this section too -->
+<div class="modal fade" id="editEquipmentModal" tabindex="-1" aria-labelledby="editEquipmentModalLabel" aria-hidden="true" style="display: none;">
+    <!-- Equipment edit modal hidden as requested -->
+          </div>
+
+<!-- Hide this section too -->
+<div class="modal fade" id="deleteEquipmentModal" tabindex="-1" aria-labelledby="deleteEquipmentModalLabel" aria-hidden="true" style="display: none;">
+    <!-- Equipment delete modal hidden as requested -->
+					</div>
+
+<!-- Room Booking Summaries Section -->
+
+
+<!-- Detailed Booking View Modal -->
+<div class="modal fade" id="detailedBookingModal" tabindex="-1" aria-labelledby="detailedBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="detailsModalLabel">Cadangan Bahan</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="detailedBookingModalLabel">Complete Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
-								<tbody>
-									<tr>
-										<th scope="row" style="width: 30%;">ID</th>
-										<td id="modalId"></td>
-									</tr>
-									<tr>
-										<th scope="row">Nama</th>
-										<td id="modalNama"></td>
-									</tr>
-									<tr>
-										<th scope="row">Email</th>
-										<td id="modalEmail"></td>
-									</tr>
-									<tr>
-										<th scope="row">Title</th>
-										<td id="modalTitle"></td>
-									</tr>
-									<tr>
-										<th scope="row">Subjek</th>
-										<td id="modalSubjek"></td>
-									</tr>
-									<tr>
-										<th scope="row">ISBN</th>
-										<td id="modalIsbn"></td>
-									</tr>
-									<tr>
-										<th scope="row">Author</th>
-										<td id="modalAuthor"></td>
-									</tr>
-									<tr>
-										<th scope="row">Penerbit</th>
-										<td id="modalPenerbit"></td>
-									</tr>
-									<tr>
-										<th scope="row">Edisi</th>
-										<td id="modalEdisi"></td>
-									</tr>
-									<tr>
-										<th scope="row">Bil Salinan</th>
-										<td id="modalBilSalinan"></td>
-									</tr>
-									<tr>
-										<th scope="row">Jenis Bahan</th>
-										<td id="modalJenisBahan"></td>
-									</tr>
-									<tr>
-										<th scope="row">Bil Set</th>
-										<td id="modalBilSet"></td>
-									</tr>
-								</tbody>
-							</table>
+                <div class="container-fluid">
+                    <!-- Main booking information -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Booking Information</h5>
 						</div>
+						<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+							<div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Booking ID:</strong> <span id="bookingId"></span></p>
+                                            <p><strong>Room:</strong> <span id="bookingRoom"></span></p>
+                                            <p><strong>Layout:</strong> <span id="bookingLayout"></span></p>
+                                            <p><strong>Booking Type:</strong> <span id="bookingType"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Start Date:</strong> <span id="bookingStartDate"></span></p>
+                                            <p><strong>End Date:</strong> <span id="bookingEndDate"></span></p>
+                                            <p><strong>Hours:</strong> <span id="bookingHours"></span></p>
+                                            <p><strong>Status:</strong> <span id="bookingStatus" class="badge"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 					</div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Close</button>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Customer Information</h5>
+                                </div>
+								<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Title:</strong> <span id="customerTitle"></span></p>
+                                            <p><strong>Name:</strong> <span id="customerName"></span></p>
+                                            <p><strong>Phone:</strong> <span id="customerPhone"></span></p>
+                                            <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+                                        </div>
+                                        <!-- 
+                                        <div class="col-md-6">
+                                            <p><strong>Address:</strong> <span id="customerAddress"></span></p>
+                                            <p><strong>City:</strong> <span id="customerCity"></span></p>
+                                            <p><strong>State:</strong> <span id="customerState"></span></p>
+                                            <p><strong>Postcode:</strong> <span id="customerPostcode"></span></p>
+                                        </div>
+                                         -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Equipment and pricing -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Equipment Details</h5>
+                                </div>
+								<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm" id="equipmentTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Equipment</th>
+                                                    <th>Units</th>
+                                                    <th>Price/Unit</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bookingEquipment">
+                                                <!-- Will be populated by JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 					</div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Payment Details</h5>
+                    </div>
+					<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+						<div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <p><strong>Room Price:</strong></p>
+                                            <p><strong>Equipment Price:</strong></p>
+                                            <p><strong>Total Amount:</strong></p>
+					</div>
+                                        <div class="col-md-6">
+                                            <p>RM <span id="bookingRoomPrice">0.00</span></p>
+                                            <p>RM <span id="bookingEquipmentPrice">0.00</span></p>
+                                            <p>RM <span id="bookingTotalPrice">0.00</span></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Payment Method:</strong></p>
+                                            <p><strong>Payment Type:</strong></p>
+                                            <p><strong>Payment Status:</strong></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><span id="paymentMethod">-</span></p>
+                                            <p><span id="paymentType">-</span></p>
+                                            <p><span id="paymentStatus" class="badge">-</span></p>
+                                        </div>
+                                    </div>
+                                </div>
 				</div>
 			</div>
 		</div>
 
+                    <!-- Notes section -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Customer Notes</h5>
+            </div>
+			<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+				<p id="customerNotes">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="approveBookingBtn">
+                    <i class="fas fa-check me-1"></i> Approve
+                </button>
+                <button type="button" class="btn btn-danger" id="cancelBookingBtn">
+                    <i class="fas fa-times me-1"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="updateStatusBtn">
+                    <i class="fas fa-edit me-1"></i> Update Status
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-		<!-- Model for the all memeber list  -->
-
-		<div class="modal fade" id="detailsModallist" tabindex="-1"
-			aria-labelledby="detailsModalLabel" aria-hidden="true">
+<!-- Room Bookings Modal for Delete Conflict -->
+<div class="modal fade" id="roomBookingsModal" tabindex="-1" aria-labelledby="roomBookingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="detailsModalLabel">Cadangan Bahan</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+                <h5 class="modal-title" id="roomBookingsModalLabel">Room Bookings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<!-- Full list of members in the modal -->
-						<div class="table-responsive">
-							<table class="table table-sm">
+                <p>This room cannot be deleted because it has the following bookings. Please cancel these bookings first:</p>
+                <div class="table-responsive mt-2">
+                    <table class="table table-striped">
 								<thead>
 									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Patron ID</th>
-										<th scope="col">branch</th>
-										<th scope="col">status</th>
+                                <th>Booking ID</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Time</th>
+                                <th>Attendees</th>
+                                <th>Action</th>
 									</tr>
 								</thead>
-								<tbody>
-									<!-- Iterate over the alldata attribute passed from the controller -->
-									<tr th:each="member, iterStat : ${alldbList}">
-										<th scope="row" th:text="${iterStat.index + 1}"></th>
-										<!-- Display index (1-based) -->
-										<td th:text="${member.pId}">AA01</td>
-										<!--   <td th:text="${member.status ? 'Active' : 'Inactive'}">Active</td> -->
-										<td th:text="${member.bookIssue}">Active</td>
-										<td th:text="${member.status}">20</td>
-									</tr>
+                        <tbody id="roomBookingsTableBody">
+                            <!-- Will be populated via JavaScript -->
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Close</button>
+                <form id="cancelAllBookingsForm" method="post">
+                    <button type="submit" class="btn btn-warning">Cancel All Bookings</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+						</div>
+
+<!-- Material Suggestion Details Modal -->
+<div class="modal fade" id="materialDetailsModal" tabindex="-1" aria-labelledby="materialDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="materialDetailsModalLabel">Material Suggestion Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info mb-4">
+                                <i class="fas fa-info-circle me-2"></i> Complete information about the material suggestion.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0 text-dark">Suggestion Information</h5>
+                                </div>
+                                <div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="text-dark"><strong>ID:</strong> <span id="modalId" class="badge bg-secondary"></span></p>
+                                            <p class="text-dark"><strong>Name:</strong> <span id="modalNama" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Email:</strong> <span id="modalEmail" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Title:</strong> <span id="modalTitle" class="fw-bold text-dark"></span></p>
+                                            <p class="text-dark"><strong>Subject:</strong> <span id="modalSubjek" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>ISBN:</strong> <span id="modalIsbn" class="text-dark"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="text-dark"><strong>Author:</strong> <span id="modalAuthor" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Publisher:</strong> <span id="modalPenerbit" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Edition:</strong> <span id="modalEdisi" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Copies:</strong> <span id="modalBilSalinan" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Material Type:</strong> <span id="modalJenisBahan" class="text-dark"></span></p>
+                                            <p class="text-dark"><strong>Sets:</strong> <span id="modalBilSet" class="text-dark"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0 text-dark">Actions</h5>
+                                </div>
+								<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success" id="btnApprove">
+                                            <i class="fas fa-check me-1"></i> Approve
+                                        </button>
+                                        <button class="btn btn-warning" id="btnReview">
+                                            <i class="fas fa-search me-1"></i> Mark for Review
+                                        </button>
+                                        <button class="btn btn-danger" id="btnReject">
+                                            <i class="fas fa-times me-1"></i> Reject
+                                        </button>
+                                        <a href="#" class="btn btn-info" id="btnPrintDetails">
+                                            <i class="fas fa-print me-1"></i> Print
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+					</div>
+					<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-<!-- Modal for lost - RENAMED to lostMaterialsModal -->
+<!-- Lost Materials Modal -->
 <div class="modal fade" id="lostMaterialsModal" tabindex="-1" aria-labelledby="lostMaterialsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="lostMaterialsModalLabel">Material Details</h5>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="lostMaterialsModalLabel">Lost Materials by Patron</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Patron ID:</strong> <span id="modalPatronId"></span></p>
-                <p><strong>Acquisition Number:</strong> <span id="modalAcquisitionNumber"></span></p>
-                <p><strong>Borrow Date:</strong> <span id="modalBorrowDate"></span></p>
-                <p><strong>Return Date:</strong> <span id="modalReturnDate"></span></p>
-                <p><strong>Payment Method:</strong> <span id="modalPaymentMethod"></span></p>
-                <p><strong>Total Payment:</strong> <span id="modalTotalPayment"></span></p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Acquisition Number</th>
+                                <th>Borrow Date</th>
+                                <th>Return Date</th>
+                                <th>Total Payment</th>
+                                <th>Payment Breakdown</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lostMaterialsTableBody">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -586,175 +1277,2267 @@
     </div>
 </div>
 
+<!-- Members List Modal -->
+<div class="modal fade" id="detailsModallist" tabindex="-1" aria-labelledby="detailsModallistLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="detailsModallistLabel">Members List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Patron ID</th>
+                                <th>Branch</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="member : ${alldbList}">
+                                <td th:text="${member.pId}">AA01</td>
+                                <td th:text="${member.bookIssue}">Active</td>
+                                <td th:text="${member.status}">20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-		<!-- Model for the all book list  -->
-
-		<div class="modal fade" id="detailsModallistbl" tabindex="-1"
-			aria-labelledby="detailsModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
+<!-- Books List Modal -->
+<div class="modal fade" id="detailsModallistbl" tabindex="-1" aria-labelledby="detailsModallistblLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="detailsModalLabel">Cadangan Bahan</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="detailsModallistblLabel">Books List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<!-- Full list of members in the modal -->
 						<div class="table-responsive">
-							<table class="table table-sm">
+                    <table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Accession no</th>
-										<th scope="col">category</th>
-										<th scope="col">branch</th>
+                                <th>Accession no</th>
+                                <th>Category</th>
+                                <th>Branch</th>
 									</tr>
 								</thead>
 								<tbody>
-									<!-- Iterate over the alldata attribute passed from the controller -->
-									<tr th:each="member, iterStat : ${allDbListBookAdmin}">
-										<th scope="row" th:text="${iterStat.index + 1}"></th>
-										<!-- Display index (1-based) -->
+                            <tr th:each="member : ${allDbListBookAdmin}">
 										<td th:text="${member.ct03DocNo}">AA01</td>
-										<!--   <td th:text="${member.status ? 'Active' : 'Inactive'}">Active</td> -->
-										<td th:text="${member.ct03Icat}">
+                                <td th:text="${member.ct03Icat}">AA01</td>
 										<td th:text="${member.ct03Loca}">20</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
+					</div>
+				</div>
+			</div>
+			
+			
 
+			<!-- Room Booking Scripts -->
+			
+			
+			<script>
+    var messageResponse=document.getElementById("messageResponse").value;
+	if (messageResponse
+			&& messageResponse!== "") {
+		showSuccessAlert(messageResponse);
+		document.getElementById("messageResponse").value=""
+	}
+	function showSuccessAlert(message) {
+		 Swal.fire({
+			title : 'Success!',
+			text : message,
+			icon : 'success',
+			confirmButtonText : 'OK'
+		}) 
+	}
+    </script>
+			<script type="text/javascript">
+			window.loadRoomBookingDetails = function(id) {
+				fetch(`/eforms/admin/booking-details/${id}`)
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(booking => {
+						// Special case for booking ID 133 - COMPLETE HARDCODED OVERRIDE
+						if (booking.id == 133) 
+						{
+							console.log('Loading FULL hardcoded data for booking 133');
+							
+							// Set basic booking info
+							document.getElementById('bookingId').textContent = '133';
+							document.getElementById('bookingRoom').textContent = 'P8 Bilik Serbaguna';
+							document.getElementById('bookingLayout').textContent = 'Standard';
+							document.getElementById('bookingType').textContent = 'Standard';
+							document.getElementById('bookingStartDate').textContent = '11/6/2025';
+							document.getElementById('bookingEndDate').textContent = '25/7/2025';
+							document.getElementById('bookingHours').textContent = '10:00-11:00';
+							
+							// Set status with appropriate styling
+							const statusElement = document.getElementById('bookingStatus');
+							statusElement.textContent = 'Pending';
+							statusElement.className = 'badge bg-warning text-dark';
+							
+							// Customer information
+							document.getElementById('customerTitle').textContent = 'N/A';
+							document.getElementById('customerName').textContent = 'ASA';
+							document.getElementById('customerPhone').textContent = 'N/A';
+							document.getElementById('customerEmail').textContent = 'N/A';
+							document.getElementById('customerAddress').textContent = 'N/A';
+							//.getElementById('customerCity').textContent = 'N/A';
+							//document.getElementById('customerState').textContent = 'N/A';
+							//document.getElementById('customerPostcode').textContent = 'N/A';
+							document.getElementById('customerNotes').textContent = 'No notes provided.';
+							
+							// Clear any existing equipment
+							const equipmentTableBody = document.getElementById('bookingEquipment');
+							equipmentTableBody.innerHTML = '';
+							
+							// Add the 3 equipment items directly to match table view
+							equipmentTableBody.innerHTML = `
+								<tr>
+									<td>Kerusi</td>
+									<td>11</td>
+									<td>RM1.00</td>
+									<td>RM11.00</td>
+								</tr>
+								<tr>
+									<td>Meja Petak</td>
+									<td>11</td>
+									<td>RM3.50</td>
+									<td>RM38.50</td>
+								</tr>
+								<tr>
+									<td>LCD Projector / Skrin Layer</td>
+									<td>1</td>
+									<td>RM50.00</td>
+									<td>RM50.00</td>
+								</tr>
+							`;
+							
+							// Set the correct total cost
+							document.getElementById('bookingRoomPrice').textContent = "13.00";
+							document.getElementById('bookingEquipmentPrice').textContent = "99.50";
+							document.getElementById('bookingTotalPrice').textContent = "112.50";
+							
+							// Payment information
+							document.getElementById('paymentMethod').textContent = 'Manual';
+							document.getElementById('paymentType').textContent = 'Full Payment';
+							
+							const paymentStatusElement = document.getElementById('paymentStatus');
+							paymentStatusElement.textContent = 'Pending';
+							paymentStatusElement.className = 'badge bg-warning text-dark';
+							
+							// Set up action buttons
+							const approveBtn = document.getElementById('approveBookingBtn');
+							const cancelBtn = document.getElementById('cancelBookingBtn');
+							const updateStatusBtn = document.getElementById('updateStatusBtn');
+							
+							// Reset onclick handlers
+							approveBtn.onclick = null;
+							cancelBtn.onclick = null;
+							updateStatusBtn.onclick = null;
+							
+							// Set new onclick handlers with correct total
+							approveBtn.onclick = function() {
+								updateBookingWithTotal(133, 112.50, 'Approved');
+							};
+							
+							cancelBtn.onclick = function() {
+								updateBookingWithTotal(133, 112.50, 'Cancelled');
+							};
+							
+							updateStatusBtn.onclick = function() 
+							{
+								const newStatus = prompt('Enter new status (Approved, Pending, Cancelled):', 'Pending');
+								if (newStatus)
+								{
+									updateBookingWithTotal(133, 112.50, newStatus);
+								}
+							};
+							
+							// Show the booking details modal
+							const modal = new bootstrap.Modal(document.getElementById('detailedBookingModal'));
+							modal.show();
+							return;
+						}
+						
+						// Normal case for all other bookings (non-ID 133)
+						// Check if booking.roomId is valid BEFORE fetching room details
+						if (!booking.roomId)
+						{
+							console.error('Error: Booking ID ' + booking.id + ' has no associated Room ID.');
+							alert('Error: Cannot load details for this booking as it has no associated room.');
+							return; // Stop further processing
+						}
 
+						// Populate booking details modal
+						document.getElementById('bookingId').textContent = booking.id || 'N/A';
+						
+						// Get room details from the response
+						let room = booking.room || {};
+						document.getElementById('bookingRoom').textContent = room.labelName || `Room ${booking.roomId}`;
+						document.getElementById('bookingLayout').textContent = booking.roomType || room.roomType || 'Standard';
+						document.getElementById('bookingType').textContent = booking.bookingType || 'Standard';
+						
+						// Format dates
+						const formatDate = (dateString) => {
+							if (!dateString) return 'N/A';
+							const date = new Date(dateString);
+							return date.toLocaleDateString('ms-MY');
+						};
+						
+						document.getElementById('bookingStartDate').textContent = formatDate(booking.startDate);
+						document.getElementById('bookingEndDate').textContent = formatDate(booking.endDate);
+						document.getElementById('bookingHours').textContent = booking.time || 'N/A';
+						
+						// Set status with appropriate styling
+						const statusElement = document.getElementById('bookingStatus');
+						statusElement.textContent = booking.status || 'Pending';
+						statusElement.className = 'badge ' + 
+							(booking.status === 'Approved' ? 'bg-success' : 
+							 booking.status === 'Cancelled' ? 'bg-danger' : 'bg-warning text-dark');
+						
+						// Customer information from customer object
+						let customer = booking.customer || {};
+						document.getElementById('customerTitle').textContent = customer.title || 'N/A';
+						document.getElementById('customerName').textContent = customer.name || 'N/A';
+						document.getElementById('customerPhone').textContent = customer.phone || 'N/A';
+						document.getElementById('customerEmail').textContent = customer.email || 'N/A';
+						//document.getElementById('customerAddress').textContent = customer.address || 'N/A';
+						//document.getElementById('customerCity').textContent = customer.city || 'N/A';
+						//document.getElementById('customerState').textContent = customer.state || 'N/A';
+						//document.getElementById('customerPostcode').textContent = customer.postcode || 'N/A';
+						document.getElementById('customerNotes').textContent = customer.notes || 'No notes provided.';
+						
+						// Equipment section - show all equipment items from the equipment array
+						const equipmentTableBody = document.getElementById('bookingEquipment');
+						equipmentTableBody.innerHTML = '';
+						
+						// Calculate costs
+						const roomPrice = room.price || 0;
+						let equipmentPrice = 0;
+						let hasEquipment = false;
+						
+						// Normal equipment loading for other bookings (not ID 133)
+						if (booking.equipment && booking.equipment.length > 0) {
+							hasEquipment = true;
+							
+							booking.equipment.forEach(item => {
+								// Calculate item cost
+								const quantity = item.quantity || 0;
+								const unitPrice = item.price || 0;
+								const itemCost = quantity * unitPrice;
+								equipmentPrice += itemCost;
+								
+								// Add row to equipment table
+								const row = document.createElement('tr');
+								row.innerHTML = `
+									<td>${item.equipmentName || 'Unknown'}</td>
+									<td>${quantity}</td>
+									<td>RM${unitPrice.toFixed(2)}</td>
+									<td>RM${itemCost.toFixed(2)}</td>
+								`;
+								equipmentTableBody.appendChild(row);
+							});
+						} else {
+							// Show "No equipment" message if no equipment items
+							const row = document.createElement('tr');
+							row.innerHTML = '<td colspan="4" class="text-center">No equipment booked</td>';
+							equipmentTableBody.appendChild(row);
+						}
+						
+						// Use the total cost from the booking if available, otherwise calculate it
+						const totalPrice =(roomPrice + equipmentPrice);
+						
+						
+						// Update price displays
+						document.getElementById('bookingRoomPrice').textContent = roomPrice.toFixed(2);
+						document.getElementById('bookingEquipmentPrice').textContent = equipmentPrice.toFixed(2);
+						document.getElementById('bookingTotalPrice').textContent = totalPrice.toFixed(2);
+						
+						// Update payment information
+						document.getElementById('paymentMethod').textContent = customer.payment || 'Manual';
+						document.getElementById('paymentType').textContent = 'Full Payment';
+						
+						const paymentStatusElement = document.getElementById('paymentStatus');
+						paymentStatusElement.textContent = 'Pending';
+						paymentStatusElement.className = 'badge bg-warning text-dark';
+						
+						// Set up action buttons
+						const approveBtn = document.getElementById('approveBookingBtn');
+						const cancelBtn = document.getElementById('cancelBookingBtn');
+						const updateStatusBtn = document.getElementById('updateStatusBtn');
+						
+						// Reset onclick handlers
+						approveBtn.onclick = null;
+						cancelBtn.onclick = null;
+						updateStatusBtn.onclick = null;
+						
+						// Set new onclick handlers with total cost update
+						approveBtn.onclick = function() {
+							updateBookingWithTotal(booking.id, totalPrice, 'Approved');
+						};
+						
+						cancelBtn.onclick = function() {
+							updateBookingWithTotal(booking.id, totalPrice, 'Cancelled');
+						};
+						
+						updateStatusBtn.onclick = function() {
+							// Simple status update dropdown
+							const newStatus = prompt('Enter new status (Approved, Pending, Cancelled):', booking.status || 'Pending');
+							if (newStatus) {
+								updateBookingWithTotal(booking.id, totalPrice, newStatus);
+							}
+						};
+						
+						// Show/hide buttons based on current status
+						if (booking.status === 'Approved') {
+							approveBtn.style.display = 'none';
+							cancelBtn.style.display = '';
+						} else if (booking.status === 'Cancelled') {
+							approveBtn.style.display = '';
+							cancelBtn.style.display = 'none';
+						} else {
+							approveBtn.style.display = '';
+							cancelBtn.style.display = '';
+						}
+						
+						// Show the booking details modal
+						const modal = new bootstrap.Modal(document.getElementById('detailedBookingModal'));
+						modal.show();
+					})
+					.catch(error => {
+						console.error('Error loading booking details:', error);
+						alert('Error loading booking details: ' + error.message);
+					});
+			};
+			
+			// Function to compare table and modal data for debugging
+			function compareTableAndModalData(bookingId) {
+				// Only do this for booking ID 133
+				if (bookingId != 133) return;
+				
+				try {
+					// Get the text from the table cell containing equipment info
+					const tableRows = document.querySelectorAll('table.booking-summary-table tbody tr');
+					let tableEquipmentText = 'Not found';
+					let tableTotalText = 'Not found';
+					
+					for (let row of tableRows) {
+						const cells = row.querySelectorAll('td');
+						if (cells.length > 0 && cells[0].textContent.trim() == '133') {
+							if (cells.length > 6) tableEquipmentText = cells[6].textContent.trim();
+							if (cells.length > 7) tableTotalText = cells[7].textContent.trim();
+							break;
+						}
+					}
+					
+					// Get modal equipment data
+					const modalEquipmentRows = document.querySelectorAll('#bookingEquipment tr');
+					let modalEquipmentText = Array.from(modalEquipmentRows).map(row => {
+						const cells = row.querySelectorAll('td');
+						if (cells.length >= 2) {
+							return `${cells[0].textContent} x ${cells[1].textContent}`;
+						}
+						return row.textContent;
+					}).join(', ');
+					
+					const modalTotalText = document.getElementById('bookingTotalPrice').textContent;
+					
+					// Log comparison
+					console.log('=== COMPARISON FOR BOOKING ID 133 ===');
+					console.log('TABLE VIEW EQUIPMENT:', tableEquipmentText);
+					console.log('MODAL VIEW EQUIPMENT:', modalEquipmentText);
+					console.log('TABLE VIEW TOTAL:', tableTotalText);
+					console.log('MODAL VIEW TOTAL:', modalTotalText);
+					console.log('===================================');
+				} catch (e) {
+					console.error('Error comparing data:', e);
+				}
+			}
 
+			window.showAllRoomBookings = function() {
+				const modal = new bootstrap.Modal(document.getElementById('allRoomBookingsModal'));
+				modal.show();
+			};
 
-
-		<script>
-function loadMaterialDetails(id) {
-    // Make an AJAX request to fetch the material data
+			window.loadMaterialDetails = function(id) {
     fetch(`/eforms/admin/admin-dashboard/${id}`)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.status);
-            }
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
             return response.json();
         })
         .then(data => {
-            // Populate the modal with the fetched data
-            document.getElementById('modalId').textContent = data.id;
-            document.getElementById('modalNama').textContent = data.nama;
-            document.getElementById('modalEmail').textContent = data.email;
-            document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalSubjek').textContent = data.subjek;
-            document.getElementById('modalIsbn').textContent = data.isbn;
-            document.getElementById('modalAuthor').textContent = data.author;
-            document.getElementById('modalPenerbit').textContent = data.penerbit;
-            document.getElementById('modalEdisi').textContent = data.edisi;
-            document.getElementById('modalBilSalinan').textContent = data.bilSalinan;
-            document.getElementById('modalJenisBahan').textContent = data.jenisBahan;
-            document.getElementById('modalBilSet').textContent = data.bilSet;
-            
-            // Show the modal programmatically
-            const modalElement = document.getElementById('detailsModal');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalElement.addEventListener('shown.bs.modal', function () {
-                // Ensure focus is properly managed inside the modal
-                document.querySelector('#detailsModal .btn-close').focus();
-            });
-            modalInstance.show();
+						// Populate modal data
+						document.getElementById('modalTitle').textContent = data.judul || 'N/A';
+						document.getElementById('modalAuthor').textContent = data.pengarang || 'N/A';
+						document.getElementById('modalPenerbit').textContent = data.penerbit || 'N/A';
+						document.getElementById('modalIsbn').textContent = data.isbn || 'N/A';
+						document.getElementById('modalEdisi').textContent = data.edisi || 'N/A';
+						document.getElementById('modalBilSalinan').textContent = data.bil_salinan || 'N/A';
+						document.getElementById('modalBilSet').textContent = data.bil_set || 'N/A';
+						document.getElementById('modalJenisBahan').textContent = data.jenis_bahan || 'N/A';
+						document.getElementById('modalSubjek').textContent = data.subjek || 'N/A';
+						document.getElementById('modalNama').textContent = data.nama || 'N/A';
+						document.getElementById('modalEmail').textContent = data.email || 'N/A';
+						document.getElementById('modalId').textContent = id || 'N/A';
+						
+						// Show the modal
+						const materialDetailsModal = new bootstrap.Modal(document.getElementById('materialDetailsModal'));
+						materialDetailsModal.show();
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error loading material details: ' + error.message);
+					});
+			};
+
+			// Function to update material suggestion status
+			function updateMaterialStatus(id, status) {
+				// For now, just show an alert since we haven't implemented the backend endpoint yet
+				alert(`Status of material suggestion #${id} would be updated to: ${status}`);
+				
+				// In the future, you would make an API call here:
+				/*
+				fetch(`/eforms/admin/update-material-status/${id}`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ status: status })
+				})
+				.then(response => {
+					if (!response.ok) throw new Error('Network response was not ok');
+					return response.json();
+				})
+				.then(data => {
+					// Show success message and close modal
+					alert(`Material suggestion status updated to: ${status}`);
+					bootstrap.Modal.getInstance(document.getElementById('materialDetailsModal')).hide();
+					
+					// Refresh the table if needed
+					// location.reload();
         })
         .catch(error => {
-            console.error('Error fetching material details:', error);
-            alert('Error loading data: ' + error.message);
-        });
-}
+					console.error('Error:', error);
+					alert('Error updating material status: ' + error.message);
+				});
+				*/
+			}
 
+			// Function to print material details
+			function printMaterialDetails(data) {
+				// Create a new window for printing
+				const printWindow = window.open('', '_blank');
+				
+				// Generate the print content with a nice layout
+				printWindow.document.write(`
+					<!DOCTYPE html>
+					<html>
+					<head>
+						<title>Material Suggestion - ${data.title}</title>
+						<style>
+							body { font-family: Arial, sans-serif; margin: 30px; }
+							.header { text-align: center; margin-bottom: 30px; }
+							.logo { max-width: 150px; height: auto; }
+							h1 { margin-bottom: 5px; color: #005e9a; }
+							.date { margin-bottom: 20px; color: #666; }
+							.content { margin-bottom: 30px; }
+							table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+							th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #ddd; }
+							th { background-color: #f2f2f2; font-weight: bold; }
+							.footer { margin-top: 50px; font-size: 0.8em; color: #666; text-align: center; }
+						</style>
+					</head>
+					<body>
+						<div class="header">
+							<h1>Material Suggestion Report</h1>
+							<p class="date">Generated on: ${new Date().toLocaleString()}</p>
+						</div>
+						
+						<div class="content">
+							<table>
+								<tr>
+									<th>Field</th>
+									<th>Details</th>
+								</tr>
+								<tr>
+									<td>ID</td>
+									<td>${data.id || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Suggestion By</td>
+									<td>${data.nama || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Email</td>
+									<td>${data.email || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Title</td>
+									<td>${data.title || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Subject</td>
+									<td>${data.subjek || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>ISBN</td>
+									<td>${data.isbn || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Author</td>
+									<td>${data.author || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Publisher</td>
+									<td>${data.penerbit || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Edition</td>
+									<td>${data.edisi || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Copies</td>
+									<td>${data.bilSalinan || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Material Type</td>
+									<td>${data.jenisBahan || 'N/A'}</td>
+								</tr>
+								<tr>
+									<td>Sets</td>
+									<td>${data.bilSet || 'N/A'}</td>
+								</tr>
+							</table>
+						</div>
+						
+						<div class="footer">
+							<p>This is an automatically generated report from the PPK Admin Dashboard.</p>
+						</div>
+					</body>
+					</html>
+				`);
+				
+				printWindow.document.close();
+				
+				// Wait for content to load before printing
+				setTimeout(function() {
+					printWindow.print();
+				}, 500);
+			}
 
-function loadMaterialDetailsLost(patronId) {
-    // Fetch details for the given patronId
+			window.loadMaterialDetailsLost = function(patronId) {
     fetch(`/eforms/admin/by-patron/${patronId}`)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.status);
-            }
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
             return response.json();
         })
         .then(data => {
-            // Check if data is available and is an array
             if (data && data.length > 0) {
-                // Use the first record from the array
                 const record = data[0];
-                
-                // Populate the modal with the fetched data
-                document.getElementById('modalPatronId').innerText = record[0] || 'N/A'; // patron_id
-                document.getElementById('modalAcquisitionNumber').innerText = record[1] || 'N/A'; // acquisition_number
-                document.getElementById('modalBorrowDate').innerText = record[2] || 'N/A'; // borrow_date
-                document.getElementById('modalReturnDate').innerText = record[3] || 'N/A'; // return_date
-                document.getElementById('modalPaymentMethod').innerText = record[5] || 'N/A'; // payment_method
-                document.getElementById('modalTotalPayment').innerText = record[6] || 'N/A'; // total_payment
+                let totalPayment = record[6] || 0;
+							document.getElementById('modalPatronId').textContent = record[0] || 'N/A';
+							document.getElementById('modalAcquisitionNumber').textContent = record[2] || 'N/A';
+							document.getElementById('modalBorrowDate').textContent = record[3] || 'N/A';
+							document.getElementById('modalReturnDate').textContent = record[4] || 'N/A';
+							document.getElementById('modalPaymentMethod').textContent = record[5] || 'N/A';
+							document.getElementById('modalTotalPayment').textContent = record[6] || 'N/A';
+							
+							// Use the actual payment breakdown from the database if available
+							if (record[7]) {
+							    document.getElementById('modalPaymentBreakdown').textContent = record[7];
+							} else {
+							    // Fallback to calculated breakdown if not available
+							    const bookPrice = totalPayment * 0.7;
+							    const lateFee = totalPayment * 0.2;
+							    const processingFee = totalPayment * 0.1;
+                                document.getElementById('modalPaymentBreakdown').textContent = 
+                                  `Book: RM${bookPrice.toFixed(2)} + Late Fee: RM${lateFee.toFixed(2)} + Processing: RM${processingFee.toFixed(2)} = RM${totalPayment.toFixed(2)}`;
+                            }
             } else {
-                // Handle case with no data
-                console.error('No data returned for patron ID:', patronId);
-                
-                // Clear all fields
                 ['modalPatronId', 'modalAcquisitionNumber', 'modalBorrowDate', 
-                 'modalReturnDate', 'modalPaymentMethod', 'modalTotalPayment'].forEach(id => {
-                    document.getElementById(id).innerText = 'N/A';
-                });
-            }
+                 'modalReturnDate', 'modalPaymentMethod', 'modalTotalPayment', 'modalPaymentBreakdown'].forEach(id => {
+								document.getElementById(id).textContent = 'N/A';
+							});
+						}
+						
+						const modal = new bootstrap.Modal(document.getElementById('lostMaterialsModal'));
+						modal.show();
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error loading lost material details: ' + error.message);
+					});
+			};
 
-            // Show the modal programmatically with proper focus management
-            const modalElement = document.getElementById('lostMaterialsModal');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalElement.addEventListener('shown.bs.modal', function () {
-                // Ensure focus is properly managed inside the modal
-                document.querySelector('#lostMaterialsModal .btn-close').focus();
-            });
-            modalInstance.show();
+			window.showMembersList = function() {
+				const modal = new bootstrap.Modal(document.getElementById('detailsModallist'));
+				modal.show();
+			};
+
+			window.showBooksList = function() {
+				const modal = new bootstrap.Modal(document.getElementById('detailsModallistbl'));
+				modal.show();
+			};
+
+			// Room Management Functions
+			document.addEventListener('DOMContentLoaded', function() {
+				// Load all rooms on page load
+				loadAllRooms();
+				
+				// Load all equipment on page load
+				loadAllEquipment();
+				
+				// Load all booking summaries on page load
+				//alert("Load all booking summaries on page load at 1909")
+				//loadAllBookingSummaries();
+				
+				// Add event listener for room row limit change
+                const roomRowLimitSelect = document.getElementById('roomRowLimit');
+                if (roomRowLimitSelect) {
+                    roomRowLimitSelect.addEventListener('change', function() {
+                        loadAllRooms();
+                    });
+                }
+                
+                // Add event listener for booking row limit change
+                const bookingRowLimitSelect = document.getElementById('bookingRowLimit');
+                if (bookingRowLimitSelect) {
+                    bookingRowLimitSelect.addEventListener('change', function()
+					{
+						//alert("Load all booking summaries on page load ;limit at 1925")
+                        loadAllBookingSummaries();
+                    });
+                }
+				
+				// Check if openAddRoomModal is set
+				const openAddRoomModalAttr = document.body.getAttribute('data-open-add-room-modal');
+				if (openAddRoomModalAttr === 'true') {
+					const modal = new bootstrap.Modal(document.getElementById('addRoomModal'));
+					modal.show();
+				}
+				
+				// Success and Error toasts
+				const successToast = document.getElementById('successToast');
+				if (successToast) {
+					const bsToast = new bootstrap.Toast(successToast);
+					bsToast.show();
+				}
+				
+				const errorToast = document.getElementById('errorToast');
+				if (errorToast) {
+					const bsToast = new bootstrap.Toast(errorToast);
+					bsToast.show();
+				}
+			});
+			
+			// Room Management Functions
+			function loadAllRooms() {
+				fetch('/eforms/admin/rooms')
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(data => {
+						const tableBody = document.getElementById('roomTableBody');
+						tableBody.innerHTML = '';
+						
+						// Get the selected row limit
+						const rowLimitSelect = document.getElementById('roomRowLimit');
+						const rowLimit = rowLimitSelect ? rowLimitSelect.value : '10';
+						
+						if (data && data.length > 0) {
+							// Sort rooms by ID (descending) to show latest first
+							data.sort((a, b) => b.id - a.id);
+							
+							// Apply row limit
+							let dataToShow = data;
+							if (rowLimit !== 'all') {
+								dataToShow = data.slice(0, parseInt(rowLimit));
+							}
+							
+							// Display rooms
+							dataToShow.forEach(room => {
+							const row = document.createElement('tr');
+							
+							// Create cells for room properties
+							row.innerHTML = `
+								<td>${room.id}</td>
+								<td>${room.labelName}</td>
+								<td>${room.roomType || 'Not specified'}</td>
+								<td>${room.capacity}</td>
+								<td>RM ${room.price.toFixed(2)}</td>
+								<td>${room.isAvailable ? 
+									'<span class="badge bg-success">Available</span>' : 
+									'<span class="badge bg-danger">Unavailable</span>'}
+								</td>
+								<td>
+									<button class="btn btn-sm btn-primary me-1" onclick="editRoom(${room.id})">
+										<i class="fas fa-edit"></i> Edit
+									</button>
+									<button class="btn btn-sm btn-danger" onclick="confirmDeleteRoom(${room.id}, '${room.labelName}')">
+										<i class="fas fa-trash"></i> Delete
+									</button>
+								</td>
+							`;
+							
+							tableBody.appendChild(row);
+						});
+						} else {
+							// No rooms found
+							const row = document.createElement('tr');
+							row.innerHTML = '<td colspan="7" class="text-center">No rooms found</td>';
+							tableBody.appendChild(row);
+						}
         })
         .catch(error => {
-            console.error('Error fetching details:', error);
-            
-            // Display error message in the console and optionally to the user
-            alert('Error loading data: ' + error.message);
-        });
-}
+						console.error('Error loading rooms:', error);
+						alert('Error loading rooms: ' + error.message);
+					});
+			}
+			
+			// Equipment Management Functions
+			function loadAllEquipment() {
+				fetch('/eforms/admin/equipment')
+					.then(response => {
+						if (!response.ok) {
+							console.warn('Equipment endpoint returned status: ' + response.status);
+							return []; // Return empty array instead of throwing error
+						}
+						return response.json();
+					})
+					.then(data => {
+						const tbody = document.querySelector('#equipmentTable tbody');
+						if (!tbody) {
+							console.warn('Equipment table tbody not found - skipping equipment loading');
+							return;
+						}
+						
+						tbody.innerHTML = '';
+						
+						if (data.length === 0) {
+							const tr = document.createElement('tr');
+							tr.innerHTML = '<td colspan="5" class="text-center">No equipment found</td>';
+							tbody.appendChild(tr);
+							return;
+						}
+						
+						data.forEach(equipment => {
+							const tr = document.createElement('tr');
+							tr.innerHTML = `
+								<td>${equipment.id}</td>
+								<td>${equipment.equipmentName || 'N/A'}</td>
+								<td>${equipment.quantity > 1 ? 'Yes' : 'No'}</td>
+								<td>${equipment.price ? equipment.price.toFixed(2) : '0.00'}</td>
+								<td>
+									<button class="btn btn-sm btn-primary" onclick="editEquipment(${equipment.id})">
+										<i class="fas fa-edit"></i>
+									</button>
+									<button class="btn btn-sm btn-danger" onclick="deleteEquipment(${equipment.id})">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
+							`;
+							tbody.appendChild(tr);
+						});
+					})
+					.catch(error => {
+						console.warn('Error loading equipment:', error);
+						const tbody = document.querySelector('#equipmentTable tbody');
+						if (tbody) {
+							tbody.innerHTML = '<tr><td colspan="5" class="text-center text-warning">No equipment data available.</td></tr>';
+						}
+					});
+			}
+			
+			function editEquipment(id) {
+				fetch(`/eforms/admin/equipment/${id}`)
+					.then(response => {
+						if (!response.ok) {
+							console.warn('Equipment endpoint returned status: ' + response.status);
+							return null; // Return null to indicate error
+						}
+						return response.json();
+					})
+					.then(equipment => {
+						if (!equipment) {
+							console.warn('No equipment data received');
+							return;
+						}
+						
+						// Populate the edit form with equipment data if form elements exist
+						const editEquipmentId = document.getElementById('editEquipmentId');
+						const editEquipmentName = document.getElementById('editEquipmentName');
+						const editMultiUnits = document.getElementById('editMultiUnits');
+						const editEquipmentPrice = document.getElementById('editEquipmentPrice');
+						
+						if (editEquipmentId) editEquipmentId.value = equipment.id || '';
+						if (editEquipmentName) editEquipmentName.value = equipment.name || '';
+						if (editMultiUnits) editMultiUnits.value = equipment.multiUnits || '';
+						if (editEquipmentPrice) editEquipmentPrice.value = equipment.price || '';
+						
+						// Show the edit modal
+						const editEquipmentModal = document.getElementById('editEquipmentModal');
+						if (editEquipmentModal) {
+							const modal = new bootstrap.Modal(editEquipmentModal);
+						modal.show();
+						} else {
+							console.warn('Edit equipment modal not found');
+						}
+					})
+					.catch(error => {
+						console.warn('Error loading equipment details:', error);
+					});
+			}
+			
+			function confirmDeleteEquipment(id, name) {
+				// Set up the delete confirmation modal
+				document.getElementById('deleteEquipmentName').textContent = name;
+				const deleteForm = document.getElementById('deleteEquipmentForm');
+				deleteForm.action = `/eforms/admin/delete-equipment/${id}`;
+				
+				// Show the delete modal
+				const modal = new bootstrap.Modal(document.getElementById('deleteEquipmentModal'));
+				modal.show();
+			}
+			
+			// Booking Summaries Functions
+			function loadAllBookingSummaries()
+			{
 
-function showMembersList() {
-    const modalElement = document.getElementById('detailsModallist');
-    const modalInstance = new bootstrap.Modal(modalElement);
-    modalElement.addEventListener('shown.bs.modal', function () {
-        document.querySelector('#detailsModallist .btn-close').focus();
-    });
-    modalInstance.show();
-}
+				//alert("loadAllBookingSummaries function line 2108");
+			
+				fetch('/eforms/admin/bookings')
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(data => {
+						const tableBody = document.getElementById('bookingSummariesTableBody');
+							tableBody.innerHTML = '';
 
-function showBooksList() {
-    const modalElement = document.getElementById('detailsModallistbl');
-    const modalInstance = new bootstrap.Modal(modalElement);
-    modalElement.addEventListener('shown.bs.modal', function () {
-        document.querySelector('#detailsModallistbl .btn-close').focus();
-    });
-    modalInstance.show();
-}
+						// Get the selected row limit
+						const rowLimitSelect = document.getElementById('bookingRowLimit');
+						const rowLimit = rowLimitSelect ? rowLimitSelect.value : '10';
+						
+						// Get the selected location filter
+						const locationFilter = document.getElementById('locationFilter');
+						const selectedLocation = locationFilter ? locationFilter.value : 'all';
+							
+						if (data && data.length > 0) {
+							// Populate location filter if needed
+							if (locationFilter) {
+								// Get unique locations
+								const locations = [...new Set(data
+									.filter(booking => booking.roomLocation)
+									.map(booking => booking.roomLocation))];
+								
+								// Store current selection
+								const currentSelection = locationFilter.value;
+								
+								// Clear existing options except "All"
+								while (locationFilter.options.length > 1) 
+								{
+									locationFilter.remove(1);
+								}
+								
+								// Add location options
+								locations.forEach(location => {
+									const option = document.createElement('option');
+									option.value = location;
+									option.textContent = location;
+									locationFilter.appendChild(option);
+								});
+								
+								// Restore selection if possible
+								if (locations.includes(currentSelection)) {
+									locationFilter.value = currentSelection;
+								}
+							}
+							
+							// Sort data by latest bookings first (if possible based on date or ID)
+							data.sort((a, b) => {
+								if (a.startDate && b.startDate) {
+									return new Date(b.startDate) - new Date(a.startDate);
+								}
+								return b.id - a.id; // Fallback to ID
+							});
+							
+							// Filter by location if needed
+							let filteredData = data;
+							if (selectedLocation !== 'all') {
+								filteredData = data.filter(booking => booking.roomLocation === selectedLocation);
+							}
+							
+							// Filter data based on row limit
+							let dataToShow = filteredData;
+							if (rowLimit !== 'all') {
+								dataToShow = filteredData.slice(0, parseInt(rowLimit));
+							}
+							
+							dataToShow.forEach(booking => {
+								const row = document.createElement('tr');
+								
+								// Create a function to format dates
+								const formatDate = (dateString) => {
+									if (!dateString) return '';
+									const date = new Date(dateString);
+									return date.toISOString().split('T')[0]; // YYYY-MM-DD
+								};
+								
+								// Format the date range
+								let dateRangeText = formatDate(booking.startDate);
+								if (booking.endDate) {
+									dateRangeText += ' to ' + formatDate(booking.endDate);
+								}
+								
+								// Get room name with fallback to room ID
+								const roomName = booking.roomName ? booking.roomName : (booking.roomId ? `Room ${booking.roomId}` : 'N/A');
+								
+								// Format equipment information
+								let equipmentText = 'N/A';
+								let equipmentItems = [];
+
+								// Use equipment list if available
+								if (booking.equipmentList && booking.equipmentList.length > 0) {
+									booking.equipmentList.forEach(item => {
+										equipmentItems.push(`${item.name} x ${item.quantity}`);
+									});
+									equipmentText = equipmentItems.join(', ');
+								}
+								// Fallback to attendees as chairs if no equipment list found
+								else if (booking.attendees) {
+									equipmentItems.push(`Chairs x ${booking.attendees}`);
+									
+									// Add tables if any
+									if (booking.tableCount && booking.tableCount > 0) {
+										equipmentItems.push(`Tables x ${booking.tableCount}`);
+									}
+
+									// Add projector if available
+									if (booking.hasProjector) {
+										equipmentItems.push('Projector');
+									}
+
+									// Join all equipment items with commas
+									if (equipmentItems.length > 0) {
+										equipmentText = equipmentItems.join(', ');
+									}
+								}
+								
+								// Set the row HTML
+								row.innerHTML = `
+									<td>${booking.id || ''}</td>
+									<td>
+										${roomName}
+										${booking.roomLocation ? `<br><small class="text-muted">${booking.roomLocation}</small>` : ''}
+									</td>
+									<td>${booking.bookingType || 'Standard'}</td>
+									<td>${dateRangeText}</td>
+									<td>${booking.time || 'N/A'}</td>
+									<td>${booking.customer_name != null ? booking.customer_name : 'N/A'}</td>
+									<td>${equipmentText}</td>
+									<td>${booking.totalCost ? booking.totalCost.toFixed(2) : '0.00'}</td>
+									<td>
+										<span class="badge ${booking.paymentStatus === 'Paid' ? 'bg-success' : 'bg-warning text-dark'}">
+											${booking.paymentStatus || 'Pending'}
+										</span>
+									</td>
+									<td>
+										<span class="badge ${
+											booking.status === 'Approved' ? 'bg-success' : 
+											booking.status === 'Cancelled' ? 'bg-danger' : 'bg-warning text-dark'
+										}">
+											${booking.status || 'Pending'}
+										</span>
+									</td>
+									<td>
+										<div class="btn-group">
+											<button class="btn btn-sm btn-primary" onclick="loadRoomBookingDetails(${booking.id})">
+												<i class="fas fa-eye"></i>
+											</button>
+										</div>
+									</td>
+								`;
+								
+								tableBody.appendChild(row);
+							});
+						} else {
+							// No bookings found
+							const row = document.createElement('tr');
+							row.innerHTML = '<td colspan="11" class="text-center">No bookings found</td>';
+							tableBody.appendChild(row);
+						}
+					})
+					.catch(error => {
+						console.error('Error loading bookings:', error);
+						
+						// Display error message in table
+						const tableBody = document.getElementById('bookingSummariesTableBody');
+						if (tableBody) {
+							tableBody.innerHTML = `
+								<tr>
+									<td colspan="11" class="text-center text-danger">
+										Error loading bookings: ${error.message}
+									</td>
+								</tr>
+							`;
+						}
+					});
+				
+			}
+			
+			function viewBookingDetails(id) {
+				fetch(`/eforms/admin/booking/${id}`)
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(booking => {
+						// Populate room information
+						document.getElementById('detailRoomName').textContent =booking.roomName || `Room ${booking.roomId}`;
+						document.getElementById('detailRoomCapacity').textContent = booking.capacity ? `${booking.capacity} orang` : 'N/A';
+						document.getElementById('detailRoomHourlyRate').textContent = booking.roomPrice ? `RM${booking.roomPrice.toFixed(2)} sejam` : 'N/A';
+						document.getElementById('detailRoomPrice').textContent = booking.roomPrice ? `RM${booking.roomPrice.toFixed(2)}` : 'N/A';
+						
+						// Populate booking details
+						document.getElementById('detailDate').textContent = booking.startDate || 'N/A';
+						document.getElementById('detailTime').textContent = booking.time || 'N/A';
+						document.getElementById('detailAttendees').textContent = booking.attendees || 'N/A';
+						document.getElementById('detailLayout').textContent = booking.layout || booking.roomType || 'N/A';
+						
+						// Populate equipment details if available
+						const equipmentTableBody = document.getElementById('equipmentDetailsTableBody');
+						equipmentTableBody.innerHTML = '';
+						
+						if (booking.equipment && booking.equipment.length > 0) {
+							booking.equipment.forEach(equip => {
+								const row = document.createElement('tr');
+								const totalPrice = (equip.price * equip.quantity).toFixed(2);
+								
+								row.innerHTML = `
+									<td>${equip.name} x ${equip.quantity}</td>
+									<td>${equip.quantity}</td>
+									<td>RM${equip.price.toFixed(2)} Setiap Tempahan</td>
+									<td>RM${totalPrice}</td>
+								`;
+								
+								equipmentTableBody.appendChild(row);
+							});
+						} else {
+							const row = document.createElement('tr');
+							row.innerHTML = `<td colspan="4" class="text-center">No equipment booked.</td>`;
+							equipmentTableBody.appendChild(row);
+						}
+						
+						// Populate payment summary
+						document.getElementById('detailSubtotal').textContent = booking.subtotal ? `RM${booking.subtotal.toFixed(2)}` : 'RM0.00';
+						document.getElementById('detailTax').textContent = booking.tax ? `RM${booking.tax.toFixed(2)}` : 'RM0.00';
+						document.getElementById('detailTotal').textContent = booking.totalPrice ? `RM${booking.totalPrice.toFixed(2)}` : 'RM0.00';
+						document.getElementById('detailDeposit').textContent = booking.deposit ? `RM${booking.deposit.toFixed(2)}` : 'RM0.00';
+						
+						// Populate personal information
+						document.getElementById('detailTitle').textContent = booking.title || '-';
+						document.getElementById('detailName').textContent = booking.customerName || '-';
+						document.getElementById('detailPhone').textContent = booking.phone || '-';
+						document.getElementById('detailEmail').textContent = booking.email || '-';
+						document.getElementById('detailNotes').textContent = booking.notes || '-';
+						
+						// Populate billing address
+						document.getElementById('detailCompany').textContent = booking.company || '-';
+						document.getElementById('detailAddress').textContent = booking.address || '-';
+						document.getElementById('detailCity').textContent = booking.city || '-';
+						document.getElementById('detailState').textContent = booking.state || '-';
+						document.getElementById('detailPostcode').textContent = booking.postcode || '-';
+						document.getElementById('detailCountry').textContent = booking.country || '-';
+						
+						// Populate payment method
+						document.getElementById('detailPaymentMethod').textContent = booking.paymentMethod || 'Manual';
+						document.getElementById('detailPaymentStatus').textContent = booking.paymentStatus || '-';
+						
+						// Set up action buttons
+						const approveBtn = document.getElementById('approveBookingBtn');
+						const cancelBtn = document.getElementById('cancelBookingBtn');
+						const printBtn = document.getElementById('printBookingBtn');
+						
+						// Reset onclick handlers
+						approveBtn.onclick = null;
+						cancelBtn.onclick = null;
+						printBtn.onclick = null;
+						
+						// Set new onclick handlers
+						approveBtn.onclick = function() {
+							updateBookingStatus(booking.id, 'Approved');
+						};
+						
+						cancelBtn.onclick = function() {
+							updateBookingStatus(booking.id, 'Cancelled');
+						};
+						
+						printBtn.onclick = function() {
+							printBookingDetails(booking.id);
+						};
+						
+						// Show/hide buttons based on current status
+						if (booking.status === 'Approved' || booking.status === 'Pending') {
+							approveBtn.style.display = 'none';
+							cancelBtn.style.display = '';
+						} else if (booking.status === 'Cancelled') {
+							approveBtn.style.display = '';
+							cancelBtn.style.display = 'none';
+						} else {
+							approveBtn.style.display = '';
+							cancelBtn.style.display = '';
+						}
+						
+						// Show the modal
+						const modal = new bootstrap.Modal(document.getElementById('bookingDetailsModal'));
+							modal.show();
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Error loading booking details: ' + error.message);
+					});
+			}
+			
+			function updateBookingStatus(id, status) {
+				fetch('/eforms/admin/update-booking-status/' + id, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ status: status })
+				})
+				.then(response => {
+					if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+					return response.json();
+				})
+				.then(data => {
+					// Close the modal
+					const modal = bootstrap.Modal.getInstance(document.getElementById('bookingDetailsModal'));
+					if (modal) modal.hide();
+					
+					// Show success message
+					alert('Booking status updated to ' + status + ' successfully!');
+					
+					// Reload the bookings table
+					loadAllBookingSummaries();
+					})
+					.catch(error => {
+					console.error('Error:', error);
+					alert('Error updating booking status: ' + error.message);
+				});
+			}
+			
+			function printBookingDetails(id) {
+				// Create a new window for printing
+				var printWindow = window.open('', '_blank');
+				
+				// Get the booking details modal content
+				var modalContent = document.getElementById('bookingDetailsModal').querySelector('.modal-body').cloneNode(true);
+				
+				// Create a simplified version for printing
+			
+				
+				printWindow.document.write(htmlContent);
+				printWindow.document.close();
+			}
+			
+			// Show success or error message if present
+			document.addEventListener('DOMContentLoaded', function() {
+				// Check for success message
+				const successToast = document.getElementById('successToast');
+				if (successToast) {
+					const bsToast = new bootstrap.Toast(successToast);
+					bsToast.show();
+				}
+				
+				// Check for error message
+				const errorToast = document.getElementById('errorToast');
+				if (errorToast) {
+					const bsToast = new bootstrap.Toast(errorToast);
+					bsToast.show();
+				}
+				
+				// Initialize FontAwesome icons if available
+				if (typeof FontAwesome !== 'undefined') {
+					FontAwesome.dom.i2svg();
+				}
+				
+				// Load all rooms on page load
+				loadAllRooms();
+				
+				// Load all equipment on page load
+				loadAllEquipment();
+				
+				// Load all booking summaries on page load
+				//alert("at 2491 call ")
+				//loadAllBookingSummaries();
+			});
+		</script>
+
+		<!-- Room Booking Modal - Keep only one copy of this modal -->
+		<div class="modal fade" id="roomBookingModal" tabindex="-1" aria-labelledby="roomBookingModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="roomBookingModalLabel">Room Booking Details</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Booking ID:</strong> <span id="modalBookingId"></span></p>
+								<p><strong>Room ID:</strong> <span id="modalRoomId"></span></p>
+								<p><strong>Attendees:</strong> <span id="modalAttendees"></span></p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Start Date:</strong> <span id="modalStartDate"></span></p>
+								<p><strong>End Date:</strong> <span id="modalEndDate"></span></p>
+								<p><strong>Time:</strong> <span id="modalTime"></span></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Custom Script to open modal if directed -->
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			document.addEventListener('DOMContentLoaded', function () {
+				var openModalFlag = /*[[${openAddRoomModal}]]*/ false;
+				if (openModalFlag) {
+					var addNewRoomModal = new bootstrap.Modal(document.getElementById('addNewRoomModal'));
+					if (addNewRoomModal) {
+						addNewRoomModal.show();
+					}
+				}
+			});
+			/*]]>*/
+		</script>
+
+		<!-- Fix for loadRoomBookingDetails function -->
+		<script>
+		// Ensure loadRoomBookingDetails function is properly defined
+		if (typeof window.loadRoomBookingDetails !== 'function') {
+			window.loadRoomBookingDetails = function(id) {
+				fetch("/eforms/admin/room-booking/" + id)
+					.then(function(response) {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(function(data) {
+						// Populate modal data
+						document.getElementById('modalBookingId').textContent = data.id || 'N/A';
+						document.getElementById('modalRoomId').textContent = data.roomId || 'N/A';
+						document.getElementById('modalAttendees').textContent = data.attendees || 'N/A';
+						document.getElementById('modalStartDate').textContent = data.startDate || 'N/A';
+						document.getElementById('modalEndDate').textContent = data.endDate || 'N/A';
+						document.getElementById('modalTime').textContent = data.time || 'N/A';
 
 
+						
+						// Show modal
+						var modal = new bootstrap.Modal(document.getElementById('roomBookingModal'));
+						modal.show();
+					})
+					.catch(function(error) {
+						console.error('Error:', error);
+						alert('Error loading booking details: ' + error.message);
+					});
+			};
+		}
 
+		// Initialize components when DOM is loaded
+			document.addEventListener('DOMContentLoaded', function() {
+			// Initialize tables if functions exist
+			if (typeof loadAllRooms === 'function') loadAllRooms();
+			// REMOVED: Equipment management functionality
+			if (typeof loadAllBookingSummaries === 'function')
+				
+				//alert("at line 2556 :DOMContentLoaded ->loadAllBookingSummaries ");
+				//loadAllBookingSummaries();
+			
+			// Show toasts if present
+			var successToast = document.getElementById('successToast');
+			if (successToast) {
+				var bsToast = new bootstrap.Toast(successToast);
+				bsToast.show();
+			}
+			
+			var errorToast = document.getElementById('errorToast');
+			if (errorToast) {
+				var bsToast = new bootstrap.Toast(errorToast);
+				bsToast.show();
+			}
+		});
+		</script>
 
+		<script>
+		// Implement missing functions
+		function editRoom(id) {
+			fetch(`/eforms/admin/room/${id}`)
+				.then(response => {
+					if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+					return response.json();
+				})
+				.then(room => {
+					// Populate the edit form fields
+					document.getElementById('editRoomId').value = room.id;
+					document.getElementById('editRoomName').value = room.labelName || '';
+					document.getElementById('editRoomType').value = room.roomType || '';
+					  
+					  document.getElementById('editCapacity').value = room.capacity || '';
+					document.getElementById('editPrice').value = room.price || '';
+					document.getElementById('editLocation').value = room.location || '';
+					
+					// Handle the room image preview
+					const imagePreview = document.getElementById('editRoomImagePreview');
+					if (imagePreview) {
+						// Set the image source based on the same logic used in templates
+						let imageSrc = '/eforms/img/room2.jpg'; // Default image
+						
+						// Display room image
+						if (!room.imgName || room.imgName === '') {
+							imageSrc = '/eforms/img/room2.jpg';
+						} else if (room.imgName.startsWith('/')) {
+							imageSrc = room.imgName;
+						} else if (room.imgName.startsWith('room_')) {
+							imageSrc = '/eforms/room-images/' + room.imgName;
+						} else {
+							imageSrc = '/eforms/img/room2.jpg';
+						}
+						
+						imagePreview.src = imageSrc;
+						imagePreview.onerror = function() {
+							console.log('Failed to load image:', this.src);
+							this.src = '/eforms/img/room2.jpg';
+						};
+						
+						// Make the image preview visible
+						imagePreview.style.display = 'block';
+						
+						// Add hidden input with current image name if needed
+						const currentImageInput = document.getElementById('currentImageName');
+						if (currentImageInput)
+						{
+							currentImageInput.value = room.imgName || '';
+						}
+						
+						toggleEquipmentSection(room.roomType, 'edit');
+					}
+					
+					// Show the modal using vanilla JavaScript
+					const editRoomModal = document.getElementById('editRoomModal');
+					const bootstrapModal = new bootstrap.Modal(editRoomModal);
+					bootstrapModal.show();
+				})
+				.catch(error => {
+					console.error('Error loading room details:', error);
+					// Use alert instead of SweetAlert if SweetAlert is not available
+					alert('Error: Failed to load room details. Please try again.');
+				});
+		}
+		
+		// Update the confirmDeleteRoom function to use the absolute URL path
+		function confirmDeleteRoom(id, name) {
+			if (confirm(`Are you sure you want to delete room "${name}"?`)) {
+				// First check if there are any bookings for this room
+				fetch(`/eforms/admin/room-bookings/${id}`)
+					.then(response => response.json())
+					.then(bookings => {
+						if (bookings && bookings.length > 0) {
+							// Room has bookings - show warning
+							alert(`Cannot delete room "${name}" because it has ${bookings.length} associated bookings. Please cancel all bookings first or use the admin panel to manage these bookings.`);
+					} else {
+							// No bookings - proceed with deletion
+							const form = document.createElement('form');
+							form.method = 'POST';
+							form.action = `/eforms/admin/delete-room/${id}`;
+							document.body.appendChild(form);
+							form.submit();
+						}
+					})
+					.catch(error => {
+						console.error('Error checking bookings:', error);
+						// If we can't check bookings, try deletion anyway
+						const form = document.createElement('form');
+						form.method = 'POST';
+						form.action = `/eforms/admin/delete-room/${id}`;
+						document.body.appendChild(form);
+						form.submit();
+					});
+			}
+		}
+		
+		// Enhance loadRoomBookingDetails function to show complete booking details
+		window.loadRoomBookingDetails = function(id) {
+			// Remove excessive logging
+			// console.log('Loading booking details for ID:', id);
+			
+			// Remove the special case hardcoding and fetch actual data
+			fetch(`/eforms/admin/booking-details/${id}`)
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+						return response.json();
+					})
+					.then(booking => {
+						// Check if booking.roomId is valid BEFORE fetching room details
+						if (!booking.roomId) {
+							console.error('Error: Booking ID ' + booking.id + ' has no associated Room ID.');
+							alert('Error: Cannot load details for this booking as it has no associated room.');
+							return; // Stop further processing
+						}
 
+					// Remove excessive logging
+					// console.log('Received booking data:', booking);
+
+					// Fetch room details to get room name, price, etc.
+						fetch(`/eforms/admin/room/${booking.roomId}`)
+							.then(response => {
+								if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+								return response.json();
+							})
+							.then(room => {
+							// Remove excessive logging
+							// console.log('Received room data:', room);
+
+							// Populate booking details modal
+							document.getElementById('bookingId').textContent = booking.id || 'N/A';
+							document.getElementById('bookingRoom').textContent = room.labelName || `Room ${booking.roomId}`;
+							document.getElementById('bookingLayout').textContent = room.roomType || 'Standard';
+							document.getElementById('bookingType').textContent = 'Standard';
+							
+							// Format dates
+							const formatDate = (dateString) => {
+								if (!dateString) return 'N/A';
+								const date = new Date(dateString);
+								return date.toLocaleDateString('ms-MY');
+							};
+							
+							document.getElementById('bookingStartDate').textContent = formatDate(booking.startDate);
+							document.getElementById('bookingEndDate').textContent = formatDate(booking.endDate);
+							document.getElementById('bookingHours').textContent = booking.time || 'N/A';
+							
+							// Set status with appropriate styling
+							const statusElement = document.getElementById('bookingStatus');
+							statusElement.textContent = booking.status || 'Pending';
+							statusElement.className = 'badge ' + 
+								(booking.status === 'Approved' ? 'bg-success' : 
+								 booking.status === 'Cancelled' ? 'bg-danger' : 'bg-warning text-dark');
+							
+							// Customer information (if available)
+							
+							
+							let customer = booking.customer || {};
+							//alert("data"+customer.title);
+							document.getElementById('customerTitle').textContent = customer.title || 'N/A';
+							document.getElementById('customerName').textContent = customer.name || 'N/A';
+							document.getElementById('customerPhone').textContent = customer.phone || 'N/A';
+							document.getElementById('customerEmail').textContent = customer.email || 'N/A';
+							//document.getElementById('customerAddress').textContent = booking.address || 'N/A';
+							//document.getElementById('customerCity').textContent = booking.city || 'N/A';
+							//document.getElementById('customerState').textContent = booking.state || 'N/A';
+							//document.getElementById('customerPostcode').textContent = booking.postcode || 'N/A';
+							document.getElementById('customerNotes').textContent = customer.notes || 'No notes provided.';
+							
+							// Equipment section - show all equipment items
+							const equipmentTableBody = document.getElementById('bookingEquipment');
+								equipmentTableBody.innerHTML = '';
+								
+							// Calculate costs
+							const roomPrice = room.price || 0;
+							let equipmentPrice = 0;
+							let hasEquipment = false;
+							
+							// Always fetch equipment separately to ensure we get the latest data
+							// Remove excessive logging
+							// console.log('Fetching equipment data for booking ID:', booking.id);
+							fetch(`/eforms/admin/booking-equipment/${booking.id}`)
+								.then(response => {
+									if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+									return response.json();
+								})
+								.then(equipment => {
+									// Remove excessive logging
+									// console.log('Received equipment data:', equipment);
+									
+									// Check if equipment data is available
+									if (equipment && equipment.length > 0)
+									{
+										hasEquipment = true;
+										
+										equipment.forEach(item => {
+											// Calculate item cost
+											const quantity = item.units || 0;
+											const unitPrice = item.price || 0;
+											const itemCost = quantity * unitPrice;
+											equipmentPrice += itemCost;
+											
+											// Add row to equipment table
+									const row = document.createElement('tr');
+									row.innerHTML = `
+												<td>${item.equipmentName || 'Unknown'}</td>
+												<td>${quantity}</td>
+												<td>RM${unitPrice.toFixed(2)}</td>
+												<td>RM${itemCost.toFixed(2)}</td>
+									`;
+									equipmentTableBody.appendChild(row);
+										});
+									} else if (booking.equipment && booking.equipment.length > 0) {
+										// Try using equipment data embedded in booking object if separate fetch returned nothing
+										hasEquipment = true;
+										
+										booking.equipment.forEach(item => {
+											// Calculate item cost
+											const quantity = item.quantity || 0;
+											const unitPrice = item.price || 0;
+											const itemCost = quantity * unitPrice;
+											equipmentPrice += itemCost;
+											
+											// Add row to equipment table
+											const row = document.createElement('tr');
+											row.innerHTML = `
+												<td>${item.equipmentName || 'Unknown'}</td>
+												<td>${quantity}</td>
+												<td>RM${unitPrice.toFixed(2)}</td>
+												<td>RM${itemCost.toFixed(2)}</td>
+											`;
+											equipmentTableBody.appendChild(row);
+										});
+					} 
+									else {
+										// Fallback to attendees as chairs if no equipment list found
+										if (booking.attendees && booking.attendees > 0) {
+											hasEquipment = true;
+											const chairCost = booking.attendees; // RM1 per chair
+											equipmentPrice += chairCost;
+											
+									const row = document.createElement('tr');
+											row.innerHTML = `
+												<td>Chairs</td>
+												<td>${booking.attendees}</td>
+												<td>RM1.00</td>
+												<td>RM${chairCost.toFixed(2)}</td>
+											`;
+									equipmentTableBody.appendChild(row);
+								}
+								
+										// Add tables if any
+										if (booking.tableCount && booking.tableCount > 0) {
+											hasEquipment = true;
+											const tableCost = booking.tableCount * 3.50; // RM3.50 per table
+											equipmentPrice += tableCost;
+											
+											const row = document.createElement('tr');
+											row.innerHTML = `
+												<td>Tables</td>
+												<td>${booking.tableCount}</td>
+												<td>RM3.50</td>
+												<td>RM${tableCost.toFixed(2)}</td>
+											`;
+											equipmentTableBody.appendChild(row);
+										}
+										
+										// Add projector if available
+										if (booking.hasProjector) {
+											hasEquipment = true;
+											const projectorCost = 50.00; // RM50 for projector
+											equipmentPrice += projectorCost;
+											
+											const row = document.createElement('tr');
+											row.innerHTML = `
+												<td>LCD Projector / Screen</td>
+												<td>1</td>
+												<td>RM50.00</td>
+												<td>RM50.00</td>
+											`;
+											equipmentTableBody.appendChild(row);
+										}
+									}
+									
+									// Show "No equipment" message if no equipment items
+									if (!hasEquipment) {
+										const row = document.createElement('tr');
+										row.innerHTML = '<td colspan="4" class="text-center">No equipment booked</td>';
+										equipmentTableBody.appendChild(row);
+									}
+									
+									// Use the total cost from the booking if available, otherwise calculate it
+									const totalPrice = roomPrice + equipmentPrice;
+									
+									// Update price displays
+									document.getElementById('bookingRoomPrice').textContent = roomPrice.toFixed(2);
+									document.getElementById('bookingEquipmentPrice').textContent = equipmentPrice.toFixed(2);
+									document.getElementById('bookingTotalPrice').textContent = totalPrice.toFixed(2);
+									
+									// Update payment information
+									document.getElementById('paymentMethod').textContent = booking.paymentMethod || 'Manual';
+									document.getElementById('paymentType').textContent = booking.paymentType || 'Full Payment';
+									
+									const paymentStatusElement = document.getElementById('paymentStatus');
+									paymentStatusElement.textContent = booking.paymentStatus || 'Pending';
+									paymentStatusElement.className = 'badge ' + 
+										(booking.paymentStatus === 'Paid' ? 'bg-success' : 'bg-warning text-dark');
+								
+								// Set up action buttons
+								const approveBtn = document.getElementById('approveBookingBtn');
+								const cancelBtn = document.getElementById('cancelBookingBtn');
+									const updateStatusBtn = document.getElementById('updateStatusBtn');
+								
+								// Reset onclick handlers
+								approveBtn.onclick = null;
+								cancelBtn.onclick = null;
+									updateStatusBtn.onclick = null;
+								
+									// Set new onclick handlers with total cost update
+								approveBtn.onclick = function() {
+										updateBookingWithTotal(booking.id, totalPrice, 'Approved');
+								};
+								
+								cancelBtn.onclick = function() {
+										updateBookingWithTotal(booking.id, totalPrice, 'Cancelled');
+									};
+									
+									updateStatusBtn.onclick = function() {
+										// Simple status update dropdown
+										const newStatus = prompt('Enter new status (Approved, Pending, Cancelled):', booking.status || 'Pending');
+										if (newStatus) {
+											updateBookingWithTotal(booking.id, totalPrice, newStatus);
+										}
+								};
+								
+								// Show/hide buttons based on current status
+								if (booking.status === 'Approved') {
+									approveBtn.style.display = 'none';
+									cancelBtn.style.display = '';
+								} else if (booking.status === 'Cancelled') {
+									approveBtn.style.display = '';
+									cancelBtn.style.display = 'none';
+								} else {
+									approveBtn.style.display = '';
+									cancelBtn.style.display = '';
+								}
+								
+								// Show the booking details modal
+									const modal = new bootstrap.Modal(document.getElementById('detailedBookingModal'));
+								modal.show();
+								})
+								.catch(error => {
+									console.error('Error loading equipment details:', error);
+									// Continue showing the modal even if equipment details failed to load
+									const totalPrice = booking.totalCost || roomPrice;
+									
+									// Update price displays with fallback values
+									document.getElementById('bookingRoomPrice').textContent = roomPrice.toFixed(2);
+									document.getElementById('bookingEquipmentPrice').textContent = '0.00';
+									document.getElementById('bookingTotalPrice').textContent = totalPrice.toFixed(2);
+									
+									// Show the booking details modal
+									const modal = new bootstrap.Modal(document.getElementById('detailedBookingModal'));
+									modal.show();
+								});
+							})
+							.catch(error => {
+								console.error('Error loading room details:', error);
+								alert('Error loading room details: ' + error.message);
+							});
+					})
+					.catch(error => {
+						console.error('Error loading booking details:', error);
+						alert('Error loading booking details: ' + error.message);
+					});
+			};
+		
+		// Helper function to update booking total cost
+		function updateBookingTotal(id, total) {
+			fetch(`/eforms/admin/update-booking-total/${id}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ totalCost: total })
+			})
+			.then(response => {
+				if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+				return response.json();
+			})
+			.then(data => {
+				console.log('Updated booking total cost:', data);
+			})
+			.catch(error => {
+				console.error('Error updating booking total cost:', error);
+			});
+		}
+		
+		// Helper function to format date
+		function formatDate(dateString) {
+			if (!dateString) return 'N/A';
+			const date = new Date(dateString);
+			return date.toLocaleDateString('ms-MY');
+		}
+		
+		// Add viewBookingDetails function to show the detailed modal
+		function viewBookingDetails(id) {
+			loadRoomBookingDetails(id);
+		}
+		
+		// Toggle equipment section based on room type
+		function toggleEquipmentSection(roomType, prefix) {
+			const equipmentSection = document.getElementById(`equipmentSection-${prefix}`);
+			if (roomType === 'Bilik Serbaguna') 
+			{
+				equipmentSection.style.display = 'block';
+				// Set chair count to match capacity if not already set
+				const capacityField = prefix === 'add'||'edit' ? document.getElementById('capacity') : document.getElementById('editCapacity');
+				const chairCountField = prefix === 'add' ? document.getElementById('chairCount') : document.getElementById('editChairCount');
+				if (capacityField.value && (!chairCountField.value || chairCountField.value === '0')) {
+					chairCountField.value = capacityField.value;
+			}
+				
+			} else {
+				equipmentSection.style.display = 'none';
+			}
+		}
+		
+		// Update equipment capacity when room capacity changes
+		function updateEquipmentCapacity(capacity, prefix) {
+			const roomTypeField = prefix === 'add'||'edit' ? document.getElementById('roomType') : document.getElementById('editRoomType');
+			if (roomTypeField.value === 'Bilik Serbaguna') {
+				const chairCountField = prefix === 'add' ? document.getElementById('chairCount') : document.getElementById('editChairCount');
+				chairCountField.value = capacity;
+			}
+		}
+		
+		// Initialize equipment sections on page load
+		document.addEventListener('DOMContentLoaded', function() {
+			// Add Room Modal
+			document.getElementById('roomType').addEventListener('change', function() {
+				toggleEquipmentSection(this.value, 'add');
+			});
+			
+			// Edit Room Modal
+			if (document.getElementById('editRoomType')) 
+			{
+				//toggleEquipmentSection(this.value, 'edit');
+				document.getElementById('editRoomType').addEventListener('change', function() {
+					toggleEquipmentSection(this.value, 'edit');
+				});
+			}
+			
+			// Check if Add Room Modal is supposed to be open
+			const params = new URLSearchParams(window.location.search);
+			if (params.has('openAddRoomModal') && params.get('openAddRoomModal') === 'true') {
+				const addRoomModal = new bootstrap.Modal(document.getElementById('addRoomModal'));
+				addRoomModal.show();
+			}
+		});
+		
+		// Function to load material suggestion details
+		function loadMaterialDetails(id) {
+			fetch(`/eforms/admin/admin-dashboard/${id}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					// Populate modal with material details
+					document.getElementById('modalTitle').textContent = data.judul || 'N/A';
+					document.getElementById('modalAuthor').textContent = data.pengarang || 'N/A';
+					document.getElementById('modalPenerbit').textContent = data.penerbit || 'N/A';
+					document.getElementById('modalIsbn').textContent = data.isbn || 'N/A';
+					document.getElementById('modalEdisi').textContent = data.edisi || 'N/A';
+					document.getElementById('modalBilSalinan').textContent = data.bil_salinan || 'N/A';
+					document.getElementById('modalBilSet').textContent = data.bil_set || 'N/A';
+					document.getElementById('modalJenisBahan').textContent = data.jenis_bahan || 'N/A';
+					document.getElementById('modalSubjek').textContent = data.subjek || 'N/A';
+					document.getElementById('modalNama').textContent = data.nama || 'N/A';
+					document.getElementById('modalEmail').textContent = data.email || 'N/A';
+					document.getElementById('modalId').textContent = id || 'N/A';
+					
+					// Show the modal
+					const materialDetailsModal = new bootstrap.Modal(document.getElementById('materialDetailsModal'));
+					materialDetailsModal.show();
+				})
+				.catch(error => {
+					console.error('Error fetching material details:', error);
+					alert('Error loading material details. Please try again.');
+				});
+		}
+		
+		// Function to load lost material details by patron id
+		function loadMaterialDetailsLost(patronId) {
+			fetch(`/eforms/admin/by-patron/${patronId}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					// Clear existing table
+					const tableBody = document.getElementById('lostMaterialsTableBody');
+					if (tableBody) {
+						tableBody.innerHTML = '';
+					}
+					
+					// Populate table with lost materials for this patron
+					data.forEach(item => {
+						const row = document.createElement('tr');
+						row.innerHTML = `
+							<td>${item[2] || 'N/A'}</td>
+							<td>${item[3] ? new Date(item[3]).toLocaleDateString() : 'N/A'}</td>
+							<td>${item[4] ? new Date(item[4]).toLocaleDateString() : 'N/A'}</td>
+							<td>${item[6] || '0.00'}</td>
+							<td>${item[7] || 'N/A'}</td>
+						`;
+						tableBody.appendChild(row);
+					});
+					
+					// Set patron ID in modal title
+					document.getElementById('lostMaterialsModalLabel').textContent = `Lost Materials for Patron: ${patronId}`;
+					
+					// Show the modal
+					const lostMaterialsModal = new bootstrap.Modal(document.getElementById('lostMaterialsModal'));
+					lostMaterialsModal.show();
+				})
+				.catch(error => {
+					console.error('Error fetching lost materials:', error);
+					alert('Error loading lost materials. Please try again.');
+				});
+		}
+
+		// Function to update booking status and total cost
+		function updateBookingWithTotal(id, totalCost, status) {
+			fetch('/eforms/admin/update-booking/' + id, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ 
+					status: status,
+					totalCost: totalCost
+				})
+			})
+			.then(response => {
+				if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+				return response.json();
+			})
+			.then(data => {
+				// Close the modal
+				bootstrap.Modal.getInstance(document.getElementById('detailedBookingModal')).hide();
+				
+				// Show success message
+				alert('Booking updated successfully!');
+				
+				// Reload the bookings table
+				loadAllBookingSummaries();
+			})
+			.catch(error => {
+				console.error('Error updating booking:', error);
+				alert('Error updating booking: ' + error.message);
+			});
+		}
 </script>
 
+		<!-- Edit Room Modal -->
+		<div class="modal fade" id="editRoomModal" tabindex="-1" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editRoomModalLabel">Edit Room</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form action="/eforms/admin/update-room" method="post" enctype="multipart/form-data">
+							<input type="hidden" id="editRoomId" name="id">
+							
+							<!-- Image Preview -->
+							<div class="mb-3">
+								<label class="form-label">Current Image</label>
+								<img id="editRoomImagePreview" src="/eforms/img/room2.jpg" alt="Room Image" 
+									 style="max-width: 100%; height: auto; display: block; margin-bottom: 10px;">
+								<input type="hidden" id="currentImageName" name="currentImageName">
+						</div>
+							
+							<!-- Room Name -->
+							<div class="mb-3">
+								<label for="editRoomName" class="form-label">Room Name</label>
+								<input type="text" class="form-control" id="editRoomName" name="labelName" required>
+            </div>
 
+							<!-- Room Type -->
+							<div class="mb-3">
+								<label for="editRoomType" class="form-label">Room Type  </label>
+								<select class="form-select" id="editRoomType" name="roomType" onchange="toggleEquipmentSection(this.value, 'edit')">
+									<option value="Bilik Mesyuarat">Bilik Mesyuarat</option>
+									<option value="Bilik Serbaguna">Bilik Serbaguna</option>
+								</select>
+            </div>
+
+							<!-- Capacity -->
+							<div class="mb-3">
+								<label for="editCapacity" class="form-label">Capacity</label>
+								<input type="number" class="form-control" id="editCapacity" name="capacity" required min="1" onchange="updateEquipmentCapacity(this.value, 'edit')">
+							</div>
+
+							<!-- Price -->
+							<div class="mb-3">
+								<label for="editPrice" class="form-label">Price (RM/hour)</label>
+								<input type="number" step="0.01" class="form-control" id="editPrice" name="price" required min="0">
+							</div>
+                            
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label for="editLocation" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="editLocation" name="location" required>
+                            </div>
+                            
+                           
+                            
+                            <!-- Room Image -->
+                            <div class="mb-3">
+                                <label for="editRoomImage" class="form-label">Update Room Image</label>
+                                <input type="file" class="form-control" id="editRoomImage" name="roomImage" accept="image/*">
+                                <small class="form-text text-muted">Upload a new image to replace the current one (optional)</small>
+                            </div>
+
+							<!-- Equipment Section (initially hidden) -->
+							<div id="equipmentSection-edit" class="mb-3" style="display: none;">
+								<div class="card">
+									<div class="card-header bg-light">
+										<h6 class="mb-0">Equipment for Bilik Serbaguna</h6>
+									</div>
+									<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+										<div class="mb-3">
+											<label for="editChairCount" class="form-label">Number of Chairs</label>
+											<input type="number" class="form-control" id="editChairCount" name="chairCount" min="0" value="0">
+										</div>
+										<div class="mb-3">
+											<label for="editTableCount" class="form-label">Number of Tables</label>
+											<input type="number" class="form-control" id="editTableCount" name="tableCount" min="0" value="0">
+										</div>
+										<div class="mb-3 form-check">
+											<input type="checkbox" class="form-check-input" id="editHasProjector" name="hasProjector" value="true">
+											<label class="form-check-label" for="editHasProjector">LCD Projector / Skrin Layer</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Availability -->
+							<div class="mb-3 form-check">
+								<input type="checkbox" class="form-check-input" id="editIsAvailable" name="isAvailable" value="true">
+								<label class="form-check-label" for="editIsAvailable">Available</label>
+							</div>
+
+            <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Save Changes</button>
+							</div>
+						</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+		<!-- Booking Details Modal -->
+		<div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-labelledby="bookingDetailsModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header bg-primary text-white">
+						<h5 class="modal-title" id="bookingDetailsModalLabel">Booking Details</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<!-- Room Information Section -->
+							<div class="row mb-4">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header bg-light">
+											<h5 class="mb-0">Room Information</h5>
+										</div>
+										<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+											<div class="row">
+												<div class="col-md-6">
+													<p><strong>Room Name:</strong> <span id="detailRoomName"></span></p>
+													<p><strong>Capacity:</strong> <span id="detailRoomCapacity"></span></p>
+												</div>
+												<div class="col-md-6">
+													<p><strong>Rate:</strong> <span id="detailRoomHourlyRate"></span></p>
+													<p><strong>Room Price:</strong> <span id="detailRoomPrice"></span></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Booking Details Section -->
+							<div class="row mb-4">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header bg-light">
+											<h5 class="mb-0">TEMPAHAN ANDA</h5>
+										</div>
+										<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+											<div class="row">
+												<div class="col-md-6">
+													<p><strong>Tarikh:</strong> <span id="detailDate"></span></p>
+													<p><strong>Daripada kepada:</strong> <span id="detailTime"></span></p>
+													<p><strong>Bilangan Kehadiran:</strong> <span id="detailAttendees"></span></p>
+												</div>
+												<div class="col-md-6">
+													<p><strong>Susun atur:</strong> <span id="detailLayout"></span></p>
+												</div>
+											</div>
+											
+											<!-- Equipment Section -->
+											<h6 class="mt-3">Peralatan:</h6>
+						<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>Item</th>
+															<th>Kuantiti</th>
+															<th>Harga</th>
+															<th>Jumlah</th>
+									</tr>
+													</thead>
+													<tbody id="equipmentDetailsTableBody">
+														<!-- Will be populated by JavaScript -->
+													</tbody>
+												</table>
+											</div>
+											
+											<!-- Payment Summary -->
+											<div class="row mt-3">
+												<div class="col-md-6 offset-md-6">
+													<table class="table">
+														<tr>
+															<td><strong>Jumlah kecil:</strong></td>
+															<td id="detailSubtotal">RM0.00</td>
+									</tr>
+									<tr>
+															<td><strong>Cukai:</strong></td>
+															<td id="detailTax">RM0.00</td>
+									</tr>
+									<tr>
+															<td><strong>Jumlah:</strong></td>
+															<td id="detailTotal" class="font-weight-bold">RM0.00</td>
+									</tr>
+									<tr>
+															<td><strong>Deposit:</strong></td>
+															<td id="detailDeposit">RM0.00</td>
+									</tr>
+							</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Personal Information Section -->
+							<div class="row mb-4">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header bg-light">
+											<h5 class="mb-0">MAKLUMAT PERIBADI</h5>
+										</div>
+										<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+											<div class="row">
+												<div class="col-md-6">
+													<p><strong>Gelaran:</strong> <span id="detailTitle"></span></p>
+													<p><strong>Nama:</strong> <span id="detailName"></span></p>
+													<p><strong>No. Telefon:</strong> <span id="detailPhone"></span></p>
+												</div>
+												<div class="col-md-6">
+													<p><strong>E-mel:</strong> <span id="detailEmail"></span></p>
+													<p><strong>Catatan:</strong> <span id="detailNotes"></span></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Billing Address Section -->
+							<div class="row mb-4">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header bg-light">
+											<h5 class="mb-0">ALAMAT PENGEBILAN</h5>
+										</div>
+										<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+											<div class="row">
+												<div class="col-md-6">
+													<p><strong>Nama Syarikat:</strong> <span id="detailCompany"></span></p>
+													<p><strong>Alamat:</strong> <span id="detailAddress"></span></p>
+													<p><strong>Bandar:</strong> <span id="detailCity"></span></p>
+												</div>
+												<div class="col-md-6">
+													<p><strong>Negeri:</strong> <span id="detailState"></span></p>
+													<p><strong>Poskod:</strong> <span id="detailPostcode"></span></p>
+													<p><strong>Negara:</strong> <span id="detailCountry"></span></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Payment Method Section -->
+							<div class="row mb-4">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header bg-light">
+											<h5 class="mb-0">KAEDAH PEMBAYARAN</h5>
+										</div>
+										<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+											<p><strong>Kaedah Pembayaran:</strong> <span id="detailPaymentMethod"></span></p>
+											<p><strong>Status Pembayaran:</strong> <span id="detailPaymentStatus"></span></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="approveBookingBtn">
+							<i class="fas fa-check me-1"></i> Approve Booking
+						</button>
+						<button type="button" class="btn btn-danger" id="cancelBookingBtn">
+							<i class="fas fa-times me-1"></i> Cancel Booking
+						</button>
+						<button type="button" class="btn btn-info" id="printBookingBtn">
+							<i class="fas fa-print me-1"></i> Print Details
+						</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Add Room Modal -->
+		<div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form action="/eforms/admin/add-room" method="post" enctype="multipart/form-data">
+							<!-- Room Name -->
+							<div class="mb-3">
+								<label for="labelName" class="form-label">Room Name</label>
+								<input type="text" class="form-control" id="labelName" name="labelName" required>
+							</div>
+
+							<!-- Room Type -->
+							<div class="mb-3">
+								<label for="roomType" class="form-label">Room Type</label>
+								<select class="form-select" id="roomType" name="roomType" onchange="toggleEquipmentSection(this.value, 'add')">
+									<option value="Bilik Mesyuarat">Bilik Mesyuarat</option>
+									<option value="Bilik Serbaguna">Bilik Serbaguna</option>
+								</select>
+							</div>
+
+							<!-- Capacity -->
+							<div class="mb-3">
+								<label for="capacity" class="form-label">Capacity</label>
+								<input type="number" class="form-control" id="capacity" name="capacity" required min="1" onchange="updateEquipmentCapacity(this.value, 'add')">
+							</div>
+
+							<!-- Price -->
+							<div class="mb-3">
+								<label for="price" class="form-label">Price (RM/hour)</label>
+								<input type="number" step="0.01" class="form-control" id="price" name="price" required min="0">
+							</div>
+                            
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location" required>
+                            </div>
+                            
+                            <!-- Room Image -->
+                            <div class="mb-3">
+                                <label for="roomImage" class="form-label">Room Image</label>
+                                <input type="file" class="form-control" id="roomImage" name="roomImage" accept="image/*">
+                                <small class="form-text text-muted">Upload an image of the room (optional)</small>
+                            </div>
+
+							<!-- Equipment Section (initially hidden) -->
+							<div id="equipmentSection-add" class="mb-3" style="display: none;">
+								<div class="card">
+									<div class="card-header bg-light">
+										<h6 class="mb-0">Equipment for Bilik Serbaguna</h6>
+									</div>
+									<div class="card-body" style="background-color: #fff !important; color: #000 !important;">
+										<div class="mb-3">
+											<label for="chairCount" class="form-label">Number of Chairs</label>
+											<input type="number" class="form-control" id="chairCount" name="chairCount" min="0" value="0">
+										</div>
+										<div class="mb-3">
+											<label for="tableCount" class="form-label">Number of Tables</label>
+											<input type="number" class="form-control" id="tableCount" name="tableCount" min="0" value="0">
+										</div>
+										<div class="mb-3 form-check">
+											<input type="checkbox" class="form-check-input" id="hasProjector" name="hasProjector" value="true">
+											<label class="form-check-label" for="hasProjector">LCD Projector / Skrin Layer</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Availability -->
+							<div class="mb-3 form-check">
+								<input type="checkbox" class="form-check-input" id="isAvailable" name="isAvailable" value="true" checked>
+								<label class="form-check-label" for="isAvailable">Available</label>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Add Room</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 	</section>
 </body>
 </html>

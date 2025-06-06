@@ -98,7 +98,7 @@
             <strong>Time of Error:</strong> <span th:text="${currentTime}"></span>
         </div>
 
-        <a href="/" class="retry-btn">Back to Home</a>
+        <a th:href="${backUrl != null ? backUrl : '/eforms/'}" class="retry-btn">Back to Home</a>
     </div>
 	
 	

@@ -22,6 +22,7 @@ public class LostMaterialForm {
     private String returnDate;         // Tarikh Pulangan
     private String paymentMethod;    // Kaedah Pembayaran
     private Double totalPayment;     // Jumlah Pembayaran (RM)
+    private String paymentBreakdown; // Payment breakdown details (e.g. "RM20+RM10+RM1=RM31")
 
     // Getters and setters
     public Long getId() {
@@ -78,5 +79,13 @@ public class LostMaterialForm {
 
     public void setTotalPayment(Double totalPayment) {
         this.totalPayment = totalPayment;
+    }
+
+    public String getPaymentBreakdown() {
+        return paymentBreakdown;
+    }
+
+    public void setPaymentBreakdown(String paymentBreakdown) {
+        this.paymentBreakdown = paymentBreakdown;
     }
 }

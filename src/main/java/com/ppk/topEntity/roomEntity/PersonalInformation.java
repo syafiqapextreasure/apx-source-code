@@ -27,8 +27,7 @@ public class PersonalInformation {
     @Override
 	public String toString() {
 		return "PersonalInformation [id=" + id + ", title=" + title + ", name=" + name + ", phoneNumber=" + phoneNumber
-				+ ", email=" + email + ", notes=" + notes + ", companyName=" + companyName + ", address=" + address
-				+ ", city=" + city + ", state=" + state + ", postalCode=" + postalCode + ", country=" + country + ", payment=" + paymentMethod+" ]";
+				+ ", email=" + email + ", notes=" + notes+" payment=" + paymentMethod+" ]";
 	}
 
 	//    @NotBlank(message = "Title is required")
@@ -44,28 +43,35 @@ public class PersonalInformation {
 //    @NotBlank(message = "Email is required")
     private String email;
 
+    @Column(nullable = true)
     private String notes;
 
 //    @NotBlank(message = "Company name is required")
+    @Column(nullable = true)
     private String companyName;
 
 //    @NotBlank(message = "Address is required")
+    @Column(nullable = true)
     private String address;
  
 //    @NotBlank(message = "City is required")
+    @Column(nullable = true)
     private String city;
 
 //    @NotBlank(message = "State is required")
+    @Column(nullable = true)
     private String state;
 
 //    @NotBlank(message = "Postal code is required")
+    @Column(nullable = true)
     private String postalCode;
 
 //    @NotBlank(message = "Country is required")
+    @Column(nullable = true)
     private String country;
     // Getters and Setters
     
-    
+    @Column(nullable = true)
     private String paymentMethod;
 
 	public String getPaymentMethod() {

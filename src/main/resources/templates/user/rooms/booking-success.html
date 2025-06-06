@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Booking Success</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card mt-4">
+						<div class="card-header bg-success text-white">
+							<h4 class="mb-0">Tempahan Berjaya!</h4>
+						</div>
+						<div class="card-body">
+							<div class="alert alert-success">
+								<p th:text="${successMessage}">Tempahan anda telah berjaya! Sila selesaikan pembayaran di kaunter kami.</p>
+							</div>
+							<div class="text-center mt-4">
+								<a href="/eforms/" class="btn btn-primary">Kembali ke Halaman Utama</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html> 

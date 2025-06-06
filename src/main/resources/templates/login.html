@@ -3,11 +3,9 @@
 	th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Login - PPK System</title>
 </head>
 <body>
-	<section>
-
 		  <section>
         <div class="container mt-5 p-5">
             <div class="row justify-content-center">
@@ -22,7 +20,10 @@
                                     Invalid login attempt.
                                 </p>
                             </div>
-                            <form action="/login" method="post">
+                            <form th:action="@{/login}" method="post">
+                                <!-- Hidden redirectUrl field if provided -->
+                                <input type="hidden" name="redirectUrl" th:if="${redirectUrl}" th:value="${redirectUrl}">
+                                
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Library ID or Email</label>
                                     <input
@@ -34,7 +35,6 @@
                                         placeholder="Enter your registered email"
                                     >
                                 </div>
-
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input
@@ -46,20 +46,20 @@
                                         placeholder="Enter your password"
                                     >
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">Login</button>
+                                </div>
                             </form>
                         </div>
-
                         <div class="card-footer text-center">
-                            <a href="/forgot-password" class="text-decoration-none">Forgot Password?</a><br>
-                            Don't have an account? 
-                            <a href="/register" class="text-decoration-none">Create One</a>
+                            <p>Don't have an account? 
+                                <a th:href="@{${redirectUrl != null ? '/register?redirectUrl=' + redirectUrl : '/register'}}" class="text-decoration-none">Create one</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 	</section>
 </body>
 </html>

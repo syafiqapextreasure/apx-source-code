@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Booking Error</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card mt-4">
+						<div class="card-header bg-danger text-white">
+							<h4 class="mb-0">Ralat Tempahan</h4>
+						</div>
+						<div class="card-body">
+							<div class="alert alert-danger">
+								<p th:text="${errorMessage}">Ralat telah berlaku semasa memproses tempahan anda. Sila cuba lagi.</p>
+							</div>
+							<div class="text-center mt-4">
+								<a href="/eforms/room-booking" class="btn btn-primary">Lihat Senarai Bilik</a>
+								<a href="/eforms/" class="btn btn-secondary ms-2">Kembali ke Halaman Utama</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html> 

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Lost Material Form</title>
+<link rel="stylesheet" th:href="@{/css/lmf/lmf.css}">
+</head>
+<body>
+	<section>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+		<div class="lostMaterialComplaintForm">
+			<h1>Borang Bahan Hilang</h1>
+			<form id="form-id-sub" th:action="@{/direct-lost/submit}" method="post">
+				<div class="form_wrapper">
+					<div class="row gx-md-4 gy-3 mb-3">
+						<!-- Patron ID Field -->
+						<div class="col-12 col-md-6 col-lg-5">
+							<div class="form-group">
+								<label for="patronId">Patron ID<span class="cus-red">*</span>:</label>
+								<input type="text" class="form-control mt-2" id="patronId" name="patronId" required />
+							</div>
+						</div>
+
+						<!-- Responsive Table - Book Selection -->
+						<div class="col-12 mt-2">
+							<h5 class="mt-4">Senarai Bahan Pinjaman Pengguna:</h5>
+							<div class="table-responsive mt-3">
+								<table class="table table-bordered table-hover" id="borrowedMaterialsTable">
+									<thead class="table-light">
+										<tr>
+											<th scope="col" style="width: 5%">Pilih</th>
+											<th scope="col" style="width: 15%">No Perolehan</th>
+											<th scope="col">Nama Buku</th>
+											<th scope="col" style="width: 15%">Harga Buku (RM)</th>
+											<th scope="col" style="width: 15%">Tarikh Pinjam</th>
+											<th scope="col" style="width: 15%">Tarikh Perlu Pulang</th>
+										</tr>
+									</thead>
+									<tbody id="tbodyid">
+										<tr th:each="material, iterStat : ${borrowedMaterials}" th:id="'row-' + ${iterStat.index}">
+											<td>
+												<input class="form-check-input material-checkbox" type="checkbox"
+													th:id="'defaultCheck' + ${iterStat.index}"
+													th:value="${material.acquisitionNumber}"
+													name="acquisitionNumbers"
+													th:attr="data-price=${material.bookPrice ?: '0.00'}"
+													onclick="calculateTotalPayment()">
+											</td>
+											<td th:text="${material.acquisitionNumber}"></td>
+											<td th:text="${material.bookTitle}"></td>
+											<td th:text="${#numbers.formatDecimal(material.bookPrice ?: 0.00, 1, 'COMMA', 2, 'POINT')}"></td>
+											<td>-</td> <!-- Placeholder for borrowDate -->
+											<td>-</td> <!-- Placeholder for dueDate -->
+										</tr>
+										<tr th:if="${#lists.isEmpty(borrowedMaterials)}">
+											<td colspan="6" class="text-center">Tiada bahan pinjaman ditemui untuk pengguna ini.</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- Manual Entry Section (optional) -->
+						<div class="col-12">
+							<div class="form-check mb-3">
+								<input class="form-check-input" type="checkbox" id="manualEntryCheck">
+								<label class="form-check-label" for="manualEntryCheck">
+									Masukkan No Perolehan secara manual
+								</label>
+							</div>
+							<div id="manualEntrySection" style="display: none;">
+								<div class="form-group mb-3">
+									<label for="manualAcquisitionNumber">No Perolehan<span class="cus-red">*</span>:</label>
+									<input type="text" class="form-control" id="manualAcquisitionNumber" name="manualAcquisitionNumber">
+									<small class="text-muted">Format: BK12345</small>
+								</div>
+								<button type="button" class="btn btn-outline-primary mb-3" id="addManualEntry">
+									Tambah ke Senarai
+								</button>
+							</div>
+						</div>
+
+						<!-- Date and Payment Fields -->
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="borrowDate">Tarikh Pinjaman:</label>
+								<input type="date" class="form-control mt-2" id="borrowDate" name="borrowDate" />
+							</div>
+						</div>
+
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="returnDate">Tarikh Pulangan:</label>
+								<input type="date" class="form-control mt-2" id="returnDate" name="returnDate" />
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div class="form-group">
+								<label for="paymentMethod">Kaedah Pembayaran<span class="cus-red">*</span>:</label>
+								<select class="form-control mt-2" id="paymentMethod" name="paymentMethod" required>
+									<option value="">-- Pilih Kaedah Pembayaran --</option>
+									<option value="TUNAI">TUNAI (Cash)</option>
+									<option value="KAD KREDIT">KAD KREDIT (Credit Card)</option>
+									<option value="KAD DEBIT">KAD DEBIT (Debit Card)</option>
+									<option value="LAIN-LAIN">LAIN-LAIN (Others)</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Price Calculation -->
+						<div class="col-12">
+							<div class="mt-4">
+								<h5>Perincian Bayaran:</h5>
+								<p><i>Perincian: Harga buku + Caj Pemprosesan + Denda Lewat = Jumlah Pembayaran</i></p>
+								<table class="table table-sm" style="width: auto;">
+									<tr>
+										<td>Jumlah Harga Buku Terpilih:</td>
+										<td>RM <span id="selectedBooksPrice">0.00</span></td>
+									</tr>
+									<tr>
+										<td>Caj Pemprosesan Tetap:</td>
+										<td>RM <span id="processingFee">10.00</span></td>
+									</tr>
+									<tr>
+										<td>Jumlah Denda Lewat (Anggaran):</td>
+										<td>RM <span id="totalLateFee">0.00</span></td>
+									</tr>
+									<tr>
+										<th>Jumlah Pembayaran Keseluruhan:</th>
+										<th>RM <span id="totalPayment">10.00</span></th>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<!-- Price Notes -->
+						<div class="col-12">
+							<div class="noted_text ps-2 mt-3">
+								<div id="breakdownPreview" class="alert alert-info">
+									Perincian Harga: Buku + Caj + Denda Lewat
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Hidden fields for form submission -->
+					<input type="hidden" id="finalTotalPayment" name="totalPayment" value="10.00">
+					<input type="hidden" id="bookPriceInput" name="bookPriceInput" value="0.00">
+
+					<!-- Submit Button -->
+					<div class="daftar_btn d-flex gap-4 justify-content-end mt-4">
+						<button type="submit" id="lost-material-btn-id">Hantar</button>
+						<a href="/eforms/" class="btn btn-secondary ms-2">Batal</a>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- Script to show SweetAlert for messages -->
+		<script th:if="${message}">
+			document.addEventListener("DOMContentLoaded", function() {
+				Swal.fire({
+					title: 'Message',
+					text: '[[${message}]]',
+					icon: '[[${message.contains("Error") ? "error" : "success"}]]',
+					confirmButtonText: 'OK'
+				});
+			});
+		</script>
+
+		<!-- Enhanced JavaScript for the form functionality -->
+		<script>
+			// Auto-calc total payment
+			function calculateTotalDirect() {
+				let totalBookPrice = 0;
+				const checkboxes = document.querySelectorAll('input[name="acquisitionNumbers"]:checked');
+				checkboxes.forEach(function(checkbox) {
+					const price = parseFloat(checkbox.getAttribute('data-price'));
+					if (!isNaN(price)) {
+						totalBookPrice += price;
+					}
+				});
+
+				const borrowDate = document.getElementById('borrowDate')?.value;
+				const returnDate = document.getElementById('returnDate')?.value;
+				const processingFee = 10; // Assuming a fixed processing fee
+				let lateFee = 0;
+
+				if (borrowDate && returnDate) {
+					const d1 = new Date(borrowDate);
+					const d2 = new Date(returnDate);
+					// Ensure dates are valid before calculation
+					if (!isNaN(d1.getTime()) && !isNaN(d2.getTime()) && d2 >= d1) {
+					const diffDays = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
+						if (diffDays > 2) { // Example: Late fee applies after 2 days
+							lateFee = Math.min((diffDays - 2) * 0.20, 27); // Example: RM 0.20 per day, max RM 27
+						}
+					}
+				}
+
+				const total = (totalBookPrice + processingFee + lateFee).toFixed(2);
+				document.getElementById('finalTotalPayment').value = total;
+				document.getElementById('bookPriceInput').value = totalBookPrice.toFixed(2);
+				document.getElementById('breakdownPreview').innerHTML = 
+					`Total Harga Buku: RM${totalBookPrice.toFixed(2)} + Caj Pemprosesan: RM${processingFee.toFixed(2)} + Denda Lewat: RM${lateFee.toFixed(2)} = RM${total}`;
+			}
+
+			window.addEventListener('DOMContentLoaded', function() {
+				// Add event listeners to checkboxes to recalculate on change
+				const checkboxes = document.querySelectorAll('input[name="acquisitionNumbers"]');
+				checkboxes.forEach(function(checkbox) {
+					checkbox.addEventListener('change', calculateTotalDirect);
+				});
+
+				const borrowInput = document.getElementById('borrowDate');
+				const returnInput = document.getElementById('returnDate');
+				// if (bookInput) bookInput.addEventListener('input', calculateTotalDirect); // No longer needed
+				if (borrowInput) borrowInput.addEventListener('change', calculateTotalDirect);
+				if (returnInput) returnInput.addEventListener('change', calculateTotalDirect);
+				
+				// Initial calculation in case of pre-checked boxes or pre-filled dates
+				calculateTotalDirect(); 
+			});
+			
+			// Toggle manual entry section
+			document.getElementById('manualEntryCheck').addEventListener('change', function() {
+				document.getElementById('manualEntrySection').style.display = this.checked ? 'block' : 'none';
+			});
+			
+			// Add manual entry to table
+			document.getElementById('addManualEntry').addEventListener('click', function() {
+				const acquisitionNumber = document.getElementById('manualAcquisitionNumber').value.trim();
+				if (!acquisitionNumber) {
+					alert('Sila masukkan No Perolehan');
+					return;
+				}
+				
+				// Check if this acquisitionNumber already exists
+				const existingInputs = document.querySelectorAll('input[name="acquisitionNumbers"]');
+				for (let input of existingInputs) {
+					if (input.value === acquisitionNumber) {
+						alert('No Perolehan ini sudah ada dalam senarai');
+						return;
+					}
+				}
+				
+				// Create new row
+				const tableBody = document.getElementById('tbodyid');
+				const newRow = document.createElement('tr');
+				// For manually added entries, price will be unknown or needs to be handled differently.
+				// For now, it will default to 0 in calculation unless a mechanism to add price for manual entries is implemented.
+				newRow.innerHTML = `
+					<td>
+						<input class="form-check-input material-checkbox" type="checkbox" 
+							id="defaultCheck${acquisitionNumber}" 
+							value="${acquisitionNumber}" 
+							name="acquisitionNumbers"
+							data-price="0.00" checked /> <!-- Manual entries get 0 price for now -->
+					</td>
+					<td>${acquisitionNumber}</td>
+					<td><em>Manual entry</em></td>
+					<td>N/A</td> <!-- Price for manual entry -->
+					<td>-</td> <!-- Placeholder for borrowDate -->
+					<td>-</td> <!-- Placeholder for dueDate -->
+				`;
+				
+				tableBody.appendChild(newRow);
+				// Add change listener to newly added checkbox
+				newRow.querySelector('.material-checkbox').addEventListener('change', calculateTotalDirect);
+				document.getElementById('manualAcquisitionNumber').value = '';
+				calculateTotalDirect(); // Recalculate total
+			});
+			
+			// Validate form before submission
+			document.getElementById('form-id-sub').addEventListener('submit', function(e) {
+				const checkedBoxes = document.querySelectorAll('input[name="acquisitionNumbers"]:checked');
+				if (checkedBoxes.length === 0) {
+					e.preventDefault();
+					Swal.fire({
+						title: 'Error',
+						text: 'Sila pilih sekurang-kurangnya satu buku',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					});
+				}
+			});
+
+			function calculateTotalPayment() {
+				let totalBookPrice = 0;
+				const processingFee = 10.00; // Fixed processing fee
+				let totalLateFee = 0;
+
+				const checkboxes = document.querySelectorAll('.material-checkbox:checked');
+				checkboxes.forEach(checkbox => {
+					const price = parseFloat(checkbox.getAttribute('data-price'));
+					if (!isNaN(price)) {
+						totalBookPrice += price;
+					}
+
+					// Calculate late fee based on manually input dates instead of materials data
+					const borrowDate = document.getElementById('borrowDate')?.value;
+					const returnDate = document.getElementById('returnDate')?.value;
+					if (borrowDate && returnDate) {
+						const start = new Date(borrowDate);
+						const end = new Date(returnDate);
+						if (!isNaN(start.getTime()) && !isNaN(end.getTime()) && end >= start) {
+							const diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+							if (diffDays > 2) { // Late fee after grace period
+								const lateFeePerDay = 0.20;
+								const maxLateFee = 27.00;
+								const gracePeriodDays = 2;
+								const chargeableDays = diffDays - gracePeriodDays;
+								let currentLateFee = chargeableDays * lateFeePerDay;
+								currentLateFee = Math.min(currentLateFee, maxLateFee); // Cap the late fee
+								totalLateFee += currentLateFee;
+							}
+						}
+					}
+				});
+
+				document.getElementById('selectedBooksPrice').textContent = totalBookPrice.toFixed(2);
+				document.getElementById('processingFee').textContent = processingFee.toFixed(2);
+				document.getElementById('totalLateFee').textContent = totalLateFee.toFixed(2);
+				
+				const grandTotal = totalBookPrice + processingFee + totalLateFee;
+				document.getElementById('totalPayment').textContent = grandTotal.toFixed(2);
+				document.getElementById('finalTotalPayment').value = grandTotal.toFixed(2); // For form submission
+				document.getElementById('bookPriceInput').value = totalBookPrice.toFixed(2); // Set book price for form submission
+			}
+
+			// Ensure calculateTotalPayment is called when the page loads if there are pre-selected items (e.g. from validation error)
+			document.addEventListener('DOMContentLoaded', function() {
+				calculateTotalPayment();
+			});
+		</script>
+	</section>
+</body>
+</html> 

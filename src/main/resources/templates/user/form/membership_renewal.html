@@ -2,372 +2,275 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{base::layout(~{::section})}">
 <head>
-
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	<section>
-		<!-- Place this in the <head> section -->
+<section>
+<form method="post" action="/eforms/membership-renewal">
+<div class="renewalForm_container">
+  <h1>BORANG PEMBAHARUAN KEAHLIAN</h1>
+  <div class="form-wrapper ps-md-5 ps-4 pt-5 pb-4 pe-4 mt-3">
+    <div class="row">
+      <!-- Profile Icon -->
+      <div class="col-md-2 d-flex justify-content-center align-items-start">
+        <img
+          src="https://via.placeholder.com/80"
+          alt="Profile Icon"
+          class="rounded-circle"
+        />
+            </div>
+      <!-- Form Section -->
+      <div class="col-md-10">
+        <div class="mb-3 row">
+          <label for="idPengguna" class="col-sm-2 col-form-label"
+            >ID Pengguna:</label
+          >
+          <div class="col-sm-6 flex-grow-1">
+            <input type="text" class="form-control" id="idPengguna" />
+            </div>
+                </div>
+        <div class="mb-3 row">
+          <label for="alamat" class="col-sm-2 col-form-label">Alamat:</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="alamat" rows="3"></textarea>
+                </div>
+            </div>
+        <div class="mb-2 row mt-3">
+          <label for="tarikhDidaftarkan" class="col-md-2 col-form-label"
+            >Tarikh Didaftarkan:</label
+          >
+          <div class="col-md-4 mb-2">
+            <input type="date" class="form-control" id="tarikhDidaftarkan" />
+                </div>
+          <label
+            for="tarikhTamat"
+            class="col-md-2 pt-0 col-form-label text-md-end mt-2 mt-md-0"
+          >
+            <span class="d-md-block">Tarikh Tamat</span>
+            <span class="d-md-block">Keahlian:</span></label
+          >
+          <div class="col-md-3 flex-grow-1">
+            <input type="date" class="form-control" id="tarikhTamat" />
+                </div>
+            </div>
+        <div class="mb-3 row">
+          <label for="noTelefon" class="col-md-2 col-form-label"
+            >No Telefon:</label
+          >
+          <div class="col-md-4">
+            <input type="email" class="form-control" id="noTelefon" />
+          </div>
+          <label for="emel" class="col-md-2 col-form-label text-md-end"
+            >Emel:</label
+          >
+                <div class="col-md-4">
+            <input type="email" class="form-control" id="emel" />
+                </div>
+                </div>
+            </div>
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">Maklumat Ahli</div>
+    </div>
+    <div class="mt-5 ps-md-5">
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="bilanganpinjaman">Bilangan Pinjaman:</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="bilanganpinjaman"
+          />
+                </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="tarikhPinjaman">Tarikh Pinjaman Terakhir:</label>
+          <input type="date" class="form-control mt-2" id="tarikhPinjaman" />
+                </div>
+            </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="bahanLewat">Bahan Lewat Pulang:</label>
+          <input type="text" class="form-control mt-2" id="bahanLewat" />
+                </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="tarikhPemulangan">Tarikh Pemulangan Terakhir:</label>
+          <input
+            type="date"
+            class="form-control mt-2"
+            id="tarikhPemulangan"
+          />
+                </div>
+            </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup31">Bilangan Bahan Hilang:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup31" />
+                </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup32">Tarikh Pembaharuan Terakhir:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup32" />
+                </div>
+            </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup41">Bilangan Penggantungan:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup41" />
+            </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup42">Jumlah Tertunggak:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup42" />
+                            </div>
+                        </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup51">Bahan Pinjaman Tahun Ini:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup51" />
+                            </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup52">Jumlah Bayaran:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup52" />
+                            </div>
+                        </div>
+                    </div>
+    <div class="row">
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">
+        Maklumat Peribadi
+                </div>
+            </div>
+    <div class="mt-5 ps-md-5">
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup11">ID Kumpulan:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup11" />
+        </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup12">Jabatan:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup12" />
+            </div>
+            </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup61">Status:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup61" />
+            </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup62">Kategori:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup62" />
+                        </div>
+                            </div>
+      <div class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup81">Tarikh Lahir:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup81" />
+                                </div>
+        <div class="form-group col-md-5 flex-grow-1">
+          <label for="inputgroup82">Jantina:</label>
+          <input type="text" class="form-control mt-2" id="inputgroup82" />
+                                </div>
+                                </div>
+                            </div>
+                            
+    <div class="row">
+      <div class="form_heading col-md-3 col-sm-5 col-7 my-3">
+        Maklumat Pembayaran
+      </div>
+    </div>
+    <div class="mt-5 ps-md-5">
+      <div class="table_responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Pilih</th>
+              <th scope="col">ID Pengguna</th>
+              <th scope="col">Hubungan</th>
+              <th scope="col">Status OKU</th>
+              <th scope="col">Harga (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="defaultCheck1"
+                />
+              </td>
+              <td>02121000993</td>
+              <td>Anak</td>
+              <td>Tidak</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="defaultCheck2"
+                />
+              </td>
+              <td>98900292892</td>
+              <td>Anak</td>
+              <td>Ya</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
+                            </div>
+                            
+      <div class="row">
+        <div class="col-md-12">
+          <p class="mt-3">Jumlah Harga: RM XX</p>
+                            </div>
+        <div class="col-md-12">
+          <label for="lokasiPPK" class="form-label mb-2"
+            >Kaedah Pembayaran:</label
+          >
+          <select class="form-select" id="lokasiPPK">
+            <option selected></option>
+            <option value="1">Lokasi 1</option>
+            <option value="2">Lokasi 2</option>
+            <option value="3">Lokasi 3</option>
+          </select>
+                        </div>
+                    </div>
+                </div>
+    <div class="daftar_btn d-flex gap-4 justify-content-end mt-4">
+      <button type="submit">Perbaharui Keahlian</button>
+    </div>
+            </div>
+        </div>
+</form>
 
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-		<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-		<link rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-		<!-- JS Bundle (includes both Bootstrap and Popper.js) -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-		<link
-			href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.9/dist/sweetalert2.min.css"
-			rel="stylesheet">
-
-		<!-- SweetAlert2 JS -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.9/dist/sweetalert2.min.js"></script>
-		<div class="renewalForm_container">
-			<h1>BORANG PEMBAHARUAN KEAHLIAN</h1>
-			<div class="form-wrapper ps-md-5 ps-4 pt-5 pb-4 pe-4 mt-3">
-				<div class="row">
-					<!-- Profile Icon -->
-					<div
-						class="col-md-2 d-flex justify-content-center align-items-start">
-						<img src="https://www.w3schools.com/howto/img_avatar.png"
-							alt="Profile Icon" class="rounded-circle" width="140"
-							 height="140" />
-					</div>
-					<!-- Form Section -->
-					<div class="col-md-10">
-
-						<form>
-							<div class="mb-3 row">
-								<label for="idPengguna" class="col-sm-2 col-form-label">ID
-									Pengguna:</label>
-								<div class="col-sm-6 flex-grow-1">
-									<input type="text" class="form-control"
-										th:value="${dbUserData.size()>0?dbUserData[0].patronID:''}"
-										readonly="readonly" id="idPengguna" />
-								</div>
-							</div>
-							<div class="mb-3 row">
-								<label for="alamat" class="col-sm-2 col-form-label">Alamat:</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" id="alamat" readonly="readonly"
-										rows="3"
-										th:text="${dbUserData.size()>0?dbUserData[0].address:''}"></textarea>
-								</div>
-							</div>
-							<div class="mb-2 row mt-3">
-								<label for="tarikhDidaftarkan" class="col-md-2 col-form-label">Tarikh
-									Didaftarkan:</label>
-								<div class="col-md-4 mb-2">
-									<input type="date" class="form-control"
-										th:value="${formattedDateEnrolled}" id="tarikhDidaftarkan" disabled/>
-								</div>
-								<label for="tarikhTamat"
-									class="col-md-2 pt-0 col-form-label text-md-end mt-2 mt-md-0">
-									<span class="d-md-block">Tarikh Tamat</span> <span
-									class="d-md-block">Keahlian:</span>
-								</label>
-								<div class="col-md-3 flex-grow-1">
-									<input type="date" class="form-control"
-										th:value="${expireDate}" id="tarikhTamat" disabled/>
-
-								</div>
-							</div>
-							<div class="mb-3 row">
-								<label for="noTelefon" class="col-md-2 col-form-label">No
-									Telefon:</label>
-								<div class="col-md-4">
-									<input type="text" class="form-control"
-										th:value="${dbUserData.size()>0?dbUserData[0].contactNo:''}"
-										readonly="readonly" id="noTelefon" />
-								</div>
-								<label for="emel" class="col-md-2 col-form-label text-md-end">Emel:</label>
-								<div class="col-md-4">
-									<input type="email" class="form-control"
-										th:value="${dbUserData.size()>0?dbUserData[0].email:''}"
-										readonly="readonly" id="emel" />
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="form_heading col-md-3 col-sm-5 col-7 my-3">Maklumat
-						Ahli</div>
-				</div>
-				<div class="mt-5 ps-md-5">
-					<form>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="bilanganpinjaman">Bilangan Pinjaman:</label> <input
-									type="text" class="form-control mt-2" id="bilanganpinjaman" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-
-
-
-								<label for="tarikhPinjaman">Tarikh Pinjaman Terakhir:</label> <input
-									type="date" th:value="${expireDate}" class="form-control mt-2" id="tarikhPinjaman" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="bahanLewat">Bahan Lewat Pulang:</label> <input
-									type="text" class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].lastReturnDate:''}"
-									readonly="readonly" id="bahanLewat" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="tarikhPemulangan">Tarikh Pemulangan
-									Terakhir:</label> <input type="date" class="form-control mt-2"
-									id="tarikhPemulangan" th:value="${returnDate}"
-									readonly="readonly" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup31">Bilangan Bahan Hilang:</label> <input
-									type="text" th:value="${membershipData !=null?membershipData.lostItems:''}" class="form-control mt-2" id="inputgroup31" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup32">Tarikh Pembaharuan Terakhir:</label> <input
-									type="text" class="form-control mt-2" id="inputgroup32" th:value="${membershipData !=null?membershipData.lastRenewDate:''}" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup41">Bilangan Penggantungan:</label> <input
-									type="text" class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].suspension:''}"
-									readonly="readonly" id="inputgroup41" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup42">Jumlah Tertunggak:</label> <input
-									type="text" class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].outstanding:''}"
-									id="inputgroup42" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup51">Bahan Pinjaman Tahun Ini:</label> <input
-									type="text" class="form-control mt-2" id="inputgroup51" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup52">Jumlah Bayaran:</label> <input
-									type="text" class="form-control mt-2" id="inputgroup52" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="row">
-					<div class="form_heading col-md-3 col-sm-5 col-7 my-3">
-						Maklumat Peribadi</div>
-				</div>
-				<div class="mt-5 ps-md-5">
-					<form>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup11">ID Kumpulan:</label> <input
-									type="text" class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].groupID:''}"
-									readonly="readonly" id="inputgroup11" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup12">Jabatan:</label> <input type="text"
-									class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].department:''}"
-									readonly="readonly" id="inputgroup12" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup61">Status:</label> <input type="text"
-									class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].status:''}"
-									readonly="readonly" id="inputgroup61" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup62">Kategori:</label> <input type="text"
-									class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].category:''}"
-									readonly="readonly" id="inputgroup62" />
-							</div>
-						</div>
-						<div
-							class="row d-flex justify-content-between gap-md-5 gap-2 mb-3">
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup81">Tarikh Lahir:</label> <input
-									type="text" class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].dob:''}"
-									readonly="readonly" id="inputgroup81" />
-							</div>
-							<div class="form-group col-md-5 flex-grow-1">
-								<label for="inputgroup82">Jantina:</label> <input type="text"
-									class="form-control mt-2"
-									th:value="${dbUserData.size()>0?dbUserData[0].gender:''}"
-									readonly="readonly" id="inputgroup82" />
-							</div>
-						</div>
-					</form>
-				</div>
-
-				<div class="row">
-					<div class="form_heading col-md-3 col-sm-5 col-7 my-3">
-						Maklumat Pembayaran</div>
-				</div>
-				<form class="mb-3 table_form">
-					<fieldset id="fieldset-design">
-						<div class="row px-4">
-							<div class="col-md-12 mt-2">
-								<div class="table_responsive">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th scope="col">Pilih</th>
-												<th scope="col">ID Pengguna</th>
-												<th scope="col">Hubungan</th>
-												<th scope="col">Status OKU</th>
-												<th scope="col">Harga (RM)</th>
-											</tr>
-										</thead>
-										<tbody id="tanggunganTableBody">
-											<tr th:each="dependent : ${dependentDetails}">
-												<td><input class="form-check-input" type="checkbox"
-													onchange="calculateTotalHarga()"
-													th:value="${dependent.idPengguna}" /></td>
-												<td th:text="${dependent.idPengguna}"></td>
-												<td th:text="${dependent.hubungan}"></td>
-												<td th:text="${dependent.statusOKU}"></td>
-												<td class="hargaCell" th:text="${dependent.harga}"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<div class="row">
-									<div class="col-md-12">
-										<p class="mt-3" id="totalSum">Jumlah Harga: RM XX</p>
-									</div>
-									<div class="col-md-12">
-										<label for="lokasiPPK" class="form-label mb-2">Kaedah
-											Pembayaran:</label> <select class="form-select" id="lokasiPPK">
-											<!-- <option selected></option> -->
-											<option value="1">Lokasi 1</option>
-											<option value="2">Lokasi 2</option>
-											<option value="3">Lokasi 3</option>
-										</select>
-									</div>
-								</div>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-				<div class="daftar_btn d-flex gap-4 justify-content-end mt-4">
-					<button type="button" class="btn btn-primary" id="getRenewFee"
-						data-bs-toggle="modal" data-bs-target="#renewMembershipModal">Perbaharui
-						Keahlian</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- The Modal -->
-		<div class="modal fade" id="renewMembershipModal" tabindex="-1"
-			aria-labelledby="modalName" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h5 class="modal-title" id="modalName">Perbaharui Keahlian</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-
-					<!-- Modal Body with Form -->
-					<form role="form" class="form-horizontal" id="formrenewmember">
-						<div class="modal-body">
-							<div class="form-group">
-								<label for="renewfee" class="form-label">Yuran
-									Perbaharui</label> <input type="text" class="form-control"
-									id="renewfee" name="renewfee" disabled>
-							</div>
-
-							<div class="form-group">
-								<label class="form-label">Tahun Perbaharui</label>
-								<div>
-									<input type="radio" class="form-check-input" name="renewyear"
-										id="1year" value="1" checked> <label for="1year"
-										class="form-check-label">1 Tahun</label>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="renewyearinput" class="form-label">Tahun
-									Diperbaharui</label> <input type="text" class="form-control"
-									id="renewyearinput" name="renewyearinput" disabled>
-							</div>
-
-							<div class="form-group">
-								<label for="renewpay" class="form-label">Jumlah Perlu
-									dibayar</label> <input type="text" class="form-control" id="renewpay"
-									name="renewpay" disabled>
-							</div>
-
-							<div class="form-group">
-								<label for="renewexpdate" class="form-label">Tarikh baru
-									tamat tempoh</label> <input type="text" class="form-control"
-									id="renewexpdate" name="renewexpdate" disabled>
-							</div>
-						</div>
-
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								id="renewMembership-id">Perbaharui</button>
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal" id="confirmRenewalid">Batal</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<style>
-* {
+<style>
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Base styles for all devices */
-.renewalForm_container {
+.renewalForm_container{
     width: 100%;
     height: fit-content;
     padding: 2rem 4rem;
 }
-a
-.renewalForm_container > div.form-wrapper {
+
+.renewalForm_container > div.form-wrapper{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.renewalForm_container h1 {
+.renewalForm_container h1{
     font-size: 24px;
     font-weight: 600;
     margin: 0;
     text-align: center;
 }
 
-.form_heading {
+.form_heading{
     width: fit-content;
     height: fit-content;
-    background-color: rgb(126, 126, 126);
+    background-color: rgb(126 126 126);
     padding: 6px 20px;
     border-radius: 4px;
     color: #FFF;
@@ -375,17 +278,17 @@ a
     font-weight: 400;
 }
 
-textarea {
+textarea{
     resize: none !important;
 }
 
-.table_form {
+.table_form{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 2rem 3rem;
     border-radius: 6px;
 }
 
-.daftar_btn > button {
+.daftar_btn > button{
     border: none;
     font-size: 16px;
     font-weight: 500;
@@ -394,372 +297,69 @@ textarea {
     letter-spacing: 1px;
 }
 
-.daftar_btn > button:first-child {
-    background-color: rgb(32, 78, 59);
+.daftar_btn > button:first-child{
+    background-color: rgb(32 78 59);
     color: #FFF;
 }
 
-.daftar_btn > button:hover {
+.daftar_btn > button:hover{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.my-custom-popup {
-    margin-top: 20px; /* Adjust the distance from the top */
-}
-
-/* Responsive styles for tablets (768px to 991px) */
-@media screen and (max-width: 991px) {
-    .renewalForm_container {
-        padding: 2rem 2rem; /* Reduce padding for tablets */
-    }
-
-    .table_form {
-        padding: 1.5rem 2rem; /* Reduce padding for tablets */
-    }
-
-    .renewalForm_container h1 {
-        font-size: 20px; /* Slightly smaller font size for tablets */
-    }
-
-    .form_heading {
-        font-size: 14px; /* Smaller font size for tablets */
-        padding: 5px 15px; /* Adjust padding for tablets */
-    }
-
-    .daftar_btn > button {
-        font-size: 14px; /* Smaller font size for tablets */
-        padding: 6px 14px; /* Adjust padding for tablets */
+@media screen and (max-width:991px) {
+    .table_responsive{
+        overflow-x: auto;
     }
 }
 
-/* Responsive styles for mobile devices (up to 767px) */
-@media screen and (max-width: 767px) {
-    .renewalForm_container {
-        padding: 1rem; /* Further reduce padding for mobile */
-    }
-
-    .table_form {
-        padding: 1rem; /* Further reduce padding for mobile */
-    }
-
-    .renewalForm_container h1 {
-        font-size: 18px; /* Smaller font size for mobile */
-    }
-
-    .form_heading {
-        font-size: 12px; /* Smaller font size for mobile */
-        padding: 4px 10px; /* Adjust padding for mobile */
-    }
-
-    .daftar_btn > button {
-        font-size: 14px; /* Smaller font size for mobile */
-        padding: 6px 12px; /* Adjust padding for mobile */
-    }
-
-    /* Stack buttons vertically on mobile */
-    .daftar_btn {
-        display: flex;
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center; /* Center buttons horizontally */
-    }
-
-    /* Remove hover effect on mobile (optional) */
-    .daftar_btn > button:hover {
-        box-shadow: none; /* Disable hover effect on mobile */
-    }
-}
-
-/* Responsive styles for very small mobile devices (up to 480px) */
-@media screen and (max-width: 480px) {
-    .renewalForm_container {
-        padding: 0.5rem; /* Minimal padding for very small devices */
-    }
-
-    .table_form {
-        padding: 0.5rem; /* Minimal padding for very small devices */
-    }
-
-    .renewalForm_container h1 {
-        font-size: 16px; /* Very small font size for very small devices */
-    }
-
-    .form_heading {
-        font-size: 10px; /* Very small font size for very small devices */
-        padding: 3px 8px; /* Minimal padding for very small devices */
-    }
-
-    .daftar_btn > button {
-        font-size: 12px; /* Very small font size for very small devices */
-        padding: 6px 12px; /* Minimal padding for very small devices */
-    }
-}
-
-/* Responsive styles for tables (overflow handling) */
-@media screen and (max-width: 991px) {
-    .table_responsive {
-        overflow-x: auto; /* Enable horizontal scrolling for tables */
-    }
-}
 </style>
-		<script>
-		var totalDependent=0
-		 function calculateTotalHarga() {
-		        let total = 0;
-		        
-		        // Loop through all checked checkboxes
-		        document.querySelectorAll('.form-check-input:checked').forEach(function (checkbox) {
-		            let row = checkbox.closest('tr'); // Find the parent row
-		            if (row) {
-		                let harga = parseFloat(row.querySelector('.hargaCell').textContent) || 0;
-		                total += harga;
-		                totalDependent=total;
-		            }
-		            
-		        });
-		        
-		        document.getElementById('totalSum').textContent = 'Jumlah Harga: RM ' + total.toFixed(2);
-		        
-		    }
 
-	       // Add event listeners to checkboxes to trigger calculateTotal when checked or unchecked
-	       document.getElementById('tanggunganTableBody').addEventListener('change', function (event) {
-				        if (event.target.classList.contains('form-check-input')) {
-				            let checkbox = event.target;
-				            let row = checkbox.closest('tr');
-				            console.log("Checkbox:", checkbox, "Row:", row); // Debug log
-				            calculateTotalHarga();
-				        }
-				    });
-		
-		
-/* $(document).ready(function() {  */
-	var loginuser=""
-	window.addEventListener("load", () => { 
-	      const iframeElement = window.frameElement; // Reference to the iframe
-	         const parentName = iframeElement.getAttribute("name");
-	        loginuser=parentName.split(",")[0];
-	        document.getElementById("idPengguna").value=loginuser; 
-$("#confirmRenewalid").click(function(){
-	  var modalElement = document.getElementById('renewMembershipModal');
-	    var modalInstance = bootstrap.Modal.getInstance(modalElement);
-	    modalInstance.hide();
-}) 
-
-$("#renewMembership-id").click(function(){
-	
-  
-	var patronId =loginuser;//'000106140862'; //$("#lblPatronID").val(); 
-	var endDate3=$("#tarikhTamat").val();
-	 var endDate = moment(endDate3, 'YYYY-MM-DD'); 
-	 
-	var expDate = moment(endDate, 'DD/MM/YYYY').format("YYYYMMDD");///$(".lblExpiryDate").text();
-	var newExpDate = moment($("#renewexpdate").val(), 'DD/MM/YYYY').format("YYYYMMDD");///$("#renewexpdate").val();
-	 var recordedBy ="admin";
-		
-	var fee = $("#renewpay").val();
-	var year = $('input[name="renewyear"]:checked').val();
-	$.post("/eforms/handleRenewalMembership", 
-			{patronId : patronId, expDate : expDate,  
-			newExpDate : newExpDate, recordedBy : recordedBy,
-			fee : fee, year : year}, function(result){
-				console.log("result is ",result);
-				if(result.message=="Success"){
-					Swal.fire({
-						  title: 'Success!',
-						  text: 'Renewl of membership successful.',
-						  icon: 'success',
-						  confirmButtonText: 'OK'
-						});
-				}else{
-					Swal.fire({
-						  title: 'Error!',
-						  text: 'Renewl of membership Error.',
-						  icon: 'Error',
-						  confirmButtonText: 'OK'
-						});
-				} 
-				  var modalElement = document.getElementById('renewMembershipModal');
-				    var modalInstance = bootstrap.Modal.getInstance(modalElement);
-				    modalInstance.hide();
-
-        })
-        .catch(error => console.log("Error found in the ew",error)); 
-})
-
-// When the modal is shown, call the API
-$('#getRenewFee').click(function () {
-	checkUserLogin(loginuser);
-  
-});
-
-function callApi() {  
-    fetch(`/eforms/getRenewFee?patronId=`+loginuser)
-        .then(response => response.json())
-        .then(data => {
-        	if (!data || !Array.isArray(data) || data.length === 0) {
-                console.warn("Invalid or empty response data. Using dummy data.");
-                data = [{ renewFee: "1.00", renewGrc: "1" }]; // Dummy data
-            }
-        	
-        	
-	var fee = parseFloat(data[0].renewFee); 
-	$("#renewfee").val(fee.toFixed(2));
-
-	var year;
-	year = data[0].renewGrc;
-	/* if(fee == "0" || fee == "0.00" || fee == "0.0000"){
-		$(".yeartorenew").hide();
-		$(".yeartorenewinput").show();
-		$("#renewyearinput").val(value['RenweGrc']);
-		year = value['RenweGrc'];
-		$('#2year').attr("disabled",true);
-		$('#3year').attr("disabled",true);
-		$(".divexpdate").show(); 
-	}else{
-		year = $('input[name="renewyear"]:checked').val();
-		$(".yeartorenew").show();
-		$(".yeartorenewinput").hide();
-		$(".renewyearinput").val("0")
-		$('#2year').attr("disabled",false);
-		$('#3year').attr("disabled",false);
-		$(".divexpdate").hide(); 
-	} */	
-
-	//var totalpay = 	parseFloat(0);
-	var totalpay  = 	(fee *  	parseFloat(year))+totalDependent;	
-	
-
-	$("#renewpay").val(totalpay.toFixed(2));	
-	
-	///var futureMonth = moment(today).add(year, 'Y');
-	var today = new Date();
- 
-
-// Format date as DD/MM/YYYY
-//var startDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
-var startDate = moment(today, 'DD/MM/YYYY') 
-	var endDate=$("#tarikhTamat").val();
-
-      endDate = moment(endDate, 'YYYY-MM-DD');
-      $("#renewyearinput").val(data[0].renewGrc);
-     // Check if the date is valid
-     if (endDate.isValid()) {
-    	 endDate=	 endDate.format('DD/MM/YYYY');
-    	 endDate = moment(endDate, 'DD/MM/YYYY'); 
-   
-     } else {
-         console.log("Invalid date format!");
-     }
-     
-     
-	var futureMonth;
-	
-    var dDiff = endDate.diff(startDate);
-    ///alert(dDiff+"dDiff");
-    if (dDiff > 0) {
-        //alert('Date is not past');
-        futureMonth = moment(endDate).add(year, 'Y');
-        $('#renewexpdate').val(moment(futureMonth).format("DD/MM/YYYY"));	
-        //alert(moment(futureMonth).format("DD/MM/YYYY")+"futureMonth not pass");
-    }else{
-        //alert('Date is past');
-        futureMonth = moment(today).add(year, 'Y');
-        $('#renewexpdate').val(moment(futureMonth).format("DD/MM/YYYY"));	
-        //alert(moment(futureMonth).format("DD/MM/YYYY")+"futureMonth pass");
+<script>
+// Auto-calculate Jumlah Harga
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll('tbody tr').forEach(row => {
+    const checkbox = row.querySelector('input[type="checkbox"]');
+    if (checkbox && checkbox.checked) {
+      const price = parseFloat(row.cells[4].innerText) || 0;
+      total += price;
     }
-	
-	
-	$('#renewexpdate').val(moment(futureMonth).format("DD/MM/YYYY"));	
-       })
-        .catch(error => console.error('Error fetching material details:', error));
-
+  });
+  document.querySelectorAll('p.mt-3').forEach(p => {
+    if (p.textContent.includes('Jumlah Harga')) {
+      p.textContent = 'Jumlah Harga: RM ' + total.toFixed(2);
+                    	}
+                    });
+            }
+document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+  cb.addEventListener('change', updateTotal);
+});
+// Auto-set fee based on age group
+function setFeeByAge() {
+  const dob = document.getElementById('inputgroup81').value;
+  if (!dob) return;
+  const today = new Date();
+  const birth = new Date(dob);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  let fee = 16;
+  if (age < 18) fee = 10;
+  else if (age >= 60) fee = 8;
+  // Set fee in table (first row as example)
+  const priceCell = document.querySelector('tbody tr td:last-child');
+  if (priceCell) priceCell.innerText = fee;
+  updateTotal();
 }
-
-
-  
-	if((loginuser =="") || (loginuser !="" && (loginuser.indexOf("default@kmlink.com.my")>-1 || loginuser.indexOf("20103")>-1))){
- 
-		Swal.fire({
-			  title: 'Notification!',
-			  text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
-			  icon: 'Error',
-			  confirmButtonText: 'OK',
-			  position: 'top', // Ensures the popup is displayed at the top
-			  customClass: {
-			    popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
-			  }
-			});
-	}
-	
-	
-	function checkUserLogin(loginuser){  
-		if((loginuser="") || (loginuser !="" && (loginuser.indexOf("default@kmlink.com.my")>-1 || loginuser.indexOf("20103")>-1))){
-			console.log("before the model");
-			Swal.fire({
-				  title: 'Notification!',
-				  text: 'Please register on our portal to apply for the membership form. We look forward to welcoming you!',
-				  icon: 'Error',
-				  confirmButtonText: 'OK',
-				  position: 'top', // Ensures the popup is displayed at the top
-				  customClass: {
-				    popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
-				  }
-			
-				});
-			setTimeout(() => {
-				var modalElement = document.getElementById('renewMembershipModal');
-			    var modalInstance = bootstrap.Modal.getInstance(modalElement);
-			    modalInstance.hide();
-			    console.log("closed the model");
-			}, 1000);
-			
-		}	else{
-			  callApi();
-		}
-	}
-
-	
-	
-	
-	  
-	 });  
-	  
-	function checkExpiryAndShowPopup(expiryDate) {
-	    // Convert expiryDate to a Date object
-	    let expiry = new Date(expiryDate);
-	    
-	    // Get the current date
-	    let today = new Date();
-
-	    // Calculate one month before expiry
-	    let oneMonthBeforeExpiry = new Date(expiry);
-	    oneMonthBeforeExpiry.setMonth(oneMonthBeforeExpiry.getMonth() - 1);
-
-	    // Compare dates
-	    if (today >= oneMonthBeforeExpiry) {
-	    	Swal.fire({
-				  title: 'Notification!',
-				  text: 'Your subscription is about to expire or has expired!',
-				  icon: 'Error',
-				  confirmButtonText: 'OK',
-				  position: 'top', // Ensures the popup is displayed at the top
-				  customClass: {
-				    popup: 'my-custom-popup' // Optional: Add your own class for further styling if needed
-				  }
-			
-				});
-	    }
-	}
-
-	// Example: Call the function with an expiry date (YYYY-MM-DD format)
-	var endDateIs=$("#tarikhTamat").val();
-	checkExpiryAndShowPopup(endDateIs);    
-      
-/* }); */
-</script>
-		<!-- Button to Open the Modal -->
-
-
-	</section>
+document.getElementById('inputgroup81').addEventListener('change', setFeeByAge);
+// Make button submit the form
+const btn = document.querySelector('.daftar_btn > button');
+if (btn) btn.onclick = function() {
+  btn.closest('form').submit();
+};
+// Bypass access denied (front-end only)
+// (No-op, just for testing)
+        </script>
+    </section>
 </body>
 </html>

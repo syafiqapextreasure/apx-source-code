@@ -1460,5 +1460,3 @@ function checkDuplicateOnCheckbox(endpoint, inputId, errorId) {
         });
     });
 }
-
-

@@ -18,7 +18,8 @@ public interface LostMaterialFormRepository extends JpaRepository<LostMaterialFo
             "       MAX(borrow_date) AS borrow_date, " +
             "       MAX(return_date) AS return_date, " +
             "       MAX(payment_method) AS payment_method, " +
-            "       MAX(total_payment) AS total_payment " +
+            "       MAX(total_payment) AS total_payment, " +
+            "       MAX(payment_breakdown) AS payment_breakdown " +
             "FROM lost_material_form " +
             "GROUP BY patron_id", nativeQuery = true)
 public List<Object[]> getAllLostFormRequestUnique();
@@ -30,7 +31,8 @@ public List<Object[]> getAllLostFormRequestUnique();
                "       borrow_date, " +
                "       return_date, " +
                "       payment_method, " +
-               "       total_payment " +
+               "       total_payment, " +
+               "       payment_breakdown " +
                "FROM lost_material_form " +
                "WHERE patron_id = :patronId", nativeQuery = true)
 List<Object[]> getLostFormRequestByPatronId(@Param("patronId") String patronId);

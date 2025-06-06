@@ -76,21 +76,20 @@ public class GetFndGlnumbService {
     
     // Method to update Patron status for renewal
     public boolean updatePatrStatRenewal(String loginid) {
-        // Define values to update
-        Map<String, String> valueStr = new HashMap<>();
-        Map<String, String> condition = new HashMap<>();
-
-        condition.put("GL14PATR", loginid);
-        valueStr.put("GL14STAT", "16");
-
-        // Create the update query dynamically
-        String query = createUpdateQuery("GLPATR", valueStr, condition);
-               System.out.println(valueStr+" UPDATE GLPATR isis "+condition.get("GL14PATR"));
-        // Run the query using JdbcTemplate
-        int rowsAffected = jdbcTemplate.update(query, valueStr.get("GL14STAT"),condition.get("GL14PATR"));
-        System.out.println("rowsAffected is "+rowsAffected);
-        // Return true if at least one row was affected, otherwise false
-        return rowsAffected > 0;
+        try {
+            // Simple direct update using proper parameter binding
+            String query = "UPDATE GLPATR SET GL14STAT = '1' WHERE GL14PATR = ?";
+            System.out.println("PAYMENT STATUS UPDATE: Patron=" + loginid + ", New Status=1 (Memuaskan)");
+            System.out.println("PAYMENT STATUS SQL: " + query);
+            
+            int rowsAffected = jdbcTemplate.update(query, loginid);
+            System.out.println("PAYMENT STATUS RESULT: Rows affected=" + rowsAffected);
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            System.err.println("PAYMENT STATUS ERROR: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Method to create the SQL update query dynamically

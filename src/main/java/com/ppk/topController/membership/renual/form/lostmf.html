@@ -30,35 +30,36 @@
 									<th scope="col">No Perolehan</th>
 									<th scope="col">Nama Buku</th>
 									<!-- <th scope="col">Status OKU</th> -->
-									<!-- <th scope="col">Harga (RM)</th> -->
+									<th scope="col">Harga (RM)</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="material : ${borrowedMaterials}">
-									<td><input class="form-check-input" type="checkbox"
+									<td><input class="form-check-input material-checkbox" type="checkbox"
 										th:id="'defaultCheck' + ${material.id}"
-										th:value="${material.id}" /></td>
+										th:value="${material.id}" th:attr="data-price=${material.bookPrice != null ? material.bookPrice : '0.00'}" /></td>
 									<td th:text="${material.acquisitionNumber}">02121000993</td>
 									<td th:text="${material.bookTitle}">Anak</td>
+									<td th:text="${material.bookPrice != null ? #numbers.formatDecimal(material.bookPrice, 1, 'COMMA', 2, 'POINT') : 'N/A'}">0.00</td>
 								</tr>
 							</tbody>
 
 						</table>
 					</div>
 					<div class="form-group col-md-12">
-						<label for="subject">Tarikh Pinjaman:</label> <input type="date"
-							class="form-control mt-2" id="subject" />
+						<label for="borrowDate">Tarikh Pinjaman:</label> <input type="date"
+							class="form-control mt-2" id="borrowDate" name="borrowDate" />
 					</div>
 					<div class="form-group col-md-12">
-						<label for="subject">Tarikh Pulangan:</label> <input type="date"
-							class="form-control mt-2" id="subject" />
+						<label for="returnDate">Tarikh Pulangan:</label> <input type="date"
+							class="form-control mt-2" id="returnDate" name="returnDate" />
 					</div>
 					<div class="form-group col-md-12">
 						<label for="subject">Kaedah Pembayaran:</label> <input type="text"
 							class="form-control mt-2" id="subject" />
 					</div>
 					<div class="noted_text">
-						<p>Jumlah Pembayaran (RM): XX.XX</p>
+						<p id="totalPaymentDisplay">Jumlah Pembayaran (RM): 0.00</p>
 						<p>Perincian Harga Buku + Caj + Denda Lewat</p>
 					</div>
 				</div>
@@ -69,5 +70,27 @@
 		</div>
 		</form>
 	</section>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			function calculateTotal() {
+				var total = 0;
+				$('.material-checkbox:checked').each(function() {
+					var price = parseFloat($(this).data('price'));
+					if (!isNaN(price)) {
+						total += price;
+					}
+				});
+				$('#totalPaymentDisplay').text('Jumlah Pembayaran (RM): ' + total.toFixed(2));
+			}
+
+			$('.material-checkbox').on('change', function() {
+				calculateTotal();
+			});
+
+			// Initial calculation in case some checkboxes are pre-checked (though unlikely here)
+			calculateTotal();
+		});
+	</script>
 </body>
 </html>

@@ -234,16 +234,23 @@ public class RenewFeeService {
 	        
 	        // Set the update values and conditions
 	        valueStr.put("GL14EXPDATE", expDate);
+	        valueStr.put("GL14STAT", "1"); // Set status to "1" (Memuaskan) to indicate successful renewal
 	        condition.put("GL14PATR", loginId);
+
+	        // Log the update values for debugging
+	        System.out.println("EXPIRY DATE UPDATE: Patron=" + loginId + ", New Expiry Date=" + expDate + ", New Status=1 (Memuaskan)");
 
 	        // Construct the SQL query
 	        String query = createUpdateQuery("GLPATR", valueStr, condition);
+	        System.out.println("EXPIRY DATE SQL: " + query);
 	        
 	        // Execute the update query and return whether it was successful
 	        try {
 	            int rowsAffected = jdbcTemplate.update(query);
-	            return rowsAffected > 0;  // If rowsAffected is greater than 0, the update was successful
+	            System.out.println("EXPIRY DATE RESULT: Rows affected=" + rowsAffected);
+	            return rowsAffected > 0;
 	        } catch (Exception e) {
+	            System.err.println("EXPIRY DATE ERROR: " + e.getMessage());
 	            e.printStackTrace();
 	            return false;
 	        }
